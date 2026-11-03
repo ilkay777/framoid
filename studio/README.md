@@ -12,4 +12,4 @@ The artifact is ONE self-contained file (separate files failed to load in some c
 To republish: `cp ../template/index.html template.html && python3 build.py`, then publish only `index.html` to the artifact (mode replace). Do not commit the generated index.html or template.html.
 
 Capabilities: `sample` (Claude on the viewer's plan) and `db` with rule `{path: "", read: "owner", write: "owner"}`.
-Data: collection `reflections`, one document per session: id, status (shaping | written | sent), number, turns, proposal, reflection, revisions, timestamps.
+Data: collection `reflections`, one document per session: id, status (shaping | written | sent), number, turns, proposal, reflection, revisions, timestamps, and optionally `origin: "scout"` plus `context {brief, sources[{title,url}], preparedAt}` when a project session prepared the Subject with web research. The brief is shown as a Background card and sent with every Claude call for that session.
