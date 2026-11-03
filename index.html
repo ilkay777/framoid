@@ -60,7 +60,6 @@ a.card:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
 .dots { display: flex; gap: 5px; }
 .dots b { width: 12px; height: 12px; border-radius: 50%; background: var(--c); border: 2px solid var(--c); }
 .dots b.opp { background: transparent; border-style: dashed; }
-.tally { color: var(--muted); font-variant-numeric: tabular-nums; }
 .result { font-weight: 650; }
 .empty { padding: 26px; color: var(--muted); text-align: center; }
 footer { text-align: center; color: var(--muted); font-size: 12px; margin-top: 26px; }
@@ -101,7 +100,7 @@ footer { text-align: center; color: var(--muted); font-size: 12px; margin-top: 2
     const result = up > dn ? "Embraced" : up < dn ? "Opposed" : "Tie";
     const dots = tallied ? `<div class="stance"><span class="dots">${GODS.map(g =>
       `<b class="${st[g] === "opposes" ? "opp" : ""}" style="--c:var(--${g})" title="${NAME[g]} ${st[g]}"></b>`).join("")}</span>
-      <span class="tally">↑${up} ${dn}↓</span><span class="result">${result}</span></div>` : "";
+      <span class="result">${result}</span></div>` : "";
     const label = /^\d+$/.test(r.number) ? "Reflection " + esc(r.number) : esc(r.number);
     return `<a class="card glass" href="r/${encodeURIComponent(r.slug)}/">
       <div class="meta"><span>${label}</span><span>${fmt(r.date)}</span></div>

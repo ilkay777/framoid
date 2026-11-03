@@ -56,7 +56,15 @@ button.ghost { background: transparent; box-shadow: none; border-color: transpar
 .muted { color: var(--muted); }
 .small { font-size: 13px; }
 
-/* top bar */
+/* top bar: in a session it is a slim strip flush with the top, so the Reflection gets the room */
+body.work { padding: 0 env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left); }
+body.work .bar { margin: 0; border-radius: 0; border-width: 0 0 1px; padding: max(4px, env(safe-area-inset-top)) 8px 4px; gap: 6px; min-height: 40px; }
+body.work .bar h1 { font-size: 14px; font-weight: 650; }
+body.work .bar button { padding: 6px 12px; font-size: 13px; }
+body.work .viewer { border-radius: 0; border: 0; box-shadow: none; background: transparent; -webkit-backdrop-filter: none; backdrop-filter: none; }
+body.work .chat { border-radius: 0; border-width: 0; margin-top: 0; }
+@media (max-width: 640px) { body.work .bar { flex-wrap: nowrap; } body.work .bar h1 { flex-basis: auto; } body.work .bar .actions { width: auto; flex-wrap: nowrap; overflow-x: auto; } }
+
 .bar { display: flex; align-items: center; gap: 10px; padding: 10px 12px; margin-bottom: 12px; flex: none; }
 .bar h1 { font: 700 18px/1.2 var(--display); margin: 0; letter-spacing: -.01em; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .bar .actions { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
@@ -278,6 +286,7 @@ Apply the instruction and follow every rule above. Change only what the instruct
     for (const v of ["home", "chat", "read"]) $("v-" + v).hidden = v !== view;
     $("back").hidden = view === "home";
     document.querySelector(".bar").hidden = view === "home"; // the home intro already names the Studio
+    document.body.classList.toggle("work", view !== "home");
     if (view === "home") { $("heading").textContent = "Framoid Studio"; $("actions").innerHTML = ""; cur = null; }
   }
 
@@ -426,7 +435,7 @@ Apply the instruction and follow every rule above. Change only what the instruct
   /* ---------- reading ---------- */
   function openReading() {
     show("read");
-    $("heading").textContent = "Reflection " + cur.number + ": " + cur.reflection.subject.title;
+    $("heading").textContent = ""; // the Reflection shows its own title
     $("actions").innerHTML = `<button id="a-revise">Revise</button><button class="primary" id="a-pub">${cur.status === "sent" ? "Publish again" : "Publish"}</button><button class="ghost" id="a-chat">Chat</button><button class="danger ghost" id="a-del">Delete</button>`;
     $("a-revise").onclick = reviseSheet; $("a-pub").onclick = publishSheet; $("a-chat").onclick = openChat; $("a-del").onclick = confirmDelete;
     const json = JSON.stringify(cur.reflection).replace(/</g, "\\u003c");
@@ -525,7 +534,23 @@ Apply the instruction and follow every rule above. Change only what the instruct
     const el = document.getElementById("studio-files");
     if (!el) throw new Error("files missing");
     const f = JSON.parse(el.textContent);
-    files.rules = f.rules; files.shape = f.shape; files.template = f.template;
+    files.rules = f.rules; files.shape = f.shape; files.template = f.template; files.legacy = f.legacy || [];
+  }
+
+  // One-time import of Reflections made before the Studio (built in by build.py from legacy.json).
+  let importing = false;
+  async function importLegacy() {
+    if (importing || !files.legacy.length) return;
+    importing = true;
+    for (const r of files.legacy) {
+      const id = "legacy-" + r.number;
+      if (items.some(i => i.id === id || i.number === String(r.number))) continue;
+      const at = (r.date || "2026-11-01") + "T12:00:00.000Z";
+      try {
+        await col().doc(id).set({ id, status: "written", number: String(r.number), createdAt: at, updatedAt: at, turns: [],
+          proposal: { title: r.subject.title, statement: r.subject.statement }, reflection: r, importedFrom: "artifact" });
+      } catch (e) { break; }
+    }
   }
 
   async function start() {
@@ -540,6 +565,7 @@ Apply the instruction and follow every rule above. Change only what the instruct
       if (!snap.metadata.fromCache) clearTimeout(timer);
       items = snap.docs.map(d => d.data()).filter(Boolean);
       renderList();
+      if (!snap.metadata.fromCache) importLegacy();
     }, () => { clearTimeout(timer); $("list").innerHTML = '<div class="glass empty">Your Reflections can\'t be loaded right now.</div>'; });
   }
   start();
