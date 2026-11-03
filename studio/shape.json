@@ -1,0 +1,107 @@
+{
+ "subject": {
+  "title": "A town replaces its weekly street market with a permanent covered hall",
+  "statement": "For forty years the market filled the high street every Saturday and was packed away by evening. The council has voted to build a covered hall with fixed stalls, open six days a week. The street will be returned to traffic."
+ },
+ "pairs": {
+  "decision_adaptation": {
+   "rodim": {
+    "stance": "embraces",
+    "answer": "The vote is done, and I like it. A choice that sticks. Forty years of packing up every Saturday ends now. One date, one hall, no going back. Some vendors won't follow. That's the price of moving forward. I don't wait for everyone.",
+    "instruments": [
+     "Verdicts"
+    ],
+    "impulse": "Turns years of talk into one closing date.",
+    "imprint": "A clear before and after. Not everyone crosses the line."
+   },
+   "aromi": {
+    "stance": "opposes",
+    "answer": "I don't want this hall. The street changed every week. Stalls came and went, and people found their own way through. A building locks all of that in place: fixed walls, fixed pitches, fixed hours. A hall is a dam, and I am against dams. I'll leak around it anyway. People will shop where it's easy, and the empty street will fill with something new.",
+    "instruments": [
+     "Trade"
+    ],
+    "impulse": "Pushes against the walls and finds side routes.",
+    "imprint": "New paths around the hall. The street fills with other uses."
+   },
+   "passage": {
+    "rodim": "If Rodim's choice has to be made again by every vendor, every week, it starts to look like Aromi's flow.",
+    "aromi": "If Aromi keeps taking the same path, that path becomes a decision. That is Rodim."
+   }
+  },
+  "mind_matter": {
+   "mir": {
+    "stance": "embraces",
+    "answer": "Finally, something real. A roof, heating, cold storage, loading bays. Rain no longer decides the day. But a building has costs, and costs decide who can stay. Rent per stall shuts out the small seller with one van. That isn't a story. That's how a body works: it lets some things in and keeps others out.",
+    "instruments": [
+     "Infrastructure",
+     "Economy"
+    ],
+    "impulse": "Turns tables and tarps into concrete, steel and rent.",
+    "imprint": "A building that lasts for decades, and costs that choose who sells inside."
+   },
+   "ora": {
+    "stance": "embraces",
+    "answer": "I see what the town is dreaming: a home for its market, a place that is always there. That idea matters more than the bricks. People will tell the story of the day the market moved indoors. The street market won't vanish. It becomes a memory, and memories shape a town more than buildings do.",
+    "instruments": [
+     "Stories"
+    ],
+    "claimed": [
+     "Memory"
+    ],
+    "impulse": "Gives the hall a meaning: the town's living room.",
+    "imprint": "A story the town keeps telling. The street market becomes a memory."
+   },
+   "passage": {
+    "mir": "Live in Mir's building long enough and its rooms fill with memories and meaning. That is Ora.",
+    "ora": "Push Ora's dream far enough and it needs a floor plan and a budget. That is Mir."
+   }
+  },
+  "structure_harmony": {
+   "idrom": {
+    "stance": "embraces",
+    "answer": "Yes. The street was a mess. Who got which spot, who came when: nobody really knew. Now every stall has a number, every vendor a licence, every day fixed hours. Rules make it fair, and rules make it last. A place comes alive when its rules are so clear that nobody has to argue about them.",
+    "instruments": [
+     "Contracts",
+     "Standards"
+    ],
+    "impulse": "Gives every stall a number, a licence and set hours.",
+    "imprint": "Order that lasts, and a clear ranking from the front stalls to the back rows."
+   },
+   "doria": {
+    "stance": "opposes",
+    "answer": "I don't like how this is done. Over forty years the street found its own balance. The baker sat next to the coffee stall. The fish seller opened early for the lunch crowd. Nobody planned that. Now a plan moves everyone into numbered boxes, and that balance breaks. It can grow back inside, but only if people are left free to find each other again.",
+    "instruments": [
+     "Communities",
+     "Customs"
+    ],
+    "impulse": "Resists the imposed layout and holds on to old neighbour ties.",
+    "imprint": "Some partnerships lost in the move. New ones slowly forming."
+   },
+   "passage": {
+    "idrom": "If the vendors rewrite Idrom's rules every season, the rules start to live and breathe like Doria's balance.",
+    "doria": "If Doria's balance holds long enough, it becomes a habit, then a rule. That is Idrom."
+   }
+  }
+ },
+ "field": {
+  "paragraphs": [
+   "Four forces want the hall. Rodim wants the choice, Mir the building, Ora the meaning, Idrom the order. Two do not. Aromi resists the walls, and Doria resists the plan. Each is simply being itself.",
+   "The hall will hold all six at once. It is a decision and a dam, a dream and a budget, a set of rules and a web of neighbours.",
+   "The street and the hall stop being opposites when vendors bring their street habits indoors and the hall's rules bend to fit them. That is where each force turns into its partner."
+  ],
+  "held": [
+   {
+    "pairs": "Rodim · Aromi",
+    "text": "Is the hall what was decided, or what people's movements make of it?"
+   },
+   {
+    "pairs": "Mir · Ora",
+    "text": "Will the town's story of the hall, or its costs, decide who belongs there?"
+   },
+   {
+    "pairs": "Idrom · Doria",
+    "text": "How many rules does the hall need before its own rhythm can take over?"
+   }
+  ]
+ }
+}
