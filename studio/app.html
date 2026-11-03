@@ -165,6 +165,7 @@ textarea { flex: 1; resize: none; font: 15px/1.45 var(--text); color: var(--ink)
 
 <div class="scrim" id="scrim" hidden><div class="sheet glass" id="sheet" role="dialog" aria-modal="true"></div></div>
 
+<script id="studio-files" type="application/json">{}</script>
 <script>
 (() => {
   "use strict";
@@ -520,8 +521,11 @@ Apply the instruction and follow every rule above. Change only what the instruct
 
   /* ---------- start ---------- */
   async function loadFiles() {
-    const get = async f => { const r = await fetch(f, { cache: "no-cache" }); if (!r.ok) throw new Error(f); return r.text(); };
-    [files.rules, files.shape, files.template] = await Promise.all([get("rules.md"), get("shape.json"), get("template.html")]);
+    // Everything is built into this page (see build.py), so nothing depends on how the page is served.
+    const el = document.getElementById("studio-files");
+    if (!el) throw new Error("files missing");
+    const f = JSON.parse(el.textContent);
+    files.rules = f.rules; files.shape = f.shape; files.template = f.template;
   }
 
   async function start() {
