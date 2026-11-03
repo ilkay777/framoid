@@ -27,4 +27,4 @@ Then commit and push to `main`; the site updates within a minute or two.
 
 ## Template upgrades
 
-When the template changes, copy the new REFLECTION_TEMPLATE.html to `template/index.html`, run `rebuild`, commit and push.
+When the template changes, replace `template/index.html` with the new REFLECTION_TEMPLATE.html and push. The workflow rebuilds every page from it on each push, so nothing else is needed.

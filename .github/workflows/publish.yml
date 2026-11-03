@@ -23,17 +23,18 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Publish Reflections waiting in inbox/
+      - name: Publish the inbox and rebuild every page from the template
         run: |
-          if ls inbox/*.json >/dev/null 2>&1; then
-            python3 tools/publish.py inbox
+          if ls inbox/*.json >/dev/null 2>&1; then python3 tools/publish.py inbox; fi
+          python3 tools/publish.py rebuild
+          if [ -n "$(git status --porcelain)" ]; then
             git config user.name "framoid-bot"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git add -A
-            git commit -m "Publish from inbox"
+            git commit -m "Publish inbox / rebuild pages from template"
             git push
           else
-            echo "Inbox empty"
+            echo "Nothing to commit"
           fi
 
       - uses: actions/configure-pages@v5
