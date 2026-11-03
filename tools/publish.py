@@ -5,6 +5,7 @@ Usage:
   python3 tools/publish.py add PATH/TO/reflection.json   # add or replace one Reflection
   python3 tools/publish.py remove SLUG                   # take one Reflection off the site
   python3 tools/publish.py rebuild                       # re-render every page from template/index.html
+  python3 tools/publish.py inbox                         # publish every inbox/*.json, then remove it (used by GitHub Actions)
 
 Each Reflection lives in r/<slug>/ as index.html (the template, with its own <title>)
 plus reflection.json (the content, unchanged). The slug is the Reflection's "number",
@@ -32,6 +33,25 @@ def title_of(data):
     t = (data.get("subject") or {}).get("title", "").strip()
     head = "Framoid Reflection" if n.lower() == "sample" else f"Framoid Reflection {n}"
     return f"{head}: {t}" if t else head
+
+
+def check(data, name):
+    """Refuse anything that is not a Reflection, so a bad paste cannot break the site."""
+    problems = []
+    if not isinstance(data, dict):
+        sys.exit(f"{name}: not a JSON object")
+    if not str(data.get("number", "")).strip():
+        problems.append("no number")
+    if not (data.get("subject") or {}).get("title"):
+        problems.append("no subject.title")
+    pairs = data.get("pairs") or {}
+    for g in GODS:
+        if not any(isinstance(p, dict) and isinstance(p.get(g), dict) and p[g].get("answer") for p in pairs.values()):
+            problems.append(f"no Reading for {g}")
+    if not (data.get("field") or {}).get("paragraphs"):
+        problems.append("no field.paragraphs")
+    if problems:
+        sys.exit(f"{name}: not a Reflection ({', '.join(problems)})")
 
 
 def render(folder):
@@ -75,6 +95,7 @@ def main():
     if cmd == "add" and len(sys.argv) == 3:
         src = Path(sys.argv[2])
         data = json.loads(src.read_text(encoding="utf-8"))
+        check(data, src.name)
         folder = R / slug_of(data)
         folder.mkdir(exist_ok=True)
         if src.resolve() != (folder / "reflection.json").resolve():
@@ -87,6 +108,17 @@ def main():
             sys.exit(f"r/{sys.argv[2]} not found")
         shutil.rmtree(folder)
         print(f"removed r/{sys.argv[2]}/")
+    elif cmd == "inbox":
+        inbox = ROOT / "inbox"
+        for src in sorted(inbox.glob("*.json")) if inbox.exists() else []:
+            data = json.loads(src.read_text(encoding="utf-8"))
+            check(data, src.name)
+            folder = R / slug_of(data)
+            folder.mkdir(exist_ok=True)
+            shutil.copyfile(src, folder / "reflection.json")
+            render(folder)
+            src.unlink()
+            print(f"published r/{folder.name}/ from inbox/{src.name}")
     elif cmd == "rebuild":
         for folder in sorted(p for p in R.iterdir() if (p / "reflection.json").exists()):
             render(folder)

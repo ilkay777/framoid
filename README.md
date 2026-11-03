@@ -1,7 +1,7 @@
 # framoid.com
 
-The public gallery of Framoid Reflections, served free by GitHub Pages from the `main` branch.
-Reflections are written in the "Framoid Reflections" project on claude.ai; this repository only holds the published ones.
+The public gallery of Framoid Reflections, served free by GitHub Pages. Every push to `main` runs `.github/workflows/publish.yml`, which publishes anything waiting in `inbox/` and deploys the site.
+Reflections are written in the Framoid Studio (a claude.ai artifact); this repository only holds the published ones.
 
 ## Layout
 
@@ -11,7 +11,11 @@ Reflections are written in the "Framoid Reflections" project on claude.ai; this 
 - `template/index.html`: copy of REFLECTION_TEMPLATE.html from project knowledge.
 - `CNAME`: the custom domain (framoid.com). `.nojekyll`: serve files as they are.
 
-## Publishing
+## Publishing (no AI needed)
+
+From the Studio: press Publish, copy the Reflection, open the GitHub link it gives (a new file in `inbox/`), paste, and commit. The workflow validates the file, moves it to `r/<number>/`, updates the gallery and deploys; the page is live a minute or two later. A file that is not a valid Reflection makes the workflow fail and stays in `inbox/` untouched.
+
+By hand:
 
 ```
 python3 tools/publish.py add path/to/reflection.json   # add or replace (slug = "number", lower-cased)
