@@ -105,6 +105,18 @@ main { flex: 1; min-height: 0; display: flex; flex-direction: column; }
 .proposal h3 { font: 650 17px/1.3 var(--display); margin: 0 0 6px; }
 .proposal p { margin: 0 0 12px; }
 .proposal .row { display: flex; gap: 8px; flex-wrap: wrap; }
+/* Scout sessions: the Subject as an editable card, its Background underneath (as on the Reflection page). */
+.subj { align-self: stretch; padding: 16px 18px; border-radius: 18px; background: var(--glass-strong); border: 1px solid var(--stroke); display: grid; gap: 8px; }
+.subj .eyebrow { font: 700 11px/1 var(--text); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.subj input, .subj textarea { font: inherit; color: var(--ink); background: transparent; border: 1px solid transparent; border-radius: 10px; padding: 4px 8px; margin: 0 -8px; width: calc(100% + 16px); box-sizing: border-box; min-height: 0; max-height: none; flex: none; resize: none; }
+.subj input:hover, .subj textarea:hover { border-color: var(--hairline); }
+.subj input:focus, .subj textarea:focus { border-color: var(--stroke); background: var(--seg); outline: none; }
+.subj input:read-only, .subj textarea:read-only { border-color: transparent; background: transparent; }
+.subj .s-title { font: 650 20px/1.3 var(--display); letter-spacing: -.01em; }
+.subj .s-stmt { font-size: 15px; line-height: 1.5; overflow: hidden; }
+.subj .s-bg { border-top: 1px solid var(--hairline); padding-top: 10px; margin-top: 2px; font-size: 14px; }
+.subj .s-bg p { margin: 6px 0 0; } .subj .s-bg a { color: inherit; }
+.subj .row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-top: 4px; }
 .bgcard { align-self: stretch; padding: 12px 15px; border-radius: 16px; background: var(--seg); font-size: 14px; }
 .bgcard summary { cursor: pointer; font-weight: 650; }
 .bgcard p { margin: 8px 0 0; } .bgcard a { color: inherit; }
@@ -219,7 +231,13 @@ textarea { flex: 1; resize: none; font: 15px/1.45 var(--text); color: var(--ink)
 ## Background on the Subject (researched; use it for accuracy, it is not anyone's opinion)
 ${cur.context.brief}` : "";
 
-  const shapePrompt = () => files.rules + background() + `
+  const currentSubject = () => scoutMode() ? `
+
+## The Subject as it stands (the user may have edited it)
+Title: ${cur.proposal.title}
+Statement: ${cur.proposal.statement}
+The user wants to adjust it. Answer their request; when you change the Subject, give the whole new proposal.` : "";
+  const shapePrompt = () => files.rules + background() + currentSubject() + `
 
 ## Your task now: shape the Subject (do not write the Reflection yet)
 You are helping the user decide exactly what this Reflection will consider. Reply with ONLY one JSON object:
@@ -357,7 +375,7 @@ Apply the instruction and follow every rule above. Change only what the instruct
     $("actions").innerHTML = cur.reflection ? "" : '<button class="danger ghost" id="del">Delete</button>';
     const del = $("del"); if (del) del.onclick = confirmDelete;
     renderLog();
-    $("box").focus();
+    if (!scoutMode()) $("box").focus(); // a scout Subject opens to read and edit, without the keyboard
   }
 
   function aiBubble(raw, i, last) {
@@ -368,7 +386,9 @@ Apply the instruction and follow every rule above. Change only what the instruct
         `<button type="button" data-q="${qi}" data-o="${esc(o)}">${esc(o)}</button>`).join("")}</div></div>`).join("");
     const pastQs = (!last && Array.isArray(m.questions) && m.questions.length) ? m.questions.map(q => `<p class="muted small">${esc(q.q)}</p>`).join("") : "";
     let prop = "";
-    if (m.proposal && m.proposal.title) {
+    if (m.proposal && m.proposal.title && scoutMode()) {
+      prop = `<p class="small muted">The Subject above is updated.</p>`;
+    } else if (m.proposal && m.proposal.title) {
       prop = `<div class="proposal"><div class="eyebrow">Proposed Subject</div><h3>${esc(m.proposal.title)}</h3><p>${esc(m.proposal.statement)}</p>` +
         (last ? `<div class="row"><button class="primary" type="button" data-act="write">Write this Reflection</button><button type="button" data-act="adjust">Adjust</button></div>` : "") + `</div>`;
     }
@@ -378,7 +398,9 @@ Apply the instruction and follow every rule above. Change only what the instruct
   function renderLog(status) {
     const turns = cur.turns || [];
     let html = "";
-    if (cur.context && cur.context.brief) {
+    const scout = scoutMode();
+    if (scout) html += subjectCard(!!status);
+    else if (cur.context && cur.context.brief) {
       const src = (cur.context.sources || []).filter(x => x && /^https?:\/\//.test(x.url));
       html += `<details class="bgcard"><summary>Background${cur.context.preparedAt ? " · prepared " + esc(String(cur.context.preparedAt).slice(0, 10)) : ""}</summary>
         ${String(cur.context.brief).split(/\n+/).filter(Boolean).map(t => `<p>${esc(t)}</p>`).join("")}
@@ -396,7 +418,7 @@ Apply the instruction and follow every rule above. Change only what the instruct
     }
     // A Subject scout session stores a seed user turn ("Subject chosen in a Subject scout session: …"): kept in the
     // data for older sessions, but never shown and never sent to Claude.
-    if (!turns.some(t => !isSeed(t))) html += `<div class="msg ai"><p>What should this Reflection consider? Give me a topic or a rough idea and we'll shape the Subject together, or write “Subject: …” if you already know it.</p></div>`;
+    if (!scout && !turns.some(t => !isSeed(t))) html += `<div class="msg ai"><p>What should this Reflection consider? Give me a topic or a rough idea and we'll shape the Subject together, or write “Subject: …” if you already know it.</p></div>`;
     turns.forEach((t, i) => {
       if (isSeed(t)) return;
       const last = i === turns.length - 1 && !status;
@@ -404,9 +426,40 @@ Apply the instruction and follow every rule above. Change only what the instruct
     });
     if (status) html += status;
     $("log").innerHTML = html;
-    $("log").scrollTop = $("log").scrollHeight;
+    if (scout) wireSubjectCard();
+    $("log").scrollTop = scout && !turns.some(t => !isSeed(t)) ? 0 : $("log").scrollHeight;
+    $("box").placeholder = scout ? "Ask Claude to change the Subject…" : "A topic, a question, or “Subject: …”";
   }
-  const isSeed = t => t && t.role === "user" && /^Subject chosen in a Subject scout session/.test(String(t.content || ""));
+  const isSeed = t => t && ((t.role === "user" && /^Subject chosen in a Subject scout session/.test(String(t.content || "")))
+    || (t.role === "assistant" && String(t.content || "").includes("Here is the Subject, with researched background above")));
+  // A Subject prepared by Subject scout opens as an editable Subject card instead of a chat exchange.
+  const scoutMode = () => !!(cur && cur.origin === "scout" && !cur.reflection && cur.proposal);
+  const linesHtml = (text, cls = "") => String(text || "").split(/\n+/).filter(Boolean).map(t => `<p${cls ? ` class="${cls}"` : ""}>${esc(t)}</p>`).join("");
+  const srcHtml = list => { const src = (list || []).filter(x => x && /^https?:\/\//.test(x.url));
+    return src.length ? `<p class="small muted">Sources: ${src.map(x => `<a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.title || x.url)}</a>`).join(" · ")}</p>` : ""; };
+  function subjectCard(locked) {
+    const p = cur.proposal || {}, c = cur.context || {}, ro = locked ? " readonly" : "";
+    return `<section class="subj" aria-label="Subject">
+      <span class="eyebrow">Subject</span>
+      <input id="s-title" class="s-title" value="${esc(p.title || "")}" aria-label="Subject title"${ro}>
+      <textarea id="s-stmt" class="s-stmt" rows="1" aria-label="Subject statement"${ro}>${esc(p.statement || "")}</textarea>
+      ${c.brief ? `<div class="s-bg"><span class="eyebrow">Background</span>${linesHtml(c.brief)}${srcHtml(c.sources)}</div>` : ""}
+      <div class="row"><button class="primary" type="button" data-act="write"${locked ? " disabled" : ""}>Write this Reflection</button></div>
+    </section>`;
+  }
+  let saveTimer = null;
+  function wireSubjectCard() {
+    const t = $("s-title"), st = $("s-stmt"); if (!t || !st) return;
+    const fit = () => { st.style.height = "auto"; st.style.height = st.scrollHeight + "px"; }; fit();
+    const btn = $("log").querySelector('.subj [data-act="write"]');
+    const onEdit = () => {
+      fit();
+      cur.proposal = { title: t.value.trim(), statement: st.value.trim() };
+      if (btn) btn.disabled = !cur.proposal.title || !cur.proposal.statement;
+      clearTimeout(saveTimer); saveTimer = setTimeout(() => save(cur).catch(() => {}), 700);
+    };
+    t.addEventListener("input", onEdit); st.addEventListener("input", onEdit);
+  }
   const thinking = label => `<div class="status"><span class="dots"><i></i><i></i><i></i></span>${esc(label)}</div>`;
   const failed = msg => `<div class="status err">${esc(msg)}</div>`;
 
@@ -463,7 +516,8 @@ Apply the instruction and follow every rule above. Change only what the instruct
   });
 
   async function writeReflection() {
-    if (!cur.proposal || busy) return;
+    if (!cur.proposal || !cur.proposal.title || !cur.proposal.statement || busy) return;
+    clearTimeout(saveTimer);
     renderLog(thinking("Writing the six Readings and The Field. This usually takes one to three minutes"));
     setBusy(true);
     ctl = new AbortController();
