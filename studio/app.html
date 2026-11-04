@@ -222,7 +222,15 @@ textarea { flex: 1; resize: none; font: 15px/1.45 var(--text); color: var(--ink)
     empty_completion: "No answer came back. Try again.",
     prompt_too_large: "This session got too long. Start a new Reflection.",
     cancelled: "Stopped.",
-  }[e && e.code] || (e && e.message && !e.code ? e.message : "Something went wrong. Try again."));
+    upstream_error: "The connection to Claude broke off before the answer was complete. Press the button again.",
+    not_declared: "This page isn't set up to use Claude. Reload the page.",
+    capability_disabled: "Claude can't be used in this view. Open the Studio on claude.ai.",
+    capability_removed: "This Claude app is too old for the Studio. Update it or use claude.ai in a browser.",
+    invalid_request: "The Studio sent Claude a malformed request (a Studio bug). Tell the maintenance chat.",
+    transform_error: "The Studio sent Claude a malformed request (a Studio bug). Tell the maintenance chat.",
+    queue_overflow: "Too many requests at once. Reload the page.",
+  }[e && e.code] || (e && e.message && !e.code ? e.message
+    : "Something went wrong" + (e && e.code ? " (" + e.code + ")" : "") + ". Try again."));
 
   /* ---------- prompts ---------- */
   // Background researched in a project session ("Subject scout"); facts for accuracy, not anyone's opinion.
@@ -399,7 +407,7 @@ Apply the instruction and follow every rule above. Change only what the instruct
     const turns = cur.turns || [];
     let html = "";
     const scout = scoutMode();
-    if (scout) html += subjectCard(!!status);
+    if (scout) html += subjectCard(!!status && !status.includes("status err")); // locked only while Claude is working
     else if (cur.context && cur.context.brief) {
       const src = (cur.context.sources || []).filter(x => x && /^https?:\/\//.test(x.url));
       html += `<details class="bgcard"><summary>Background${cur.context.preparedAt ? " · prepared " + esc(String(cur.context.preparedAt).slice(0, 10)) : ""}</summary>
