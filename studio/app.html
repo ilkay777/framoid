@@ -476,6 +476,7 @@ Apply the instruction and follow every rule above. Change only what the instruct
   $("log").addEventListener("click", e => {
     const b = e.target.closest("button"); if (!b || busy) return;
     if (b.dataset.act === "write") return writeReflection();
+    if (b.dataset.act === "write-default") return writeReflection("default");
     if (b.dataset.act === "adjust") { $("box").focus(); return; }
     if (b.dataset.q != null) {
       const q = b.dataset.q;
@@ -523,14 +524,19 @@ Apply the instruction and follow every rule above. Change only what the instruct
     } finally { setBusy(false); $("box").focus(); }
   });
 
-  async function writeReflection() {
+  // Writing streams, so the status shows progress; on failure it says how long it ran and how much came back,
+  // and offers the standard model as well as a retry (the most capable model sometimes drops long answers).
+  const elapsed = ms => { const s = Math.round(ms / 1000); return s < 60 ? s + " s" : Math.floor(s / 60) + " min " + (s % 60) + " s"; };
+  async function writeReflection(tier = "complex") {
     if (!cur.proposal || !cur.proposal.title || !cur.proposal.statement || busy) return;
     clearTimeout(saveTimer);
-    renderLog(thinking("Writing the six Readings and The Field. This usually takes one to three minutes"));
+    const t0 = Date.now(); let got = 0;
+    renderLog(`<div class="status" id="w-status"><span class="dots"><i></i><i></i><i></i></span><span id="w-label">Writing the six Readings and The Field${tier === "complex" ? "" : " with the standard model"}. Claude thinks first (often a minute or two), then writes.</span></div>`);
     setBusy(true);
     ctl = new AbortController();
+    const tick = setInterval(() => { const l = $("w-label"); if (l) l.textContent = got ? `Writing… ${got.toLocaleString()} characters (${elapsed(Date.now() - t0)})` : `Claude is thinking… (${elapsed(Date.now() - t0)})`; }, 1000);
     try {
-      let r = await sample.json(writePrompt(cur.proposal), { modelTier: "complex", cache: false, signal: ctl.signal });
+      let r = await sample.json(writePrompt(cur.proposal), { modelTier: tier, cache: false, signal: ctl.signal, onText: ({ text }) => { got = text.length; } });
       if (r && r.reflection) r = r.reflection;
       const bad = problems(r);
       if (bad.length) throw { message: "The Reflection came back incomplete (" + bad.slice(0, 4).join(", ") + "). Try again." };
@@ -542,8 +548,11 @@ Apply the instruction and follow every rule above. Change only what the instruct
       await save(cur);
       openReading();
     } catch (err) {
-      renderLog(err && err.code === "cancelled" ? "" : failed(errText(err)));
-    } finally { setBusy(false); }
+      if (err && err.code === "cancelled") { renderLog(""); return; }
+      const when = ` (after ${elapsed(Date.now() - t0)}${got ? ", " + got.toLocaleString() + " characters written" : ", before any text"})`;
+      renderLog(`<div class="status err" style="flex-direction:column;align-items:flex-start;gap:8px">${esc(errText(err) + when)}
+        <span class="row" style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" data-act="write">Try again</button>${tier === "complex" ? '<button type="button" data-act="write-default">Try the standard model</button>' : ""}</span></div>`);
+    } finally { clearInterval(tick); setBusy(false); }
   }
 
   /* ---------- reading ---------- */
