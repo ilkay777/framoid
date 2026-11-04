@@ -527,7 +527,13 @@ Apply the instruction and follow every rule above. Change only what the instruct
   // site repo in one push; the site's workflow checks and deploys it. By hand: the copy-and-commit steps.
   const GH = { server: "GitHub", tool: "push_files", owner: "ilkay777", repo: "framoid", branch: "main" };
   const slugOf = it => String(it.number).toLowerCase().replace(/[^a-z0-9-]+/g, "-").replace(/^-+|-+$/g, "");
-  const publishable = it => it && it.reflection && it.number && !problems(it.reflection).length;
+  // Same test the site applies on every push (tools/publish.py check), so older Reflections (schema 3, no
+  // Instruments) can be published too; problems() is the stricter test for newly written ones.
+  const publishable = it => {
+    const r = it && it.reflection;
+    if (!r || !it.number || !(r.subject && r.subject.title) || !(r.field && (r.field.paragraphs || []).length)) return false;
+    return GODS.every(g => Object.values(r.pairs || {}).some(p => p && p[g] && p[g].answer));
+  };
   async function pushToSite(list) {
     if (!mcp) throw { code: "not_granted" };
     const files = list.map(it => ({ path: `r/${slugOf(it)}/reflection.json`, content: JSON.stringify(withBackground(it), null, 1) + "\n" }));
