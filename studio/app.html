@@ -182,6 +182,7 @@ textarea { flex: 1; resize: none; font: 15px/1.45 var(--text); color: var(--ink)
 (() => {
   "use strict";
   const REPO_NEW = "https://github.com/ilkay777/framoid/new/main/inbox";
+  const REPO_EDIT = "https://github.com/ilkay777/framoid/edit/main/r"; // a published page's own file
   const SITE = "https://framoid.com";
   const FIRST_NUMBER = 6; // Reflections 1-5 were made before the Studio
   const GODS = ["rodim", "aromi", "mir", "ora", "idrom", "doria"];
@@ -517,15 +518,19 @@ Apply the instruction and follow every rule above. Change only what the instruct
   function publishSheet() {
     const slug = String(cur.number).toLowerCase();
     const json = JSON.stringify(cur.reflection, null, 1);
-    const link = `${REPO_NEW}?filename=reflection-${encodeURIComponent(slug)}.json`;
+    // First publish: a new file in the inbox. Publishing again: edit the page's own file, which already exists.
+    const again = cur.status === "sent";
+    const newLink = `${REPO_NEW}?filename=reflection-${encodeURIComponent(slug)}.json`;
+    const link = again ? `${REPO_EDIT}/${encodeURIComponent(slug)}/reflection.json` : newLink;
     sheet(`<h2>Publish to framoid.com</h2>
       <p class="muted small">No AI is used for this step. GitHub publishes the file for free.</p>
       <ol>
         <li><button class="primary" id="p-copy">Copy Reflection</button> <span id="p-copied" class="note"></span>
           <textarea id="p-json" readonly hidden aria-label="Reflection JSON"></textarea></li>
-        <li><a class="btn" href="${esc(link)}" target="_blank" rel="noopener">Open GitHub inbox ↗</a>
-          <div class="note">Opens a new file named reflection-${esc(slug)}.json in your site's inbox.</div></li>
-        <li>Paste into the file and press <b>Commit changes</b>.
+        <li><a class="btn" href="${esc(link)}" target="_blank" rel="noopener">${again ? "Open the published file ↗" : "Open GitHub inbox ↗"}</a>
+          <div class="note">${again ? `Opens r/${esc(slug)}/reflection.json, the file behind the live page. Not there any more? <a href="${esc(newLink)}" target="_blank" rel="noopener">Create it in the inbox</a> instead.`
+            : `Opens a new file named reflection-${esc(slug)}.json in your site's inbox.`}</div></li>
+        <li>${again ? "Select all the text in the file, paste over it" : "Paste into the file"} and press <b>Commit changes</b>.
           <div class="note">The page goes live at ${esc(SITE)}/r/${esc(slug)}/ about two minutes later.${cur.status === "sent" ? " Publishing again replaces the page." : ""}</div></li>
       </ol>
       <div class="row"><button id="p-close">Close</button><button class="primary" id="p-done">I've committed it</button></div>`);

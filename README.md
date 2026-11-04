@@ -15,6 +15,8 @@ Reflections are written in the Framoid Studio (a claude.ai artifact); this repos
 
 From the Studio: press Publish, copy the Reflection, open the GitHub link it gives (a new file in `inbox/`), paste, and commit. The workflow validates the file, moves it to `r/<number>/`, updates the gallery and deploys; the page is live a minute or two later. A file that is not a valid Reflection makes the workflow fail and stays in `inbox/` untouched.
 
+Publishing again from the Studio opens the live page's own file, `r/<slug>/reflection.json`, for editing: paste over it and commit. Every push checks every `r/*/reflection.json`; a broken edit (bad JSON, not a Reflection, or a number that doesn't match the folder) fails the workflow and nothing is deployed, so the live site stays as it was.
+
 By hand:
 
 ```

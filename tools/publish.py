@@ -4,7 +4,7 @@
 Usage:
   python3 tools/publish.py add PATH/TO/reflection.json   # add or replace one Reflection
   python3 tools/publish.py remove SLUG                   # take one Reflection off the site
-  python3 tools/publish.py rebuild                       # re-render every page from template/index.html
+  python3 tools/publish.py rebuild                       # check and re-render every page from template/index.html
   python3 tools/publish.py inbox                         # publish every inbox/*.json, then remove it (used by GitHub Actions)
 
 Each Reflection lives in r/<slug>/ as index.html (the template, with its own <title>)
@@ -120,7 +120,16 @@ def main():
             src.unlink()
             print(f"published r/{folder.name}/ from inbox/{src.name}")
     elif cmd == "rebuild":
+        # Pages can be edited in place on GitHub (Studio: Publish again), so check each one before rendering.
         for folder in sorted(p for p in R.iterdir() if (p / "reflection.json").exists()):
+            name = f"r/{folder.name}/reflection.json"
+            try:
+                data = json.loads((folder / "reflection.json").read_text(encoding="utf-8"))
+            except ValueError as e:
+                sys.exit(f"{name}: not valid JSON ({e})")
+            check(data, name)
+            if slug_of(data) != folder.name:
+                sys.exit(f"{name}: its number gives the slug '{slug_of(data)}', not '{folder.name}'")
             render(folder)
             print(f"rendered r/{folder.name}/")
     else:
