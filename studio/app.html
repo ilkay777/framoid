@@ -476,7 +476,7 @@ Apply the instruction and follow every rule above. Change only what the instruct
   $("log").addEventListener("click", e => {
     const b = e.target.closest("button"); if (!b || busy) return;
     if (b.dataset.act === "write") return writeReflection();
-    if (b.dataset.act === "write-default") return writeReflection("default");
+    if (b.dataset.act === "write-complex") return writeReflection("complex");
     if (b.dataset.act === "adjust") { $("box").focus(); return; }
     if (b.dataset.q != null) {
       const q = b.dataset.q;
@@ -527,11 +527,11 @@ Apply the instruction and follow every rule above. Change only what the instruct
   // Writing streams, so the status shows progress; on failure it says how long it ran and how much came back,
   // and offers the standard model as well as a retry (the most capable model sometimes drops long answers).
   const elapsed = ms => { const s = Math.round(ms / 1000); return s < 60 ? s + " s" : Math.floor(s / 60) + " min " + (s % 60) + " s"; };
-  async function writeReflection(tier = "complex") {
+  async function writeReflection(tier = "default") { // standard model by default; the most capable one on request
     if (!cur.proposal || !cur.proposal.title || !cur.proposal.statement || busy) return;
     clearTimeout(saveTimer);
     const t0 = Date.now(); let got = 0;
-    renderLog(`<div class="status" id="w-status"><span class="dots"><i></i><i></i><i></i></span><span id="w-label">Writing the six Readings and The Field${tier === "complex" ? "" : " with the standard model"}. Claude thinks first (often a minute or two), then writes.</span></div>`);
+    renderLog(`<div class="status" id="w-status"><span class="dots"><i></i><i></i><i></i></span><span id="w-label">Writing the six Readings and The Field${tier === "complex" ? " with the most capable model" : ""}. Claude thinks first, then writes.</span></div>`);
     setBusy(true);
     ctl = new AbortController();
     const tick = setInterval(() => { const l = $("w-label"); if (l) l.textContent = got ? `Writing… ${got.toLocaleString()} characters (${elapsed(Date.now() - t0)})` : `Claude is thinking… (${elapsed(Date.now() - t0)})`; }, 1000);
@@ -551,7 +551,7 @@ Apply the instruction and follow every rule above. Change only what the instruct
       if (err && err.code === "cancelled") { renderLog(""); return; }
       const when = ` (after ${elapsed(Date.now() - t0)}${got ? ", " + got.toLocaleString() + " characters written" : ", before any text"})`;
       renderLog(`<div class="status err" style="flex-direction:column;align-items:flex-start;gap:8px">${esc(errText(err) + when)}
-        <span class="row" style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" data-act="write">Try again</button>${tier === "complex" ? '<button type="button" data-act="write-default">Try the standard model</button>' : ""}</span></div>`);
+        <span class="row" style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" data-act="${tier === "complex" ? "write-complex" : "write"}">Try again</button>${tier === "complex" ? '<button type="button" data-act="write">Try the standard model</button>' : '<button type="button" data-act="write-complex">Try the most capable model</button>'}</span></div>`);
     } finally { clearInterval(tick); setBusy(false); }
   }
 
@@ -587,7 +587,7 @@ Apply the instruction and follow every rule above. Change only what the instruct
       $("rev-status").innerHTML = thinking("Revising. This can take a minute or two");
       ctl = new AbortController();
       try {
-        let r = await sample.json(revisePrompt(cur.reflection, ins), { modelTier: "complex", cache: false, signal: ctl.signal });
+        let r = await sample.json(revisePrompt(cur.reflection, ins), { modelTier: "default", cache: false, signal: ctl.signal });
         if (r && r.reflection) r = r.reflection;
         const bad = problems(r);
         if (bad.length) throw { message: "The revision came back incomplete (" + bad.slice(0, 4).join(", ") + "). Try again." };
