@@ -1,6 +1,21 @@
 {
  "reflections": [
   {
+   "slug": "7",
+   "number": "7",
+   "date": "2026-11-03",
+   "title": "A country makes the four-day work week law",
+   "statement": "Parliament passes a law that cuts the standard work week from five days to four, with no cut in pay. Employers get two years to adjust, and overtime will start after 32 hours. Hospitals, shops and factories that must stay open will need new shift patterns.",
+   "stances": {
+    "rodim": "embraces",
+    "aromi": "opposes",
+    "mir": "opposes",
+    "ora": "embraces",
+    "idrom": "embraces",
+    "doria": "embraces"
+   }
+  },
+  {
    "slug": "sample",
    "number": "Sample",
    "date": "2026-10-27",
