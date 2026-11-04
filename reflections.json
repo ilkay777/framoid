@@ -16,6 +16,81 @@
    }
   },
   {
+   "slug": "6",
+   "number": "6",
+   "date": "2026-11-03",
+   "title": "A child takes a toy back from a friend's hand",
+   "statement": "One child pulls a toy out of a friend's hand and will not let the friend play with it. The Subject is this single moment: the grabbing, the refusal to share, and what it means for the two children and the toy between them. It is not a judgment of the child, only the act and what it sets in motion.",
+   "stances": {
+    "rodim": "embraces",
+    "aromi": "opposes",
+    "mir": "embraces",
+    "ora": "embraces",
+    "idrom": "opposes",
+    "doria": "opposes"
+   }
+  },
+  {
+   "slug": "5",
+   "number": "5",
+   "date": "2026-11-02",
+   "title": "A lion hunts a deer: the chase, the kill, the meal",
+   "statement": "A lion crouches in tall grass, picks out one deer and breaks cover. The deer runs, twisting and turning, and the lion closes in. He brings her down, kills her and eats.",
+   "stances": {
+    "rodim": "embraces",
+    "aromi": "opposes",
+    "mir": "embraces",
+    "ora": "opposes",
+    "idrom": "embraces",
+    "doria": "opposes"
+   }
+  },
+  {
+   "slug": "3",
+   "number": "3",
+   "date": "2026-11-01",
+   "title": "A country takes in a large, sudden wave of refugees",
+   "statement": "A war next door sends hundreds of thousands of people across the border within a few months. The host country must decide how to receive them, and its economy, identity, institutions and everyday trust between people are all touched at once.",
+   "stances": {
+    "rodim": "embraces",
+    "aromi": "embraces",
+    "mir": "opposes",
+    "ora": "embraces",
+    "idrom": "opposes",
+    "doria": "embraces"
+   }
+  },
+  {
+   "slug": "2",
+   "number": "2",
+   "date": "2026-11-01",
+   "title": "How can Western civilization safeguard itself against rising rival powers?",
+   "statement": "Western civilization grew into a place where freedom, prosperity and human rights are protected. Rival powers with other values are now strong enough to challenge the world order it built. The question is how, if at all, it should act to preserve what it is.",
+   "stances": {
+    "rodim": "embraces",
+    "aromi": "opposes",
+    "mir": "embraces",
+    "ora": "embraces",
+    "idrom": "embraces",
+    "doria": "opposes"
+   }
+  },
+  {
+   "slug": "1",
+   "number": "1",
+   "date": "2026-11-01",
+   "title": "Humanity under one government instead of many nations",
+   "statement": "Today humanity is divided into about two hundred countries, each with its own borders, laws and armies. The idea is that people could one day be governed by a single entity, and countries as we know them would end. This Reflection considers that idea as a whole, not any one route to it.",
+   "stances": {
+    "rodim": "embraces",
+    "aromi": "opposes",
+    "mir": "embraces",
+    "ora": "opposes",
+    "idrom": "embraces",
+    "doria": "opposes"
+   }
+  },
+  {
    "slug": "sample",
    "number": "Sample",
    "date": "2026-10-27",
