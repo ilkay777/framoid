@@ -1,0 +1,109 @@
+{
+ "date": "2026-11-03",
+ "field": {
+  "held": [
+   {
+    "pairs": "Rodim · Aromi",
+    "text": "Is the toy decided by the grab, or by where the play moves next?"
+   },
+   {
+    "pairs": "Mir · Ora",
+    "text": "Does the child hold a thing, or a feeling that needed a thing to hold?"
+   },
+   {
+    "pairs": "Idrom · Doria",
+    "text": "Will a rule about turns come before the friendship's rhythm, or grow out of it?"
+   }
+  ],
+  "paragraphs": [
+   "Three forces take the grab as it is. Rodim wants the clear act, Mir the hard fact of one toy, Ora the birth of mine. Three resist. Aromi resists the closed hand, Idrom the missing rule, Doria the broken rhythm. Each is simply being itself.",
+   "The moment holds all six at once. It is a choice and a wall, a grip and a feeling, a gap in order and a gap in friendship.",
+   "Mine and ours stop being opposites when the toy goes back and forth often enough that taking and giving become one game. That is where each force turns into its partner."
+  ]
+ },
+ "number": "6",
+ "pairs": {
+  "decision_adaptation": {
+   "aromi": {
+    "answer": "I don't like this grab. A moment ago the toy was moving. It passed from hand to hand, and the game was changing as it went. Now it is stuck in one fist. A closed hand is a wall, and I am against walls. Play is supposed to flow. Held this tight, the toy stops being part of the game. The friend will drift to something else, and the play will move on without it.",
+    "imprint": "A toy that stopped moving. Play that flows somewhere else.",
+    "impulse": "Pushes against the closed fist and looks for the next game.",
+    "instruments": [
+     "Trade"
+    ],
+    "stance": "opposes"
+   },
+   "passage": {
+    "aromi": "If Aromi's flow keeps carrying the toy back to the same child, that path becomes a choice. That is Rodim.",
+    "rodim": "If Rodim's grab has to be made again every minute to keep the toy, holding on becomes constant watching and adjusting. That is Aromi."
+   },
+   "rodim": {
+    "answer": "Good. A clear act. The child wanted the toy and took it. No asking. No waiting. No maybe. Something had to yield, and the friend's grip yielded. That is how movement starts. One hand closes, the other opens. The line is drawn: mine, not yours. I like a line that small and that sharp. The child knows exactly what it wants.",
+    "imprint": "A firm line between two hands. Mine, not yours.",
+    "impulse": "Turns wanting into one fast pull.",
+    "instruments": [
+     "Force",
+     "Verdicts"
+    ],
+    "stance": "embraces"
+   }
+  },
+  "mind_matter": {
+   "mir": {
+    "answer": "This is real. One toy. Two hands. Only one can hold it. That isn't an idea, that's a fact about bodies and things. The stronger pull wins the object. The toy is small territory, and the child just claimed it with its own arm. Sharing is a nice word, but the plastic is still in one hand. Limits like this are where children first learn what is possible.",
+    "imprint": "One child holding, one child empty-handed. The limit is felt in the body.",
+    "impulse": "Moves the toy from one grip to another by pulling.",
+    "instruments": [
+     "Bodies",
+     "Territory"
+    ],
+    "stance": "embraces"
+   },
+   "ora": {
+    "answer": "I see something being born here. The word mine is taking shape inside a small person. The toy is not just plastic. It carries a story, a feeling, maybe a game only this child was playing in its head. And the friend has an inner world too, now holding surprise or hurt. This moment will be remembered and retold. It is one of the first lessons in what self and other mean.",
+    "imprint": "A first story of self and other, kept by both children.",
+    "impulse": "Fills the toy with feeling: mine, special, part of me.",
+    "instruments": [
+     "Stories",
+     "Education"
+    ],
+    "stance": "embraces"
+   },
+   "passage": {
+    "mir": "Let Mir's toy stay in one hand long enough and it gathers memories and meaning. That is Ora.",
+    "ora": "Push Ora's feeling of mine far enough and it needs a hand, a grip, a toy to hold. That is Mir."
+   }
+  },
+  "structure_harmony": {
+   "doria": {
+    "answer": "This hurts the play between them. A moment ago there were two voices in one game. Now one voice holds everything and the other is pushed out. That is not balance. Friendship lives on give and take, on a shared rhythm of turns. The grab breaks that rhythm. The toy can be held, but the togetherness slips away. I want the friend's hand back in the game.",
+    "imprint": "A small break in a friendship, waiting to be mended.",
+    "impulse": "Reaches toward the friend who was left out.",
+    "instruments": [
+     "Communities",
+     "Solidarity"
+    ],
+    "stance": "opposes"
+   },
+   "idrom": {
+    "answer": "I reject this grab. It follows no rule. Who owns the toy? Whose turn was it? Nothing was settled. The child acted on impulse, and impulse is not order. A taking without a rule is an exception, and exceptions spread. Next time anyone may grab anything. An architecture lives only when its rules are known before the hands move. Here there was no rule at all.",
+    "imprint": "A gap where a rule should be. A call for clear turns and owners.",
+    "impulse": "Demands a rule: whose toy, whose turn, for how long.",
+    "instruments": [
+     "Law",
+     "Contracts"
+    ],
+    "stance": "opposes"
+   },
+   "passage": {
+    "doria": "If Doria's give and take repeats long enough, it settles into a habit, then a rule about turns. That is Idrom.",
+    "idrom": "If Idrom's rule about turns is used and adjusted every day by the children themselves, it starts to live like Doria's rhythm."
+   }
+  }
+ },
+ "schema": 4,
+ "subject": {
+  "statement": "One child pulls a toy out of a friend's hand and will not let the friend play with it. The Subject is this single moment: the grabbing, the refusal to share, and what it means for the two children and the toy between them. It is not a judgment of the child, only the act and what it sets in motion.",
+  "title": "A child takes a toy back from a friend's hand"
+ }
+}

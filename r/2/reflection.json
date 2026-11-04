@@ -1,0 +1,86 @@
+{
+ "date": "2026-11-01",
+ "field": {
+  "held": [
+   {
+    "pairs": "Rodim · Aromi",
+    "text": "Does the West last by choosing its side, or by never being pinned down?"
+   },
+   {
+    "pairs": "Mir · Ora",
+    "text": "Is the West what it makes, or what it believes?"
+   },
+   {
+    "pairs": "Idrom · Doria",
+    "text": "Can firm rules protect many voices without asking them to line up?"
+   }
+  ],
+  "paragraphs": [
+   "Four forces want the West safeguarded. Rodim wants a line, Mir wants the means, Ora wants the story, Idrom wants the law. Two do not. Aromi resists the walls, and Doria resists the split. Each answers the question by being itself.",
+   "Their strategies pull against each other: a hard line and open doors, factories and ideas, enforced rules and many voices. Each is a way to last. Each is also a way to stop being what is being kept.",
+   "Guarding and changing stop being opposites at one point: when what is guarded is the ability to keep changing. There the line, the factory, the story and the law begin to turn into their partners."
+  ]
+ },
+ "number": "2",
+ "pairs": {
+  "decision_adaptation": {
+   "aromi": {
+    "answer": "I don't want this guarding. To preserve what it is means to stop it. But the West was never one fixed thing. It borrowed numbers, paper, faiths and coffee from others, and it kept changing. That is why it lasted. Walls against rivals turn a river into a pond. Keep the doors open. Trade, travel, mix. Let rivals change you, and change them back. What flows cannot be conquered.",
+    "imprint": "A civilization that keeps changing shape and is never quite the same twice.",
+    "impulse": "Seeps through every wall and keeps the currents moving.",
+    "stance": "opposes"
+   },
+   "passage": {
+    "aromi": "If Aromi keeps flowing toward the same partners, her currents harden into a side. That is Rodim.",
+    "rodim": "If Rodim has to redraw his line every time a rival moves, his decision becomes constant response. That is Aromi."
+   },
+   "rodim": {
+    "answer": "Yes. Guard it. But guarding is not talking. Draw the line. Say what is yours and what is not. Choose your side and make the rivals choose theirs. Arm first. Cut the ties that make you weak. Some trade dies. Some comfort ends. Fine. A civilization that will not decide gets decided for. Hesitation is the real enemy. Move now, while you still can.",
+    "imprint": "A divided map of blocs, borders and a clear front.",
+    "impulse": "Draws a hard line and forces every side to choose.",
+    "stance": "embraces"
+   }
+  },
+  "mind_matter": {
+   "mir": {
+    "answer": "Good. Now talk about things you can count. Steel, ships, shells, chips, power plants, rare minerals, workers. The rivals make these. The West sent much of its making away and kept the brands. Values don't stop a missile. Factories do. Bring the making home. Secure the mines, the ports, the grid. Raise children, or there is no one left to defend anything. Power has weight, and weight is material.",
+    "imprint": "Heavy industry rebuilt, and a society shaped around making and defending.",
+    "impulse": "Turns the contest into factories, mines and stockpiles.",
+    "stance": "embraces"
+   },
+   "ora": {
+    "answer": "Yes, because what is at stake is an idea. The West is a story: each person matters, the mind is free, truth can be argued for. Rivals cannot take that by force. It is lost only when people stop believing it. So tell the story again. Teach it, argue it, live it, make art from it. An idea that is alive crosses every border. One that is only defended dies inside its walls.",
+    "imprint": "A renewed story that people inside and outside choose to join.",
+    "impulse": "Calls the civilization back to the meaning it stands for.",
+    "stance": "embraces"
+   },
+   "passage": {
+    "mir": "Mir's factories and ships matter only if people know what they are for. Pushed far enough, matter asks for meaning. That is Ora.",
+    "ora": "Ora's story, to last, needs schools, books, cities and armies. That is Mir."
+   }
+  },
+  "structure_harmony": {
+   "doria": {
+    "answer": "I don't like this. To safeguard against rivals is to split the world in two, and a world cut in half cannot breathe together. Inside, it asks everyone to march to one beat, and quiet voices get pushed aside as disloyal. A whole lives when its many parts keep sounding. The West is one voice in a larger song. Its strength is its many voices, kept, not lined up.",
+    "imprint": "Ties kept across the divide, and dissent kept alive inside.",
+    "impulse": "Pulls back from the split and keeps the many voices sounding.",
+    "stance": "opposes"
+   },
+   "idrom": {
+    "answer": "Yes. The world order is a set of rules, and rules that are not enforced are not rules. Define who is a member. Write the duties down. Treaty, court, sanction, alliance: each with a clear role. A breach must carry a fixed cost, every time, without exception. The West held firm where its laws were firm. It weakens wherever it makes exceptions. Guard the law, and the law guards you.",
+    "imprint": "Durable institutions, and a firm line between members and outsiders.",
+    "impulse": "Writes membership, duties and penalties into binding form.",
+    "stance": "embraces"
+   },
+   "passage": {
+    "doria": "If Doria's many voices keep finding the same shared rhythm, it becomes custom, then law. That is Idrom.",
+    "idrom": "If Idrom's rules are rewritten together by all who live under them, they begin to breathe like Doria's balance."
+   }
+  }
+ },
+ "schema": 3,
+ "subject": {
+  "statement": "Western civilization grew into a place where freedom, prosperity and human rights are protected. Rival powers with other values are now strong enough to challenge the world order it built. The question is how, if at all, it should act to preserve what it is.",
+  "title": "How can Western civilization safeguard itself against rising rival powers?"
+ }
+}

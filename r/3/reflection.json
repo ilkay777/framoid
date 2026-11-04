@@ -1,0 +1,86 @@
+{
+ "date": "2026-11-01",
+ "field": {
+  "held": [
+   {
+    "pairs": "Rodim · Aromi",
+    "text": "Is the welcome what the government decided, or what people's movements made of it?"
+   },
+   {
+    "pairs": "Mir · Ora",
+    "text": "Will the country's limits or its story decide how many can belong?"
+   },
+   {
+    "pairs": "Idrom · Doria",
+    "text": "How long can emergency rules last before they become the country's new order, or its new harmony?"
+   }
+  ],
+  "paragraphs": [
+   "Four forces welcome the arrival. Rodim wants the answer made now, Aromi wants the movement, Ora the new story, Doria the new voices. Two resist. Mir counts beds and finds too few. Idrom sees categories blur and rules bend. Each is simply being itself.",
+   "The country will carry all six at once. The arrival is a decision and a flood, a strain on bodies and a gift of stories, a breach in procedure and a chance for new belonging.",
+   "Host and newcomer stop being opposites when the newcomers' children take the country's story as their own, and the country's rules are rewritten to include them. That is where each force turns into its partner."
+  ]
+ },
+ "number": "3",
+ "pairs": {
+  "decision_adaptation": {
+   "aromi": {
+    "answer": "People are moving, and I move with them. Borders were never as solid as they look on paper. Water finds the low ground, and people find the open door. Let them come and spread out into towns, kitchens, markets and schools. They will change the country, and the country will change them. Nothing stays where it was put. That is how a living place keeps flowing.",
+    "imprint": "New channels everywhere: mixed streets, new trades, changed habits.",
+    "impulse": "Pours new people through every opening the country has.",
+    "stance": "embraces"
+   },
+   "passage": {
+    "aromi": "If Aromi keeps flowing toward the same towns and the same trades, the path hardens into a choice. That is Rodim.",
+    "rodim": "If Rodim has to choose again at every border post, every hour, his decisions merge into one long response. That is Aromi."
+   },
+   "rodim": {
+    "answer": "Good. No more waiting. The war made the question urgent, and the country has to answer now. I say take them in, and do it fast. Buses. Camps. Papers by Friday. Hesitation costs more than any mistake. Some at home will be angry. Let them be. A country that moves when it must is a country that is alive.",
+    "imprint": "A line in the nation's story: before the arrival, and after.",
+    "impulse": "Forces a yes or no on a country that was waiting.",
+    "stance": "embraces"
+   }
+  },
+  "mind_matter": {
+   "mir": {
+    "answer": "No. Count first. Hundreds of thousands of people need beds tonight, water tomorrow, doctors this week. Houses don't appear because a government is kind. Schools have a number of seats. Hospitals have a number of beds. Push past that number and things break: waiting lists, rents, tempers. A country is a body. It can take in a lot, but not all at once. Too much, too fast, and the body goes into shock.",
+    "imprint": "Full rooms and long queues, then, slowly, new houses and new hands at work.",
+    "impulse": "Turns arrivals into numbers: beds, litres, classroom seats.",
+    "stance": "opposes"
+   },
+   "ora": {
+    "answer": "I see a country being asked who it is. Each person crossing carries a language, a lost home, songs, recipes, grief. That is not a cost. It is a world arriving. The host country has to tell a new story about itself: are we the ones who opened the door? Children will grow up between two memories. Identity is not erased by this. It is deepened.",
+    "imprint": "Stories of loss and welcome, and children who think in two languages.",
+    "impulse": "Fills the country's question \"who are we?\" with new voices.",
+    "stance": "embraces"
+   },
+   "passage": {
+    "mir": "Fill Mir's houses and classrooms long enough, and the people inside start to remember, dream and tell. That is Ora.",
+    "ora": "Carry Ora's new story far enough and it has to be built: classrooms, shops, places of worship. That is Mir."
+   }
+  },
+  "structure_harmony": {
+   "doria": {
+    "answer": "I welcome them. A whole grows richer when more voices join it. The danger is not the newcomers. It is anything that tells them to vanish into sameness, or tells the hosts their ways no longer count. Let neighbours learn each other's names. Let the bakery sell two kinds of bread. Belonging grows slowly, from small shared rhythms. Nobody has to be silenced for this country to hold together.",
+    "imprint": "Slow new belonging: shared streets, shared holidays, mixed families.",
+    "impulse": "Seeks a place in the whole for every new voice.",
+    "stance": "embraces"
+   },
+   "idrom": {
+    "answer": "I object. A sudden arrival of this size breaks every procedure. Who is a refugee, who is a migrant, who stays, who returns: the categories blur within days. Officials improvise. Exceptions multiply. Temporary status becomes permanent by neglect. An order built over decades bends under emergency rules. A state must set its categories first and admit by them. Anything else teaches the law that it can be ignored.",
+    "imprint": "Emergency laws that linger, and categories redrawn after the fact.",
+    "impulse": "Strains every rule, form and office at once.",
+    "stance": "opposes"
+   },
+   "passage": {
+    "doria": "If Doria's shared rhythms last a generation, they settle into customs, then laws. That is Idrom.",
+    "idrom": "If Idrom's procedures are rewritten again and again to fit the people they serve, the rules begin to breathe. That is Doria."
+   }
+  }
+ },
+ "schema": 3,
+ "subject": {
+  "statement": "A war next door sends hundreds of thousands of people across the border within a few months. The host country must decide how to receive them, and its economy, identity, institutions and everyday trust between people are all touched at once.",
+  "title": "A country takes in a large, sudden wave of refugees"
+ }
+}

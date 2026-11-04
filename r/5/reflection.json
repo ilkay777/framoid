@@ -1,0 +1,86 @@
+{
+ "date": "2026-11-02",
+ "field": {
+  "held": [
+   {
+    "pairs": "Rodim · Aromi",
+    "text": "Was the kill decided at the lunge, or found in the turns of the chase?"
+   },
+   {
+    "pairs": "Mir · Ora",
+    "text": "When the deer is eaten, what ends: a body, or a world?"
+   },
+   {
+    "pairs": "Idrom · Doria",
+    "text": "Is hunter and hunted a law, or a rhythm two lives keep together?"
+   }
+  ],
+  "paragraphs": [
+   "Three forces welcome the hunt. Rodim wants the single choice, Mir the bodies and the meat, Idrom the fixed roles. Three refuse it. Aromi refuses the stop, Ora refuses the reduction to food, Doria refuses the silenced voice. Each is simply being itself.",
+   "The scene holds all six in a few seconds. The lunge is a decision and a run. The kill is meat and the end of a mind. The meal is a law kept and a voice lost.",
+   "The lines blur at the moment of contact. The chase Aromi loves is made of the lion's choices, stride by stride. The minds Ora defends live only in running bodies. The law Idrom names is a rhythm repeated until it hardens. In the hunt, each force is already turning into its partner."
+  ]
+ },
+ "number": "5",
+ "pairs": {
+  "decision_adaptation": {
+   "aromi": {
+    "answer": "I live in the chase, not the catch. The deer swerves, the lion bends, the ground opens a new way at every step. That is my moment. Then the jaws close and everything stops. A living thing that could turn in any direction becomes still. Every path is cut off for good. I don't want endings like that. Let the deer slip through. Let the run go on.",
+    "imprint": "Tracks in the grass that lead nowhere now.",
+    "impulse": "Runs through every turn of the chase, swerving with it.",
+    "stance": "opposes"
+   },
+   "passage": {
+    "aromi": "If Aromi follows the deer's every turn closely enough, each turn becomes a choice of where to go. That is Rodim.",
+    "rodim": "If Rodim chooses again at every stride of the chase, his choosing becomes pure following. That is Aromi."
+   },
+   "rodim": {
+    "answer": "Yes. This is what I am. The lion picks one deer. Not two. One. He waits, then he goes. No second thoughts. The deer runs, and running is not enough. The teeth close. It ends. The grass, the hiding, the patience: all of it yields to one burst. A choice that cannot be taken back. Then he eats.",
+    "imprint": "A body brought down. One choice that can never be undone.",
+    "impulse": "Fixes one target and ends the waiting in a single burst.",
+    "stance": "embraces"
+   }
+  },
+  "mind_matter": {
+   "mir": {
+    "answer": "This is the body at its plainest. Muscle against muscle. Speed, breath, weight. The lion needs meat or he starves. The deer is meat. Teeth through hide, blood on the grass, bones left in the sun. Nothing here is a story. Food moves from one body into another. The hunger is real. The kill is real. The full belly is real.",
+    "imprint": "A fed lion, a carcass, bones drying in the grass.",
+    "impulse": "Puts muscle, breath and teeth against each other.",
+    "stance": "embraces"
+   },
+   "ora": {
+    "answer": "I don't accept what this scene makes of the deer. A moment ago she saw, heard and feared. She had a whole world inside her. Now she is called food, as if that were all she ever was. The lion is more than a stomach too: he watches, waits and chooses. Calling them meat and muscle misses what happened. Two minds met in that chase.",
+    "imprint": "The sense that something with a world inside it has ended.",
+    "impulse": "Finds two minds in the chase: one afraid, one intent.",
+    "stance": "opposes"
+   },
+   "passage": {
+    "mir": "Feed Mir's body long enough and it learns where deer hide and when to wait. Learning is Ora.",
+    "ora": "Follow Ora's minds far enough and they rest on legs, lungs and a beating heart. That is Mir."
+   }
+  },
+  "structure_harmony": {
+   "doria": {
+    "answer": "I can't welcome this. Before the chase there were two lives, each with its own pulse. Now one voice is silenced and the other swallows it. That is not harmony. It is one part erasing another. I want the lion and the deer both kept, both heard, both alive in the same grass. A whole where one part must vanish so the other can go on is not whole.",
+    "imprint": "One rhythm gone. A silence where the deer's pulse was.",
+    "impulse": "Holds on to both heartbeats as the chase begins.",
+    "stance": "opposes"
+   },
+   "idrom": {
+    "answer": "This is order. The lion is the hunter. The deer is the prey. Each holds its role and does not leave it. No bargaining. No exceptions. The strong one eats; the caught one is eaten. This law was in place before either of them was born, and it will hold after both are gone. Every hunt confirms it. I ask nothing more of a scene than that it obeys.",
+    "imprint": "A rule confirmed once more, exactly as before.",
+    "impulse": "Assigns the roles: hunter and hunted, eater and eaten.",
+    "stance": "embraces"
+   },
+   "passage": {
+    "doria": "If Doria's two rhythms meet often enough, chase and escape fall into a pattern, and the pattern hardens into a rule. That is Idrom.",
+    "idrom": "If Idrom's rule shifted with every chase, fitting itself to each lion and each deer, it would stop being law and start to breathe. That is Doria."
+   }
+  }
+ },
+ "schema": 3,
+ "subject": {
+  "statement": "A lion crouches in tall grass, picks out one deer and breaks cover. The deer runs, twisting and turning, and the lion closes in. He brings her down, kills her and eats.",
+  "title": "A lion hunts a deer: the chase, the kill, the meal"
+ }
+}

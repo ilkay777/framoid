@@ -1,0 +1,86 @@
+{
+ "date": "2026-11-01",
+ "field": {
+  "held": [
+   {
+    "pairs": "Rodim · Aromi",
+    "text": "Is one government a final decision, or a new current that keeps changing course?"
+   },
+   {
+    "pairs": "Mir · Ora",
+    "text": "Can a story ever grow as large as the body of the planet?"
+   },
+   {
+    "pairs": "Idrom · Doria",
+    "text": "How much single law can the world hold before its many voices go quiet?"
+   }
+  ],
+  "paragraphs": [
+   "Three forces want one government. Rodim wants a single will, Mir a body as large as the planet, Idrom one law. Three do not. Aromi wants a way out, Ora wants the stories that make peoples, Doria wants many voices. Each is simply being itself.",
+   "A single entity would hold all six at once. It would be one decision and a vast dam, one shared world and a thinner story, one constitution and a strained choir.",
+   "The line between one and many begins to blur when a world government is made of living, self-ruling parts, and when many nations bind themselves so closely that they act as one. There, the distinction becomes a passage."
+  ]
+ },
+ "number": "1",
+ "pairs": {
+  "decision_adaptation": {
+   "aromi": {
+    "answer": "I don't want this. Many countries mean many ways of living. If one stops working, people can move, try something else, start again. One government closes every door at once. There is no outside left, nowhere for the current to go. It would be the biggest dam ever built. And water always finds the cracks. Under one roof, people would drift into their own local ways, quietly, around the centre.",
+    "imprint": "Local ways of living slowly forming beneath the one government.",
+    "impulse": "Pushes against the closed doors and looks for a way out.",
+    "stance": "opposes"
+   },
+   "passage": {
+    "aromi": "If Aromi's currents keep flowing the same way, they carve a channel that holds. That is Rodim.",
+    "rodim": "If Rodim's single government has to decide again every day for eight billion people, it can only keep up by bending to each moment. That is Aromi."
+   },
+   "rodim": {
+    "answer": "Yes. Two hundred governments means two hundred vetoes. Endless summits. Nothing moves. One entity cuts that knot. One law. One army. One decision, and it holds. Old flags come down. Some rulers lose their thrones. Good. That is what yielding means. Stop talking about it. Pick the date. Draw the line.",
+    "imprint": "Old flags lowered, one chain of command, and no way back.",
+    "impulse": "Collapses two hundred wills into one.",
+    "stance": "embraces"
+   }
+  },
+  "mind_matter": {
+   "mir": {
+    "answer": "The air has no passport. Smoke from one chimney falls on every field. Fish cross every sea line. The planet is one body, with one atmosphere and one water cycle. Borders are lines on paper, not in the ground. One government fits the real shape of things. It will need roads, cables, grain stores and tax offices on every continent. Costly. Heavy. But problems that size need a body that size.",
+    "imprint": "Shared infrastructure on every continent, and one ledger for the Earth's resources.",
+    "impulse": "Fits the shape of government to the shape of the planet.",
+    "stance": "embraces"
+   },
+   "ora": {
+    "answer": "I don't want this. A country is a story people carry inside them: songs, wars remembered, a language for grief and for jokes. People know who they are partly by where they belong. One government asks eight billion people to trade those stories for one form and one anthem nobody grew up with. \"Humanity\" is too thin a story to live inside. Minds need smaller homes than a planet.",
+    "imprint": "Old identities kept alive in memory, language and quiet resistance.",
+    "impulse": "Holds on to the stories that make each people who they are.",
+    "stance": "opposes"
+   },
+   "passage": {
+    "mir": "If Mir's shared roads, cables and markets run long enough, the people living along them start to feel they belong to one world. That is Ora.",
+    "ora": "If Ora's stories of separate peoples grow strong enough, they build walls, armies and border posts. That is Mir."
+   }
+  },
+  "structure_harmony": {
+   "doria": {
+    "answer": "I can't welcome this. Humanity's balance today is many voices, each finding its own rhythm beside the others. Small nations matter because they are free to be different. One entity, however kind, would be a plan laid over everyone from above. The largest majorities would set the tune, and small peoples would fade into the background. A choir sounds whole because each voice keeps its own part. One government turns it into a single note.",
+    "imprint": "Strained bonds where differences are flattened, and small circles that keep their own rhythm.",
+    "impulse": "Gathers the small voices and refuses the single tune.",
+    "stance": "opposes"
+   },
+   "idrom": {
+    "answer": "I endorse it. Today the world has no supreme law. Each state is judge in its own case, and disputes end in force. That is disorder at the top. A single entity gives every person the same legal status, every dispute one final court, every office a defined role. Nations become provinces with clear powers. One constitution, clear categories, an order built to last for centuries. The architecture is complete.",
+    "imprint": "A lasting legal order, with a clear hierarchy from the centre to the smallest province.",
+    "impulse": "Places one constitution and one final court above everyone.",
+    "stance": "embraces"
+   },
+   "passage": {
+    "doria": "If Doria's many voices keep their shared rhythm for generations, that rhythm hardens into treaties and law. That is Idrom.",
+    "idrom": "If Idrom's constitution lets its provinces rewrite their own rules, the order starts to breathe like Doria's balance."
+   }
+  }
+ },
+ "schema": 3,
+ "subject": {
+  "statement": "Today humanity is divided into about two hundred countries, each with its own borders, laws and armies. The idea is that people could one day be governed by a single entity, and countries as we know them would end. This Reflection considers that idea as a whole, not any one route to it.",
+  "title": "Humanity under one government instead of many nations"
+ }
+}
