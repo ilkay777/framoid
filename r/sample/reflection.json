@@ -1,10 +1,15 @@
 {
-  "schema": 4,
+  "schema": 5,
   "number": "Sample",
   "date": "2026-10-27",
   "subject": {
     "title": "A town replaces its weekly street market with a permanent covered hall",
-    "statement": "For forty years the market filled the high street every Saturday and was packed away by evening. The council has voted to build a covered hall with fixed stalls, open six days a week. The street will be returned to traffic."
+    "statement": "For forty years the market filled the high street every Saturday and was packed away by evening. The council has voted to build a covered hall with fixed stalls, open six days a week. The street will be returned to traffic.",
+    "background": {
+      "brief": "The market has filled the high street every Saturday for forty years.\nOn a typical Saturday about sixty stalls trade, and all of them pack away by evening.\nThe council voted to build a covered hall with fixed stalls, open six days a week.\nStalls in the hall will be let on licences with a monthly rent.\nOnce the hall opens, the high street returns to traffic on Saturdays.",
+      "sources": [],
+      "preparedAt": "2026-10-27"
+    }
   },
   "pairs": {
     "decision_adaptation": {

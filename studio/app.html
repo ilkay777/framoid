@@ -250,7 +250,19 @@ The user's instruction: ${instruction}
 
 Apply the instruction and follow every rule above. Change only what the instruction asks for; keep everything else word for word. Reply with ONLY the whole revised Reflection as one JSON object in the same shape.`;
 
-  const stripMeta = r => { const { number, date, schema, ...rest } = r || {}; return rest; };
+  // The background is the Studio's to attach, not Claude's to write: strip it before sending a Reflection to Claude.
+  const stripMeta = r => { const { number, date, schema, ...rest } = r || {};
+    if (rest.subject && rest.subject.background) { const { background, ...s } = rest.subject; rest.subject = s; } return rest; };
+  // Scout background (session context) as stored in a Reflection: subject.background (schema 5).
+  const bgOf = it => (it && it.context && it.context.brief) ? { brief: String(it.context.brief),
+    sources: (it.context.sources || []).filter(x => x && /^https?:\/\//.test(x.url)).map(x => ({ title: String(x.title || x.url), url: String(x.url) })),
+    preparedAt: String(it.context.preparedAt || "").slice(0, 10) } : null;
+  // Older Reflections from scout sessions lack the field: add it, so the view and the published page show it.
+  function withBackground(it) {
+    const r = it.reflection, bg = bgOf(it);
+    if (!r || !r.subject || !bg || r.subject.background) return r;
+    return { ...r, schema: Math.max(5, r.schema || 0), subject: { ...r.subject, background: bg } };
+  }
 
   /* ---------- validation ---------- */
   function problems(r) {
@@ -439,8 +451,9 @@ Apply the instruction and follow every rule above. Change only what the instruct
       const bad = problems(r);
       if (bad.length) throw { message: "The Reflection came back incomplete (" + bad.slice(0, 4).join(", ") + "). Try again." };
       r.subject = { title: cur.proposal.title, statement: cur.proposal.statement };
+      const bg = bgOf(cur); if (bg) r.subject.background = bg;
       cur.number = cur.number || nextNumber();
-      cur.reflection = { schema: 4, number: cur.number, date: new Date().toISOString().slice(0, 10), ...normalise(r) };
+      cur.reflection = { schema: 5, number: cur.number, date: new Date().toISOString().slice(0, 10), ...normalise(r) };
       cur.status = "written";
       await save(cur);
       openReading();
@@ -451,6 +464,7 @@ Apply the instruction and follow every rule above. Change only what the instruct
 
   /* ---------- reading ---------- */
   function openReading() {
+    cur.reflection = withBackground(cur);
     show("read");
     $("heading").textContent = ""; // the Reflection shows its own title
     $("actions").innerHTML = `<button id="a-revise">Revise</button><button class="primary" id="a-pub">${cur.status === "sent" ? "Publish again" : "Publish"}</button><button class="ghost" id="a-chat">Chat</button><button class="danger ghost" id="a-del">Delete</button>`;
@@ -485,6 +499,8 @@ Apply the instruction and follow every rule above. Change only what the instruct
         const bad = problems(r);
         if (bad.length) throw { message: "The revision came back incomplete (" + bad.slice(0, 4).join(", ") + "). Try again." };
         const { schema, number, date } = cur.reflection;
+        const keepBg = cur.reflection.subject && cur.reflection.subject.background;
+        if (keepBg && r.subject) r.subject.background = keepBg;
         cur.reflection = { schema, number, date, ...normalise(r) };
         cur.revisions = (cur.revisions || []).concat([{ at: now(), instruction: ins }]).slice(-20);
         if (cur.status === "sent") cur.status = "written";
