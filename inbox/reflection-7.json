@@ -102,9 +102,31 @@
    }
   }
  },
- "schema": 4,
+ "schema": 5,
  "subject": {
   "statement": "Parliament passes a law that cuts the standard work week from five days to four, with no cut in pay. Employers get two years to adjust, and overtime will start after 32 hours. Hospitals, shops and factories that must stay open will need new shift patterns.",
-  "title": "A country makes the four-day work week law"
+  "title": "A country makes the four-day work week law",
+  "background": {
+   "brief": "No country has yet made a full-pay four-day week national law. Belgium lets workers ask for a compressed four-day week with the same total hours.\nIn Iceland, public-sector trials from 2015 to 2019 cut about 2,500 workers' weeks to 35 or 36 hours with no loss of pay.\nIn most trial workplaces, output and service stayed the same or got better, and measures of stress and burnout improved.\nAfter the trials, unions negotiated new contracts. About 86% of Icelandic workers now work shorter hours or have the right to.\nIn 2022, Lithuania gave public-sector workers with children under three the right to a 32-hour week at full pay.\nIn Gothenburg, a 2015 six-hour-day trial raised productivity but was stopped because of its cost.\nIn the US, the Thirty-Two Hour Workweek Act was reintroduced on 8 September 2026. It would lower the overtime threshold from 40 to 32 hours. It has not passed.\nChile is lowering its maximum work week from 45 to 40 hours in stages. The 42-hour stage started in April 2026.",
+   "sources": [
+    {
+     "title": "4dayweek.io: The 4-Day Work Week by Country, Compared",
+     "url": "https://www.4dayweek.io/countries"
+    },
+    {
+     "title": "Euronews: Iceland trialled a four-day working week and it was an 'overwhelming success'",
+     "url": "https://www.euronews.com/next/amp/2021/07/06/iceland-trialled-a-shorter-working-week-and-it-was-an-overwhelming-success"
+    },
+    {
+     "title": "Insurance Business: Largest ever trial of shorter working week reveals findings",
+     "url": "https://www.insurancebusinessmag.com/uk/news/breaking-news/largest-ever-trial-of-shorter-working-week-reveals-findings-260014.aspx"
+    },
+    {
+     "title": "Secret NYC: Thirty-Two Hour Workweek Act reintroduced",
+     "url": "https://secretnyc.co/?p=401361"
+    }
+   ],
+   "preparedAt": "2026-11-03"
+  }
  }
 }
