@@ -321,7 +321,7 @@ Apply the instruction and follow every rule above. Change only what the instruct
   }
 
   function statusChip(it) {
-    if (it.status === "sent") return '<span class="chip sent">On framoid.com</span>';
+    if (it.status === "sent") return '<span class="chip sent">Live</span>';
     if (it.status === "written") return '<span class="chip written">Written</span>';
     if (it.proposal) return '<span class="chip ready">Ready to write</span>';
     return '<span class="chip">Shaping</span>';
@@ -475,7 +475,7 @@ Apply the instruction and follow every rule above. Change only what the instruct
     cur.reflection = withBackground(cur);
     show("read");
     $("heading").textContent = ""; // the Reflection shows its own title
-    $("actions").innerHTML = `<button id="a-revise">Revise</button><button class="primary" id="a-pub">${cur.status === "sent" ? "Publish again" : "Publish"}</button><button class="ghost" id="a-chat">Chat</button><button class="danger ghost" id="a-del">Delete</button>`;
+    $("actions").innerHTML = `<button id="a-revise">Revise</button><button class="primary" id="a-pub">${cur.status === "sent" ? "Republish" : "Publish"}</button><button class="ghost" id="a-chat">Chat</button><button class="danger ghost" id="a-del">Delete</button>`;
     $("a-revise").onclick = reviseSheet; $("a-pub").onclick = publishSheet; $("a-chat").onclick = openChat; $("a-del").onclick = confirmDelete;
     const json = JSON.stringify(cur.reflection).replace(/</g, "\\u003c");
     const block = `<script id="reflection" type="application/json">${json}<\/script>`;
@@ -554,7 +554,7 @@ Apply the instruction and follow every rule above. Change only what the instruct
     if (c === "not_granted" || c === "capability_disabled" || c === "capability_removed") return "Direct publishing isn't available in this view. Use the steps by hand below.";
     if (c === "server_not_connected" || c === "server_not_found") return "The GitHub connector isn't connected. Connect it in claude.ai → Customize → Connectors, then try again.";
     if (c === "needs_reauth") return "GitHub needs you to sign in again: claude.ai → Customize → Connectors → GitHub → Connect.";
-    if (c === "approval_required" || c === "not_in_manifest" || c === "consent_required") return "The Studio needs your permission to use GitHub. Press Publish again and choose Allow.";
+    if (c === "approval_required" || c === "not_in_manifest" || c === "consent_required") return "The Studio needs your permission to use GitHub. Press the button again and choose Allow.";
     if (c === "selection_required") return "You have more than one GitHub connector. Choose one when claude.ai asks, then try again.";
     if (c === "blocked_by_policy") return "Your organisation's settings block this GitHub tool.";
     if (c === "tool_error") return "GitHub refused the commit: " + String((e && e.message) || "").slice(0, 200);
@@ -577,10 +577,10 @@ Apply the instruction and follow every rule above. Change only what the instruct
   function publishSheet() {
     const slug = slugOf(cur), again = cur.status === "sent";
     const json = JSON.stringify(withBackground(cur), null, 1);
-    sheet(`<h2>${again ? "Publish again" : "Publish to framoid.com"}</h2>
+    sheet(`<h2>${again ? "Republish" : "Publish to framoid.com"}</h2>
       <p class="muted small">Commits this Reflection to the site through your GitHub connector. No AI is used. The page goes live at ${esc(SITE)}/r/${esc(slug)}/ about two minutes later.${again ? " This replaces the live page." : ""}</p>
       <div id="p-status" class="note"></div>
-      <div class="row"><button id="p-close">Close</button><button class="primary" id="p-go"${mcp ? "" : " disabled"}>${again ? "Publish again" : "Publish now"}</button></div>
+      <div class="row"><button id="p-close">Close</button><button class="primary" id="p-go"${mcp ? "" : " disabled"}>${again ? "Republish" : "Publish now"}</button></div>
       <details class="manual"${mcp ? "" : " open"}><summary class="small muted">Or publish by hand</summary>${manualSteps(cur, again)}</details>`);
     if (!mcp) $("p-status").textContent = pushError({ code: "not_granted" });
     $("p-json").value = json;
@@ -617,7 +617,7 @@ Apply the instruction and follow every rule above. Change only what the instruct
       <div class="picks">${list.map(it => {
         const s = it.reflection.subject || {};
         return `<label class="pick"><input type="checkbox" value="${esc(it.id)}"${it.status === "sent" ? "" : " checked"}>
-          <span><b>${esc(it.number)}</b> · ${esc(s.title || "")}</span>${it.status === "sent" ? '<span class="chip sent">On framoid.com</span>' : ""}</label>`; }).join("")}</div>
+          <span><b>${esc(it.number)}</b> · ${esc(s.title || "")}</span>${it.status === "sent" ? '<span class="chip sent">Live</span>' : ""}</label>`; }).join("")}</div>
       <div id="b-status" class="note"></div>
       <div class="row"><button id="b-close">Close</button><button class="primary" id="b-go"${mcp ? "" : " disabled"}>Publish selected</button></div>`);
     if (!mcp) $("b-status").textContent = pushError({ code: "not_granted" });
