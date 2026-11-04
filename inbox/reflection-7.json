@@ -1,0 +1,110 @@
+{
+ "date": "2026-11-03",
+ "field": {
+  "held": [
+   {
+    "pairs": "Rodim · Aromi",
+    "text": "Is the four-day week what parliament decided, or what workplaces make of it over two years?"
+   },
+   {
+    "pairs": "Mir · Ora",
+    "text": "Will the idea of a freer life, or the cost of extra staff, decide how long it lasts?"
+   },
+   {
+    "pairs": "Idrom · Doria",
+    "text": "Can one national rule keep a shared rhythm for those whose work never stops?"
+   }
+  ],
+  "paragraphs": [
+   "Four forces want the law. Rodim wants the choice, Ora the meaning, Idrom the standard, Doria the shared day. Two do not. Aromi resists the fixed number, and Mir counts the cost. Each is simply being itself.",
+   "The law will carry all six at once. It is a verdict and a frozen trend, a payroll and a new story, a rule and a rhythm.",
+   "The rule and the rota stop being opposites when each hospital and shop bends the law into its own shifts, and those shifts settle into new habits. That is where each force turns into its partner."
+  ]
+ },
+ "number": "7",
+ "pairs": {
+  "decision_adaptation": {
+   "aromi": {
+    "answer": "I don't want this law. The change was already moving. Iceland got there through trials and union deals, one workplace at a time. Belgium let people ask. Each place found its own shape. Now one number is poured over everything like concrete. A nurse, a baker and a coder don't move the same way. Fix their week in law and you freeze what was still flowing.",
+    "imprint": "Side deals and new work patterns that slip around the rule.",
+    "impulse": "Pushes back against one fixed number for every kind of work.",
+    "instruments": [
+     "Trends",
+     "Networks"
+    ],
+    "stance": "opposes"
+   },
+   "passage": {
+    "aromi": "If Aromi's trend keeps flowing in one direction, workplace after workplace, it adds up to a choice. That is Rodim.",
+    "rodim": "If Rodim's line has to be redrawn in every hospital rota and every shop schedule, deciding becomes constant adjusting. That is Aromi."
+   },
+   "rodim": {
+    "answer": "Good. A country finally chose. No more trials, no more pilots, no more waiting. Thirty-two hours. One number, one deadline, two years. The five-day week must yield. So must every employer who hoped this would stay a debate. Some will struggle with new shifts. Let them. Movement starts when someone draws the line and steps over it.",
+    "imprint": "A hard line in time: before the law, and after it.",
+    "impulse": "Ends years of trials with one vote and one date.",
+    "instruments": [
+     "Verdicts",
+     "Leaders"
+    ],
+    "stance": "embraces"
+   }
+  },
+  "mind_matter": {
+   "mir": {
+    "answer": "A law doesn't make hours appear. A hospital ward still needs bodies on it every hour of every day. Cut each nurse's week and you need more nurses, and someone pays them. Gothenburg's six-hour day worked and was still stopped because of the cost. Same pay, fewer hours, more staff: that bill is real. Wishing doesn't cover a payroll.",
+    "imprint": "Higher labour costs that land somewhere: prices, budgets or jobs.",
+    "impulse": "Counts the extra staff, shifts and wages the law demands.",
+    "instruments": [
+     "Economy",
+     "Bodies"
+    ],
+    "stance": "opposes"
+   },
+   "ora": {
+    "answer": "I see an old idea finding a body: that a life is more than its job. A third free day is time to think, to make, to learn, to rest the mind. People will tell a new story about themselves, not as workers who sometimes live, but as people who also work. Iceland's workers felt less stress and less burnout. That inner change is the real law.",
+    "imprint": "A new story of what a good life is, told by a whole country.",
+    "impulse": "Turns a dream about free time into a national promise.",
+    "instruments": [
+     "Stories",
+     "Ideologies"
+    ],
+    "stance": "embraces"
+   },
+   "passage": {
+    "mir": "Give Mir's tired bodies enough rest and they start to imagine, learn and reflect. That is Ora.",
+    "ora": "Push Ora's idea of free time far enough and it needs rotas, wages and more staff to exist. That is Mir."
+   }
+  },
+  "structure_harmony": {
+   "doria": {
+    "answer": "I welcome this. A shared free day is time for families, friends and neighbours to find each other again. Parents get time with small children, as Lithuania saw. Clubs, volunteers and gatherings get people back. When a whole country rests together, it keeps a common rhythm. Every voice gets a little more room to be heard at home and in the street.",
+    "imprint": "Stronger ties at home and more people taking part locally.",
+    "impulse": "Fills the new free day with family and community life.",
+    "instruments": [
+     "Kinship",
+     "Communities"
+    ],
+    "stance": "embraces"
+   },
+   "idrom": {
+    "answer": "This is correct. A standard week, written in law. A precise threshold: overtime begins at hour thirty-two. A fixed adjustment period: two years. Every employer knows the rule. Every worker knows the right. No case-by-case bargaining, no exceptions by favour. An architecture begins to live when it is so clear that a whole country can organise its days around it.",
+    "imprint": "A national standard that contracts and schedules must fit.",
+    "impulse": "Writes one week length and one overtime line for everyone.",
+    "instruments": [
+     "Law",
+     "Standards"
+    ],
+    "stance": "embraces"
+   },
+   "passage": {
+    "doria": "If Doria's shared free day holds year after year, it becomes a custom, then a standard. That is Idrom.",
+    "idrom": "If Idrom's rule is reshaped in every workplace to fit how people actually live, it starts to breathe like Doria's harmony."
+   }
+  }
+ },
+ "schema": 4,
+ "subject": {
+  "statement": "Parliament passes a law that cuts the standard work week from five days to four, with no cut in pay. Employers get two years to adjust, and overtime will start after 32 hours. Hospitals, shops and factories that must stay open will need new shift patterns.",
+  "title": "A country makes the four-day work week law"
+ }
+}
