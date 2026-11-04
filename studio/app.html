@@ -384,6 +384,16 @@ Apply the instruction and follow every rule above. Change only what the instruct
         ${String(cur.context.brief).split(/\n+/).filter(Boolean).map(t => `<p>${esc(t)}</p>`).join("")}
         ${src.length ? `<p class="small muted">Sources: ${src.map(x => `<a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.title || x.url)}</a>`).join(" · ")}</p>` : ""}</details>`;
     }
+    // Origin (scout generalization): the specific case behind a generalized Subject. Shown to the owner only;
+    // never sent to Claude and never published (prompts and withBackground read only proposal/context/reflection).
+    const sp = cur.specific;
+    if (sp && (sp.title || sp.statement)) {
+      const ssrc = (sp.sources || []).filter(x => x && /^https?:\/\//.test(x.url));
+      html += `<details class="bgcard"><summary>Origin</summary>
+        ${sp.title ? `<p><strong>${esc(sp.title)}</strong></p>` : ""}${sp.statement ? `<p>${esc(sp.statement)}</p>` : ""}
+        ${String(sp.brief || "").split(/\n+/).filter(Boolean).map(t => `<p class="small">${esc(t)}</p>`).join("")}
+        ${ssrc.length ? `<p class="small muted">Sources: ${ssrc.map(x => `<a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.title || x.url)}</a>`).join(" · ")}</p>` : ""}</details>`;
+    }
     if (!turns.length) html += `<div class="msg ai"><p>What should this Reflection consider? Give me a topic or a rough idea and we'll shape the Subject together, or write “Subject: …” if you already know it.</p></div>`;
     turns.forEach((t, i) => {
       const last = i === turns.length - 1 && !status;
