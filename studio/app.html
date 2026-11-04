@@ -125,6 +125,13 @@ textarea { flex: 1; resize: none; font: 15px/1.45 var(--text); color: var(--ink)
 .sheet h2 { font: 700 20px/1.2 var(--display); margin: 0 0 8px; }
 .sheet ol { padding-left: 20px; margin: 12px 0; } .sheet li { margin-bottom: 12px; }
 .sheet .row { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; margin-top: 16px; }
+.sheet .manual { margin-top: 14px; border-top: 1px solid var(--hairline, rgba(127,127,127,.2)); padding-top: 10px; }
+.sheet .manual summary { cursor: pointer; }
+.sheet .picks { display: grid; gap: 6px; max-height: 50vh; overflow: auto; margin: 12px 0; }
+.sheet .pick { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 12px; cursor: pointer; }
+.sheet .pick:hover { background: color-mix(in srgb, currentColor 6%, transparent); }
+.sheet .pick span:nth-of-type(1) { flex: 1; min-width: 0; }
+.row-start { display: flex; gap: 8px; flex-wrap: wrap; }
 .sheet textarea { width: 100%; min-height: 110px; max-height: 260px; }
 .note { font-size: 13px; color: var(--muted); margin-top: 6px; }
 
@@ -153,7 +160,7 @@ textarea { flex: 1; resize: none; font: 15px/1.45 var(--text); color: var(--ink)
     <div class="intro glass">
       <h2>Framoid Studio</h2>
       <p>Each session starts fresh: shape a Subject, let the six gods give their Readings and Framoid hold them in The Field. Nothing carries over between sessions. Drafts stay here, visible only to you, until you publish one to framoid.com.</p>
-      <button class="primary" id="new">New Reflection</button>
+      <div class="row-start"><button class="primary" id="new">New Reflection</button><button id="bulk" hidden>Publish several</button></div>
       <p class="note" id="unavailable" hidden></p>
     </div>
     <div class="list" id="list"><div class="glass empty">Loading…</div></div>
@@ -190,7 +197,7 @@ textarea { flex: 1; resize: none; font: 15px/1.45 var(--text); color: var(--ink)
   const $ = id => document.getElementById(id);
   const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
-  let db = null, sample = null, files = {}, items = [], cur = null, ctl = null, busy = false, unsub = null;
+  let db = null, sample = null, mcp = null, files = {}, items = [], cur = null, ctl = null, busy = false, unsub = null;
 
   /* ---------- copy for errors ---------- */
   const errText = e => ({
@@ -515,35 +522,118 @@ Apply the instruction and follow every rule above. Change only what the instruct
     };
   }
 
-  function publishSheet() {
-    const slug = String(cur.number).toLowerCase();
-    const json = JSON.stringify(cur.reflection, null, 1);
-    // First publish: a new file in the inbox. Publishing again: edit the page's own file, which already exists.
-    const again = cur.status === "sent";
+  /* ---------- publishing ---------- */
+  // Direct: the "GitHub" connector (GitHub's remote MCP server) commits r/<slug>/reflection.json to the
+  // site repo in one push; the site's workflow checks and deploys it. By hand: the copy-and-commit steps.
+  const GH = { server: "GitHub", tool: "push_files", owner: "ilkay777", repo: "framoid", branch: "main" };
+  const slugOf = it => String(it.number).toLowerCase().replace(/[^a-z0-9-]+/g, "-").replace(/^-+|-+$/g, "");
+  const publishable = it => it && it.reflection && it.number && !problems(it.reflection).length;
+  async function pushToSite(list) {
+    if (!mcp) throw { code: "not_granted" };
+    const files = list.map(it => ({ path: `r/${slugOf(it)}/reflection.json`, content: JSON.stringify(withBackground(it), null, 1) + "\n" }));
+    const names = list.map(it => it.number).join(", ");
+    return mcp.callTool(GH.server, GH.tool, { owner: GH.owner, repo: GH.repo, branch: GH.branch, files,
+      message: (list.length === 1 ? "Publish Reflection " : "Publish Reflections ") + names + " (from the Studio)" });
+  }
+  async function markSent(list) {
+    const at = now();
+    for (const it of list) {
+      const doc = it.id === (cur && cur.id) ? cur : JSON.parse(JSON.stringify(it));
+      doc.reflection = withBackground(doc); doc.status = "sent"; doc.sentAt = at;
+      try { await save(doc); } catch {}
+    }
+  }
+  const pushError = e => {
+    const c = e && e.code;
+    if (c === "not_granted" || c === "capability_disabled" || c === "capability_removed") return "Direct publishing isn't available in this view. Use the steps by hand below.";
+    if (c === "server_not_connected" || c === "server_not_found") return "The GitHub connector isn't connected. Connect it in claude.ai → Customize → Connectors, then try again.";
+    if (c === "needs_reauth") return "GitHub needs you to sign in again: claude.ai → Customize → Connectors → GitHub → Connect.";
+    if (c === "approval_required" || c === "not_in_manifest" || c === "consent_required") return "The Studio needs your permission to use GitHub. Press Publish again and choose Allow.";
+    if (c === "selection_required") return "You have more than one GitHub connector. Choose one when claude.ai asks, then try again.";
+    if (c === "blocked_by_policy") return "Your organisation's settings block this GitHub tool.";
+    if (c === "tool_error") return "GitHub refused the commit: " + String((e && e.message) || "").slice(0, 200);
+    return "No clear answer came back from GitHub, so the page may or may not have been published. Check the site in a minute before trying again.";
+  };
+  const manualSteps = (it, again) => {
+    const slug = slugOf(it);
     const newLink = `${REPO_NEW}?filename=reflection-${encodeURIComponent(slug)}.json`;
     const link = again ? `${REPO_EDIT}/${encodeURIComponent(slug)}/reflection.json` : newLink;
-    sheet(`<h2>Publish to framoid.com</h2>
-      <p class="muted small">No AI is used for this step. GitHub publishes the file for free.</p>
-      <ol>
-        <li><button class="primary" id="p-copy">Copy Reflection</button> <span id="p-copied" class="note"></span>
+    return `<ol>
+        <li><button id="p-copy">Copy Reflection</button> <span id="p-copied" class="note"></span>
           <textarea id="p-json" readonly hidden aria-label="Reflection JSON"></textarea></li>
         <li><a class="btn" href="${esc(link)}" target="_blank" rel="noopener">${again ? "Open the published file ↗" : "Open GitHub inbox ↗"}</a>
           <div class="note">${again ? `Opens r/${esc(slug)}/reflection.json, the file behind the live page. Not there any more? <a href="${esc(newLink)}" target="_blank" rel="noopener">Create it in the inbox</a> instead.`
             : `Opens a new file named reflection-${esc(slug)}.json in your site's inbox.`}</div></li>
-        <li>${again ? "Select all the text in the file, paste over it" : "Paste into the file"} and press <b>Commit changes</b>.
-          <div class="note">The page goes live at ${esc(SITE)}/r/${esc(slug)}/ about two minutes later.${cur.status === "sent" ? " Publishing again replaces the page." : ""}</div></li>
-      </ol>
-      <div class="row"><button id="p-close">Close</button><button class="primary" id="p-done">I've committed it</button></div>`);
+        <li>${again ? "Select all the text in the file, paste over it" : "Paste into the file"} and press <b>Commit changes</b>, then <button class="ghost" id="p-done" type="button">mark it published</button>.</li>
+      </ol>`;
+  };
+
+  function publishSheet() {
+    const slug = slugOf(cur), again = cur.status === "sent";
+    const json = JSON.stringify(withBackground(cur), null, 1);
+    sheet(`<h2>${again ? "Publish again" : "Publish to framoid.com"}</h2>
+      <p class="muted small">Commits this Reflection to the site through your GitHub connector. No AI is used. The page goes live at ${esc(SITE)}/r/${esc(slug)}/ about two minutes later.${again ? " This replaces the live page." : ""}</p>
+      <div id="p-status" class="note"></div>
+      <div class="row"><button id="p-close">Close</button><button class="primary" id="p-go"${mcp ? "" : " disabled"}>${again ? "Publish again" : "Publish now"}</button></div>
+      <details class="manual"${mcp ? "" : " open"}><summary class="small muted">Or publish by hand</summary>${manualSteps(cur, again)}</details>`);
+    if (!mcp) $("p-status").textContent = pushError({ code: "not_granted" });
     $("p-json").value = json;
     $("p-copy").onclick = async () => {
       try { await navigator.clipboard.writeText(json); $("p-copied").textContent = "Copied."; }
       catch { $("p-json").hidden = false; $("p-json").select(); $("p-copied").textContent = "Copy the text below (select all, copy)."; }
     };
-    $("p-close").onclick = closeSheet;
-    $("p-done").onclick = async () => {
-      cur.status = "sent"; cur.sentAt = now();
-      try { await save(cur); } catch {}
-      closeSheet(); openReading();
+    $("p-close").onclick = () => { if (!busy) closeSheet(); };
+    $("p-done").onclick = async () => { await markSent([cur]); closeSheet(); openReading(); };
+    $("p-go").onclick = async () => {
+      if (busy) return;
+      busy = true; $("p-go").disabled = true; $("p-close").disabled = true;
+      $("p-status").innerHTML = thinking("Committing to GitHub");
+      try {
+        await pushToSite([cur]);
+        await markSent([cur]);
+        busy = false;
+        $("sheet").innerHTML = `<h2>Published</h2><p class="small">Committed to GitHub. The page will be live at <a href="${esc(SITE)}/r/${esc(slug)}/" target="_blank" rel="noopener">${esc(SITE)}/r/${esc(slug)}/</a> in about two minutes.</p>
+          <div class="row"><button class="primary" id="p-ok">Done</button></div>`;
+        $("p-ok").onclick = () => { closeSheet(); openReading(); };
+      } catch (e) {
+        busy = false; $("p-go").disabled = false; $("p-close").disabled = false;
+        $("p-status").innerHTML = `<span style="color:var(--danger)">${esc(pushError(e))}</span>`;
+      }
+    };
+  }
+
+  // Bulk: choose several written Reflections and publish them in one commit.
+  function bulkSheet() {
+    const list = items.filter(publishable).sort((a, b) => (parseInt(a.number, 10) || 0) - (parseInt(b.number, 10) || 0));
+    if (!list.length) { sheet(`<h2>Publish</h2><p class="muted small">No written Reflections yet.</p><div class="row"><button id="b-close">Close</button></div>`); $("b-close").onclick = closeSheet; return; }
+    sheet(`<h2>Publish several</h2>
+      <p class="muted small">Choose Reflections to commit to framoid.com together, in one commit through your GitHub connector. Ones already on the site are replaced.</p>
+      <div class="picks">${list.map(it => {
+        const s = it.reflection.subject || {};
+        return `<label class="pick"><input type="checkbox" value="${esc(it.id)}"${it.status === "sent" ? "" : " checked"}>
+          <span><b>${esc(it.number)}</b> · ${esc(s.title || "")}</span>${it.status === "sent" ? '<span class="chip sent">On framoid.com</span>' : ""}</label>`; }).join("")}</div>
+      <div id="b-status" class="note"></div>
+      <div class="row"><button id="b-close">Close</button><button class="primary" id="b-go"${mcp ? "" : " disabled"}>Publish selected</button></div>`);
+    if (!mcp) $("b-status").textContent = pushError({ code: "not_granted" });
+    const chosen = () => [...$("sheet").querySelectorAll(".pick input:checked")].map(x => list.find(it => it.id === x.value)).filter(Boolean);
+    const label = () => { const n = chosen().length; $("b-go").textContent = n ? `Publish ${n}` : "Publish selected"; $("b-go").disabled = !mcp || !n || busy; };
+    $("sheet").querySelectorAll(".pick input").forEach(x => x.onchange = label); label();
+    $("b-close").onclick = () => { if (!busy) closeSheet(); };
+    $("b-go").onclick = async () => {
+      const sel = chosen(); if (!sel.length || busy) return;
+      busy = true; $("b-go").disabled = true; $("b-close").disabled = true;
+      $("b-status").innerHTML = thinking(`Committing ${sel.length} to GitHub`);
+      try {
+        await pushToSite(sel);
+        await markSent(sel);
+        busy = false;
+        $("sheet").innerHTML = `<h2>Published</h2><p class="small">Committed ${sel.length} Reflection${sel.length > 1 ? "s" : ""} (${sel.map(it => esc(it.number)).join(", ")}). They'll be live on <a href="${esc(SITE)}" target="_blank" rel="noopener">${esc(SITE.replace("https://", ""))}</a> in about two minutes.</p>
+          <div class="row"><button class="primary" id="b-ok">Done</button></div>`;
+        $("b-ok").onclick = closeSheet;
+      } catch (e) {
+        busy = false; $("b-close").disabled = false; label();
+        $("b-status").innerHTML = `<span style="color:var(--danger)">${esc(pushError(e))}</span>`;
+      }
     };
   }
 
@@ -558,6 +648,7 @@ Apply the instruction and follow every rule above. Change only what the instruct
     };
   }
 
+  $("bulk").onclick = () => { if (!busy) bulkSheet(); };
   $("back").onclick = () => { if (busy) return; show("home"); };
 
   $("new").onclick = async () => {
@@ -595,13 +686,14 @@ Apply the instruction and follow every rule above. Change only what the instruct
     const fail = msg => { $("unavailable").hidden = false; $("unavailable").textContent = msg; $("new").disabled = true; };
     try { await loadFiles(); } catch { fail("The Studio's files could not be loaded. Reload the page."); $("list").innerHTML = ""; return; }
     if (!window.claude || !claude.use) { fail("Open the Studio on claude.ai to use it."); $("list").innerHTML = ""; return; }
-    [db, sample] = await Promise.all([claude.use("db"), claude.use("sample")]);
+    [db, sample, mcp] = await Promise.all([claude.use("db"), claude.use("sample"), claude.use("mcp")]);
     if (!sample) fail("Claude isn't available in this view, so new Reflections can't be written here.");
     if (!db) { fail("Sign in to claude.ai to keep and see your Reflections."); $("list").innerHTML = ""; return; }
     const timer = setTimeout(() => { if (!items.length) $("list").innerHTML = '<div class="glass empty">Your Reflections can\'t be reached yet.</div>'; }, 10000);
     unsub = col().orderBy("updatedAt", "desc").onSnapshot(snap => {
       if (!snap.metadata.fromCache) clearTimeout(timer);
       items = snap.docs.map(d => d.data()).filter(Boolean);
+      $("bulk").hidden = !items.some(publishable);
       renderList();
       if (!snap.metadata.fromCache) importLegacy();
     }, () => { clearTimeout(timer); $("list").innerHTML = '<div class="glass empty">Your Reflections can\'t be loaded right now.</div>'; });

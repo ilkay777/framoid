@@ -11,5 +11,7 @@ The artifact is ONE self-contained file (separate files failed to load in some c
 
 To republish: `cp ../template/index.html template.html && python3 build.py`, then publish only `index.html` to the artifact (mode replace). Do not commit the generated index.html or template.html.
 
-Capabilities: `sample` (Claude on the viewer's plan) and `db` with rule `{path: "", read: "owner", write: "owner"}`.
+Capabilities: `sample` (Claude on the viewer's plan), `db` with rule `{path: "", read: "owner", write: "owner"}`, and `mcp` with `{server: "GitHub", tools: ["push_files"]}`.
+
+Publishing: with the user's claude.ai custom connector "GitHub" (GitHub's remote MCP server, https://api.githubcopilot.com/mcp/), Publish and "Publish several" commit `r/<slug>/reflection.json` for each chosen Reflection in one `push_files` call to ilkay777/framoid main; the site workflow checks and deploys. Without the connector, the sheet falls back to the copy-and-commit steps (new inbox file the first time, the page's own file after that).
 Data: collection `reflections`, one document per session: id, status (shaping | written | sent), number, turns, proposal, reflection, revisions, timestamps, and optionally `origin: "scout"` plus `context {brief, sources[{title,url}], preparedAt}` when a project session prepared the Subject with web research. The brief is shown as a Background card and sent with every Claude call for that session. When the Reflection is written it is also stored in the Reflection as `subject.background {brief, sources, preparedAt}` (schema 5), so it shows under "Show more" and goes to framoid.com; older scout Reflections get it added when opened. `shape.json` deliberately has no background: Claude never writes it.
