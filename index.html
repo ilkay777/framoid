@@ -53,7 +53,6 @@ h1 { font: 700 34px/1.1 var(--display); letter-spacing: -.02em; margin: 0 0 8px;
 a.card { display: block; padding: 20px 22px; color: inherit; text-decoration: none; transition: transform .25s ease, box-shadow .25s ease; }
 a.card:hover { transform: translateY(-2px); box-shadow: inset 0 1px 0 var(--hl), 0 16px 40px -14px var(--shadow); }
 a.card:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
-.meta { display: flex; justify-content: space-between; gap: 12px; font-size: 13px; color: var(--muted); margin-bottom: 6px; }
 .card h2 { font: 650 20px/1.25 var(--display); letter-spacing: -.01em; margin: 0 0 6px; }
 .card p { margin: 0; color: var(--muted); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .stance { display: flex; align-items: center; gap: 10px; margin-top: 12px; font-size: 13px; }
@@ -61,6 +60,9 @@ a.card:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
 .dots b { width: 12px; height: 12px; border-radius: 50%; background: var(--c); border: 2px solid var(--c); }
 .dots b.opp { background: transparent; border-style: dashed; }
 .result { font-weight: 650; }
+.foot { display: flex; align-items: center; gap: 12px; margin-top: 12px; font-size: 13px; color: var(--muted); }
+.foot .stance { margin-top: 0; color: var(--ink); }
+.foot .date { margin-left: auto; }
 .empty { padding: 26px; color: var(--muted); text-align: center; }
 footer { text-align: center; color: var(--muted); font-size: 12px; margin-top: 26px; }
 @media (max-width: 560px) { header { padding: 22px 20px 18px; } h1 { font-size: 28px; } a.card { padding: 18px; } }
@@ -88,7 +90,7 @@ footer { text-align: center; color: var(--muted); font-size: 12px; margin-top: 2
   const NAME = { rodim: "Rodim", aromi: "Aromi", mir: "Mir", ora: "Ora", idrom: "Idrom", doria: "Doria" };
   const list = document.getElementById("list");
   const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-  const fmt = d => { const t = Date.parse(d + "T12:00:00"); return isNaN(t) ? esc(d) : new Date(t).toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" }); };
+  const fmt = d => { const t = Date.parse(d + "T12:00:00"); return isNaN(t) ? esc(d) : new Date(t).toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" }); };
   let items = [];
   try { items = (await (await fetch("reflections.json", { cache: "no-cache" })).json()).reflections || []; }
   catch (e) { list.innerHTML = '<div class="glass empty">The Reflections could not be loaded.</div>'; return; }
@@ -101,10 +103,9 @@ footer { text-align: center; color: var(--muted); font-size: 12px; margin-top: 2
     const dots = tallied ? `<div class="stance"><span class="dots">${GODS.map(g =>
       `<b class="${st[g] === "opposes" ? "opp" : ""}" style="--c:var(--${g})" title="${NAME[g]} ${st[g]}"></b>`).join("")}</span>
       <span class="result">${result}</span></div>` : "";
-    const label = /^\d+$/.test(r.number) ? "Reflection " + esc(r.number) : esc(r.number);
+    const date = r.date ? `<span class="date">${fmt(r.date)}</span>` : "";
     return `<a class="card glass" href="r/${encodeURIComponent(r.slug)}/">
-      <div class="meta"><span>${label}</span><span>${fmt(r.date)}</span></div>
-      <h2>${esc(r.title)}</h2><p>${esc(r.statement)}</p>${dots}</a>`;
+      <h2>${esc(r.title)}</h2><p>${esc(r.statement)}</p>${dots || date ? `<div class="foot">${dots}${date}</div>` : ""}</a>`;
   }).join("");
 })();
 </script>
