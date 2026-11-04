@@ -394,8 +394,11 @@ Apply the instruction and follow every rule above. Change only what the instruct
         ${String(sp.brief || "").split(/\n+/).filter(Boolean).map(t => `<p class="small">${esc(t)}</p>`).join("")}
         ${ssrc.length ? `<p class="small muted">Sources: ${ssrc.map(x => `<a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.title || x.url)}</a>`).join(" · ")}</p>` : ""}</details>`;
     }
-    if (!turns.length) html += `<div class="msg ai"><p>What should this Reflection consider? Give me a topic or a rough idea and we'll shape the Subject together, or write “Subject: …” if you already know it.</p></div>`;
+    // A Subject scout session stores a seed user turn ("Subject chosen in a Subject scout session: …"): kept in the
+    // data for older sessions, but never shown and never sent to Claude.
+    if (!turns.some(t => !isSeed(t))) html += `<div class="msg ai"><p>What should this Reflection consider? Give me a topic or a rough idea and we'll shape the Subject together, or write “Subject: …” if you already know it.</p></div>`;
     turns.forEach((t, i) => {
+      if (isSeed(t)) return;
       const last = i === turns.length - 1 && !status;
       html += t.role === "user" ? `<div class="msg me">${esc(t.content)}</div>` : aiBubble(t.content, i, last);
     });
@@ -403,6 +406,7 @@ Apply the instruction and follow every rule above. Change only what the instruct
     $("log").innerHTML = html;
     $("log").scrollTop = $("log").scrollHeight;
   }
+  const isSeed = t => t && t.role === "user" && /^Subject chosen in a Subject scout session/.test(String(t.content || ""));
   const thinking = label => `<div class="status"><span class="dots"><i></i><i></i><i></i></span>${esc(label)}</div>`;
   const failed = msg => `<div class="status err">${esc(msg)}</div>`;
 
@@ -444,7 +448,7 @@ Apply the instruction and follow every rule above. Change only what the instruct
     setBusy(true);
     ctl = new AbortController();
     try {
-      const input = [{ role: "user", content: shapePrompt() }, ...cur.turns.slice(-24)];
+      const input = [{ role: "user", content: shapePrompt() }, ...cur.turns.filter(t => !isSeed(t)).slice(-24)];
       const m = await sample.json(input, { cache: false, signal: ctl.signal });
       const reply = { say: String(m.say || ""), questions: Array.isArray(m.questions) ? m.questions.slice(0, 3) : [], proposal: m.proposal && m.proposal.title ? { title: String(m.proposal.title), statement: String(m.proposal.statement || "") } : null };
       cur.turns.push({ role: "assistant", content: JSON.stringify(reply) });
