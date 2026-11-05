@@ -456,8 +456,8 @@ button.chip:hover { transform: translateY(-2px); box-shadow: inset 0 1px 0 var(-
 
   /* ---------- Readings ---------- */
   // schema 2: optional stance per Reading ("embraces" | "opposes"); schema 1 Reflections simply show no badge.
-  const stance = st => st === "embraces" ? '<span class="stance">↑ Embraces the Subject</span>'
-                     : st === "opposes"  ? '<span class="stance opp">↓ Opposes the Subject</span>' : "";
+  const stance = st => st === "embraces" ? '<span class="stance">↑ Embraces</span>'
+                     : st === "opposes"  ? '<span class="stance opp">↓ Opposes</span>' : "";
   // schema 3: pairs.<pair>.passage is { <god>: text } with one Passage from each god toward its partner.
   // Schema 1–2 Reflections keep a single passage string, shown as the older shared Passage card.
   const passOut = (from, to, text) => text ? `<button type="button" class="pass" data-to="${to}" style="--a: var(--${from}); --b: var(--${to})"
