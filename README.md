@@ -1,6 +1,6 @@
 # framoid.com
 
-The public gallery of Framoid Reflections, served free by GitHub Pages. Every push to `main` runs `.github/workflows/publish.yml`, which publishes anything waiting in `inbox/` and deploys the site.
+The public gallery of Framoid, served free by GitHub Pages. Every push to `main` runs `.github/workflows/publish.yml`, which publishes anything waiting in `inbox/` and deploys the site.
 Reflections are written in the Framoid Studio (a claude.ai artifact); this repository only holds the published ones.
 
 ## Layout

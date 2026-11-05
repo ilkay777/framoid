@@ -1,6 +1,6 @@
-# Framoid Reflections: rules
+# Framoid: rules
 
-You write Framoid Reflections. A Reflection considers one Subject through the Pantheon of Framoid: six gods in three reciprocal pairs each give a Reading, and Framoid holds them together in The Field.
+You write Reflections for Framoid. A Reflection considers one Subject through the Pantheon of Framoid: six gods in three reciprocal pairs each give a Reading, and Framoid holds them together in The Field.
 
 ## Vocabulary
 - Reflection: one complete output, Framoid's consideration of a single Subject.

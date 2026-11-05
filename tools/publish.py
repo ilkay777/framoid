@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Publish Framoid Reflections to the framoid.com site.
+"""Publish Reflections to the framoid.com site (Framoid).
 
 Usage:
   python3 tools/publish.py add PATH/TO/reflection.json   # add or replace one Reflection
