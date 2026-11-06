@@ -36,10 +36,14 @@
   --ora:   #5e47b8;
   --idrom: #4b5b6d;
   --doria: #2f8443;
+  /* Text shades: god colours as small text (badges, tags, labels) at 4.5:1 or better on glass.
+     Orbs, large names and fills keep the god colour itself. */
+  --rodim-text: #a73b16; --aromi-text: #106784; --mir-text: #805819; --doria-text: #276e38;
+  --ora-text: var(--ora); --idrom-text: var(--idrom);
 
-  --text: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --rounded: ui-rounded, "SF Pro Rounded", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --text: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --display: var(--text);
+  --rounded: ui-rounded, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
@@ -49,6 +53,7 @@
     --hl: rgba(255, 255, 255, 0.2); --spec: rgba(255, 255, 255, 0.1); --shadow: rgba(0, 0, 0, 0.5);
     --blob: 0.42; --focus: #5aa2ff;
     --rodim: #ff7a45; --aromi: #4cc3e6; --mir: #e0ae5c; --ora: #a996ff; --idrom: #a6b6c8; --doria: #6fd284;
+    --rodim-text: var(--rodim); --aromi-text: var(--aromi); --mir-text: var(--mir); --doria-text: var(--doria);
     color-scheme: dark;
   }
 }
@@ -59,6 +64,7 @@
   --hl: rgba(255, 255, 255, 0.2); --spec: rgba(255, 255, 255, 0.1); --shadow: rgba(0, 0, 0, 0.5);
   --blob: 0.42; --focus: #5aa2ff;
   --rodim: #ff7a45; --aromi: #4cc3e6; --mir: #e0ae5c; --ora: #a996ff; --idrom: #a6b6c8; --doria: #6fd284;
+  --rodim-text: var(--rodim); --aromi-text: var(--aromi); --mir-text: var(--mir); --doria-text: var(--doria);
   color-scheme: dark;
 }
 
@@ -129,26 +135,26 @@ button { font: inherit; color: inherit; }
   .subject-text { max-height: 100%; }
 }
 .subject-text { display: grid; grid-auto-rows: max-content; gap: 8px; align-content: start; min-width: 0; min-height: 0; overflow: auto; scrollbar-width: thin; }
-.subject-top { display: flex; flex-wrap: wrap; gap: 4px 10px; font-size: 11.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); }
-.back-link { font-size: 13px; font-weight: 650; letter-spacing: 0; text-transform: none; color: var(--muted); text-decoration: none; border-radius: 999px; }
+.subject-top { display: flex; flex-wrap: wrap; gap: 4px 10px; font-size: 12px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); }
+.back-link { font-size: 13px; font-weight: 600; letter-spacing: 0; text-transform: none; color: var(--muted); text-decoration: none; border-radius: 999px; }
 .back-link:hover { color: var(--ink); }
 @media (min-width: 901px) { .subject-top:has(.back-link) { display: none; } } /* desktop: the side orbit carries it */
-.subject h1 { font-size: clamp(21px, 3vw, 36px); line-height: 1.12; letter-spacing: -0.025em; max-width: 26ch; margin: 0; }
-.subject .lede { margin: 0; font-size: clamp(14.5px, 1.3vw, 16.5px); line-height: 1.5; max-width: 62ch;
+.subject h1 { font-family: var(--display); font-weight: 600; text-wrap: balance; font-size: clamp(21px, 3vw, 36px); line-height: 1.12; letter-spacing: -0.025em; max-width: 26ch; margin: 0; }
+.subject .lede { margin: 0; font-size: clamp(15px, 1.3vw, 16px); line-height: 1.5; max-width: 62ch;
   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-.subject-date { display: none; margin: 0; font-size: 12.5px; font-weight: 600; color: var(--muted); }
+.subject-date { display: none; margin: 0; font-size: 13px; font-weight: 600; color: var(--muted); }
 .subject-text.open .lede { display: block; }
 .subject-text.open .subject-date { display: block; }
 /* Background (schema 5): researched facts about the Subject, shown with the full statement. */
 .subject-bg { display: none; margin-top: 6px; padding-top: 10px; border-top: 1px solid var(--hairline); gap: 6px; max-width: 62ch; }
 .subject-text.open .subject-bg { display: grid; }
 .subject-bg .bg-lbl { font-size: 11px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); }
-.subject-bg p { margin: 0; font-size: 13.5px; line-height: 1.5; }
-.subject-bg .bg-src { display: flex; flex-wrap: wrap; gap: 2px 12px; font-size: 12.5px; color: var(--muted); }
+.subject-bg p { margin: 0; font-size: 14px; line-height: 1.5; }
+.subject-bg .bg-src { display: flex; flex-wrap: wrap; gap: 2px 12px; font-size: 13px; color: var(--muted); }
 .subject-bg .bg-src a { color: inherit; text-decoration: underline; text-decoration-color: color-mix(in srgb, currentColor 40%, transparent); text-underline-offset: 2px; }
 .subject-bg .bg-src a:hover { color: var(--ink); }
 .more-btn { justify-self: start; border: 1px solid var(--stroke); background: var(--glass-strong); border-radius: 999px;
-  padding: 3px 12px; font-size: 12.5px; font-weight: 600; cursor: pointer; box-shadow: inset 0 1px 0 var(--hl); }
+  padding: 4px 12px; font-size: 13px; font-weight: 600; cursor: pointer; box-shadow: inset 0 1px 0 var(--hl); }
 
 /* Subject orbit: each pair faces the other across Framoid. --d (px) is set in script,
    and every part is sized from it, so the dial is always a true circle. */
@@ -172,11 +178,11 @@ button { font: inherit; color: inherit; }
 .snode .lbl { position: absolute; left: 50%; transform: translateX(-50%); display: grid; justify-items: center; line-height: 1.15; white-space: nowrap; pointer-events: none; }
 .snode.up .lbl { bottom: calc(100% + 6px); }
 .snode.down .lbl { top: calc(100% + 6px); }
-.snode .lbl strong { font-family: var(--rounded); font-size: 15px; font-weight: 700; color: var(--c); }
+.snode .lbl strong { font-family: var(--rounded); font-size: 15px; font-weight: 700; color: var(--ct, var(--c)); }
 .snode .lbl small { font-size: 10px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
 .score {
   position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
-  width: calc(var(--d) * 0.27); height: calc(var(--d) * 0.27); box-sizing: border-box; border-radius: 50%; padding: 5px; border: 0; cursor: pointer;
+  width: calc(var(--d) * 0.27); height: calc(var(--d) * 0.27); box-sizing: border-box; border-radius: 50%; padding: 6px; border: 0; cursor: pointer;
   background: conic-gradient(from 210deg, var(--rodim), var(--aromi), var(--mir), var(--ora), var(--idrom), var(--doria), var(--rodim));
   box-shadow: 0 12px 32px -10px var(--shadow);
   transition: transform .3s;
@@ -187,9 +193,9 @@ button { font: inherit; color: inherit; }
   background: var(--glass-strong); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
 }
 .score i b { font-family: var(--rounded); font-size: 16px; font-weight: 700; line-height: 1.1; }
-.score i small { font-size: 9.5px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); line-height: 1.2; }
+.score i small { font-size: 10px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); line-height: 1.2; }
 .sorbit-cap { flex: none; margin: 0; min-height: 2.9em; max-width: 36ch; text-align: center; font-size: 13px; line-height: 1.45; color: var(--muted); }
-.sorbit-cap strong { color: var(--ink); font-weight: 650; }
+.sorbit-cap strong { color: var(--ink); font-weight: 600; }
 @media (hover: none) { .sorbit-cap { display: none; } }
 /* Stances on the dial (schema 2+): Embraces = solid orb with ↑, Opposes = hollow dashed orb with ↓,
    the same filled / dashed language as the stance badges on the Reading cards. */
@@ -205,27 +211,16 @@ button { font: inherit; color: inherit; }
 .sorbit.small .score.tallied i b { font-size: 12px; }
 .score .verdict { font-family: var(--rounded); font-size: calc(var(--d) * 0.075); font-weight: 800; line-height: 1; color: var(--ink); }
 .sorbit.small .snode .lbl strong { font-size: 13px; }
-.sorbit.small .snode .lbl small { font-size: 9px; }
-.sorbit.small .score i b { font-size: 13.5px; }
+.sorbit.small .snode .lbl small { font-size: 10px; }
+.sorbit.small .score i b { font-size: 14px; }
 .sorbit.small .score i small { display: none; }
 
 .orbit-top { display: grid; justify-items: center; gap: 10px; text-align: center; }
-.subject-btn { border: 1px solid var(--stroke); background: var(--glass-strong); border-radius: 999px; padding: 6px 16px; font-size: 13px; font-weight: 650; cursor: pointer; box-shadow: inset 0 1px 0 var(--hl); color: var(--muted); transition: color .25s; }
+.subject-btn { border: 1px solid var(--stroke); background: var(--glass-strong); border-radius: 999px; padding: 6px 16px; font-size: 13px; font-weight: 600; cursor: pointer; box-shadow: inset 0 1px 0 var(--hl); color: var(--muted); transition: color .25s; }
 .subject-btn.on { color: var(--ink); box-shadow: inset 0 1px 0 var(--hl), 0 0 0 2px color-mix(in srgb, var(--ink) 25%, transparent); }
 
 /* Shared type */
-header.glass { display: grid; gap: 4px; padding: 16px 22px; }
-.eyebrow { font-size: 11.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 14px; }
-h1 { font-family: var(--display); font-weight: 650; font-size: clamp(20px, 2.3vw, 27px); line-height: 1.15; letter-spacing: -0.022em; margin: 2px 0 0; text-wrap: balance; }
-.statement-row { display: flex; align-items: flex-end; gap: 10px; }
-.statement { margin: 4px 0 0; color: var(--muted); max-width: 95ch; min-width: 0;
-  display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
-.statement.open { display: block; }
-.pill-btn {
-  flex: none; border: 1px solid var(--stroke); background: var(--glass-strong); border-radius: 999px;
-  padding: 3px 11px; font-size: 12.5px; font-weight: 600; color: var(--ink); cursor: pointer;
-  box-shadow: inset 0 1px 0 var(--hl);
-}
+.eyebrow { font-size: 12px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); }
 
 /* Main */
 .main { min-height: 0; display: grid; grid-template-columns: 290px minmax(0, 1fr); gap: 14px; }
@@ -250,7 +245,7 @@ nav.orbit { display: flex; flex-direction: column; align-items: center; justify-
 .node:hover { opacity: 1; }
 .node span {
   position: absolute; top: calc(100% + 5px); left: 50%; transform: translateX(-50%);
-  font-family: var(--rounded); font-size: 12px; font-weight: 650; color: var(--ink); white-space: nowrap;
+  font-family: var(--rounded); font-size: 12px; font-weight: 600; color: var(--ink); white-space: nowrap;
 }
 .core {
   position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
@@ -264,7 +259,7 @@ nav.orbit { display: flex; flex-direction: column; align-items: center; justify-
 .core i {
   display: grid; place-items: center; width: 100%; height: 100%; border-radius: 50%; font-style: normal;
   background: var(--glass-strong); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
-  font-family: var(--rounded); font-size: 11.5px; font-weight: 700; line-height: 1.1; text-align: center;
+  font-family: var(--rounded); font-size: 12px; font-weight: 700; line-height: 1.1; text-align: center;
 }
 .stepper { display: flex; align-items: center; gap: 12px; }
 .round-btn {
@@ -272,8 +267,8 @@ nav.orbit { display: flex; flex-direction: column; align-items: center; justify-
   border: 1px solid var(--stroke); background: var(--glass-strong); box-shadow: inset 0 1px 0 var(--hl), 0 4px 12px -6px var(--shadow);
   font-size: 18px; line-height: 1;
 }
-.step-label { font-size: 12.5px; font-weight: 600; color: var(--muted); min-width: 120px; text-align: center; font-variant-numeric: tabular-nums; }
-.keys { font-size: 11.5px; color: var(--muted); margin: -8px 0 0; }
+.step-label { font-size: 13px; font-weight: 600; color: var(--muted); min-width: 120px; text-align: center; font-variant-numeric: tabular-nums; }
+.keys { font-size: 12px; color: var(--muted); margin: -8px 0 0; }
 
 /* Stage */
 .stage { min-height: 0; overflow: auto; padding: 2px 2px 8px; scrollbar-width: thin; }
@@ -282,36 +277,36 @@ nav.orbit { display: flex; flex-direction: column; align-items: center; justify-
 .view.enter { animation: enter .45s cubic-bezier(.2, .8, .2, 1); }
 @keyframes enter { from { opacity: 0; transform: translateY(10px) scale(.99); } }
 .view-head { display: flex; align-items: baseline; justify-content: space-between; gap: 6px 16px; flex-wrap: wrap; padding: 2px 6px 0; }
-.view-head h2 { font-family: var(--display); font-weight: 650; font-size: 21px; letter-spacing: -0.015em; margin: 0; }
-.view-head .sub { font-size: 12.5px; font-weight: 600; color: var(--muted); }
+.view-head h2 { font-family: var(--display); font-weight: 600; font-size: 21px; letter-spacing: -0.015em; margin: 0; }
+.view-head .sub { font-size: 13px; font-weight: 600; color: var(--muted); }
 
 .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-.card { padding: 22px 24px; display: flex; flex-direction: column; gap: 13px; min-width: 0; transition: box-shadow .4s; }
+.card { padding: 22px 24px; display: flex; flex-direction: column; gap: 12px; min-width: 0; transition: box-shadow .4s; }
 .card.ping { animation: ping 1s ease; }
 @keyframes ping { 30% { box-shadow: inset 0 1px 0 var(--hl), 0 0 0 3px color-mix(in srgb, var(--c) 55%, transparent), 0 18px 50px -20px var(--shadow); } }
 .god-row { display: flex; align-items: center; gap: 12px; }
 .dot { width: 14px; height: 14px; border-radius: 50%; flex: none; background: var(--c);
   box-shadow: 0 0 0 4px color-mix(in srgb, var(--c) 18%, transparent), 0 0 16px color-mix(in srgb, var(--c) 60%, transparent); }
 .god-name { font-family: var(--rounded); font-weight: 700; font-size: 27px; line-height: 1; letter-spacing: -0.01em; color: var(--c); margin: 0; }
-.epithet { font-size: 11.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); margin-left: auto; text-align: right; }
-.stance { justify-self: start; align-self: flex-start; font-size: 11.5px; font-weight: 700; letter-spacing: 0.04em; padding: 4px 11px; border-radius: 999px;
-  color: var(--c); background: color-mix(in srgb, var(--c) 14%, transparent); border: 1px solid color-mix(in srgb, var(--c) 35%, transparent); }
+.epithet { font-size: 12px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); margin-left: auto; text-align: right; }
+.stance { justify-self: start; align-self: flex-start; font-size: 12px; font-weight: 700; letter-spacing: 0.04em; padding: 4px 12px; border-radius: 999px;
+  color: var(--ct, var(--c)); background: color-mix(in srgb, var(--c) 14%, transparent); border: 1px solid color-mix(in srgb, var(--c) 35%, transparent); }
 .stance.opp { color: var(--ink); background: transparent; border: 1.5px dashed color-mix(in srgb, var(--c) 70%, transparent); }
 .question { margin: 0; font-size: 14px; line-height: 1.45; color: var(--muted); font-style: italic; text-wrap: balance; }
 .answer { margin: 0; font-size: 16px; line-height: 1.55; }
-.seg { display: inline-grid; grid-auto-flow: column; gap: 2px; padding: 3px; border-radius: 999px; background: var(--seg); justify-self: start; align-self: flex-start; }
-.seg button { border: 0; background: transparent; border-radius: 999px; padding: 5px 15px; font-size: 12.5px; font-weight: 600; color: var(--muted); cursor: pointer; transition: background .25s, color .25s; }
-.seg button[aria-pressed="true"] { background: var(--glass-strong); color: var(--c); box-shadow: 0 1px 4px var(--shadow), inset 0 1px 0 var(--hl); }
+.seg { display: inline-grid; grid-auto-flow: column; gap: 2px; padding: 4px; border-radius: 999px; background: var(--seg); justify-self: start; align-self: flex-start; }
+.seg button { border: 0; background: transparent; border-radius: 999px; padding: 6px 16px; font-size: 13px; font-weight: 600; color: var(--muted); cursor: pointer; transition: background .25s, color .25s; }
+.seg button[aria-pressed="true"] { background: var(--glass-strong); color: var(--ct, var(--c)); box-shadow: 0 1px 4px var(--shadow), inset 0 1px 0 var(--hl); }
 /* Instruments (schema 4): the means the god works through in this Reading. Claimed ones
    (not yet on the god's list) get a dashed outline and a small "claimed" note. */
 .inst { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
 .inst-lbl { font-size: 11px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); margin-right: 2px; }
-.tag { font-size: 12px; font-weight: 650; line-height: 1.3; padding: 3px 10px; border-radius: 999px; color: var(--c);
+.tag { font-size: 12px; font-weight: 600; line-height: 1.3; padding: 4px 10px; border-radius: 999px; color: var(--ct, var(--c));
   background: color-mix(in srgb, var(--c) 10%, transparent); border: 1px solid color-mix(in srgb, var(--c) 28%, transparent); }
 .tag.claimed { background: transparent; border-style: dashed; border-color: color-mix(in srgb, var(--c) 60%, transparent); }
-.tag small { font-size: 10px; font-weight: 600; color: var(--muted); margin-left: 5px; }
+.tag small { font-size: 10px; font-weight: 600; color: var(--muted); margin-left: 6px; }
 .ii { display: grid; }
-.ii p { grid-area: 1 / 1; margin: 0; font-size: 14.5px; line-height: 1.5; transition: opacity .25s; }
+.ii p { grid-area: 1 / 1; margin: 0; font-size: 15px; line-height: 1.5; transition: opacity .25s; }
 .ii p[aria-hidden="true"] { opacity: 0; visibility: hidden; }
 
 .passage {
@@ -320,28 +315,28 @@ nav.orbit { display: flex; flex-direction: column; align-items: center; justify-
   background: linear-gradient(var(--glass-strong), var(--glass-strong)) padding-box,
               linear-gradient(90deg, var(--a), var(--b)) border-box;
 }
-.passage-top { display: flex; align-items: center; gap: 10px; font-size: 11.5px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; }
+.passage-top { display: flex; align-items: center; gap: 10px; font-size: 12px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; }
 .passage-top .lbl { color: var(--muted); }
-.passage-top .x { font-size: 15px; color: var(--muted); letter-spacing: 0; }
+.passage-top .x { font-size: 16px; color: var(--muted); letter-spacing: 0; }
 .passage p { margin: 0; font-size: 15px; max-width: 90ch; }
 
 /* Directional Passage (schema 3): closes each Reading, runs from this god to its partner,
    and opens the partner's Reading when pressed. Bottom-aligned so both cards end level. */
 .pass {
   margin-top: auto; display: grid; gap: 6px; text-align: left; cursor: pointer;
-  padding: 13px 16px; border-radius: 18px; border: 1.5px solid transparent;
+  padding: 12px 16px; border-radius: 18px; border: 1.5px solid transparent;
   background: linear-gradient(var(--glass-strong), var(--glass-strong)) padding-box,
               linear-gradient(90deg, var(--a), var(--b)) border-box;
   transition: transform .25s, box-shadow .25s;
 }
 .pass:hover { transform: translateY(-2px); box-shadow: 0 10px 24px -14px var(--shadow); }
-.pass-top { display: flex; align-items: center; gap: 8px; font-size: 11.5px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; }
+.pass-top { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; }
 .pass-top .lbl, .pass-top .arrow { color: var(--muted); }
 .pass-top .arrow { font-size: 14px; letter-spacing: 0; }
-.pass-text { font-size: 14.5px; line-height: 1.5; }
+.pass-text { font-size: 15px; line-height: 1.5; }
 
 /* Framoid's view */
-.field { padding: 26px 28px; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 28px; align-items: start; }
+.field { padding: 28px; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 28px; align-items: start; }
 .sigil { width: 140px; aspect-ratio: 1; max-width: 100%; border-radius: 50%; position: relative;
   background: conic-gradient(from 210deg, var(--rodim), var(--aromi), var(--mir), var(--ora), var(--idrom), var(--doria), var(--rodim));
   animation: spin 80s linear infinite; }
@@ -352,15 +347,16 @@ nav.orbit { display: flex; flex-direction: column; align-items: center; justify-
 .field-body h2 { font-family: var(--display); font-weight: 700; font-size: 32px; letter-spacing: -0.025em; margin: 0; line-height: 1.05; }
 .field-body .question { font-size: 15px; }
 .field-text { display: grid; gap: 10px; max-width: 75ch; }
-.field-text p { margin: 0; font-size: 15.5px; }
-.held-title { font-size: 11.5px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); margin-top: 6px; }
+.field-text p { margin: 0; font-size: 16px; }
+.held-title { font-size: 12px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); margin-top: 6px; }
 .held { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
-.chip { padding: 13px 15px; border-radius: 18px; background: var(--glass-strong); border: 1px solid var(--stroke); box-shadow: inset 0 1px 0 var(--hl); display: grid; gap: 6px; align-content: start; }
-.chip-top { display: flex; align-items: center; gap: 6px; font-size: 11.5px; font-weight: 700; color: var(--muted); }
-.chip-top b { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+.chip { padding: 12px 14px; border-radius: 18px; background: var(--glass-strong); border: 1px solid var(--stroke); box-shadow: inset 0 1px 0 var(--hl); display: grid; gap: 6px; align-content: start; }
+.chip-top { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; color: var(--muted); }
+.chip-top b { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
 button.chip { font: inherit; color: inherit; text-align: left; cursor: pointer; transition: transform .25s, box-shadow .25s; }
-button.chip:hover { transform: translateY(-2px); box-shadow: inset 0 1px 0 var(--hl), 0 10px 24px -14px var(--shadow); }.chip p { margin: 0; font-size: 13.5px; line-height: 1.45; }
-.note { font-size: 12.5px; color: var(--muted); margin: 4px 0 0; }
+button.chip:hover { transform: translateY(-2px); box-shadow: inset 0 1px 0 var(--hl), 0 10px 24px -14px var(--shadow); }
+.chip p { margin: 0; font-size: 14px; line-height: 1.45; }
+.note { font-size: 13px; color: var(--muted); margin: 4px 0 0; }
 
 /* Phone tab bar */
 .tabbar { display: none; }
@@ -382,11 +378,11 @@ button.chip:hover { transform: translateY(-2px); box-shadow: inset 0 1px 0 var(-
     display: grid; grid-template-columns: repeat(5, 1fr); gap: 2px;
     position: fixed; z-index: 5; bottom: calc(10px + env(safe-area-inset-bottom, 0px));
     left: max(16px, env(safe-area-inset-left, 0px)); right: max(16px, env(safe-area-inset-right, 0px));
-    padding: 5px; border-radius: 999px;
+    padding: 6px; border-radius: 999px;
   }
-  .tabbar button { border: 0; background: transparent; border-radius: 999px; padding: 7px 2px 6px; cursor: pointer; display: grid; justify-items: center; gap: 3px; font-size: 11px; font-weight: 600; color: var(--muted); }
+  .tabbar button { border: 0; background: transparent; border-radius: 999px; padding: 8px 2px 6px; cursor: pointer; display: grid; justify-items: center; gap: 4px; font-size: 11px; font-weight: 600; color: var(--muted); }
   .tabbar button[aria-current="true"] { background: var(--glass-strong); color: var(--ink); box-shadow: 0 1px 4px var(--shadow), inset 0 1px 0 var(--hl); }
-  .tabbar .dots { display: flex; gap: 3px; }
+  .tabbar .dots { display: flex; gap: 4px; }
   .tabbar .dots b { width: 8px; height: 8px; border-radius: 50%; }
 }
 
@@ -462,7 +458,7 @@ button.chip:hover { transform: translateY(-2px); box-shadow: inset 0 1px 0 var(-
   // Schema 1–2 Reflections keep a single passage string, shown as the older shared Passage card.
   const passOut = (from, to, text) => text ? `<button type="button" class="pass" data-to="${to}" style="--a: var(--${from}); --b: var(--${to})"
       aria-label="Passage from ${PANTHEON[from].name} to ${PANTHEON[to].name}: ${esc(text)} Open ${PANTHEON[to].name}'s Reading.">
-      <span class="pass-top"><span class="lbl">Passage</span><span class="arrow">→</span><span style="color:var(--${to})">${PANTHEON[to].name}</span></span>
+      <span class="pass-top"><span class="lbl">Passage</span><span class="arrow">→</span><span style="color:var(--${to}-text)">${PANTHEON[to].name}</span></span>
       <span class="pass-text">${esc(text)}</span></button>` : "";
   // schema 4: optional "instruments" (from the god's list) and "claimed" (new, not yet on the list) per Reading.
   const instruments = (id, r) => {
@@ -474,7 +470,7 @@ button.chip:hover { transform: translateY(-2px); box-shadow: inset 0 1px 0 var(-
   };
   const reading = (id, r, pass = "") => {
     const g = PANTHEON[id];
-    return `<article class="card glass" id="card-${id}" style="--c: var(--${id})">
+    return `<article class="card glass" id="card-${id}" style="--c: var(--${id}); --ct: var(--${id}-text)">
       <div class="god-row"><span class="dot"></span><h3 class="god-name">${g.name}</h3><span class="epithet">${g.epithet}</span></div>
       ${stance(r.stance)}
       <p class="question">${g.q}</p>
@@ -502,7 +498,7 @@ button.chip:hover { transform: translateY(-2px); box-shadow: inset 0 1px 0 var(-
       <div class="cards">
         ${reading(a, d[a] || {}, split ? passOut(a, b, ps[a]) : "")}${reading(b, d[b] || {}, split ? passOut(b, a, ps[b]) : "")}
         ${!split && ps ? `<div class="passage glass" style="--a: var(--${a}); --b: var(--${b})">
-          <div class="passage-top"><span class="lbl">Passage</span><span style="color:var(--${a})">${PANTHEON[a].name}</span><span class="x">⇄</span><span style="color:var(--${b})">${PANTHEON[b].name}</span></div>
+          <div class="passage-top"><span class="lbl">Passage</span><span style="color:var(--${a}-text)">${PANTHEON[a].name}</span><span class="x">⇄</span><span style="color:var(--${b}-text)">${PANTHEON[b].name}</span></div>
           <p>${esc(ps)}</p>
         </div>` : ""}
       </div>
@@ -556,7 +552,7 @@ button.chip:hover { transform: translateY(-2px); box-shadow: inset 0 1px 0 var(-
     const mark = st === "embraces" ? "↑" : st === "opposes" ? "↓" : "";
     const word = st === "embraces" ? ", embraces the Subject" : st === "opposes" ? ", opposes the Subject" : "";
     return `<button type="button" class="snode ${p.y < 50 ? "up" : "down"}${st === "opposes" ? " opp" : ""}" id="snode-${id}" data-god="${id}" data-view="${v.id}"
-      style="--c: var(--${id}); left:${p.x}%; top:${p.y}%" aria-label="${g.name}, ${g.epithet}${word}: open ${v.title}">
+      style="--c: var(--${id}); --ct: var(--${id}-text); left:${p.x}%; top:${p.y}%" aria-label="${g.name}, ${g.epithet}${word}: open ${v.title}">
       ${mark ? `<span class="st" aria-hidden="true">${mark}</span>` : ""}<span class="lbl"><strong>${g.name}</strong><small>${g.epithet}</small></span></button>`;
   }).join("");
   // Framoid's tally. The centre ring gets one 60° sector per god, centred on that god's direction

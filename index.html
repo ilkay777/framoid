@@ -12,8 +12,8 @@
   --stroke: rgba(255,255,255,.7); --hairline: rgba(20,24,40,.08);
   --hl: rgba(255,255,255,.95); --shadow: rgba(30,36,70,.14); --blob: .5; --focus: #0a6cff;
   --rodim: #c4461a; --aromi: #13789a; --mir: #95661d; --ora: #5e47b8; --idrom: #4b5b6d; --doria: #2f8443;
-  --text: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --text: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --display: var(--text);
 }
 @media (prefers-color-scheme: dark) {
   :root {
@@ -33,38 +33,38 @@ body {
   padding: max(20px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(28px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
 }
 .fields { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
-.fields i { position: absolute; width: 60vmax; height: 60vmax; border-radius: 50%; filter: blur(70px); opacity: var(--blob); }
+.fields i { position: absolute; width: 60vmax; height: 60vmax; border-radius: 50%; filter: blur(80px); opacity: var(--blob); }
 .fields i:nth-child(1) { background: var(--aromi); left: -20vmax; top: -22vmax; }
 .fields i:nth-child(2) { background: var(--doria); right: -24vmax; top: 10vh; opacity: calc(var(--blob) * .8); }
 .fields i:nth-child(3) { background: var(--rodim); left: 10vw; bottom: -34vmax; opacity: calc(var(--blob) * .7); }
 .fields i:nth-child(4) { background: var(--ora); right: 5vw; bottom: -30vmax; opacity: calc(var(--blob) * .6); }
 .glass {
   background: var(--glass); border: 1px solid var(--stroke); border-radius: 26px;
-  -webkit-backdrop-filter: blur(28px) saturate(1.6); backdrop-filter: blur(28px) saturate(1.6);
-  box-shadow: inset 0 1px 0 var(--hl), 0 10px 34px -12px var(--shadow);
+  -webkit-backdrop-filter: blur(28px) saturate(175%); backdrop-filter: blur(28px) saturate(175%);
+  box-shadow: inset 0 1px 0 var(--hl), 0 18px 50px -20px var(--shadow), 0 2px 6px -2px var(--shadow);
 }
 main { max-width: 880px; margin: 0 auto; }
-header { padding: 26px 26px 22px; margin-bottom: 18px; }
+header { padding: 24px 24px 22px; margin-bottom: 18px; }
 h1 { font: 700 34px/1.1 var(--display); letter-spacing: -.02em; margin: 0 0 8px; }
 .lede { margin: 0; color: var(--muted); max-width: 60ch; }
 .gods { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 14px; font-size: 13px; color: var(--muted); }
 .gods span::before { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; background: var(--c); vertical-align: 1px; }
 .list { display: grid; gap: 14px; }
 a.card { display: block; padding: 20px 22px; color: inherit; text-decoration: none; transition: transform .25s ease, box-shadow .25s ease; }
-a.card:hover { transform: translateY(-2px); box-shadow: inset 0 1px 0 var(--hl), 0 16px 40px -14px var(--shadow); }
+a.card:hover { transform: translateY(-2px); box-shadow: inset 0 1px 0 var(--hl), 0 18px 50px -20px var(--shadow), 0 2px 6px -2px var(--shadow), 0 10px 24px -14px var(--shadow); }
 a.card:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
-.card h2 { font: 650 20px/1.25 var(--display); letter-spacing: -.01em; margin: 0 0 6px; }
+.card h2 { font: 600 20px/1.25 var(--display); letter-spacing: -.01em; margin: 0 0 6px; }
 .card p { margin: 0; color: var(--muted); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .stance { display: flex; align-items: center; gap: 10px; margin-top: 12px; font-size: 13px; }
 .dots { display: flex; gap: 5px; }
 .dots b { width: 12px; height: 12px; border-radius: 50%; background: var(--c); border: 2px solid var(--c); }
 .dots b.opp { background: transparent; border-style: dashed; }
-.result { font-weight: 650; }
+.result { font-weight: 600; }
 .foot { display: flex; align-items: center; gap: 12px; margin-top: 12px; font-size: 13px; color: var(--muted); }
 .foot .stance { margin-top: 0; color: var(--ink); }
 .foot .date { margin-left: auto; }
-.empty { padding: 26px; color: var(--muted); text-align: center; }
-footer { text-align: center; color: var(--muted); font-size: 12px; margin-top: 26px; }
+.empty { padding: 24px; color: var(--muted); text-align: center; }
+footer { text-align: center; color: var(--muted); font-size: 12px; margin-top: 28px; }
 @media (max-width: 560px) { header { padding: 22px 20px 18px; } h1 { font-size: 28px; } a.card { padding: 18px; } }
 @media (prefers-reduced-motion: reduce) { a.card { transition: none; } a.card:hover { transform: none; } }
 </style>
