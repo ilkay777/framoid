@@ -741,7 +741,7 @@ Apply the instruction and follow every rule above. Change only what the instruct
     if (!queue.length) { sheet(`<h2>Write all</h2><p class="muted small">No Subjects are ready to write.</p><div class="row"><button id="wa-close">Close</button></div>`); $("wa-close").onclick = closeSheet; return; }
     const n = queue.length;
     sheet(`<h2>Write all</h2>
-      <p class="muted small">${n} Subject${n > 1 ? "s are" : " is"} ready. They are written one after another with the standard model, about a minute or two each. Each write uses your plan like one chat message. Keep this page open until it finishes.</p>
+      <p class="muted small">${n} Subject${n > 1 ? "s are" : " is"} ready. They are written one after another with the standard model, about a minute or two each. Each write uses your plan like one chat message. Keep this tab open and in front, with the computer awake, until it finishes: a hidden tab can pause the writing. A write that stalls is tried once more.</p>
       <div class="picks">${queue.map((it, i) => `<div class="pick"><span>${esc(it.proposal.title)}</span><span class="chip" id="wa-${i}">Waiting</span></div>`).join("")}</div>
       <div id="wa-status" class="note"></div>
       <div class="row"><button id="wa-close">Close</button><button id="wa-stop" hidden>Stop</button><button class="primary" id="wa-go"${sample ? "" : " disabled"}>Write ${n}</button></div>`);
@@ -753,23 +753,40 @@ Apply the instruction and follow every rule above. Change only what the instruct
       busy = true; $("wa-go").hidden = true; $("wa-close").hidden = true; $("wa-stop").hidden = false;
       const taken = []; let ok = 0, failed = 0, limit = null;
       const t0 = Date.now();
+      // Keep the screen awake while writing, where the browser allows it (renewed when the tab comes back).
+      let lock = null;
+      const wake = async () => { try { if (navigator.wakeLock && document.visibilityState === "visible") lock = await navigator.wakeLock.request("screen"); } catch {} };
+      const onVis = () => { if (document.visibilityState === "visible") wake(); };
+      document.addEventListener("visibilitychange", onVis); wake();
+      // Watchdog: a write that sends no new text for STALL ms, or runs longer than MAX ms, is stopped and tried
+      // once more; a second stall marks it Failed and the queue moves on. (Hidden tabs can freeze a write.)
+      const W = window.__WA || {}, STALL = W.stall || 6 * 60000, MAX = W.max || 15 * 60000;
       for (let i = 0; i < n && !stop; i++) {
         const chip = $("wa-" + i), it = queue[i];
-        chip.className = "chip ready"; chip.textContent = "Writing…";
-        const t1 = Date.now(); let got = 0;
-        const tick = setInterval(() => { chip.textContent = got ? got.toLocaleString() + " chars" : "Thinking " + elapsed(Date.now() - t1); }, 1000);
-        $("wa-status").textContent = `Writing ${i + 1} of ${n}…`;
-        ctl = new AbortController();
-        try {
-          await writeCore(it, "default", ctl.signal, ({ text }) => { got = text.length; }, taken);
-          taken.push(it.number); ok++;
-          chip.className = "chip written"; chip.textContent = "Written · " + it.number;
-        } catch (err) {
-          if (err && err.code === "cancelled") { chip.className = "chip"; chip.textContent = "Stopped"; break; }
-          failed++; chip.className = "chip"; chip.style.color = "var(--danger)"; chip.textContent = "Failed"; chip.title = errText(err);
-          if (err && (err.code === "rate_limited" || err.code === "session_expired" || err.code === "not_granted" || err.code === "sampling_disabled")) { limit = errText(err); break; }
-        } finally { clearInterval(tick); }
+        let done = false;
+        for (let attempt = 1; attempt <= 2 && !done && !stop; attempt++) {
+          chip.className = "chip ready"; chip.style.color = ""; chip.textContent = attempt > 1 ? "Retrying…" : "Writing…";
+          const t1 = Date.now(); let got = 0, last = Date.now(), stalled = false;
+          const tick = setInterval(() => {
+            chip.textContent = (attempt > 1 ? "Retry · " : "") + (got ? got.toLocaleString() + " chars" : "Thinking " + elapsed(Date.now() - t1));
+            if (Date.now() - last > STALL || Date.now() - t1 > MAX) { stalled = true; if (ctl) ctl.abort(); }
+          }, 1000);
+          $("wa-status").textContent = `Writing ${i + 1} of ${n}…`;
+          ctl = new AbortController();
+          try {
+            await writeCore(it, "default", ctl.signal, ({ text }) => { if (text.length !== got) { got = text.length; last = Date.now(); } }, taken);
+            taken.push(it.number); ok++; done = true;
+            chip.className = "chip written"; chip.textContent = "Written · " + it.number;
+          } catch (err) {
+            if (stalled && !stop) { if (attempt === 2) { failed++; chip.className = "chip"; chip.style.color = "var(--danger)"; chip.textContent = "Failed"; chip.title = "Stalled twice: no answer came back."; } continue; }
+            if (err && err.code === "cancelled") { chip.className = "chip"; chip.textContent = "Stopped"; stop = true; break; }
+            failed++; done = true; chip.className = "chip"; chip.style.color = "var(--danger)"; chip.textContent = "Failed"; chip.title = errText(err);
+            if (err && (err.code === "rate_limited" || err.code === "session_expired" || err.code === "not_granted" || err.code === "sampling_disabled")) { limit = errText(err); stop = true; }
+          } finally { clearInterval(tick); }
+        }
       }
+      document.removeEventListener("visibilitychange", onVis);
+      try { if (lock) await lock.release(); } catch {}
       busy = false; ctl = null;
       const left = n - ok - failed;
       $("wa-status").innerHTML = esc(`Wrote ${ok} of ${n} in ${elapsed(Date.now() - t0)}.` + (failed ? ` ${failed} failed.` : "") + (left ? ` ${left} not started.` : "")
