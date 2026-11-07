@@ -1,6 +1,471 @@
 {
  "reflections": [
   {
+   "slug": "38",
+   "number": "38",
+   "date": "2026-11-07",
+   "title": "The football World Cup grows to 48 teams across a continent",
+   "statement": "The world's biggest football tournament expands from 32 to 48 national teams, hosted across several countries on one continent. More nations get a place, and the number of matches rises sharply. Fans and players argue over whether quality and fairness suffer.",
+   "stances": {
+    "rodim": "opposes",
+    "aromi": "embraces",
+    "mir": "opposes",
+    "ora": "embraces",
+    "idrom": "opposes",
+    "doria": "embraces"
+   }
+  },
+  {
+   "slug": "37",
+   "number": "37",
+   "date": "2026-11-07",
+   "title": "A strong El Niño begins",
+   "statement": "Warm water spreads across the central and eastern tropical Pacific, and forecasters declare a strong El Niño. Rain patterns shift around the world, bringing drought to some regions and floods to others. Governments and farmers prepare for a hard year or two.",
+   "stances": {
+    "rodim": "opposes",
+    "aromi": "embraces",
+    "mir": "embraces",
+    "ora": "opposes",
+    "idrom": "embraces",
+    "doria": "opposes"
+   }
+  },
+  {
+   "slug": "36",
+   "number": "36",
+   "date": "2026-11-07",
+   "title": "The pressure to optimize every part of life",
+   "statement": "People track their sleep, steps, food, work and looks, and try to push each number higher. Social media rewards visible self-improvement. For some it builds better habits; for others it becomes a constant source of stress.",
+   "stances": {
+    "rodim": "embraces",
+    "aromi": "opposes",
+    "mir": "embraces",
+    "ora": "opposes",
+    "idrom": "embraces",
+    "doria": "opposes"
+   }
+  },
+  {
+   "slug": "35",
+   "number": "35",
+   "date": "2026-11-07",
+   "title": "Measles returns after a gap in childhood vaccination",
+   "statement": "After years of missed or delayed childhood vaccinations, measles spreads again in a country where it had become rare. Hospitals fill with sick children. Health workers rush to vaccinate those who missed their doses.",
+   "stances": {
+    "rodim": "embraces",
+    "aromi": "embraces",
+    "mir": "embraces",
+    "ora": "opposes",
+    "idrom": "opposes",
+    "doria": "opposes"
+   }
+  },
+  {
+   "slug": "34",
+   "number": "34",
+   "date": "2026-11-07",
+   "title": "A country bans tobacco for life for everyone born after a set year",
+   "statement": "A law makes it illegal ever to sell tobacco to anyone born after a certain year. The legal smoking age rises by one year every year, so a whole generation never gains the right to buy. Adults who can already buy tobacco keep that right.",
+   "stances": {
+    "rodim": "embraces",
+    "aromi": "opposes",
+    "mir": "embraces",
+    "ora": "opposes",
+    "idrom": "embraces",
+    "doria": "opposes"
+   }
+  },
+  {
+   "slug": "33",
+   "number": "33",
+   "date": "2026-11-07",
+   "title": "A rainforest nation cuts forest loss to a decades-low",
+   "statement": "A country with a vast tropical rainforest reports its lowest rate of forest clearing in decades. The government credits stronger enforcement, fines and satellite monitoring. Farmers and ranchers who clear land for crops and cattle feel the pressure.",
+   "stances": {
+    "rodim": "embraces",
+    "aromi": "opposes",
+    "mir": "embraces",
+    "ora": "embraces",
+    "idrom": "embraces",
+    "doria": "opposes"
+   }
+  },
+  {
+   "slug": "32",
+   "number": "32",
+   "date": "2026-11-07",
+   "title": "Nations meet to cut emissions while a war drives up oil",
+   "statement": "Governments gather for their yearly climate summit to agree on cutting greenhouse gases. At the same time, a war has pushed oil prices up and made energy security the top worry. Some push to speed the shift to clean energy, others to secure more oil and gas.",
+   "stances": {
+    "rodim": "embraces",
+    "aromi": "opposes",
+    "mir": "embraces",
+    "ora": "embraces",
+    "idrom": "embraces",
+    "doria": "opposes"
+   }
+  },
+  {
+   "slug": "31",
+   "number": "31",
+   "date": "2026-11-07",
+   "title": "People fly around the Moon for the first time in half a century",
+   "statement": "A crew of astronauts launches on a mission to loop around the Moon and return to Earth. No human has travelled beyond low Earth orbit since the early 1970s. The flight is a test for later landings.",
+   "stances": {
+    "rodim": "embraces",
+    "aromi": "embraces",
+    "mir": "embraces",
+    "ora": "embraces",
+    "idrom": "embraces",
+    "doria": "embraces"
+   }
+  },
+  {
+   "slug": "30",
+   "number": "30",
+   "date": "2026-11-07",
+   "title": "A law says AI alone may not fire a worker",
+   "statement": "A legislature passes a law that bars employers from dismissing or disciplining workers on the word of an automated system alone. A human must review such decisions, and workers can ask how they were made. Employers that manage staff by algorithm must change how they work.",
+   "stances": {
+    "rodim": "embraces",
+    "aromi": "opposes",
+    "mir": "opposes",
+    "ora": "embraces",
+    "idrom": "embraces",
+    "doria": "embraces"
+   }
+  },
+  {
+   "slug": "29",
+   "number": "29",
+   "date": "2026-11-07",
+   "title": "Driverless taxis spread to many new cities",
+   "statement": "Companies running taxis with no human driver expand from a few test cities to many more. Riders in large parts of the country can now hail a robotaxi. Taxi and ride-hail drivers fear for their jobs.",
+   "stances": {
+    "rodim": "embraces",
+    "aromi": "embraces",
+    "mir": "embraces",
+    "ora": "opposes",
+    "idrom": "embraces",
+    "doria": "opposes"
+   }
+  },
+  {
+   "slug": "28",
+   "number": "28",
+   "date": "2026-11-07",
+   "title": "Scientists switch brain cells on and off with light",
+   "statement": "Scientists find a way to make chosen nerve cells respond to light, using genes for light-sensitive proteins from algae. With a flash of light they can switch specific cells on or off and watch what changes. The method is starting to move from the lab into treatments.",
+   "stances": {
+    "rodim": "embraces",
+    "aromi": "opposes",
+    "mir": "embraces",
+    "ora": "opposes",
+    "idrom": "embraces",
+    "doria": "opposes"
+   }
+  },
+  {
+   "slug": "27",
+   "number": "27",
+   "date": "2026-11-07",
+   "title": "A nationwide general strike over the cost of living",
+   "statement": "Unions call a one-day general strike across a country to protest rising prices and wages that lag behind. Trains, schools and public offices stop. The government faces pressure to raise pay or cut costs for households.",
+   "stances": {
+    "rodim": "embraces",
+    "aromi": "opposes",
+    "mir": "embraces",
+    "ora": "embraces",
+    "idrom": "opposes",
+    "doria": "embraces"
+   }
+  },
+  {
+   "slug": "26",
+   "number": "26",
+   "date": "2026-11-07",
+   "title": "The largest delivery app buys its main grocery rival",
+   "statement": "The country's biggest food-delivery app agrees to buy the leading grocery-delivery app. Together they would handle most online deliveries from restaurants and shops. Competition regulators must decide whether to allow the deal.",
+   "stances": {
+    "rodim": "embraces",
+    "aromi": "opposes",
+    "mir": "embraces",
+    "ora": "opposes",
+    "idrom": "embraces",
+    "doria": "opposes"
+   }
+  },
+  {
+   "slug": "25",
+   "number": "25",
+   "date": "2026-11-07",
+   "title": "Two neighbours go to war over militants sheltering across the border",
+   "statement": "One state accuses its neighbour of sheltering armed groups that attack across their shared border. After repeated attacks, it strikes their bases on the neighbour's soil, and the neighbour hits back. The fighting turns into open war between the two states.",
+   "stances": {
+    "rodim": "embraces",
+    "aromi": "opposes",
+    "mir": "embraces",
+    "ora": "opposes",
+    "idrom": "opposes",
+    "doria": "opposes"
+   }
+  },
+  {
+   "slug": "24",
+   "number": "24",
+   "date": "2026-11-07",
+   "title": "A new government ends its predecessor's feud with a neighbour",
+   "statement": "After an election, a new government reverses its predecessor's hostile line toward a neighbouring country. It reopens talks, softens its language and drops some blocking moves. Some voters welcome the change, while others see it as giving ground.",
+   "stances": {
+    "rodim": "opposes",
+    "aromi": "embraces",
+    "mir": "embraces",
+    "ora": "embraces",
+    "idrom": "opposes",
+    "doria": "embraces"
+   }
+  },
+  {
+   "slug": "23",
+   "number": "23",
+   "date": "2026-11-07",
+   "title": "A country opens a mega-prison to fight record violence",
+   "statement": "After years of rising murders, a government builds a huge maximum-security prison for gang members. It promises to lock up leaders fast and cut their contact with the outside. Critics raise concerns about mass arrests, due process and prison conditions.",
+   "stances": {
+    "rodim": "embraces",
+    "aromi": "opposes",
+    "mir": "embraces",
+    "ora": "opposes",
+    "idrom": "embraces",
+    "doria": "opposes"
+   }
+  },
+  {
+   "slug": "22",
+   "number": "22",
+   "date": "2026-11-07",
+   "title": "Thieves steal famous paintings from a museum",
+   "statement": "Thieves break into a museum and escape with several well-known paintings. The works are too famous to sell openly. Police, insurers and the art world begin the search.",
+   "stances": {
+    "rodim": "embraces",
+    "aromi": "embraces",
+    "mir": "embraces",
+    "ora": "opposes",
+    "idrom": "opposes",
+    "doria": "opposes"
+   }
+  },
+  {
+   "slug": "21",
+   "number": "21",
+   "date": "2026-11-07",
+   "title": "Farms are joined into a new national park",
+   "statement": "A government and conservation groups buy a block of private farms and merge them into a new national park. Fences come down, cattle leave and wild animals are brought back. Some farm families sell gladly; others worry about jobs and the local economy.",
+   "stances": {
+    "rodim": "embraces",
+    "aromi": "embraces",
+    "mir": "embraces",
+    "ora": "embraces",
+    "idrom": "embraces",
+    "doria": "opposes"
+   }
+  },
+  {
+   "slug": "20",
+   "number": "20",
+   "date": "2026-11-07",
+   "title": "An adult moves back in with their parents to afford life",
+   "statement": "A working adult in their late twenties or thirties gives up their rented flat and moves back into their parents' home. Rent, food and bills had grown faster than their pay. They save money but lose some independence, and the whole household has to adjust.",
+   "stances": {
+    "rodim": "embraces",
+    "aromi": "embraces",
+    "mir": "embraces",
+    "ora": "opposes",
+    "idrom": "opposes",
+    "doria": "embraces"
+   }
+  },
+  {
+   "slug": "19",
+   "number": "19",
+   "date": "2026-11-07",
+   "title": "Wildfire smoke from one country closes schools in its neighbours",
+   "statement": "Fires burning in one country send thick smoke across its borders for weeks. Neighbouring countries close schools, cancel events and tell people to stay indoors. They press the country where the fires burn to act.",
+   "stances": {
+    "rodim": "embraces",
+    "aromi": "embraces",
+    "mir": "embraces",
+    "ora": "embraces",
+    "idrom": "opposes",
+    "doria": "embraces"
+   }
+  },
+  {
+   "slug": "18",
+   "number": "18",
+   "date": "2026-11-07",
+   "title": "A small town fights a giant AI data centre",
+   "statement": "A tech company plans a huge AI data centre on farmland at the edge of a small town. It promises jobs and tax income; residents fear for their water, their power bills and their quiet. The town council must decide whether to approve it.",
+   "stances": {
+    "rodim": "embraces",
+    "aromi": "opposes",
+    "mir": "opposes",
+    "ora": "embraces",
+    "idrom": "embraces",
+    "doria": "opposes"
+   }
+  },
+  {
+   "slug": "17",
+   "number": "17",
+   "date": "2026-11-07",
+   "title": "A country bans social media for under-16s",
+   "statement": "A government passes a law that bars children under 16 from holding social media accounts. Platforms must check users' ages or face large fines. Parents and teenagers argue over whether it protects young people or cuts them off.",
+   "stances": {
+    "rodim": "embraces",
+    "aromi": "opposes",
+    "mir": "embraces",
+    "ora": "opposes",
+    "idrom": "embraces",
+    "doria": "opposes"
+   }
+  },
+  {
+   "slug": "16",
+   "number": "16",
+   "date": "2026-11-07",
+   "title": "A company rates its staff by how much AI they use",
+   "statement": "A large company starts measuring how much each employee uses AI tools and adds the figure to performance reviews. Heavy users may be favoured for pay and promotion. Some staff worry that usage, not results, is what gets rewarded.",
+   "stances": {
+    "rodim": "embraces",
+    "aromi": "opposes",
+    "mir": "opposes",
+    "ora": "opposes",
+    "idrom": "embraces",
+    "doria": "opposes"
+   }
+  },
+  {
+   "slug": "15",
+   "number": "15",
+   "date": "2026-11-07",
+   "title": "Young people protest rents they can't afford",
+   "statement": "Thousands of young people march through a country's cities against rents that take most of their pay. They demand rent caps, more public housing and limits on short-term holiday lets. Landlords and builders argue that caps will cut the supply of homes.",
+   "stances": {
+    "rodim": "embraces",
+    "aromi": "opposes",
+    "mir": "embraces",
+    "ora": "embraces",
+    "idrom": "embraces",
+    "doria": "opposes"
+   }
+  },
+  {
+   "slug": "14",
+   "number": "14",
+   "date": "2026-11-07",
+   "title": "A government rolls back tariffs after prices rise",
+   "statement": "A government that raised import tariffs to protect home industries cuts many of them again after consumer prices climb. It says the rollback will ease household costs. Industries that gained protection argue it leaves them exposed.",
+   "stances": {
+    "rodim": "opposes",
+    "aromi": "embraces",
+    "mir": "opposes",
+    "ora": "embraces",
+    "idrom": "opposes",
+    "doria": "embraces"
+   }
+  },
+  {
+   "slug": "13",
+   "number": "13",
+   "date": "2026-11-07",
+   "title": "Secondary-school students blockade schools across a country",
+   "statement": "Teenage students block the gates of their schools in cities across the country. They protest against a government reform they say will harm their education and their future. Classes stop in many schools, and the government must decide whether to negotiate.",
+   "stances": {
+    "rodim": "embraces",
+    "aromi": "embraces",
+    "mir": "embraces",
+    "ora": "embraces",
+    "idrom": "opposes",
+    "doria": "embraces"
+   }
+  },
+  {
+   "slug": "12",
+   "number": "12",
+   "date": "2026-11-07",
+   "title": "A government takes a stake in its leading AI company",
+   "statement": "A national government buys a minority stake in the country's best-known AI company. It says the move keeps a strategic technology at home. The company gains public money and a powerful new shareholder.",
+   "stances": {
+    "rodim": "embraces",
+    "aromi": "opposes",
+    "mir": "embraces",
+    "ora": "opposes",
+    "idrom": "embraces",
+    "doria": "opposes"
+   }
+  },
+  {
+   "slug": "11",
+   "number": "11",
+   "date": "2026-11-07",
+   "title": "War closes a sea passage that carries much of the world's oil",
+   "statement": "Fighting in a region shuts a narrow strait that a large share of the world's seaborne oil passes through. Tankers stop or take long detours, and oil prices jump. Importing countries scramble for other supplies.",
+   "stances": {
+    "rodim": "embraces",
+    "aromi": "opposes",
+    "mir": "embraces",
+    "ora": "opposes",
+    "idrom": "opposes",
+    "doria": "opposes"
+   }
+  },
+  {
+   "slug": "10",
+   "number": "10",
+   "date": "2026-11-07",
+   "title": "A mid-term election becomes a verdict on the leader",
+   "statement": "Halfway through a leader's term, voters elect a new legislature. The campaign turns into a vote on the leader's record rather than on local candidates. The result will decide how much the leader can still pass into law.",
+   "stances": {
+    "rodim": "embraces",
+    "aromi": "opposes",
+    "mir": "embraces",
+    "ora": "embraces",
+    "idrom": "embraces",
+    "doria": "opposes"
+   }
+  },
+  {
+   "slug": "9",
+   "number": "9",
+   "date": "2026-11-07",
+   "title": "A central bank chief resigns early to speak freely on politics",
+   "statement": "The head of a central bank steps down before the end of the term. The stated reason is to speak openly on political questions, which the job's neutrality rules forbid. The government must now choose a successor.",
+   "stances": {
+    "rodim": "embraces",
+    "aromi": "opposes",
+    "mir": "opposes",
+    "ora": "embraces",
+    "idrom": "opposes",
+    "doria": "embraces"
+   }
+  },
+  {
+   "slug": "8",
+   "number": "8",
+   "date": "2026-11-04",
+   "title": "A country deports most of its undocumented migrants",
+   "statement": "A national government decides to remove most of the people living in the country without legal status, within a few years. It expands arrests, detention and removal flights. Many of those affected have worked and raised families there for years.",
+   "stances": {
+    "rodim": "embraces",
+    "aromi": "opposes",
+    "mir": "opposes",
+    "ora": "opposes",
+    "idrom": "embraces",
+    "doria": "opposes"
+   }
+  },
+  {
    "slug": "7",
    "number": "7",
    "date": "2026-11-03",
