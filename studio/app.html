@@ -172,7 +172,7 @@ textarea { flex: 1; resize: none; font: 15px/1.45 var(--text); color: var(--ink)
   <section class="view home" id="v-home">
     <div class="intro glass">
       <h2>Framoid Studio</h2>
-      <div class="row-start"><button class="primary" id="new">New Reflection</button><button id="writeall" hidden>Write all</button><button id="bulk" hidden>Publish several</button></div>
+      <div class="row-start"><button class="primary" id="new">New Reflection</button><button id="writeall" hidden>Write</button><button id="bulk" hidden>Publish</button></div>
       <p class="note" id="unavailable" hidden></p>
     </div>
     <div class="list" id="list"><div class="glass empty">Loading…</div></div>
@@ -527,7 +527,7 @@ Apply the instruction and follow every rule above. Change only what the instruct
   // Writing streams, so the status shows progress; on failure it says how long it ran and how much came back,
   // and offers the standard model as well as a retry (the most capable model sometimes drops long answers).
   const elapsed = ms => { const s = Math.round(ms / 1000); return s < 60 ? s + " s" : Math.floor(s / 60) + " min " + (s % 60) + " s"; };
-  // Writes one Subject into a Reflection and saves it. Shared by "Write this Reflection" and "Write all".
+  // Writes one Subject into a Reflection and saves it. Shared by "Write this Reflection" and "Write".
   const readyToWrite = it => !!(it && !it.reflection && it.proposal && it.proposal.title && it.proposal.statement);
   async function writeCore(it, tier, signal, onText, taken = []) {
     let r = await sample.json(writePrompt(it.proposal, it), { modelTier: tier, cache: false, signal, onText });
@@ -703,7 +703,7 @@ Apply the instruction and follow every rule above. Change only what the instruct
   function bulkSheet() {
     const list = items.filter(publishable).sort((a, b) => (parseInt(a.number, 10) || 0) - (parseInt(b.number, 10) || 0));
     if (!list.length) { sheet(`<h2>Publish</h2><p class="muted small">No written Reflections yet.</p><div class="row"><button id="b-close">Close</button></div>`); $("b-close").onclick = closeSheet; return; }
-    sheet(`<h2>Publish several</h2>
+    sheet(`<h2>Publish</h2>
       <p class="muted small">Choose Reflections to commit to framoid.com together, in one commit through your GitHub connector. Ones already on the site are replaced.</p>
       <div class="picks">${list.map(it => {
         const s = it.reflection.subject || {};
@@ -734,23 +734,28 @@ Apply the instruction and follow every rule above. Change only what the instruct
     };
   }
 
-  // Write all: writes every Subject marked "Ready to write", one after another, with the standard model.
+  // Write: writes the chosen Subjects marked "Ready to write", one after another, with the standard model.
   // Runs only while the page stays open; a failure is noted and the queue moves on; a usage limit stops the run.
   function writeAllSheet() {
     const queue = items.filter(readyToWrite).sort((a, b) => String(a.createdAt || "").localeCompare(String(b.createdAt || ""))).map(it => JSON.parse(JSON.stringify(it)));
-    if (!queue.length) { sheet(`<h2>Write all</h2><p class="muted small">No Subjects are ready to write.</p><div class="row"><button id="wa-close">Close</button></div>`); $("wa-close").onclick = closeSheet; return; }
-    const n = queue.length;
-    sheet(`<h2>Write all</h2>
-      <p class="muted small">${n} Subject${n > 1 ? "s are" : " is"} ready. They are written one after another with the standard model, about a minute or two each. Each write uses your plan like one chat message. Keep this tab open and in front, with the computer awake, until it finishes: a hidden tab can pause the writing. A write that stalls is tried once more.</p>
-      <div class="picks">${queue.map((it, i) => `<div class="pick"><span>${esc(it.proposal.title)}</span><span class="chip" id="wa-${i}">Waiting</span></div>`).join("")}</div>
+    if (!queue.length) { sheet(`<h2>Write</h2><p class="muted small">No Subjects are ready to write.</p><div class="row"><button id="wa-close">Close</button></div>`); $("wa-close").onclick = closeSheet; return; }
+    sheet(`<h2>Write</h2>
+      <p class="muted small">Choose Subjects to write. They are written one after another with the standard model, several minutes each, and each write uses your plan like one chat message. Keep this tab open and in front, with the computer awake, until it finishes: a hidden tab can pause the writing. A write that stalls is tried once more.</p>
+      <div class="picks">${queue.map((it, i) => `<label class="pick" id="wa-row-${i}"><input type="checkbox" value="${i}" checked><span>${esc(it.proposal.title)}</span><span class="chip" id="wa-${i}" hidden>Waiting</span></label>`).join("")}</div>
       <div id="wa-status" class="note"></div>
-      <div class="row"><button id="wa-close">Close</button><button id="wa-stop" hidden>Stop</button><button class="primary" id="wa-go"${sample ? "" : " disabled"}>Write ${n}</button></div>`);
+      <div class="row"><button id="wa-close">Close</button><button id="wa-stop" hidden>Stop</button><button class="primary" id="wa-go">Write selected</button></div>`);
+    const picked = () => [...$("sheet").querySelectorAll(".pick input:checked")].map(x => +x.value);
+    const label = () => { const k = picked().length; $("wa-go").textContent = k ? `Write ${k}` : "Write selected"; $("wa-go").disabled = !sample || !k || busy; };
+    $("sheet").querySelectorAll(".pick input").forEach(x => x.onchange = label); label();
     let stop = false;
     $("wa-close").onclick = () => { if (!busy) closeSheet(); };
     $("wa-stop").onclick = () => { stop = true; if (ctl) ctl.abort(); };
     $("wa-go").onclick = async () => {
       if (busy) return;
+      const sel = picked(); if (!sel.length) return;
       busy = true; $("wa-go").hidden = true; $("wa-close").hidden = true; $("wa-stop").hidden = false;
+      queue.forEach((_, i) => { const row = $("wa-row-" + i); row.querySelector("input").disabled = true; if (!sel.includes(i)) row.hidden = true; else $("wa-" + i).hidden = false; });
+      const n = sel.length;
       const taken = []; let ok = 0, failed = 0, limit = null;
       const t0 = Date.now();
       // Keep the screen awake while writing, where the browser allows it (renewed when the tab comes back).
@@ -761,8 +766,8 @@ Apply the instruction and follow every rule above. Change only what the instruct
       // Watchdog: a write that sends no new text for STALL ms, or runs longer than MAX ms, is stopped and tried
       // once more; a second stall marks it Failed and the queue moves on. (Hidden tabs can freeze a write.)
       const W = window.__WA || {}, STALL = W.stall || 6 * 60000, MAX = W.max || 15 * 60000;
-      for (let i = 0; i < n && !stop; i++) {
-        const chip = $("wa-" + i), it = queue[i];
+      for (let j = 0; j < n && !stop; j++) {
+        const i = sel[j], chip = $("wa-" + i), it = queue[i];
         let done = false;
         for (let attempt = 1; attempt <= 2 && !done && !stop; attempt++) {
           chip.className = "chip ready"; chip.style.color = ""; chip.textContent = attempt > 1 ? "Retrying…" : "Writing…";
@@ -771,7 +776,7 @@ Apply the instruction and follow every rule above. Change only what the instruct
             chip.textContent = (attempt > 1 ? "Retry · " : "") + (got ? got.toLocaleString() + " chars" : "Thinking " + elapsed(Date.now() - t1));
             if (Date.now() - last > STALL || Date.now() - t1 > MAX) { stalled = true; if (ctl) ctl.abort(); }
           }, 1000);
-          $("wa-status").textContent = `Writing ${i + 1} of ${n}…`;
+          $("wa-status").textContent = `Writing ${j + 1} of ${n}…`;
           ctl = new AbortController();
           try {
             await writeCore(it, "default", ctl.signal, ({ text }) => { if (text.length !== got) { got = text.length; last = Date.now(); } }, taken);
@@ -790,7 +795,7 @@ Apply the instruction and follow every rule above. Change only what the instruct
       busy = false; ctl = null;
       const left = n - ok - failed;
       $("wa-status").innerHTML = esc(`Wrote ${ok} of ${n} in ${elapsed(Date.now() - t0)}.` + (failed ? ` ${failed} failed.` : "") + (left ? ` ${left} not started.` : "")
-        + (limit ? " " + limit : "") + (failed || left ? " Press Write all again later to continue with the rest." : " Open each to read it, then publish."));
+        + (limit ? " " + limit : "") + (failed || left ? " Press Write again later to continue with the rest." : " Open each to read it, then publish."));
       $("wa-stop").hidden = true; $("wa-close").hidden = false; $("wa-close").textContent = "Done";
     };
   }
