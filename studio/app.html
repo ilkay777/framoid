@@ -857,8 +857,12 @@ Apply the instruction and follow every rule above. Change only what the instruct
     unsub = col().orderBy("updatedAt", "desc").onSnapshot(snap => {
       if (!snap.metadata.fromCache) clearTimeout(timer);
       items = snap.docs.map(d => d.data()).filter(Boolean);
+      // Home buttons show counts: Write (Subjects ready to write), Publish (written but not yet live).
+      const nReady = items.filter(readyToWrite).length, nPub = items.filter(i => publishable(i) && i.status !== "sent").length;
       $("bulk").hidden = !items.some(publishable);
-      $("writeall").hidden = !sample || !items.some(readyToWrite);
+      $("bulk").textContent = nPub ? `Publish (${nPub})` : "Publish";
+      $("writeall").hidden = !sample || !nReady;
+      $("writeall").textContent = `Write (${nReady})`;
       renderList();
       if (!snap.metadata.fromCache) importLegacy();
     }, () => { clearTimeout(timer); $("list").innerHTML = '<div class="glass empty">Your Reflections can\'t be loaded right now.</div>'; });
