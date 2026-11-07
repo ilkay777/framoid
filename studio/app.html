@@ -172,7 +172,7 @@ textarea { flex: 1; resize: none; font: 15px/1.45 var(--text); color: var(--ink)
   <section class="view home" id="v-home">
     <div class="intro glass">
       <h2>Framoid Studio</h2>
-      <div class="row-start"><button class="primary" id="new">New Reflection</button><button id="bulk" hidden>Publish several</button></div>
+      <div class="row-start"><button class="primary" id="new">New Reflection</button><button id="writeall" hidden>Write all</button><button id="bulk" hidden>Publish several</button></div>
       <p class="note" id="unavailable" hidden></p>
     </div>
     <div class="list" id="list"><div class="glass empty">Loading…</div></div>
@@ -234,10 +234,10 @@ textarea { flex: 1; resize: none; font: 15px/1.45 var(--text); color: var(--ink)
 
   /* ---------- prompts ---------- */
   // Background researched in a project session ("Subject scout"); facts for accuracy, not anyone's opinion.
-  const background = () => (cur && cur.context && cur.context.brief) ? `
+  const background = (it = cur) => (it && it.context && it.context.brief) ? `
 
 ## Background on the Subject (researched; use it for accuracy, it is not anyone's opinion)
-${cur.context.brief}` : "";
+${it.context.brief}` : "";
 
   const currentSubject = () => scoutMode() ? `
 
@@ -257,7 +257,7 @@ You are helping the user decide exactly what this Reflection will consider. Repl
 - When the Subject is clear, give a proposal: a one-line title plus a two-or-three-sentence plain statement, and in "say" ask the user to confirm or adjust it. Leave "questions" empty when you give a proposal.
 - "say" is one to three short, plain sentences. Write in the user's language.`;
 
-  const writePrompt = (subj) => files.rules + background() + `
+  const writePrompt = (subj, it = cur) => files.rules + background(it) + `
 
 ## Your task now: write the Reflection
 Confirmed Subject:
@@ -332,8 +332,8 @@ Apply the instruction and follow every rule above. Change only what the instruct
     const body = JSON.parse(JSON.stringify(it));
     await col().doc(it.id).set(body);
   }
-  function nextNumber() {
-    const nums = items.map(i => parseInt(i.number, 10)).filter(n => !isNaN(n));
+  function nextNumber(taken = []) { // taken: numbers given out in this run that the list may not show yet
+    const nums = [...items.map(i => i.number), ...taken].map(n => parseInt(n, 10)).filter(n => !isNaN(n));
     return String(Math.max(FIRST_NUMBER - 1, ...nums) + 1);
   }
 
@@ -527,6 +527,21 @@ Apply the instruction and follow every rule above. Change only what the instruct
   // Writing streams, so the status shows progress; on failure it says how long it ran and how much came back,
   // and offers the standard model as well as a retry (the most capable model sometimes drops long answers).
   const elapsed = ms => { const s = Math.round(ms / 1000); return s < 60 ? s + " s" : Math.floor(s / 60) + " min " + (s % 60) + " s"; };
+  // Writes one Subject into a Reflection and saves it. Shared by "Write this Reflection" and "Write all".
+  const readyToWrite = it => !!(it && !it.reflection && it.proposal && it.proposal.title && it.proposal.statement);
+  async function writeCore(it, tier, signal, onText, taken = []) {
+    let r = await sample.json(writePrompt(it.proposal, it), { modelTier: tier, cache: false, signal, onText });
+    if (r && r.reflection) r = r.reflection;
+    const bad = problems(r);
+    if (bad.length) throw { message: "The Reflection came back incomplete (" + bad.slice(0, 4).join(", ") + "). Try again." };
+    r.subject = { title: it.proposal.title, statement: it.proposal.statement };
+    const bg = bgOf(it); if (bg) r.subject.background = bg;
+    it.number = it.number || nextNumber(taken);
+    it.reflection = { schema: 5, number: it.number, date: new Date().toISOString().slice(0, 10), ...normalise(r) };
+    it.status = "written";
+    await save(it);
+    return it;
+  }
   async function writeReflection(tier = "default") { // standard model by default; the most capable one on request
     if (!cur.proposal || !cur.proposal.title || !cur.proposal.statement || busy) return;
     clearTimeout(saveTimer);
@@ -536,16 +551,7 @@ Apply the instruction and follow every rule above. Change only what the instruct
     ctl = new AbortController();
     const tick = setInterval(() => { const l = $("w-label"); if (l) l.textContent = got ? `Writing… ${got.toLocaleString()} characters (${elapsed(Date.now() - t0)})` : `Claude is thinking… (${elapsed(Date.now() - t0)})`; }, 1000);
     try {
-      let r = await sample.json(writePrompt(cur.proposal), { modelTier: tier, cache: false, signal: ctl.signal, onText: ({ text }) => { got = text.length; } });
-      if (r && r.reflection) r = r.reflection;
-      const bad = problems(r);
-      if (bad.length) throw { message: "The Reflection came back incomplete (" + bad.slice(0, 4).join(", ") + "). Try again." };
-      r.subject = { title: cur.proposal.title, statement: cur.proposal.statement };
-      const bg = bgOf(cur); if (bg) r.subject.background = bg;
-      cur.number = cur.number || nextNumber();
-      cur.reflection = { schema: 5, number: cur.number, date: new Date().toISOString().slice(0, 10), ...normalise(r) };
-      cur.status = "written";
-      await save(cur);
+      await writeCore(cur, tier, ctl.signal, ({ text }) => { got = text.length; });
       openReading();
     } catch (err) {
       if (err && err.code === "cancelled") { renderLog(""); return; }
@@ -728,6 +734,51 @@ Apply the instruction and follow every rule above. Change only what the instruct
     };
   }
 
+  // Write all: writes every Subject marked "Ready to write", one after another, with the standard model.
+  // Runs only while the page stays open; a failure is noted and the queue moves on; a usage limit stops the run.
+  function writeAllSheet() {
+    const queue = items.filter(readyToWrite).sort((a, b) => String(a.createdAt || "").localeCompare(String(b.createdAt || ""))).map(it => JSON.parse(JSON.stringify(it)));
+    if (!queue.length) { sheet(`<h2>Write all</h2><p class="muted small">No Subjects are ready to write.</p><div class="row"><button id="wa-close">Close</button></div>`); $("wa-close").onclick = closeSheet; return; }
+    const n = queue.length;
+    sheet(`<h2>Write all</h2>
+      <p class="muted small">${n} Subject${n > 1 ? "s are" : " is"} ready. They are written one after another with the standard model, about a minute or two each. Each write uses your plan like one chat message. Keep this page open until it finishes.</p>
+      <div class="picks">${queue.map((it, i) => `<div class="pick"><span>${esc(it.proposal.title)}</span><span class="chip" id="wa-${i}">Waiting</span></div>`).join("")}</div>
+      <div id="wa-status" class="note"></div>
+      <div class="row"><button id="wa-close">Close</button><button id="wa-stop" hidden>Stop</button><button class="primary" id="wa-go"${sample ? "" : " disabled"}>Write ${n}</button></div>`);
+    let stop = false;
+    $("wa-close").onclick = () => { if (!busy) closeSheet(); };
+    $("wa-stop").onclick = () => { stop = true; if (ctl) ctl.abort(); };
+    $("wa-go").onclick = async () => {
+      if (busy) return;
+      busy = true; $("wa-go").hidden = true; $("wa-close").hidden = true; $("wa-stop").hidden = false;
+      const taken = []; let ok = 0, failed = 0, limit = null;
+      const t0 = Date.now();
+      for (let i = 0; i < n && !stop; i++) {
+        const chip = $("wa-" + i), it = queue[i];
+        chip.className = "chip ready"; chip.textContent = "Writing…";
+        const t1 = Date.now(); let got = 0;
+        const tick = setInterval(() => { chip.textContent = got ? got.toLocaleString() + " chars" : "Thinking " + elapsed(Date.now() - t1); }, 1000);
+        $("wa-status").textContent = `Writing ${i + 1} of ${n}…`;
+        ctl = new AbortController();
+        try {
+          await writeCore(it, "default", ctl.signal, ({ text }) => { got = text.length; }, taken);
+          taken.push(it.number); ok++;
+          chip.className = "chip written"; chip.textContent = "Written · " + it.number;
+        } catch (err) {
+          if (err && err.code === "cancelled") { chip.className = "chip"; chip.textContent = "Stopped"; break; }
+          failed++; chip.className = "chip"; chip.style.color = "var(--danger)"; chip.textContent = "Failed"; chip.title = errText(err);
+          if (err && (err.code === "rate_limited" || err.code === "session_expired" || err.code === "not_granted" || err.code === "sampling_disabled")) { limit = errText(err); break; }
+        } finally { clearInterval(tick); }
+      }
+      busy = false; ctl = null;
+      const left = n - ok - failed;
+      $("wa-status").innerHTML = esc(`Wrote ${ok} of ${n} in ${elapsed(Date.now() - t0)}.` + (failed ? ` ${failed} failed.` : "") + (left ? ` ${left} not started.` : "")
+        + (limit ? " " + limit : "") + (failed || left ? " Press Write all again later to continue with the rest." : " Open each to read it, then publish."));
+      $("wa-stop").hidden = true; $("wa-close").hidden = false; $("wa-close").textContent = "Done";
+    };
+  }
+  $("writeall").onclick = () => { if (!busy) writeAllSheet(); };
+
   function confirmDelete() {
     sheet(`<h2>Delete this ${cur.reflection ? "Reflection" : "session"}?</h2>
       <p class="muted small">It is removed from the Studio. ${cur.status === "sent" ? "The copy on framoid.com stays until it is taken down there." : ""}</p>
@@ -785,6 +836,7 @@ Apply the instruction and follow every rule above. Change only what the instruct
       if (!snap.metadata.fromCache) clearTimeout(timer);
       items = snap.docs.map(d => d.data()).filter(Boolean);
       $("bulk").hidden = !items.some(publishable);
+      $("writeall").hidden = !sample || !items.some(readyToWrite);
       renderList();
       if (!snap.metadata.fromCache) importLegacy();
     }, () => { clearTimeout(timer); $("list").innerHTML = '<div class="glass empty">Your Reflections can\'t be loaded right now.</div>'; });
