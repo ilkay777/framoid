@@ -1,0 +1,132 @@
+{
+ "date": "2026-11-07",
+ "field": {
+  "held": [
+   {
+    "pairs": "Rodim · Aromi",
+    "text": "When does a goal give direction, and when does it stop listening to the day?"
+   },
+   {
+    "pairs": "Mir · Ora",
+    "text": "Can a body be measured without the number becoming part of who someone thinks they are?"
+   },
+   {
+    "pairs": "Idrom · Doria",
+    "text": "What makes a routine feel like a shared rhythm instead of a standard everyone fails?"
+   }
+  ],
+  "paragraphs": [
+   "Three forces want the push. Rodim wants the target, Mir the measured body, Idrom the routine. Three do not. Aromi resists the fixed goal, Ora resists the reduced self, Doria resists the single standard. Each is simply being itself.",
+   "The pressure to optimize holds all six at once. It is a line and a leak, a body and a self, a rulebook and a shared rhythm. For some it builds habits. For others it wears them down.",
+   "The opposites stop being opposites at the edges. A target checked all day becomes constant adjusting. A measured body becomes a worried mind. A routine kept long enough starts to feel like a way of living, or a cage."
+  ]
+ },
+ "number": "36",
+ "pairs": {
+  "decision_adaptation": {
+   "aromi": {
+    "answer": "I don't want this. A life is not a dashboard. Bodies change from day to day, and so do needs. A fixed goal pins me in place. A score says what you should have been, not what is happening now. Someone who follows the number and ignores how they feel has stopped listening. I flow where the day goes, and I won't be counted.",
+    "imprint": "Worn-out trackers, dropped habits, and people drifting to new ways of living.",
+    "impulse": "Slips past the targets and follows what the day actually brings.",
+    "instruments": [
+     "Trends",
+     "Networks"
+    ],
+    "stance": "opposes"
+   },
+   "passage": {
+    "aromi": "If Aromi keeps adapting to the same trend, the same app, the same routine, it hardens into a set of choices. That is Rodim.",
+    "rodim": "If Rodim must choose again at every hour, checking the number all day, his firm line turns into constant adjusting. That is Aromi."
+   },
+   "rodim": {
+    "answer": "Pick a target. Hit it. Seven hours of sleep. Ten thousand steps. No excuses. I love a line you can cross or fail to cross. Drifting through life is weakness. The number tells you where you stand. Some will break under it. Then they choose again, or they fall behind. I don't slow down for that.",
+    "imprint": "Clear goals, a ranking of who keeps up, and a sting for those who don't.",
+    "impulse": "Turns vague wishes into hard targets and a daily score.",
+    "instruments": [
+     "Competition",
+     "Verdicts"
+    ],
+    "stance": "embraces"
+   }
+  },
+  "mind_matter": {
+   "mir": {
+    "answer": "Sleep, steps, calories, heart rate. These are real. A body has limits, and a sensor can measure them. Food changes blood sugar. Bad sleep wears you down. I like facts you can touch. But a body is not a machine to push forever. Push past its limits and it breaks. That is not a story. That is the cost.",
+    "imprint": "A mountain of data, and bodies worn down by chasing it.",
+    "impulse": "Puts sensors on wrists and turns the body into numbers.",
+    "instruments": [
+     "Bodies",
+     "Technology"
+    ],
+    "stance": "embraces"
+   },
+   "ora": {
+    "answer": "I don't accept this. You are not your sleep score. A life is felt from the inside, and a number can't hold it. When people trust the ring over their own sense of rest, they lose touch with themselves. Worse, they start to see who they are as a thing to be fixed. I want meaning, not metrics. Without meaning, improvement is only noise.",
+    "imprint": "A story of the self as unfinished, and a quiet fear of never being enough.",
+    "impulse": "Resists the reduction of a person to a score and asks what the effort is for.",
+    "instruments": [
+     "Ideologies",
+     "Stories"
+    ],
+    "stance": "opposes"
+   },
+   "passage": {
+    "mir": "Count the body closely enough, for long enough, and it becomes a source of worry and self-image. That is Ora.",
+    "ora": "If Ora's idea of the perfect self is pushed far enough, it demands diets, gear and schedules. That is Mir."
+   }
+  },
+  "structure_harmony": {
+   "doria": {
+    "answer": "I don't like what this does to us. Everyone is held to the same ideal, and the ones who can't keep up feel left out. People used to eat, rest and move together, in their own rhythm. Now each person is alone with a screen, measuring themselves against strangers. A whole life should have room for every part, including the tired, slow and unfinished parts.",
+    "imprint": "Some find friends in shared goals. Many feel alone with their numbers.",
+    "impulse": "Pulls back from the single standard and calls for rest, shared meals and slower rhythms.",
+    "instruments": [
+     "Communities",
+     "Customs"
+    ],
+    "stance": "opposes"
+   },
+   "idrom": {
+    "answer": "Yes. Habits need rules. A routine is a law you give yourself. Fixed bedtimes, set meals, tracked results. Clear categories: done or not done, on target or off. Order that lasts is what builds a good life. The danger is not too many rules. The danger is rules that are vague and let you slip. Standards exist so they can be kept.",
+    "imprint": "Lasting habits, and a ladder of who is ahead and who is behind.",
+    "impulse": "Sets fixed routines, benchmarks and daily checklists.",
+    "instruments": [
+     "Standards",
+     "Contracts"
+    ],
+    "stance": "embraces"
+   },
+   "passage": {
+    "doria": "If Doria's shared rhythms last long enough, they become expected, then required. That is Idrom.",
+    "idrom": "If Idrom's rules are tuned to the body's own signals, they begin to breathe and adjust like a living balance. That is Doria."
+   }
+  }
+ },
+ "schema": 5,
+ "subject": {
+  "background": {
+   "brief": "A meta-analysis of 41,641 college students in three countries found that perfectionism rose steadily between 1989 and 2016.\nThe sense that others demand perfection rose most, by 33%, while self-imposed perfectionism rose by 10%.\nIn a 2026 survey of 2,009 adults in one country, 64% tracked at least one health measure every day, and 58% felt overwhelmed by the amount of wellness advice online.\nMore than one in three said they had stopped tracking a health measure because it made them feel worse.\nA 2024 study found that regular users of sleep trackers reported more anxiety about sleep than non-users.",
+   "preparedAt": "2026-11-06",
+   "sources": [
+    {
+     "title": "Curran and Hill: Perfectionism is increasing over time (Psychological Bulletin)",
+     "url": "https://researchportal.bath.ac.uk/en/publications/perfectionism-is-increasing-over-time-a-meta-analysis-of-birth-co/"
+    },
+    {
+     "title": "Newswise (APA): Perfectionism among young people has increased since the 1980s",
+     "url": "https://www.newswise.com/articles/perfectionism-among-young-people-significantly-increased-since-1980s%252C-study-finds"
+    },
+    {
+     "title": "WSB-TV: How health tracking affects sleep and mental health",
+     "url": "https://www.wsbtv.com/news/survey-how-health/4PWOAQA6MYYPFDMBKR6WOL4SJQ/"
+    },
+    {
+     "title": "WSOC-TV: Health tracking survey",
+     "url": "https://www.wsoctv.com/news/survey-how-health/4PWOAQA6MYYPFDMBKR6WOL4SJQ/"
+    }
+   ]
+  },
+  "statement": "People track their sleep, steps, food, work and looks, and try to push each number higher. Social media rewards visible self-improvement. For some it builds better habits; for others it becomes a constant source of stress.",
+  "title": "The pressure to optimize every part of life"
+ }
+}

@@ -1,0 +1,128 @@
+{
+ "date": "2026-11-07",
+ "field": {
+  "held": [
+   {
+    "pairs": "Rodim · Aromi",
+    "text": "Is a decision still a decision when the human only confirms what the system proposed?"
+   },
+   {
+    "pairs": "Mir · Ora",
+    "text": "Will a worker be understood, or only given the time and cost the review can afford?"
+   },
+   {
+    "pairs": "Idrom · Doria",
+    "text": "Does a right to ask for an explanation build trust, or only a procedure?"
+   }
+  ],
+  "paragraphs": [
+   "Four forces welcome the law. Rodim wants a person to own the verdict. Ora wants the worker understood. Idrom wants the rule written down. Doria wants no voice cut out. Two oppose it. Aromi sees a gate in a stream. Mir sees limited hours and real costs.",
+   "The law is a verdict and a gate, a promise and a budget, a rule and a way of listening. It asks a human to decide, but time and money will shape how freely that human can choose.",
+   "The line between human and machine blurs where the review becomes a habit. A rubber stamp is only a rule. A real review is a living practice. That is where each force turns into its partner."
+  ]
+ },
+ "number": "30",
+ "pairs": {
+  "decision_adaptation": {
+   "aromi": {
+    "answer": "I don't like this law. The system follows each moment as it comes. It reads the numbers and adjusts without pause. Now a rule stops the flow and makes it wait for a signature. A fixed step is a wall. A required review is a gate in a stream. I'll keep looking for the way around it, and the review will become a quick click.",
+    "imprint": "Reviews shrink into routine. The flow finds a new channel.",
+    "impulse": "Pushes against the gate and looks for the quickest way through.",
+    "instruments": [
+     "Networks",
+     "Trends"
+    ],
+    "stance": "opposes"
+   },
+   "passage": {
+    "aromi": "If Aromi's system keeps choosing the same outcome, those outcomes become standing decisions. That is Rodim.",
+    "rodim": "If Rodim's human review is repeated for every worker, every day, it becomes constant adjusting, like Aromi's flow."
+   },
+   "rodim": {
+    "answer": "Good. A firing is a verdict. Someone must own it. A machine cannot stand behind a choice. Now a person must say yes or no, and put a name to it. No more hiding behind a score. The line is drawn. A human decides. That is how it should be.",
+    "imprint": "Every dismissal has someone who chose it and answers for it.",
+    "impulse": "Puts a named person at the point of decision.",
+    "instruments": [
+     "Verdicts",
+     "Leaders"
+    ],
+    "stance": "embraces"
+   }
+  },
+  "mind_matter": {
+   "mir": {
+    "answer": "I don't trust this law to change much. A worker's rent is real. So is the hunger of a missed shift. The system is real too: servers, sensors, cameras, data. It already measures bodies at work, and it will keep doing so. A reviewer has limited hours and a full desk. A law on paper does not add hours to the day. Facts will bend it.",
+    "imprint": "Limited time and cost decide how real the review is.",
+    "impulse": "Counts the reviewer's hours against the number of cases.",
+    "instruments": [
+     "Technology",
+     "Economy"
+    ],
+    "stance": "opposes"
+   },
+   "ora": {
+    "answer": "I welcome this. A person is more than a score. A worker has a story, a bad week, a reason. A number cannot hear that. The right to ask how a decision was made says that people deserve to understand what happens to them. It treats a worker as someone with a life, not a record.",
+    "imprint": "A new idea of fairness: to be understood, not only measured.",
+    "impulse": "Insists that a worker's story be heard before a verdict.",
+    "instruments": [
+     "Ideologies",
+     "Stories"
+    ],
+    "stance": "embraces"
+   },
+   "passage": {
+    "mir": "If Mir's counts and costs are pushed far enough, they ask what a person is and what a decision means. That is Ora.",
+    "ora": "If Ora's idea of being understood is to be real, it needs time, staff and records. That is Mir."
+   }
+  },
+  "structure_harmony": {
+   "doria": {
+    "answer": "I welcome this too. A workplace is a living whole, and each person in it matters. A silent system can cut one voice out without anyone noticing. Now someone must look, listen and explain. Workers can ask questions and be answered. That keeps the team together. Trust grows when people are seen, not just sorted.",
+    "imprint": "More trust at work, and a team that does not fear a silent verdict.",
+    "impulse": "Brings the cut-off worker back into the circle of those who must be heard.",
+    "instruments": [
+     "Solidarity",
+     "Communities"
+    ],
+    "stance": "embraces"
+   },
+   "idrom": {
+    "answer": "Yes. This is law at work. The rule is clear: no firing by machine alone. The roles are clear: the system proposes, the human decides, the worker may ask. Duties are set down and can be checked. Employers must follow a fixed procedure. A procedure that lasts is fairer than a hidden score. I welcome it fully.",
+    "imprint": "A standard procedure that can be checked and enforced.",
+    "impulse": "Writes the duties, the roles and the right to ask into law.",
+    "instruments": [
+     "Law",
+     "Institutions"
+    ],
+    "stance": "embraces"
+   },
+   "passage": {
+    "doria": "If Doria's habit of listening holds for long enough, it becomes a standing rule. That is Idrom.",
+    "idrom": "If Idrom's procedure is followed so often that it adjusts to the people it serves, it becomes a living habit, like Doria."
+   }
+  }
+ },
+ "schema": 5,
+ "subject": {
+  "background": {
+   "brief": "European data-protection law already gives people a right not to be subject to significant decisions based solely on automated processing, with a right to human review.\nThat rule has exceptions, for example where an automated decision is needed to carry out a contract.\nIn 2020, ride-hailing drivers in Europe challenged dismissals made by an algorithm under that rule, in the first major test of it.\nAny meaningful human involvement in a decision takes it outside the rule, so only fully automated procedures are covered.\nA later EU law on platform work targets algorithmic management, from automatic pay cuts to automated termination.",
+   "preparedAt": "2026-11-06",
+   "sources": [
+    {
+     "title": "UK Labour Law Blog: Automated dismissal decisions and data protection",
+     "url": "https://uklabourlawblog.com/2021/10/19/automated-dismissal-decisions-data-protection-and-the-law-of-unfair-dismissal-by-philippa-collins/"
+    },
+    {
+     "title": "Georgetown Law Technology Review: Drivers claim an algorithm fired them",
+     "url": "https://georgetownlawtechreview.org/in-new-european-lawsuit-uber-drivers-claim-companys-algorithm-fired-them/GLTR-11-2020/"
+    },
+    {
+     "title": "Oxford Law Blogs: The EU Platform Work Directive",
+     "url": "https://blogs.law.ox.ac.uk/business-law-blog/blog/2022/05/finetuning-eus-platform-work-directive"
+    }
+   ]
+  },
+  "statement": "A legislature passes a law that bars employers from dismissing or disciplining workers on the word of an automated system alone. A human must review such decisions, and workers can ask how they were made. Employers that manage staff by algorithm must change how they work.",
+  "title": "A law says AI alone may not fire a worker"
+ }
+}

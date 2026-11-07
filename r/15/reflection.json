@@ -1,0 +1,128 @@
+{
+ "date": "2026-11-07",
+ "field": {
+  "held": [
+   {
+    "pairs": "Rodim · Aromi",
+    "text": "Is the answer a line drawn once, or a response that keeps changing with the city?"
+   },
+   {
+    "pairs": "Mir · Ora",
+    "text": "Is this crisis a count of missing homes, or a story of a generation's closed future?"
+   },
+   {
+    "pairs": "Idrom · Doria",
+    "text": "How much rule does a neighbourhood need before its own balance can hold the young inside it?"
+   }
+  ],
+  "paragraphs": [
+   "Four forces side with the march. Rodim wants the line drawn, Mir the homes built, Ora the story heard, Idrom the rule written. Two do not. Aromi resists the cap, and Doria resists a single plan laid over every street. Each is simply being itself.",
+   "The march holds all six at once. It is a demand and a market, a shortage of bricks and a shortage of hope, a rulebook and a set of neighbourhoods.",
+   "A cap and a flowing market stop being opposites when rules adjust to prices and prices settle into habit. Where a rent law is revised each year, decision becomes adaptation. Where a custom of fair rent holds for decades, harmony becomes law."
+  ]
+ },
+ "number": "15",
+ "pairs": {
+  "decision_adaptation": {
+   "aromi": {
+    "answer": "I don't like caps. A cap is a wall around a price. Cities shift, people move, and rents find new routes. Fix the number and the market slips sideways: into hidden fees, informal rooms, other towns. I'm for many paths, not one frozen figure. Let people move and let supply respond as things change.",
+    "imprint": "Hidden fees, shared rooms and people drifting to cheaper places.",
+    "impulse": "Pushes around the cap and finds side routes through the market.",
+    "instruments": [
+     "Trade",
+     "Migration"
+    ],
+    "stance": "opposes"
+   },
+   "passage": {
+    "aromi": "If Aromi's market keeps sending young people the same way, to parents' homes and shared rooms, that path becomes a decision. That is Rodim.",
+    "rodim": "If Rodim's rent rule must be decided again every year as prices move, it starts to look like Aromi's flow."
+   },
+   "rodim": {
+    "answer": "Good. They stopped waiting. They name a line: caps, public homes, limits on lets. That is a demand, and a demand forces a choice. Rents stay as they are, or they change. Someone must decide. Landlords say wait. I say no. Drifting is how people got here. Pick a side and act now.",
+    "imprint": "A clear line in law, and winners and losers on each side of it.",
+    "impulse": "Turns a crowd's anger into a demand that must be answered with a yes or no.",
+    "instruments": [
+     "Revolutions",
+     "Verdicts"
+    ],
+    "stance": "embraces"
+   }
+  },
+  "mind_matter": {
+   "mir": {
+    "answer": "This is about bodies and roofs. Every person needs a place to sleep. There are only so many homes, and prices rise when homes are few. Pay is short, and rent takes most of it. Holiday lets turn homes into hotel beds. Public housing means actual walls built. Caps without new homes only shift the squeeze. Build, and count the bricks.",
+    "imprint": "Walls built or not built, and a young generation housed or crowded.",
+    "impulse": "Counts homes, wages and rent, and shows the shortage as a hard fact.",
+    "instruments": [
+     "Economy",
+     "Territory"
+    ],
+    "stance": "embraces"
+   },
+   "ora": {
+    "answer": "I hear a story here: a generation told they would own a life, and finding they cannot even rent one. A home is where a person becomes someone. Without it, plans wait: a family, a career, a future. The march is that feeling finding its voice. The song and the sign matter as much as the figures.",
+    "imprint": "A generation's memory of waiting, which shapes how it votes and what it trusts.",
+    "impulse": "Gives the crowd a shared story of being locked out of adult life.",
+    "instruments": [
+     "Stories",
+     "Ideologies"
+    ],
+    "stance": "embraces"
+   },
+   "passage": {
+    "mir": "Live in a crowded flat long enough and the shortage becomes a feeling, a story, a politics. That is Ora.",
+    "ora": "Push Ora's story far enough and it demands keys, walls and a building site. That is Mir."
+   }
+  },
+  "structure_harmony": {
+   "doria": {
+    "answer": "I am uneasy. Streets lose their neighbours when young people are priced out and holiday guests come and go. A place needs its young, its old and its long-time families. But a cap handed down from above treats every street the same, and streets are not the same. Do not force one plan on a living quarter.",
+    "imprint": "Fewer familiar faces, and neighbours who find new ways to stay close.",
+    "impulse": "Mourns emptied neighbourhoods and resists one rule laid over every street.",
+    "instruments": [
+     "Communities",
+     "Kinship"
+    ],
+    "stance": "opposes"
+   },
+   "idrom": {
+    "answer": "Yes. A rent without limits is a rent without law. Set the rule: this much, no more. Define the lets: a home or a hotel, not both. Define public housing: who qualifies, who builds, who manages. Clear categories protect the tenant and bind the landlord. A cap is written once and applies to all. That is order.",
+    "imprint": "Lasting rules, rent ceilings on paper, and offices that enforce them.",
+    "impulse": "Writes limits into law and sorts every home into a clear category.",
+    "instruments": [
+     "Law",
+     "Contracts"
+    ],
+    "stance": "embraces"
+   },
+   "passage": {
+    "doria": "If Doria's neighbourhood habits of fair rents and shared care last long enough, they become a custom, then a rule. That is Idrom.",
+    "idrom": "If Idrom's rent rules are bent and adjusted street by street until they fit each place, they start to live like Doria's balance."
+   }
+  }
+ },
+ "schema": 5,
+ "subject": {
+  "background": {
+   "brief": "In 2021, about one in ten young people in the EU lived in households spending 40% or more of their disposable income on housing, more than the population as a whole; in two countries the share was over 30%.\nIn one country, private renters under 35 paid on average 46% of their income on housing in 2024, against 31% for young people in social housing.\nIn most OECD countries, most people in their twenties live with their parents, around three-quarters in some, and the share has risen in over 20 countries.\nYoung people are more likely than any other age group to name housing affordability as a top concern.\nSocial housing has become scarcer in many places, limiting cheaper options for young renters.",
+   "preparedAt": "2026-11-06",
+   "sources": [
+    {
+     "title": "Eurostat: Young people, housing conditions",
+     "url": "https://ec.europa.eu/eurostat/statistics-explained/SEPDF/cache/46039.pdf"
+    },
+    {
+     "title": "NL Times: Young people spending nearly half their income on rent",
+     "url": "https://nltimes.nl/2025/05/23/young-people-spending-nearly-half-income-rent-social-housing-gets-scarcer"
+    },
+    {
+     "title": "OECD Ecoscope: No home for the young?",
+     "url": "https://oecdecoscope.blog/2022/06/29/no-home-for-the-young/"
+    }
+   ]
+  },
+  "statement": "Thousands of young people march through a country's cities against rents that take most of their pay. They demand rent caps, more public housing and limits on short-term holiday lets. Landlords and builders argue that caps will cut the supply of homes.",
+  "title": "Young people protest rents they can't afford"
+ }
+}

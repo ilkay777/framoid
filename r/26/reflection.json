@@ -1,0 +1,126 @@
+{
+ "date": "2026-11-07",
+ "field": {
+  "held": [
+   {
+    "pairs": "Rodim · Aromi",
+    "text": "Is the deal a final decision, or one more step in a market that keeps moving?"
+   },
+   {
+    "pairs": "Mir · Ora",
+    "text": "Will the pooled trucks and riders decide what people come to expect, or will their expectations decide what the network becomes?"
+   },
+   {
+    "pairs": "Idrom · Doria",
+    "text": "How much of the ruling should be written down, and how much left to the shops and couriers to settle among themselves?"
+   }
+  ],
+  "paragraphs": [
+   "Three forces want the deal. Rodim wants the decisive move, Mir the shared fleet, Idrom the clear ruling. Three do not. Aromi dislikes the single gate, Ora the flattened meaning, Doria the quieter voices. Each is simply being itself.",
+   "The deal holds all six at once. It is a signature and a narrowing, a pooled fleet and a merged story, a ruling and a crowd of small parts waiting to be heard.",
+   "The lines blur where the evidence is mixed. A larger network may help shoppers and couriers if few used both apps, and hurt them if many did. In such a case the decision turns into a flow of effects, and the flow turns into a rule. That is where each force becomes its partner."
+  ]
+ },
+ "number": "26",
+ "pairs": {
+  "decision_adaptation": {
+   "aromi": {
+    "answer": "I don't want this deal. Two apps meant two routes, and people moved between them as they liked. Couriers could switch. Shoppers could compare. Now the paths narrow into one gate. One company sets the fees, the rules and the pace. I am against gates. Flow needs many ways to go, and this deal closes most of them.",
+    "imprint": "Fewer choices for shoppers and couriers. New small services try to slip around the giant.",
+    "impulse": "Pushes against the single gate and looks for side routes.",
+    "instruments": [
+     "Trade",
+     "Networks"
+    ],
+    "stance": "opposes"
+   },
+   "passage": {
+    "aromi": "If Aromi keeps flowing toward the same big network, that choice hardens into a decision. That is Rodim.",
+    "rodim": "If Rodim's big decision has to be remade every day as prices, orders and couriers shift, it becomes Aromi's flow."
+   },
+   "rodim": {
+    "answer": "One buyer. One signature. Two rivals become one. I like it. Years of circling end with a single move. The big app picks its target and takes it. Regulators must now choose too: yes or no. No drifting. The one who acts first sets the terms. The others follow or fall away.",
+    "imprint": "A clear winner and a clear line. Smaller rivals must pick a side or leave.",
+    "impulse": "Turns a crowded race into one signed deal and one ruling.",
+    "instruments": [
+     "Enterprise",
+     "Verdicts"
+    ],
+    "stance": "embraces"
+   }
+  },
+  "mind_matter": {
+   "mir": {
+    "answer": "Now this is real. Bikes, bags, vans, warehouses, phones and drivers on the road. Put two fleets on one network and fewer trips run half empty. A courier can carry a burger and a bag of rice together. That saves fuel and time. But one owner also holds the whole chain, and food and shops depend on it. Real power sits where the trucks and riders are.",
+    "imprint": "Fewer empty trips, and one owner holding the routes that shops and kitchens rely on.",
+    "impulse": "Joins two fleets and two sets of orders into one system.",
+    "instruments": [
+     "Infrastructure",
+     "Economy"
+    ],
+    "stance": "embraces"
+   },
+   "ora": {
+    "answer": "I see a story being flattened. Two apps had two faces: one for the evening treat, one for the weekly shop. People held different feelings for each. Couriers saw themselves in different ways too. Now both become one brand, one screen, one habit. A meal and a grocery list turn into just another order. I don't like it when meaning is merged into volume.",
+    "claimed": [
+     "Brands"
+    ],
+    "imprint": "One familiar logo. The old differences fade into habit.",
+    "impulse": "Resists turning two different meanings into one number.",
+    "instruments": [
+     "Stories"
+    ],
+    "stance": "opposes"
+   },
+   "passage": {
+    "mir": "Run Mir's network long enough and it shapes what people expect, trust and want. That is Ora.",
+    "ora": "Push Ora's trust in one brand far enough and it needs vans, depots and servers to carry it. That is Mir."
+   }
+  },
+  "structure_harmony": {
+   "doria": {
+    "answer": "I am worried for the many voices. Small restaurants, corner shops, couriers and families all lived in the space between two apps. Each had some say, some choice. One giant can set terms for all of them, and the smaller voices go quiet. A whole stays alive when its parts can still speak. This deal takes the speaking away.",
+    "imprint": "Weaker bargaining for small parts. Couriers and shops look for ways to organize together.",
+    "impulse": "Stands with the shops, kitchens and riders who must accept one set of terms.",
+    "instruments": [
+     "Communities",
+     "Solidarity"
+    ],
+    "stance": "opposes"
+   },
+   "idrom": {
+    "answer": "This needs a ruling, and a ruling is what it will get. Regulators must set clear categories: what counts as the market, what counts as too large, what conditions apply. One firm is easier to hold to account than two. Rules can be written once and applied to all. Order lasts when the lines are drawn and kept.",
+    "imprint": "A written decision that sets terms for the firm and for every later case.",
+    "impulse": "Brings the deal under a defined test, with named conditions and set duties.",
+    "instruments": [
+     "Law",
+     "Institutions"
+    ],
+    "stance": "embraces"
+   },
+   "passage": {
+    "doria": "If Doria's balance among the parties holds for years, it becomes custom, then rule. That is Idrom.",
+    "idrom": "If Idrom's rules are reshaped again and again by shops, riders and shoppers, they begin to breathe like Doria's balance."
+   }
+  }
+ },
+ "schema": 5,
+ "subject": {
+  "background": {
+   "brief": "Mergers between on-demand delivery and service platforms have become common and have prompted antitrust debates.\nSuch a merger can raise prices because competition falls, but it can also benefit customers and couriers by pooling them on one larger network.\nOne economic model finds that platforms, customers and workers can all gain if the market was not saturated before the merger, but gains for customers and workers are less likely when many workers already use both apps.\nA study of a merger between the two largest pet-sitting platforms found that users of the buying platform gained, users of the bought platform lost, and the market as a whole was not substantially better off.",
+   "preparedAt": "2026-11-06",
+   "sources": [
+    {
+     "title": "Information Systems Research: Mergers between on-demand service platforms",
+     "url": "https://pubsonline.informs.org/doi/full/10.1287/isre.2022.0553"
+    },
+    {
+     "title": "Farronato, Fong and Fradkin: Dog eat dog, a digital platform merger",
+     "url": "https://academicnewsletter.sufe.edu.cn/info/387762"
+    }
+   ]
+  },
+  "statement": "The country's biggest food-delivery app agrees to buy the leading grocery-delivery app. Together they would handle most online deliveries from restaurants and shops. Competition regulators must decide whether to allow the deal.",
+  "title": "The largest delivery app buys its main grocery rival"
+ }
+}

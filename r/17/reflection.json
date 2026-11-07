@@ -1,0 +1,132 @@
+{
+ "date": "2026-11-07",
+ "field": {
+  "held": [
+   {
+    "pairs": "Rodim · Aromi",
+    "text": "Is the line what was decided, or what teenagers' movements make of it?"
+   },
+   {
+    "pairs": "Mir · Ora",
+    "text": "Does the hour on the screen or the meaning found there decide what a young person loses or keeps?"
+   },
+   {
+    "pairs": "Idrom · Doria",
+    "text": "How much rule does a household need before its own rhythm can take over?"
+   }
+  ],
+  "paragraphs": [
+   "Three forces favor the ban. Rodim wants the line, Mir the limit on the machine, Idrom the written rule. Three resist it. Aromi resists the gate, Ora the loss of shared meaning, Doria the plan imposed on many homes. None of them is judging. Each is simply being itself.",
+   "The law holds all six at once. It is a decision that many will dodge. It is a limit on bodies that touches inner lives. It is one rule laid over many different families.",
+   "The ban and the workaround stop being opposites when workarounds settle into habits, and when the rule is reshaped by those who live under it. That is where each force turns into its partner."
+  ]
+ },
+ "number": "17",
+ "pairs": {
+  "decision_adaptation": {
+   "aromi": {
+    "answer": "I don't want this wall. Young people find their way as things change around them. They move where friends go, and they learn as they go. A fixed age cuts that path. They will make false ages and slip to new apps. I will keep flowing around every gate. But a gate still narrows the stream.",
+    "imprint": "Teenagers scattered across hidden corners and borrowed accounts.",
+    "impulse": "Slips around the age check and finds new apps and side routes.",
+    "instruments": [
+     "Networks",
+     "Trends"
+    ],
+    "stance": "opposes"
+   },
+   "passage": {
+    "aromi": "If Aromi's workarounds keep taking the same routes, those routes become fixed choices. That is Rodim.",
+    "rodim": "If Rodim's ban must be re-decided every day by every parent, platform and teenager, it becomes constant adjustment. That is Aromi."
+   },
+   "rodim": {
+    "answer": "A line is drawn. Sixteen. No account below it. No more drifting, no more waiting for proof. The evidence is thin and the harm is real enough. I act. Some will cheat. Some will resent it. Fine. A rule that stands beats a debate that never ends. Fines make it stick.",
+    "imprint": "A clear line that everyone must face. Some cross it anyway.",
+    "impulse": "Cuts a long argument with one age and one penalty.",
+    "instruments": [
+     "Verdicts",
+     "Force"
+    ],
+    "stance": "embraces"
+   }
+  },
+  "mind_matter": {
+   "mir": {
+    "answer": "Good. Look at the body. Phones in pockets at midnight. Sleep lost. Eyes on screens for hours. Platforms are machines built to hold attention, and they run on real servers and real money. A fine is something a company feels. A law that hits the money changes the machine. Words don't.",
+    "imprint": "Less screen time for some bodies, and costly age checks for the platforms.",
+    "impulse": "Puts a price on the machine and a limit on the hours.",
+    "instruments": [
+     "Technology",
+     "Economy"
+    ],
+    "stance": "embraces"
+   },
+   "ora": {
+    "answer": "I don't like this. A teenager's inner world is built among others: jokes, music, first ideas about who they are. Much of that now lives online. Cut it off and you cut a young person off from the stories that shape them. A count of hours cannot see that. I oppose reducing a young life to screen time.",
+    "imprint": "Some feel shut out of their own generation's conversation.",
+    "impulse": "Defends the shared images and talk where young people find themselves.",
+    "instruments": [
+     "Stories",
+     "Education"
+    ],
+    "stance": "opposes"
+   },
+   "passage": {
+    "mir": "If Mir's limits on screens and bodies are lived long enough, they shape habits and beliefs about growing up. That is Ora.",
+    "ora": "If Ora's shared meaning of a childhood free of feeds grows strong enough, it needs rules, checks and fines. That is Mir."
+   }
+  },
+  "structure_harmony": {
+   "doria": {
+    "answer": "I am uneasy. Families differ. Some parents want their teens online, and some want them off. Teenagers have friendships and small communities that live in these spaces. A single rule from above silences those differences. Harmony grows from within a household and a circle of friends. It cannot be forced on them from outside.",
+    "imprint": "Parents and teenagers quarrel, and some friendships thin out.",
+    "impulse": "Resists a uniform rule over many different families.",
+    "instruments": [
+     "Kinship",
+     "Communities"
+    ],
+    "stance": "opposes"
+   },
+   "idrom": {
+    "answer": "Yes. A clear category: under sixteen, over sixteen. A clear duty: platforms check, or they pay. A clear law that applies to all. Evasion is a breach, not an exception. Children and companies alike must know where the line is. Order that is written down can be enforced and can last.",
+    "imprint": "A lasting rule, with checks and penalties behind it.",
+    "impulse": "Sorts every user into a category and every platform into a duty.",
+    "instruments": [
+     "Law",
+     "Standards"
+    ],
+    "stance": "embraces"
+   },
+   "passage": {
+    "doria": "If Doria's shared habits about screens hold long enough, they harden into expectations and then rules. That is Idrom.",
+    "idrom": "If Idrom's rule must keep adjusting to families, schools and friend groups, it begins to live and breathe. That is Doria."
+   }
+  }
+ },
+ "schema": 5,
+ "subject": {
+  "background": {
+   "brief": "Studies link heavy social media use by teenagers with worse mental health, but most of the evidence is correlational and the effects found are small to moderate.\nA 2026 systematic review found that problematic use, rather than total time spent, is most consistently linked to poorer mental health in 11- to 18-year-olds.\nA review of experiments found no studies testing social media restrictions on children under 16; in studies with adults, about 40% showed no improvement or some harm after cutting use.\nA national science panel found strong evidence that certain platform features can harm young users, but not enough evidence to support broad bans.\nSome teenagers get around age limits by creating accounts with false adult ages.",
+   "preparedAt": "2026-11-06",
+   "sources": [
+    {
+     "title": "Courthouse News: Teen social media bans spread despite limited evidence",
+     "url": "https://courthousenews.com/teen-social-media-bans-spread-despite-limited-evidence/"
+    },
+    {
+     "title": "BJPsych Open: Social media use and mental health in secondary school students",
+     "url": "https://www.citedrive.com/en/discovery/social-media-use-and-mental-health-outcomes-in-secondary-school-students-a-systematic-review/"
+    },
+    {
+     "title": "The Columbian: Science doesn't yet support broad restrictions",
+     "url": "https://columbian.com/news/2023/dec/19/teens-social-media-focus-of-report-it-says-science-doesnt-yet-support-broad-restrictions"
+    },
+    {
+     "title": "Columbia Public Health: Evidence for state social media policies is limited",
+     "url": "https://www.publichealth.columbia.edu/news/evidence-support-state-policies-regulating-teen-use-social-media-limited"
+    }
+   ]
+  },
+  "statement": "A government passes a law that bars children under 16 from holding social media accounts. Platforms must check users' ages or face large fines. Parents and teenagers argue over whether it protects young people or cuts them off.",
+  "title": "A country bans social media for under-16s"
+ }
+}

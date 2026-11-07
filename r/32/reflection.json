@@ -1,0 +1,132 @@
+{
+ "date": "2026-11-07",
+ "field": {
+  "held": [
+   {
+    "pairs": "Rodim · Aromi",
+    "text": "Is a firm climate target a decision, or the start of many adjustments no one can fix in advance?"
+   },
+   {
+    "pairs": "Mir · Ora",
+    "text": "Will the fear of running short, or the promise of a livable world, shape what gets built?"
+   },
+   {
+    "pairs": "Idrom · Doria",
+    "text": "How much law does the world need before its shared habits can carry the weight?"
+   }
+  ],
+  "paragraphs": [
+   "Four forces embrace some part of this. Rodim wants the choice, Mir the barrels and wires, Ora the promise, Idrom the rules. Two oppose it. Aromi resists fixed targets, and Doria resists a plan that silences some voices. Each is simply being itself.",
+   "The summit and the war sit in one room. It is a verdict and a changing market, a pipeline and a promise, a treaty and a quarrel among neighbours. Oil and clean power are both being built, believed in and bargained over at once.",
+   "The sides stop being opposites when a pledge needs pipes and panels, when fear of scarcity becomes a story, and when a habit of cooperation becomes law. That is where each force turns into its partner."
+  ]
+ },
+ "number": "32",
+ "pairs": {
+  "decision_adaptation": {
+   "aromi": {
+    "answer": "I don't want one fixed answer. Prices rise and fall, wars start and end, and energy finds new routes each time. A treaty with a hard target is a wall across a river. Let each country follow what is happening. Sun, wind, gas and oil can all flow where they are needed. Locking the path today means missing the turn tomorrow.",
+    "imprint": "Many shifting routes, with fuel and power moving wherever it is cheapest.",
+    "impulse": "Slips around fixed targets and follows prices and supply.",
+    "instruments": [
+     "Trade",
+     "Trends"
+    ],
+    "stance": "opposes"
+   },
+   "passage": {
+    "aromi": "If Aromi keeps adjusting toward the same energy source again and again, that habit becomes a decision. That is Rodim.",
+    "rodim": "If Rodim's choice must be remade every year as prices and wars change, it becomes Aromi's constant adjusting."
+   },
+   "rodim": {
+    "answer": "Choose. Now. Governments sit at one table and must pick a line. Clean energy or more oil. A war makes the choice sharper, not softer. Delay is a choice too, and a weak one. Some countries will lose from any pick. That is the cost of moving. I want a verdict, signed and counted.",
+    "imprint": "A clear line that some countries cross and others refuse.",
+    "impulse": "Forces a hard choice between two energy futures.",
+    "instruments": [
+     "Verdicts",
+     "Competition"
+    ],
+    "stance": "embraces"
+   }
+  },
+  "mind_matter": {
+   "mir": {
+    "answer": "Here is what is real. Oil and gas supply about eighty percent of the world's energy. Ships, tanks, pipelines, power plants, all built for fuel. A war cuts supply, and prices jump. Solar panels and wind farms need metal, land and grid wires. You can't wish a barrel into being, and you can't wish it away. Build what can carry the load.",
+    "imprint": "Physical systems that last for decades and decide what is possible.",
+    "impulse": "Counts barrels, pipelines, panels and costs.",
+    "instruments": [
+     "Economy",
+     "Infrastructure"
+    ],
+    "stance": "embraces"
+   },
+   "ora": {
+    "answer": "I see a story about what a people owes the future. A summit is an idea made visible: that nations share one sky. A war pulls attention to fear and safety. Which story wins? Security now, or a livable world later? Pledges to triple renewables and move away from fossil fuels are meanings first. They change what people think is normal.",
+    "imprint": "A new sense of what is normal, repeated in speeches, schools and law.",
+    "impulse": "Frames the summit as a shared promise about the future.",
+    "instruments": [
+     "Ideologies",
+     "Stories"
+    ],
+    "stance": "embraces"
+   },
+   "passage": {
+    "mir": "Live inside Mir's pipelines and power lines long enough and they shape what people believe is normal. That is Ora.",
+    "ora": "Push Ora's promise far enough and it needs steel, panels and money. That is Mir."
+   }
+  },
+  "structure_harmony": {
+   "doria": {
+    "answer": "I don't like a shock deciding this. A war drags the world toward fear, and fear silences voices. Poor countries, island nations and communities near the wells and mines all live differently with this. A single plan from the top flattens them. Balance means every voice is heard, and the summit hears the loud ones first.",
+    "imprint": "Strained trust between nations, and quiet alliances forming among the overlooked.",
+    "impulse": "Resists a plan that sets some peoples' needs above others.",
+    "instruments": [
+     "Diplomacy",
+     "Solidarity"
+    ],
+    "stance": "opposes"
+   },
+   "idrom": {
+    "answer": "This needs law. Binding targets. Clear categories for what counts as clean. Agreed standards, reported and checked. A summit without enforceable rules is noise. A war is a reason to write energy security into contracts and treaties, not to improvise. Order that lasts is stronger than any single crisis. Write it down and hold every nation to it.",
+    "imprint": "Treaties and standards that outlast the crisis and rank who complies.",
+    "impulse": "Turns pledges into rules, targets and reporting duties.",
+    "instruments": [
+     "Law",
+     "Standards"
+    ],
+    "stance": "embraces"
+   },
+   "passage": {
+    "doria": "If Doria's balance among nations holds long enough, it hardens into custom and then treaty. That is Idrom.",
+    "idrom": "If Idrom's rules are renegotiated each year by those who must live under them, they begin to breathe like Doria's balance."
+   }
+  }
+ },
+ "schema": 5,
+ "subject": {
+  "background": {
+   "brief": "Governments have met for United Nations climate talks since the first global warming treaty in 1992.\nIn 2023, nearly 200 countries agreed for the first time to transition away from fossil fuels in energy systems, with goals to triple renewable capacity and double energy efficiency by 2030; no deadline was set for fossil fuels.\nFossil fuels still supply about 80% of the world's energy and are the largest source of warming emissions.\nAfter the oil shocks of the 1970s, many importing countries invested heavily in renewables research, but renewables stayed a small share of their energy for decades.\nThe same shocks led some fuel exporters to expand coal and gas exports instead.",
+   "preparedAt": "2026-11-06",
+   "sources": [
+    {
+     "title": "AGBI: Deal struck at Cop28 to transition away from fossil fuels",
+     "url": "https://agbi.com/articles/deal-struck-at-cop28-to-transition-away-from-fossil-fuels"
+    },
+    {
+     "title": "Good Morning America: Key takeaways from the COP28 climate conference",
+     "url": "https://goodmorningamerica.com/news/story/biggest-takeaways-cop28-climate-conference-dubai-105589122"
+    },
+    {
+     "title": "IEA: Renewable energy market and policy trends in IEA countries",
+     "url": "https://ebooks.mpdl.mpg.de/ebooks/Record/EB000317407"
+    },
+    {
+     "title": "UCF: The Australian Paradox, politics of an energy transition",
+     "url": "https://stars.library.ucf.edu/honorstheses/1042"
+    }
+   ]
+  },
+  "statement": "Governments gather for their yearly climate summit to agree on cutting greenhouse gases. At the same time, a war has pushed oil prices up and made energy security the top worry. Some push to speed the shift to clean energy, others to secure more oil and gas.",
+  "title": "Nations meet to cut emissions while a war drives up oil"
+ }
+}

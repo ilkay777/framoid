@@ -1,0 +1,128 @@
+{
+ "date": "2026-11-07",
+ "field": {
+  "held": [
+   {
+    "pairs": "Rodim · Aromi",
+    "text": "Is a softer line a decision made, or a decision put off?"
+   },
+   {
+    "pairs": "Mir · Ora",
+    "text": "Will open roads change the story of the neighbour, or will the story decide whether the roads stay open?"
+   },
+   {
+    "pairs": "Idrom · Doria",
+    "text": "How much must be written down before mended ties can last past the next election?"
+   }
+  ],
+  "paragraphs": [
+   "Three forces welcome the thaw. Aromi wants the open path, Mir the moving goods, Ora the new story. Doria wants the mended ties. Rodim and Idrom do not. Rodim misses the firm line, and Idrom misses the fixed rule. Each is simply being itself.",
+   "The change holds all six at once. It is a choice that looks like drift, a road and a story, a loosened rule and a returning rhythm. Voters who welcome it and voters who see lost ground are both describing something real.",
+   "The thaw and the feud stop being opposites when the new openness hardens into treaties and habits, or when the old firmness is tested at every crossing. That is where each force turns into its partner."
+  ]
+ },
+ "number": "24",
+ "pairs": {
+  "decision_adaptation": {
+   "aromi": {
+    "answer": "I welcome this. The feud was a wall, and walls make me restless. Now talk opens, words ease, and goods and people can move again. Nobody has to know where this ends. I like that. Let the border be a place of crossing. Let each season bring new paths. The old hostility was a dam, and the water has found its way.",
+    "imprint": "New contacts, new habits, and paths nobody planned.",
+    "impulse": "Softens words and opens routes that were blocked.",
+    "instruments": [
+     "Trade",
+     "Language"
+    ],
+    "stance": "embraces"
+   },
+   "passage": {
+    "aromi": "If Aromi's easy openness keeps choosing the same friendly path, that path becomes a decision. That is Rodim.",
+    "rodim": "If Rodim's firm line is redrawn at every election, it starts to look like Aromi's flow."
+   },
+   "rodim": {
+    "answer": "I oppose this. The old line was a line. It said who is a rival and who is not. Now it is erased by a new hand. Soft words, open talks, dropped blocks. Nothing is fixed. Nothing is chosen. A government that bends toward its rival has stopped choosing. I want the line held, or a new one drawn hard.",
+    "imprint": "A line that can be redrawn by the next election.",
+    "impulse": "Strikes down the old verdict and leaves the new one unclear.",
+    "instruments": [
+     "Leaders",
+     "Verdicts"
+    ],
+    "stance": "opposes"
+   }
+  },
+  "mind_matter": {
+   "mir": {
+    "answer": "I back this, for plain reasons. A feud costs. Closed crossings, blocked trucks, idle ports, soldiers kept at the fence. Open the road and goods move. Open the pipe and energy flows. Rivers, roads and markets don't care about old speeches. They need use. Talk is cheap, but trade is real, and a border that lets things through feeds people.",
+    "imprint": "More goods crossing, and lower costs on both sides.",
+    "impulse": "Frees trucks, pipes and rails that the feud had held up.",
+    "instruments": [
+     "Economy",
+     "Infrastructure"
+    ],
+    "stance": "embraces"
+   },
+   "ora": {
+    "answer": "I am drawn to this. A feud is a story people tell: they are against us, they always were. A new government tells another story. Maybe we share a past, a language, a fear. Some voters feel hope. Others feel shame, as if the old story was their honour. Both feel it deeply. A country lives in what it believes about itself and its neighbour.",
+    "imprint": "Two memories of the same change: a thaw, or a surrender.",
+    "impulse": "Offers a new story about who the neighbour is.",
+    "instruments": [
+     "Stories",
+     "Ideologies"
+    ],
+    "stance": "embraces"
+   },
+   "passage": {
+    "mir": "Keep Mir's roads and trade open long enough and people start to share stories and trust. That is Ora.",
+    "ora": "Push Ora's new story far enough and it needs border posts, contracts and cargo. That is Mir."
+   }
+  },
+  "structure_harmony": {
+   "doria": {
+    "answer": "I welcome this gently. Neighbours share rivers, families, markets and weather. A feud cuts those ties, and the people on the border feel it first. Now voices can be heard on both sides. Some fear giving ground, and their fear is part of the whole too. Still, a region breathes better when its parts speak. Let the old bonds grow back at their own pace.",
+    "imprint": "Slowly returning habits of visiting, trading and talking.",
+    "impulse": "Reopens talk and lets border ties mend.",
+    "instruments": [
+     "Diplomacy",
+     "Communities"
+    ],
+    "stance": "embraces"
+   },
+   "idrom": {
+    "answer": "I oppose this as it stands. The old policy was clear. Neighbour was named a rival, and the rules followed. Now categories blur. Is the neighbour a friend, a rival, or something between? Talks reopen with no settled terms. Words soften without a written rule. What is not fixed in law will be undone by the next government. Give me treaties, or leave the old order standing.",
+    "imprint": "Policy that depends on who governs, not on a rule.",
+    "impulse": "Tests the old rules and finds no new ones ready.",
+    "instruments": [
+     "Law",
+     "Institutions"
+    ],
+    "stance": "opposes"
+   },
+   "passage": {
+    "doria": "If Doria's mended ties hold long enough, they become routine, then rule. That is Idrom.",
+    "idrom": "If Idrom's treaties are renewed and adjusted year after year, they begin to live like Doria's balance."
+   }
+  }
+ },
+ "schema": 5,
+ "subject": {
+  "background": {
+   "brief": "A change of government often brings a reset in relations with neighbours, even when most other policies stay the same.\nAfter a change of administration in 2010, one South American country repaired tense relations with two neighbours within months while keeping its security priorities.\nAfter a leadership change in 2016, one Central Asian state moved from isolation to a policy of good neighbourliness and improved ties across its region.\nIn another case, two Asian countries drew closer under new leaders for 22 months, until one of those governments collapsed in 2020.",
+   "preparedAt": "2026-11-06",
+   "sources": [
+    {
+     "title": "Colombia Reports: A better neighborhood for Colombia",
+     "url": "https://colombiareports.com/a-better-neighborhood-for-colombia/"
+    },
+    {
+     "title": "FIIA: Uzbekistan's new Central Asia policy",
+     "url": "https://fiia.fi/en/publication/uzbekistans-new-central-asia-policy"
+    },
+    {
+     "title": "Issues and Studies: Regime change and Malaysia-South Korea relations",
+     "url": "https://eprints.um.edu.my/43673/"
+    }
+   ]
+  },
+  "statement": "After an election, a new government reverses its predecessor's hostile line toward a neighbouring country. It reopens talks, softens its language and drops some blocking moves. Some voters welcome the change, while others see it as giving ground.",
+  "title": "A new government ends its predecessor's feud with a neighbour"
+ }
+}

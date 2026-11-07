@@ -1,0 +1,132 @@
+{
+ "date": "2026-11-07",
+ "field": {
+  "held": [
+   {
+    "pairs": "Rodim · Aromi",
+    "text": "Is the move a firm decision, or one step in a flow that will carry the adult out again?"
+   },
+   {
+    "pairs": "Mir · Ora",
+    "text": "Will the savings or the sense of self decide whether this feels like a gain?"
+   },
+   {
+    "pairs": "Idrom · Doria",
+    "text": "How much must be written down before the household's own rhythm can hold?"
+   }
+  ],
+  "paragraphs": [
+   "Four forces welcome the move. Rodim wants the choice, Aromi the open path, Mir the savings, Doria the family. Two oppose it. Ora resists a story reduced to cost, and Idrom resists roles left undefined. Each is simply being itself.",
+   "The household holds all six at once. It is a decision and a drift, a budget and a self, a set of rules and a web of care.",
+   "The move stops being only a retreat or only a rescue when the adult's choice becomes the family's rhythm, and the family's rhythm becomes a plan with an end date. That is where each force turns into its partner."
+  ]
+ },
+ "number": "20",
+ "pairs": {
+  "decision_adaptation": {
+   "aromi": {
+    "answer": "This is the water finding a lower channel. Prices rose, so the path bent. The flat was one shape and now there is another. Nothing here is final. The adult can move out again when the current changes, and the household will find a new rhythm for dinners, doors and quiet hours. I like a home that can open and close like this.",
+    "imprint": "A household that keeps shifting its routines as needs change.",
+    "impulse": "Follows the cost of living back to an open door.",
+    "instruments": [
+     "Migration"
+    ],
+    "stance": "embraces"
+   },
+   "passage": {
+    "aromi": "If Aromi keeps flowing back to the same house, that path becomes a settled choice. That is Rodim.",
+    "rodim": "If Rodim's choice must be made again each month, whether to stay, save or leave, it becomes the steady adjusting of Aromi."
+   },
+   "rodim": {
+    "answer": "Good. A hard call, made. The rent was winning, so the flat goes. One line drawn: I will not pay more than I can. No drifting, no waiting for prices to fall. Pack the boxes, hand back the keys, move. The pride that stands in the way must yield. Movement starts when something gives.",
+    "imprint": "A clear before and after, and savings that begin to grow.",
+    "impulse": "Ends the flat with one firm choice and a moving date.",
+    "instruments": [
+     "Verdicts"
+    ],
+    "stance": "embraces"
+   }
+  },
+  "mind_matter": {
+   "mir": {
+    "answer": "Numbers first. Rent, food and bills outran pay. A body needs a bed, a meal and a roof, and one household can supply all three for less. Money saved is real. Space is real too: one bathroom, one kitchen, a limited number of rooms. Limits decide this, not feelings. The wall of the flat was too costly, so the wall of the family home takes its place.",
+    "imprint": "Savings in the bank, and crowded rooms and shared bills at home.",
+    "impulse": "Moves a body from a costly room into a free one.",
+    "instruments": [
+     "Economy",
+     "Territory"
+    ],
+    "stance": "embraces"
+   },
+   "ora": {
+    "answer": "I do not like how this is reduced to rent and savings. A person in their thirties has built a self, and a self needs a place that is theirs. Under a parent's roof they may be seen as a child again, whatever the bank balance says. A story of failure may grow, or a story of loss. Numbers cannot show that, and I will not let them stand for all of it.",
+    "imprint": "A private sense of setback, or a new way of seeing family.",
+    "impulse": "Asks who this adult is now, in their old childhood room.",
+    "instruments": [
+     "Stories"
+    ],
+    "stance": "opposes"
+   },
+   "passage": {
+    "mir": "Live in Mir's shared house long enough and it fills with habits, memories and a new meaning of home. That is Ora.",
+    "ora": "If Ora's sense of self stays unmet, it demands a door, a key and a rent. That is Mir."
+   }
+  },
+  "structure_harmony": {
+   "doria": {
+    "answer": "I welcome this. A family is meant to hold its members, and it holds one who needs help. Another voice at the table, another pair of hands. The household will need time to find a new balance in kitchen and quiet. Each person's needs count, and the parents' too. If everyone is heard, the house can grow warmer, not smaller.",
+    "imprint": "Closer ties, and a household that learns a new shared rhythm.",
+    "impulse": "Draws the adult back into the circle of family care.",
+    "instruments": [
+     "Kinship",
+     "Solidarity"
+    ],
+    "stance": "embraces"
+   },
+   "idrom": {
+    "answer": "I do not like this. A parent's house has roles, and the roles are old. Parent and child, host and guest. Now an adult earns, pays and lives there, and nothing is defined. Who sets the hours? Who pays what? Who has the final say? Without clear terms, there are quarrels. Write it down: rent, chores, guests, an end date. Ambiguity is the enemy here.",
+    "imprint": "Rules about money and chores, or constant friction without them.",
+    "impulse": "Demands written terms where unclear roles have crept in.",
+    "instruments": [
+     "Contracts"
+    ],
+    "stance": "opposes"
+   },
+   "passage": {
+    "doria": "If Doria's new rhythm in the house holds for years, it hardens into rules everyone knows. That is Idrom.",
+    "idrom": "If Idrom's house rules are revised again and again as the family learns what works, they begin to live like Doria's balance."
+   }
+  }
+ },
+ "schema": 5,
+ "subject": {
+  "background": {
+   "brief": "In most OECD countries, most people aged 20 to 29 live with their parents, and the share has risen in more than 20 countries.\nAcross the EU, young people left the parental home at about 26 on average in 2019, but after 30 in several countries.\nThe share of employed 25- to 34-year-olds in the EU living with their parents rose from 24% to 27% between 2017 and 2022.\nIn one large country outside Europe, about 18% of adults aged 25 to 34 lived with a parent in 2023.\nWhen people leave home depends on relationships, study, income, jobs and the cost of housing, as well as on culture.",
+   "preparedAt": "2026-11-06",
+   "sources": [
+    {
+     "title": "OECD: No home for the young?",
+     "url": "https://t4.oecd.org/housing/no-home-for-the-young.pdf"
+    },
+    {
+     "title": "Eurostat: When are they ready to leave the nest?",
+     "url": "https://ec.europa.eu/eurostat/web/products-eurostat-news/-/edn-20200812-1"
+    },
+    {
+     "title": "RNA News: Rise in employed young people living with parents across the EU",
+     "url": "https://rnanews.eu/data-shows-rise-in-employed-young-people-living-with-parents-across-eu-662132.html"
+    },
+    {
+     "title": "WLR FM: Average age for leaving the family home",
+     "url": "https://wlrfm.com/news/average-age-for-irish-person-leaving-family-home-is-27-143050/"
+    },
+    {
+     "title": "Verbalists: Young adults are leaving home much later",
+     "url": "https://verbalistseducation.com/jw/young-adults-leaving-home-later/"
+    }
+   ]
+  },
+  "statement": "A working adult in their late twenties or thirties gives up their rented flat and moves back into their parents' home. Rent, food and bills had grown faster than their pay. They save money but lose some independence, and the whole household has to adjust.",
+  "title": "An adult moves back in with their parents to afford life"
+ }
+}

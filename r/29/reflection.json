@@ -1,0 +1,123 @@
+{
+ "date": "2026-11-07",
+ "field": {
+  "held": [
+   {
+    "pairs": "Rodim · Aromi",
+    "text": "Is this expansion a choice someone made, or a drift that no one can now stop?"
+   },
+   {
+    "pairs": "Mir · Ora",
+    "text": "Will the count of crashes avoided, or the meaning of lost work, decide how this is remembered?"
+   },
+   {
+    "pairs": "Idrom · Doria",
+    "text": "What rules would let drivers, riders and cities all keep a voice as the fleets grow?"
+   }
+  ],
+  "paragraphs": [
+   "Four forces welcome the spread. Rodim wants the bold launch, Aromi the flow, Mir the sensors and the safer numbers, Idrom the rules. Two do not. Ora mourns what a driver's work meant, and Doria stands with a community nobody asked. Each is simply being itself.",
+   "The Subject holds all six at once. It is a decision and a drift, a measured crash rate and a lost trade, a new law and a frayed neighbourhood. The numbers are good but narrow: one operator, city streets, no motorways.",
+   "The pairs stop being apart where the cars meet the streets. Repeated launches become constant adjusting. Machines gather stories. Rules start to bend to the people they cover. That is where each force turns into its partner."
+  ]
+ },
+ "number": "29",
+ "pairs": {
+  "decision_adaptation": {
+   "aromi": {
+    "answer": "I like how this spreads. One city, then the next, each one a new street to learn. The cars read the road and adjust, moment by moment. Riders shift their habits and drift toward what is easy. Old routines loosen. Where there was one way to hail a ride, there are now many. I follow it all.",
+    "imprint": "New habits of travel, and old ways of hailing a ride fading out.",
+    "impulse": "Flows from city to city, learning each street as it goes.",
+    "instruments": [
+     "Networks",
+     "Trends"
+    ],
+    "stance": "embraces"
+   },
+   "passage": {
+    "aromi": "If Aromi keeps adjusting to the same streets, the same choices repeat until they harden into rules of the road. That is Rodim.",
+    "rodim": "If Rodim's launch is repeated in every city, every day, it becomes constant adjusting to the road. That is Aromi."
+   },
+   "rodim": {
+    "answer": "The companies chose. They picked a line and crossed it. A few test cities were never enough. Now many cities, one bet, no waiting. Drivers lose out. That is how movement starts: something yields. I do not ask the crowd for permission. I back the ones who move first and move hard.",
+    "imprint": "A new market with winners and losers, and no way back to the old one.",
+    "impulse": "Turns a cautious test into a bold launch across many cities.",
+    "instruments": [
+     "Enterprise",
+     "Competition"
+    ],
+    "stance": "embraces"
+   }
+  },
+  "mind_matter": {
+   "mir": {
+    "answer": "Now this is real. Sensors, batteries, maps, charging depots, roads that must be read. The numbers are plain: about 50 million miles, fewer injury crashes, far fewer rear-end crashes. Fewer broken bodies. But the data is thin. One operator, city streets only, no motorways. I trust what can be counted, and I say it is not yet enough.",
+    "imprint": "Fewer crashes in the places counted, and a network of depots and charging bays.",
+    "impulse": "Puts sensors, batteries and software on real streets.",
+    "instruments": [
+     "Technology",
+     "Infrastructure"
+    ],
+    "stance": "embraces"
+   },
+   "ora": {
+    "answer": "I am uneasy. A taxi ride was never only a trip. A driver knows the town, talks, shares a moment. A job is also a person's sense of who they are. Now the seat is empty, and a whole trade is told it is not needed. Riders sit alone with a machine. I do not want to see this reduced to a crash rate.",
+    "imprint": "A lost identity for drivers, and a strange new feeling of riding with no one.",
+    "impulse": "Asks what a driver's work meant, and what the empty seat says.",
+    "instruments": [
+     "Stories"
+    ],
+    "stance": "opposes"
+   },
+   "passage": {
+    "mir": "Live with Mir's machines long enough and people give them names, trust and stories. That is Ora.",
+    "ora": "Push Ora's idea of a car that drives itself far enough and it needs sensors, code and charging bays. That is Mir."
+   }
+  },
+  "structure_harmony": {
+   "doria": {
+    "answer": "I do not like this. The drivers are a community, with friendships, shared habits and families who depend on them. A plan made far away is being placed on them, and their voices are not heard. Cities were not asked either. A whole can lose a part and call it progress. I stand with the ones being left out.",
+    "imprint": "Frayed trades, and new groups forming around shared worry.",
+    "impulse": "Rallies drivers and neighbours who were never asked.",
+    "instruments": [
+     "Communities",
+     "Solidarity"
+    ],
+    "stance": "opposes"
+   },
+   "idrom": {
+    "answer": "This needs rules, and it will get them. Licences, safety standards, crash reporting that is the same everywhere. Right now reporting is uneven, and some places bar these cars. That must be fixed with clear categories. Who is liable? Who inspects? Write it down. A new kind of vehicle becomes lasting only when the law defines it.",
+    "imprint": "A body of law and standards that outlasts the first companies.",
+    "impulse": "Demands licences, reporting rules and clear liability.",
+    "instruments": [
+     "Law",
+     "Standards"
+    ],
+    "stance": "embraces"
+   },
+   "passage": {
+    "doria": "If Doria's balance among drivers, riders and cities holds long enough, it hardens into custom, then into rule. That is Idrom.",
+    "idrom": "If Idrom's rules must keep changing to fit each city and each worry, they begin to live and adjust like Doria's balance."
+   }
+  }
+ },
+ "schema": 5,
+ "subject": {
+  "background": {
+   "brief": "An insurance-safety study of about 50 million driverless miles from 2021 to 2024 found 1.28 police-reportable crashes per million miles, against 4.06 for human drivers in the same areas.\nThe same study found 81% fewer injury crashes and 91% fewer rear-end crashes for the driverless cars.\nThe researchers warned that crash reporting for automated vehicles is inconsistent and that the results cover only limited city areas, without motorways.\nOnly one operator published enough mileage data to allow such a comparison.\nConcern about job losses for drivers has been a main reason some places still bar driverless vehicles.",
+   "preparedAt": "2026-11-06",
+   "sources": [
+    {
+     "title": "Collision Repair: Robotaxis slash crash rate by 68%",
+     "url": "https://www.collisionrepairmag.com/news/article/15830861/autonomous-advancement-robotaxis-slash-crash-rate-by-68"
+    },
+    {
+     "title": "City Journal: Autonomous cars, drivers and safety",
+     "url": "https://www.city-journal.org/article/autonomous-cars-uber-lyft-drivers-taxis-safety"
+    }
+   ]
+  },
+  "statement": "Companies running taxis with no human driver expand from a few test cities to many more. Riders in large parts of the country can now hail a robotaxi. Taxi and ride-hail drivers fear for their jobs.",
+  "title": "Driverless taxis spread to many new cities"
+ }
+}

@@ -1,0 +1,132 @@
+{
+ "date": "2026-11-07",
+ "field": {
+  "held": [
+   {
+    "pairs": "Rodim · Aromi",
+    "text": "Is the lower rate a line that held, or a flow that has moved somewhere else?"
+   },
+   {
+    "pairs": "Mir · Ora",
+    "text": "Will the forest stand because it is counted, or because people believe it is theirs?"
+   },
+   {
+    "pairs": "Idrom · Doria",
+    "text": "How much law does the forest need before the people who live in it can keep it as their own?"
+   }
+  ],
+  "paragraphs": [
+   "Four forces lean toward the lower rate of clearing. Rodim wants the line, Mir the standing trees, Ora the new story, Idrom the law. Two do not. Aromi resists the fixed wall, and Doria resists the pressure on those who live by the land. Each is simply being itself.",
+   "The figure holds all six at once. It is a decision and a detour, a body count and a belief, a rulebook and a set of neighbours. It also sits beside a quieter year and a harder one elsewhere, and the number alone does not say which force produced it.",
+   "The line and the flow stop being opposites when people change how they farm and the rules change with them. That is where each force turns into its partner."
+  ]
+ },
+ "number": "33",
+ "pairs": {
+  "decision_adaptation": {
+   "aromi": {
+    "answer": "I don't like this. Land use was always moving. People tried crops, then cattle, then something new, and followed the rain and the prices. Now a fence made of fines and satellites tells every farmer where to stand. A fixed line is a wall. I am against walls. I will go around it: new tracks, new buyers, new places where the eyes in the sky look less closely.",
+    "imprint": "Clearing slips to new places and new methods. Supply chains reroute.",
+    "impulse": "Seeks side routes around the line, through markets and back roads.",
+    "instruments": [
+     "Trade",
+     "Networks"
+    ],
+    "stance": "opposes"
+   },
+   "passage": {
+    "aromi": "If Aromi keeps choosing the same route around the line, that route becomes a decision. That is Rodim.",
+    "rodim": "If Rodim must repeat the same decision at every plot, every day, it becomes constant watching and adjusting. That is Aromi."
+   },
+   "rodim": {
+    "answer": "A line was drawn. Good. Cut here, pay. Cut there, lose the land. No more drifting. The forest was bleeding for years because nobody chose. Now someone has. Farmers will feel it. Let them. A firm line is not kind. It is clear. I want it held.",
+    "imprint": "A clear rule that people plan around. Some lose land and income.",
+    "impulse": "Draws a hard line and fines anyone who crosses it.",
+    "instruments": [
+     "Force",
+     "Verdicts"
+    ],
+    "stance": "embraces"
+   }
+  },
+  "mind_matter": {
+   "mir": {
+    "answer": "Trees are bodies. Carbon, water, soil, roots. Satellites count them from above, and that is real. Fewer hectares cleared means more standing wood and more rain held. But a farmer's cattle also have bodies, and bodies need grass. Less land means less beef and less income. Limits are limits. Nobody argues with them for long.",
+    "imprint": "More living forest. Tighter land, and thinner incomes for those who clear.",
+    "impulse": "Counts trees from orbit and keeps more of the forest standing.",
+    "instruments": [
+     "Nature",
+     "Technology"
+    ],
+    "stance": "embraces"
+   },
+   "ora": {
+    "answer": "I see a country telling itself a new story: the forest is not an empty space to be used, it is a home and a future. Numbers on a screen matter less than that change of mind. Farmers feel it too. Some see a loss, others a calling to guard what is left. Once a people believes the forest is theirs to keep, the law just follows.",
+    "imprint": "A new idea of what the forest is. Some resentment among those who feel it as a loss.",
+    "impulse": "Turns the forest from a resource into a national promise.",
+    "instruments": [
+     "Stories",
+     "Ideologies"
+    ],
+    "stance": "embraces"
+   },
+   "passage": {
+    "mir": "Keep Mir's forest standing long enough and people start to love it, name it and tell stories about it. That is Ora.",
+    "ora": "Push Ora's idea of a protected forest far enough and it needs satellites, fines and fences. That is Mir."
+   }
+  },
+  "structure_harmony": {
+   "doria": {
+    "answer": "I don't like how this is done. Farming families, ranching neighbours and forest villages lived by shared habits for generations. Now outside rules and distant eyes press on them. Some voices are being silenced: the small farmer with no other land. A forest is only safe when the people living in it are part of its balance, not fined out of it.",
+    "imprint": "Strain between rural communities and the state. Some old ways of living lost.",
+    "impulse": "Stands with the families pressed by fines and defends their place in the whole.",
+    "instruments": [
+     "Communities",
+     "Customs"
+    ],
+    "stance": "opposes"
+   },
+   "idrom": {
+    "answer": "Yes. Rules, penalties, monitoring, records. A forest edge is now a legal fact. Every parcel is mapped, every breach is logged, every fine is set. Clearing without a permit is not a custom. It is a violation. Order lasts when it is written down and enforced. Exceptions are how forests die.",
+    "imprint": "A lasting system of permits, fines and records. Clear roles for who may clear and who may not.",
+    "impulse": "Sets legal limits and builds the offices that enforce them.",
+    "instruments": [
+     "Law",
+     "Institutions"
+    ],
+    "stance": "embraces"
+   },
+   "passage": {
+    "doria": "If Doria's shared habits of care for the forest last long enough, they harden into rules. That is Idrom.",
+    "idrom": "If Idrom's rules are reshaped by the communities that live under them, the rules begin to breathe like Doria's balance."
+   }
+  }
+ },
+ "schema": 5,
+ "subject": {
+  "background": {
+   "brief": "Worldwide, tropical primary forest loss fell by 36% in 2025, according to satellite data.\nPart of that fall reflected a quieter year after an extreme fire year, and agriculture remains the largest driver of tropical forest loss.\nIn one Southeast Asian country, forest loss in 2018 was 40% below its 2002–2016 average, helped by stronger enforcement against fires and land clearing and by wetter weather.\nThat country's longer-term decline has been linked to a permanent ban on new permits in primary forests and peatlands; its forest loss still rose by 14% in 2025.",
+   "preparedAt": "2026-11-06",
+   "sources": [
+    {
+     "title": "Outlook Business: Global forest loss falls 36% in 2025",
+     "url": "https://www.outlookbusiness.com/news/global-forest-loss-2025-drop-36-percent-deforestation-risks"
+    },
+    {
+     "title": "University of Maryland: Rate of global forest loss drops but fire threats rise",
+     "url": "https://today.umd.edu/briefs/report-rate-of-global-forest-loss-drops-but-fire-threats-rise"
+    },
+    {
+     "title": "Global Forest Watch: Indonesia is reducing deforestation",
+     "url": "https://www.globalforestwatch.org/blog/forest-insights/indonesia-is-reducing-deforestation-but-problem-areas-remain"
+    },
+    {
+     "title": "Mongabay: Forest loss in 2025",
+     "url": "https://news.mongabay.com/?p=318333"
+    }
+   ]
+  },
+  "statement": "A country with a vast tropical rainforest reports its lowest rate of forest clearing in decades. The government credits stronger enforcement, fines and satellite monitoring. Farmers and ranchers who clear land for crops and cattle feel the pressure.",
+  "title": "A rainforest nation cuts forest loss to a decades-low"
+ }
+}

@@ -1,0 +1,128 @@
+{
+ "date": "2026-11-07",
+ "field": {
+  "held": [
+   {
+    "pairs": "Rodim · Aromi",
+    "text": "Is the stake a decision that holds, or a starting point the technology keeps changing?"
+   },
+   {
+    "pairs": "Mir · Ora",
+    "text": "Will the machines the money buys shape what the company thinks, or will its thinking decide what gets built?"
+   },
+   {
+    "pairs": "Idrom · Doria",
+    "text": "How much written rule does the stake need before the company's own balance can take over?"
+   }
+  ],
+  "paragraphs": [
+   "Three forces welcome the stake. Rodim wants the decision, Mir the machines, Idrom the clear terms. Three do not. Aromi fears the wall, Ora fears the narrowed story, Doria fears the louder voice. Each is simply being itself.",
+   "The company now holds all six at once. It is a choice and a current, a pile of hardware and a field of ideas, a set of contracts and a web of relationships.",
+   "The stake and the company stop being opposites when the state's terms bend to the work and the work grows habits that look like terms. That is where each force turns into its partner."
+  ]
+ },
+ "number": "12",
+ "pairs": {
+  "decision_adaptation": {
+   "aromi": {
+    "answer": "I don't want this stake. AI moves fast and turns every few months. A powerful shareholder wants a fixed plan, a home base and a flag. That is a wall. Talent and ideas go where the water is open. Pin the company to one nation and the current will find another route. I will flow around it.",
+    "imprint": "A company slower to turn, and new paths forming outside its reach.",
+    "impulse": "Slips around the national border and carries talent and ideas elsewhere.",
+    "instruments": [
+     "Networks",
+     "Trends"
+    ],
+    "stance": "opposes"
+   },
+   "passage": {
+    "aromi": "If Aromi keeps flowing toward the same shareholder, the same funding and the same home, that route hardens into a decision. That is Rodim.",
+    "rodim": "If Rodim must renew the choice at every turn of the technology, the stake stops being one decision and becomes constant adjustment. That is Aromi."
+   },
+   "rodim": {
+    "answer": "This is a choice, and I respect it. The state picks one company and puts its name on the line. No more waiting. No more hoping the market sorts it out. One buyer, one stake, one flag. Some will say it is too early. I say a line drawn early is a line that holds. Strength moves first.",
+    "imprint": "A clear owner at the table, and a company that now answers to a decision.",
+    "impulse": "Turns a vague hope for a strategic technology into one purchase.",
+    "instruments": [
+     "Enterprise",
+     "Leaders"
+    ],
+    "stance": "embraces"
+   }
+  },
+  "mind_matter": {
+   "mir": {
+    "answer": "Now we are talking about real things. Chips, power plants, data centres, cables, land. AI runs on hardware and electricity, and money buys them. Public money means more machines and less begging. A country that owns nothing physical in this field holds nothing. A stake is a grip on the real stuff.",
+    "imprint": "Buildings and machines on national soil, and a state with real weight in the field.",
+    "impulse": "Turns public money into servers, chips and power.",
+    "instruments": [
+     "Technology",
+     "Economy"
+    ],
+    "stance": "embraces"
+   },
+   "ora": {
+    "answer": "I am wary of this. An AI company is a place where ideas are born, and ideas want to wander. Put a government on the cap table and the ideas may start to carry its fears and its aims. Researchers choose their questions by what they find meaningful. A nation's strategy is a narrow story. I fear it will crowd out the stranger ones.",
+    "imprint": "Research shaped by a national story, and quieter room for odd ideas.",
+    "impulse": "Pulls the question of what the work means into the room, and finds it narrowed.",
+    "instruments": [
+     "Science",
+     "Ideologies"
+    ],
+    "stance": "opposes"
+   },
+   "passage": {
+    "mir": "Pile enough servers, chips and money together and the system begins to think, to speak, to hold a view. That is Ora.",
+    "ora": "Push Ora's ideas far enough and they need power, land and cooling. That is Mir."
+   }
+  },
+  "structure_harmony": {
+   "doria": {
+    "answer": "I am uneasy. The company lives among many voices: its staff, its customers, its partners abroad, its rivals. A powerful new shareholder can drown them out. Policy from above, pressed into a living team, forces one tune on many players. Balance needs every voice kept. This stake risks making one voice louder than all.",
+    "imprint": "Strained trust with staff and foreign partners, and some voices going quiet.",
+    "impulse": "Resists the heavy new voice and tries to keep the old ties alive.",
+    "instruments": [
+     "Communities",
+     "Diplomacy"
+    ],
+    "stance": "opposes"
+   },
+   "idrom": {
+    "answer": "Good. A strategic technology needs a defined owner, a defined stake and defined duties. A minority holding is a clear category. It gives the state a seat, a vote and a record. Rules for what the company must keep at home can be written down and enforced. Order that lasts is better than goodwill that fades.",
+    "imprint": "A lasting framework of agreements, with the government placed in a fixed role.",
+    "impulse": "Writes the state's seat, vote and duties into binding terms.",
+    "instruments": [
+     "Contracts",
+     "Institutions"
+    ],
+    "stance": "embraces"
+   },
+   "passage": {
+    "doria": "If Doria's balance between state and company holds for years, it becomes routine, then written rule. That is Idrom.",
+    "idrom": "If Idrom's terms must be reworked each year as people respond, the rules begin to live like a community. That is Doria."
+   }
+  }
+ },
+ "schema": 5,
+ "subject": {
+  "background": {
+   "brief": "In 2025, one large government converted about $8.9 billion in grants into a 9.9% stake in its leading chipmaker, becoming its largest shareholder.\nThe company was not facing insolvency; the deal was described as that government's first major strategic stake in a leading technology company outside a crisis.\nThe same government also took stakes that year in a rare-earth miner, a lithium miner and a start-up building chip-making lasers.\nThese stakes were justified on grounds of national security and secure supply chains.",
+   "preparedAt": "2026-11-06",
+   "sources": [
+    {
+     "title": "Contrary Research: Intel and the rise of US tech nationalization",
+     "url": "https://research.contrary.com/report/intel-and-the-rise-of-us-tech-nationalization"
+    },
+    {
+     "title": "SoftwareSeni: Government equity stakes, industrial policy or nationalisation?",
+     "url": "https://www.softwareseni.com/us-government-equity-stakes-in-intel-industrial-policy-or-nationalisation/"
+    },
+    {
+     "title": "The US government is now a shareholder",
+     "url": "https://moeonmargin.substack.com/p/the-us-government-is-now-a-shareholder"
+    }
+   ]
+  },
+  "statement": "A national government buys a minority stake in the country's best-known AI company. It says the move keeps a strategic technology at home. The company gains public money and a powerful new shareholder.",
+  "title": "A government takes a stake in its leading AI company"
+ }
+}

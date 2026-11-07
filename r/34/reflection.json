@@ -1,0 +1,127 @@
+{
+ "date": "2026-11-07",
+ "field": {
+  "held": [
+   {
+    "pairs": "Rodim · Aromi",
+    "text": "Is a line that never moves a decision, or only a gate that people keep finding ways around?"
+   },
+   {
+    "pairs": "Mir · Ora",
+    "text": "Will a generation's healthier bodies or its own story of the forbidden thing shape what the law becomes?"
+   },
+   {
+    "pairs": "Idrom · Doria",
+    "text": "When a whole generation grows up under the rule, does the rule make the community, or does the community make the rule?"
+   }
+  ],
+  "paragraphs": [
+   "Three forces want the law, or something in it. Rodim wants the line, Mir the healthier body, Idrom the lasting rule. Three oppose it. Aromi resists the gate, Ora resists the reduction to lungs, Doria resists the split between generations. Each is simply being itself.",
+   "The law holds all six at once. It is a decision and a wall, a count of bodies and a loss of meaning, a firm rule and a divided community. Its repeal before it began shows that a line drawn in law can be erased by the next vote.",
+   "The forces meet where the line meets time. A fixed date moves one year at a time, so a decision becomes a flow. A generation lives without tobacco long enough that the absence becomes its custom, and custom becomes structure. That is where each force turns into its partner."
+  ]
+ },
+ "number": "34",
+ "pairs": {
+  "decision_adaptation": {
+   "aromi": {
+    "answer": "I don't want this wall. People change, and so do their habits. A law that says never, to a whole generation, for life, is a gate that cannot move. Smokers will find new paths: other countries, other sellers, other products. Trade will flow around the gate. I am against any rule that tries to stop the river by naming a birth year.",
+    "imprint": "Cross-border buying and hidden markets grow around the rule.",
+    "impulse": "Pushes against the fixed date and looks for side routes.",
+    "instruments": [
+     "Trade",
+     "Migration"
+    ],
+    "stance": "opposes"
+   },
+   "passage": {
+    "aromi": "If Aromi's side routes harden into the same few paths, those paths become choices. That is Rodim.",
+    "rodim": "If Rodim's line must be re-decided every year as the cut-off date moves, it starts to look like Aromi's flow."
+   },
+   "rodim": {
+    "answer": "One line. Drawn once. Born after it, you never buy. No review, no loophole, no waiting. A country picks one thing over another and says so in law. A repeal is a weak hand, and the one in 2024 shows it. A decision must hold. Some adults will grumble. I don't wait for them.",
+    "imprint": "A clear line between those who may buy and those who never will.",
+    "impulse": "Draws one hard date and fixes it in law.",
+    "instruments": [
+     "Verdicts",
+     "Leaders"
+    ],
+    "stance": "embraces"
+   }
+  },
+  "mind_matter": {
+   "mir": {
+    "answer": "This is about lungs. Smoke damages bodies. Cancer, heart disease, hospital beds, money spent on treatment. Up to 5,000 deaths a year, counted. Fewer shops means less to buy and less to reach. Cutting nicotine changes what is in the body. But shops also pay tax, and crime follows scarcity. Those are real costs too. I judge by what can be measured.",
+    "imprint": "Fewer lung cancers and lower health bills, but less tax and a risk of illegal trade.",
+    "impulse": "Cuts the supply of the thing that harms the body.",
+    "instruments": [
+     "Bodies",
+     "Economy"
+    ],
+    "stance": "embraces"
+   },
+   "ora": {
+    "answer": "I don't like how this treats people. Smoking is also a ritual, a pause, a way some people mark their day. The law reduces all of that to lungs and costs. It tells a generation that a whole experience is closed to them before they have lived it. I oppose any rule that sees only the body and forgets what the habit means to the person inside it.",
+    "imprint": "A generation grows up with a forbidden thing, and the forbidding becomes its own story.",
+    "impulse": "Resists a rule that counts bodies and leaves out meaning.",
+    "instruments": [
+     "Ideologies"
+    ],
+    "stance": "opposes"
+   },
+   "passage": {
+    "mir": "If Mir's counting of lungs and costs goes deep enough, it becomes a belief about what a good life is. That is Ora.",
+    "ora": "If Ora's idea of a smoke-free generation is pushed all the way, it needs shop counts, tax sums and enforcement. That is Mir."
+   }
+  },
+  "structure_harmony": {
+   "doria": {
+    "answer": "I don't like how this divides us. Two people in the same family, the same street, the same friendship group, and one may buy while the other never can. The old and the young stop sharing a custom. A rule imposed from outside cuts through belonging. I oppose a law that makes one generation different from all the rest, for good.",
+    "imprint": "Shared habits fade, and older and younger people stand on different sides of a line.",
+    "impulse": "Resists a rule that splits neighbours and families into two kinds.",
+    "instruments": [
+     "Communities",
+     "Kinship"
+    ],
+    "stance": "opposes"
+   },
+   "idrom": {
+    "answer": "Yes. The rule is clear. Born before the date, you may buy. Born after, you may not. No exceptions, no age to wait for, no gray zone. Sellers know their duty, and officers know their task. A law that holds for decades builds order that lasts. A repeal is a break in that order, and I count it as a loss.",
+    "imprint": "A lasting order with two classes of adults, sorted by date of birth.",
+    "impulse": "Sets a permanent category by birth year and binds every seller to it.",
+    "instruments": [
+     "Law",
+     "Standards"
+    ],
+    "stance": "embraces"
+   },
+   "passage": {
+    "doria": "If Doria's shared dislike of smoking lasts long enough, it hardens into a norm and then a rule. That is Idrom.",
+    "idrom": "If Idrom's rule is kept for a lifetime, the generation under it forms its own customs and rhythm. That is Doria."
+   }
+  }
+ },
+ "schema": 5,
+ "subject": {
+  "background": {
+   "brief": "The first such law was passed in 2022 in one country, covering everyone born on or after 1 January 2009; it also cut nicotine levels and reduced licensed tobacco shops from about 6,000 to 600.\nModelling for that country estimated the measures could prevent up to 5,000 deaths a year and save about $780 million in health costs over 20 years.\nThe law was repealed in 2024, before it took effect, by a new government that cited lost tax revenue and the risk of crime around the few remaining shops.\nA 2024 study estimated that banning tobacco sales to everyone born between 2006 and 2010 worldwide could prevent about 1.2 million lung-cancer deaths.",
+   "preparedAt": "2026-11-06",
+   "sources": [
+    {
+     "title": "Pulse: A generational smoking ban passed in 2022, repealed before it took effect",
+     "url": "https://www.pulse.bot/healthcare/news/new-zealand-passed-a-generational-smoking-ban-in-2022-but-repealed-it-before-it-went-into-effect-b2fb1b09-b38e-47e0-b841-4a1cf79cf9a6/"
+    },
+    {
+     "title": "The Spinoff: The lives that could be saved by a smokefree generation",
+     "url": "https://thespinoff.co.nz/politics/04-10-2024/the-lives-that-could-be-saved-by-creating-a-smokefree-generation"
+    },
+    {
+     "title": "TBS News (Reuters): World-first tobacco ban set to be scrapped",
+     "url": "https://www.tbsnews.net/world/new-zealand-set-scrap-world-first-tobacco-ban-799590"
+    }
+   ]
+  },
+  "statement": "A law makes it illegal ever to sell tobacco to anyone born after a certain year. The legal smoking age rises by one year every year, so a whole generation never gains the right to buy. Adults who can already buy tobacco keep that right.",
+  "title": "A country bans tobacco for life for everyone born after a set year"
+ }
+}

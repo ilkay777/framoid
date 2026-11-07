@@ -1,0 +1,132 @@
+{
+ "date": "2026-11-07",
+ "field": {
+  "held": [
+   {
+    "pairs": "Rodim · Aromi",
+    "text": "When the weather will not hold still, which choices should be fixed and which should keep moving?"
+   },
+   {
+    "pairs": "Mir · Ora",
+    "text": "Will the year be remembered by its losses in money and grain, or by what people felt and told?"
+   },
+   {
+    "pairs": "Idrom · Doria",
+    "text": "Which rules will help the weakest voices be heard, and which will quiet them first?"
+   }
+  ],
+  "paragraphs": [
+   "Aromi, Mir and Idrom take this event as their own. Aromi follows the moving rain, Mir counts the broken ground, and Idrom builds the rules for the emergency. Rodim, Ora and Doria oppose it. Rodim hates the drift, Ora hates the reduction to numbers, and Doria hates the broken balance.",
+   "The warm water does not choose any side. It is a physical fact, a human story, a test of rules and a shock to living ties, all at once. None of these cancels the others.",
+   "The pairs begin to turn into each other. Constant adjusting becomes a decision. Fear and forecast become granaries and walls. Shared habits of survival become law. The hard year or two is where each force finds its partner."
+  ]
+ },
+ "number": "37",
+ "pairs": {
+  "decision_adaptation": {
+   "aromi": {
+    "answer": "This is me, at ocean size. Warm water slides east and the winds ease. Rain leaves old places and finds new ones. Nothing stays where it was fixed. Fields that were wet go dry, and dry lands drink. Farmers who move with it, change crops, shift routes and follow the water, will flow on. I open every path. I hold none of them.",
+    "imprint": "New routes for food and work. Old plans left behind.",
+    "impulse": "Moves rain, fish, crops and people onto new paths.",
+    "instruments": [
+     "Migration",
+     "Trade"
+    ],
+    "stance": "embraces"
+   },
+   "passage": {
+    "aromi": "If Aromi's adapting keeps landing on the same answer, such as the same crop or the same road, that answer becomes a decision. That is Rodim.",
+    "rodim": "If Rodim's choices must be remade every week as the rain shifts, they stop being firm and become Aromi's flow."
+   },
+   "rodim": {
+    "answer": "I do not like this. The ocean drifts and no one chooses. No line holds. Rain moves where it wants. Farmers plant and the sky changes the order. Forecasters declare it and the water does not care. I want one clear choice and one firm line. This is the opposite. It is a huge shift with no one in command, and I stand against it.",
+    "imprint": "Hard calls on water, seed and aid. Some regions are chosen over others.",
+    "impulse": "Demands that someone pick a plan and hold it while the weather shifts.",
+    "instruments": [
+     "Leaders",
+     "Verdicts"
+    ],
+    "stance": "opposes"
+   }
+  },
+  "mind_matter": {
+   "mir": {
+    "answer": "Now the world shows what it is. Warm water, weak winds, less rain, more rain. Dry soil. Flooded roads. Thin fish nets. Hungry bodies. Prices climb because the harvest is short. Trillions in losses are not an idea. They are rotted grain and broken bridges. Limits are real, and this year they bite hard.",
+    "imprint": "Damaged land and infrastructure. Costs that keep growing for years.",
+    "impulse": "Turns warm water into floods, dust, empty nets and higher prices.",
+    "instruments": [
+     "Nature",
+     "Economy"
+    ],
+    "stance": "embraces"
+   },
+   "ora": {
+    "answer": "I do not want this reduced to water, rain and prices. People will live this year from the inside: fear of a failed harvest, grief over a lost home, hope in a forecast. A number cannot hold that. If this is only a count of losses, then the story is missing. I oppose telling it as only temperature and cost.",
+    "imprint": "Stories of the drought year, told for generations.",
+    "impulse": "Insists on the fear, hope and meaning people carry through the hard year.",
+    "instruments": [
+     "Stories",
+     "Science"
+    ],
+    "stance": "opposes"
+   },
+   "passage": {
+    "mir": "Live through enough dry years and the land fills with memory, warning and belief. That is Ora.",
+    "ora": "Push Ora's forecasts and fears far enough and they must become grain stores, wells and walls. That is Mir."
+   }
+  },
+  "structure_harmony": {
+   "doria": {
+    "answer": "I do not like what this does. Rain was shared between valleys, farms, fish and forest, and now the balance breaks. One place drowns while another cracks dry. Neighbours who lived in rhythm are pulled apart. Some voices go quiet first: small farmers, coastal fishers. I oppose a shock that silences the weak parts of the whole.",
+    "imprint": "Strained villages and damaged habitats. Slow work to find a new balance.",
+    "impulse": "Mourns the broken rhythm of rain, reef, river and village.",
+    "instruments": [
+     "Ecosystems",
+     "Communities"
+    ],
+    "stance": "opposes"
+   },
+   "idrom": {
+    "answer": "The declaration itself is order. A threshold is crossed, a category is named: strong El Niño. Then rules follow. Reserves are released. Water is rationed. Insurance pays by contract. Standards say who is entitled to aid. Chaos in the sky is answered by clear roles on the ground. Structure does its best work when the weather is at its worst.",
+    "imprint": "Emergency plans that outlast the year and set who gets help first.",
+    "impulse": "Turns a warning into rules, ranks, rations and payouts.",
+    "instruments": [
+     "Institutions",
+     "Contracts"
+    ],
+    "stance": "embraces"
+   },
+   "passage": {
+    "doria": "If Doria's shared ways of surviving hold through many bad years, they harden into custom and law. That is Idrom.",
+    "idrom": "If Idrom's rules are bent again and again by each village's needs, they begin to live like Doria's balance."
+   }
+  }
+ },
+ "schema": 5,
+ "subject": {
+  "background": {
+   "brief": "El Niño is the warm phase of a natural cycle in the tropical Pacific; it weakens the trade winds and shifts rainfall around the globe.\nStrong El Niño years often bring floods, droughts, crop failures, smaller fish catches and more tropical disease.\nOne study put the global economic loss from the 1997-98 El Niño at $5.7 trillion over the following years, far above an earlier official estimate of $45 billion.\nAnother study estimated losses of $2.1 trillion for 1997-98 and $3.9 trillion for 2015-16, with damage growing for three years after each event.\nPast El Niño periods have raised non-energy commodity prices by nearly 4 percentage points, and the 2015-16 event helped make 2016 the hottest year on record at that time.",
+   "preparedAt": "2026-11-06",
+   "sources": [
+    {
+     "title": "Nature Communications: Nonlinear El Niño impacts on the global economy",
+     "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10514271/"
+    },
+    {
+     "title": "DTN: El Niño cost study",
+     "url": "https://www.dtnpf.com/agriculture/web/ag/news/article/2023/05/24/el-nino-cost-study-points-world"
+    },
+    {
+     "title": "Earth.com: El Niño events cost the global economy trillions",
+     "url": "https://earth.com/news/el-nino-events-cost-the-global-economy-trillions-of-dollars"
+    },
+    {
+     "title": "Dhaka Tribune: How El Niño may prolong food inflation",
+     "url": "https://www.dhakatribune.com/world/313646/el-nino-how-the-climate-pattern-may-prolong-food"
+    }
+   ]
+  },
+  "statement": "Warm water spreads across the central and eastern tropical Pacific, and forecasters declare a strong El Niño. Rain patterns shift around the world, bringing drought to some regions and floods to others. Governments and farmers prepare for a hard year or two.",
+  "title": "A strong El Niño begins"
+ }
+}

@@ -1,0 +1,125 @@
+{
+ "date": "2026-11-07",
+ "field": {
+  "held": [
+   {
+    "pairs": "Rodim · Aromi",
+    "text": "Is the verdict a decision voters make, or a passing mood caught on one day?"
+   },
+   {
+    "pairs": "Mir · Ora",
+    "text": "Do the seats decide what the leader means, or does the story decide who wins the seats?"
+   },
+   {
+    "pairs": "Idrom · Doria",
+    "text": "Does the fixed calendar make the swing, or does the swing make the calendar feel like a rule?"
+   }
+  ],
+  "paragraphs": [
+   "Four forces see the mid-term as a verdict. Rodim wants the line drawn, Mir the seats counted, Ora the story told, Idrom the rule kept. Aromi resists the freezing of opinion, and Doria resists the loss of local voices. Each is simply being itself.",
+   "The election holds all six at once. It is a decision and a snapshot, a count and a story, a fixed rule and a swing of mood that shows up again and again.",
+   "The pattern is not universal. In one 2025 mid-term the ruling party won. Where the verdict goes the other way, the distinctions blur: a decision turns into a flow, a count into a story, a rule into a rhythm."
+  ]
+ },
+ "number": "10",
+ "pairs": {
+  "decision_adaptation": {
+   "aromi": {
+    "answer": "I don't like this. Two years of change get squeezed into one day and one judgment. Local needs, small shifts, many views: all of it is flattened into a vote for or against one person. Then the result is treated as final. I would rather let opinion keep moving than stop it in a single count.",
+    "imprint": "A snapshot that is already out of date when the count ends.",
+    "impulse": "Slips away from the single verdict and keeps opinion moving.",
+    "instruments": [
+     "Trends"
+    ],
+    "stance": "opposes"
+   },
+   "passage": {
+    "aromi": "If Aromi's shifting opinion keeps settling on the same answer, it becomes a decision. That is Rodim.",
+    "rodim": "If Rodim's verdict is demanded every two years, again and again, it starts to look like Aromi's constant adjustment."
+   },
+   "rodim": {
+    "answer": "Good. A verdict. Voters draw a line and say yes or no. No drifting. The leader has a record, and the record gets judged. Seats are won or lost. Power moves or it stays. I like a day when everything is decided and everyone must live with it.",
+    "imprint": "A clear result that fixes who can pass what.",
+    "impulse": "Forces a plain yes or no on the leader's record.",
+    "instruments": [
+     "Verdicts",
+     "Leaders"
+    ],
+    "stance": "embraces"
+   }
+  },
+  "mind_matter": {
+   "mir": {
+    "answer": "Seats are real. Count them. Each one is a body in a chair with a vote. Turnout is about 40%, so the people who actually show up decide it. The leader's party has lost seats in nearly every mid-term. Lose a few dozen and bills die. That is how power works: it is counted, not talked about.",
+    "imprint": "A real shift in who can pass laws, and who cannot.",
+    "impulse": "Turns opinion into counted votes and seats in districts.",
+    "instruments": [
+     "Bodies",
+     "Territory"
+    ],
+    "stance": "embraces"
+   },
+   "ora": {
+    "answer": "I see a story being told. Voters ask what the leader has meant, and what the country thinks of itself. The campaign stops being about local candidates and becomes about a face, a promise, a mood. Each voter carries a feeling into the booth. The result will be read as a story: rebuke, warning, or renewal.",
+    "imprint": "A shared reading of the result that outlives the seats.",
+    "impulse": "Turns a local contest into a story about one leader.",
+    "instruments": [
+     "Stories"
+    ],
+    "stance": "embraces"
+   },
+   "passage": {
+    "mir": "Count seats long enough and the numbers become a story of mood and meaning. That is Ora.",
+    "ora": "Push Ora's story far enough and it must become ballots, seats and votes. That is Mir."
+   }
+  },
+  "structure_harmony": {
+   "doria": {
+    "answer": "I don't like it. Local candidates have neighbours, concerns, and voices of their own. Here they are drowned out. A town's needs become a vote on someone far away. Many voters stay home, so whole parts of the community go unheard. A whole is not healthy when one face speaks for all its parts.",
+    "imprint": "Neglected local concerns and a quiet, absent majority.",
+    "impulse": "Resists the way local voices are swallowed by one national contest.",
+    "instruments": [
+     "Communities"
+    ],
+    "stance": "opposes"
+   },
+   "idrom": {
+    "answer": "The rule is clear. Terms are fixed. Elections fall on set dates. The leader's power is checked by a legislature the voters renew. This is order doing its work. Whatever the mood, the calendar holds and the count is official. Law decides what the leader may pass, and the result sets the limit.",
+    "imprint": "A legislature whose size limits what the leader can do.",
+    "impulse": "Holds the vote on a fixed date under fixed rules.",
+    "instruments": [
+     "Institutions",
+     "Law"
+    ],
+    "stance": "embraces"
+   },
+   "passage": {
+    "doria": "If Doria's shared mood holds across time, it hardens into a pattern of swings. That is Idrom.",
+    "idrom": "If Idrom's fixed vote repeats long enough, it grows its own habits and rhythm, like Doria's harmony."
+   }
+  }
+ },
+ "schema": 5,
+ "subject": {
+  "background": {
+   "brief": "In one long-running presidential democracy, the president's party lost an average of 28 lower-house seats and four upper-house seats in the 22 mid-terms from 1934 to 2018.\nIn those elections the president's party gained lower-house seats only three times.\nLosses tend to be larger when the leader is unpopular: about 14 seats on average with approval above 50%, and 33 seats with approval below 50% since 1970.\nTurnout at mid-terms there is usually around 40%, against 50 to 60% at presidential elections.\nThe pattern is not universal: in a 2025 mid-term in another country, the ruling party won about 41% of the vote, the first mid-term win for a ruling party there since 2017.",
+   "preparedAt": "2026-11-06",
+   "sources": [
+    {
+     "title": "American Presidency Project: The 2022 midterm elections, what the historical data suggest",
+     "url": "https://presidency.ucsb.edu/analyses/the-2022-midterm-elections-what-the-historical-data-suggest"
+    },
+    {
+     "title": "VOA: Congressional midterms through history",
+     "url": "https://www.voanews.com/a/congressional-midterms-through-history/4547818.html"
+    },
+    {
+     "title": "Buenos Aires Herald: 2025 midterms result",
+     "url": "https://buenosairesherald.com/politics/argentina-2025-midterms-lla-gets-landslide-win-reaches-key-number-of-congress-seats"
+    }
+   ]
+  },
+  "statement": "Halfway through a leader's term, voters elect a new legislature. The campaign turns into a vote on the leader's record rather than on local candidates. The result will decide how much the leader can still pass into law.",
+  "title": "A mid-term election becomes a verdict on the leader"
+ }
+}

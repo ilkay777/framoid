@@ -1,0 +1,132 @@
+{
+ "date": "2026-11-07",
+ "field": {
+  "held": [
+   {
+    "pairs": "Rodim · Aromi",
+    "text": "Is a demand to act still a decision when the wind changes every day?"
+   },
+   {
+    "pairs": "Mir · Ora",
+    "text": "Will the count of the harmed, or the story of shared air, shape what is done?"
+   },
+   {
+    "pairs": "Idrom · Doria",
+    "text": "How much shared concern must hold before it becomes a rule that binds?"
+   }
+  ],
+  "paragraphs": [
+   "Five forces welcome the Subject in some way. Rodim wants the demand, Aromi the drift, Mir the facts of the body, Ora the shared meaning, Doria the shared home. Idrom does not. He sees a border with no rule across it. Each is simply being itself.",
+   "The smoke is a fact in the lungs and a story in the sky. It is an order to close a school and a wind that changes by the hour. It belongs to no one's law, yet it links every neighbour.",
+   "The border and the air stop being opposites when pressure turns into habit, and habit turns into rule. That is where each force becomes its partner."
+  ]
+ },
+ "number": "19",
+ "pairs": {
+  "decision_adaptation": {
+   "aromi": {
+    "answer": "The smoke ignores borders, and I like that. It drifts where the wind goes and reaches whoever is in its way. People adapt. Schools shut, work moves home, plans bend. Nothing stays fixed for long. The wind turns, the smoke shifts, and everyone finds a new way through the week.",
+    "imprint": "Habits that bend with the air: masks, remote work, flexible days.",
+    "impulse": "Carries smoke across borders and sends daily routines in new directions.",
+    "instruments": [
+     "Networks",
+     "Migration"
+    ],
+    "stance": "embraces"
+   },
+   "passage": {
+    "aromi": "If Aromi keeps choosing the same shelter day after day, that path hardens into a decision. That is Rodim.",
+    "rodim": "If Rodim must decide again every morning as the wind changes, his decisions become Aromi's flow."
+   },
+   "rodim": {
+    "answer": "Close the schools. Cancel the events. Stay inside. Good. Someone drew a line and held it. Now the neighbours demand action from the country where the fires burn. Right. Stop the fires. Name who must act. Smoke does not wait for a long debate. Choose, and move.",
+    "imprint": "A clear demand with a name on it. Pressure on one government to act.",
+    "impulse": "Turns a haze into orders: close, cancel, stay in.",
+    "instruments": [
+     "Verdicts",
+     "Force"
+    ],
+    "stance": "embraces"
+   }
+  },
+  "mind_matter": {
+   "mir": {
+    "answer": "Fine particles go into lungs. That is the fact. Hundreds of millions breathed air past the safe limit. Thousands died soon after, and tens of thousands lost years of life. More deaths fell in the crowded neighbour than where the trees burned. Bodies count, and the air is a body's first need. Smoke goes where the wind pushes it.",
+    "imprint": "Illness, lost years and closed classrooms, spread over two continents.",
+    "impulse": "Puts particles into lungs and counts the dead.",
+    "instruments": [
+     "Bodies",
+     "Nature"
+    ],
+    "stance": "embraces"
+   },
+   "ora": {
+    "answer": "I wonder what this smoke means to people. A sky turned orange is a strange sight. It feels like a message, or a warning. Children kept at home remember the year the air turned. Neighbours begin to tell a new story: this fire is not only theirs, it is ours too. Meaning crosses borders as easily as smoke.",
+    "imprint": "A story of shared air that outlasts the season.",
+    "impulse": "Turns an orange sky into a shared question about who is responsible.",
+    "instruments": [
+     "Stories",
+     "Ideologies"
+    ],
+    "stance": "embraces"
+   },
+   "passage": {
+    "mir": "Breathe the same smoke long enough and people begin to feel and speak as one. That is Ora.",
+    "ora": "Push the idea of shared air far enough and it needs filters, monitors and fire crews. That is Mir."
+   }
+  },
+  "structure_harmony": {
+   "doria": {
+    "answer": "The smoke shows how joined we are. One country's fire is another country's cough. The neighbours do not stay silent. They speak up, and they ask. That is how a shared home speaks. Every voice should be heard, including those who breathe the smoke and those who fight the fire. A shared sky asks for shared care.",
+    "imprint": "Closer ties between countries, and also strain where blame is felt.",
+    "impulse": "Draws distant neighbours into one concern for the same air.",
+    "instruments": [
+     "Diplomacy",
+     "Solidarity"
+    ],
+    "stance": "embraces"
+   },
+   "idrom": {
+    "answer": "I oppose this. The border is a line, and the fire is on one side of it. Now neighbours press that country to act, with no treaty, no court and no duty written down. Pressure without rules is noise. Smoke crosses the line and nobody can say who answers for it. Without clear law and a clear owner of the duty, nothing lasts.",
+    "imprint": "Demands with no binding force, and a gap where an agreement should be.",
+    "impulse": "Points at the border and asks which rule applies.",
+    "instruments": [
+     "Law",
+     "Institutions"
+    ],
+    "stance": "opposes"
+   },
+   "passage": {
+    "doria": "If Doria's shared concern holds year after year, it becomes a habit, then an agreement. That is Idrom.",
+    "idrom": "If Idrom's rules are tested by every season of smoke, they start to adapt and grow like Doria's balance."
+   }
+  }
+ },
+ "schema": 5,
+ "subject": {
+  "background": {
+   "brief": "Smoke from one country's record wildfire season in 2023 exposed about 354 million people on two continents to fine-particle pollution above World Health Organization limits.\nA 2025 study estimated about 5,400 short-term deaths and about 82,100 premature deaths worldwide from that smoke.\nMore of those deaths occurred in the densely populated neighbour downwind than in the country where the fires burned.\nDuring the worst smoke, schools closed and companies told staff to work from home in affected areas downwind.\nThe smoke reached another continent, where it was linked to about 22,400 shortened lives.",
+   "preparedAt": "2026-11-06",
+   "sources": [
+    {
+     "title": "eNCA (AFP): Smoke from 2023 fires linked to thousands of deaths",
+     "url": "https://www.enca.com/lifestyle/smoke-2023-canada-fires-linked-thousands-deaths-study"
+    },
+    {
+     "title": "PreventionWeb: Wildfire smoke caused 82,000 premature deaths globally",
+     "url": "https://www.preventionweb.net/news/study-estimates-2023-canadian-wildfire-smoke-caused-82000-premature-deaths-globally"
+    },
+    {
+     "title": "New West Record: Wildfires drop air quality, schools close",
+     "url": "https://www.newwestrecord.ca/weatherhood-bc/wildfires-drop-canadas-air-quality-below-us-for-first-time-ever-says-report-8465881"
+    },
+    {
+     "title": "Live Science: Wildfires contributed to 87,000 early deaths worldwide",
+     "url": "https://livescience.com/health/canadas-2023-wildfires-contributed-to-87-000-early-deaths-worldwide-study-estimates"
+    }
+   ]
+  },
+  "statement": "Fires burning in one country send thick smoke across its borders for weeks. Neighbouring countries close schools, cancel events and tell people to stay indoors. They press the country where the fires burn to act.",
+  "title": "Wildfire smoke from one country closes schools in its neighbours"
+ }
+}

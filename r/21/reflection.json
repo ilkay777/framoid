@@ -1,0 +1,132 @@
+{
+ "date": "2026-11-07",
+ "field": {
+  "held": [
+   {
+    "pairs": "Rodim · Aromi",
+    "text": "Is the park a decision that was made, or a flow that the land and its people keep shaping?"
+   },
+   {
+    "pairs": "Mir · Ora",
+    "text": "Will the park's story of rescue, or the wages and rents of those who left, decide what it means?"
+   },
+   {
+    "pairs": "Idrom · Doria",
+    "text": "How firm must the park's rules be before a new community can grow inside them?"
+   }
+  ],
+  "paragraphs": [
+   "Five forces welcome the park. Rodim wants the decision, Aromi the open land, Mir the ground, Ora the meaning, Idrom the order. One does not. Doria sees a whole that is losing some of its parts. Each is simply being itself.",
+   "The park holds all six at once. It is a line drawn and a land set free, a habitat and a lost livelihood, a dream and a charter, a new order and a broken neighbourhood.",
+   "The park and the farms stop being opposites when former farmers work as guides, rangers or hosts, and when park rules grow from local habits. That is where each force turns into its partner."
+  ]
+ },
+ "number": "21",
+ "pairs": {
+  "decision_adaptation": {
+   "aromi": {
+    "answer": "I like what comes next. Fences fall and the land can move again. Seeds travel, animals roam, rivers wander. Nobody has to plan each step. The wild finds its own paths, and species I haven't met arrive and stay. The park's boundary is a wall, yes. But inside it, I get to flow.",
+    "imprint": "New paths, new arrivals, and a landscape that keeps changing.",
+    "impulse": "Opens the land so seeds and animals can move and settle where they will.",
+    "instruments": [
+     "Evolution",
+     "Migration"
+    ],
+    "stance": "embraces"
+   },
+   "passage": {
+    "aromi": "If Aromi's many paths keep settling into the same few, those paths become choices. That is Rodim.",
+    "rodim": "If Rodim's choice must be renewed every season as the land shifts, it becomes constant adjustment. That is Aromi."
+   },
+   "rodim": {
+    "answer": "The line is drawn. Money changed hands. Land was chosen. Cattle out, wild animals in. No more drifting between ranch and wilderness. A park is a verdict, and I like verdicts. Some families will lose out. That is what a choice costs. I don't wait for every voice. I move.",
+    "imprint": "A clear before and after. Some families stay behind the line.",
+    "impulse": "Turns scattered farms into one boundary and one purpose.",
+    "instruments": [
+     "Verdicts",
+     "Enterprise"
+    ],
+    "stance": "embraces"
+   }
+  },
+  "mind_matter": {
+   "mir": {
+    "answer": "This is real ground. 1,370 square kilometres. Fewer cattle, more roots, more water held in soil. About 4,000 species need room, and room is what this gives them. But land is also wages. When the ranches go, the work goes too. Bodies need food and rent. A park fills some bellies and empties others.",
+    "imprint": "More species, fewer ranch jobs, and land held for the long run.",
+    "impulse": "Gives wild bodies room to live and takes working land out of use.",
+    "instruments": [
+     "Nature",
+     "Territory"
+    ],
+    "stance": "embraces"
+   },
+   "ora": {
+    "answer": "I see a dream taking shape: land made whole, a place where nature is allowed to be itself. People will tell stories about the day the fences came down. Some will tell it as a rescue. Others, as a loss of home. Both stories will last. A park is an idea first, and then it is soil.",
+    "imprint": "Two stories that last: one of rescue and one of loss.",
+    "impulse": "Gives the land a meaning: a wild place kept for its own sake.",
+    "instruments": [
+     "Stories",
+     "Ideologies"
+    ],
+    "stance": "embraces"
+   },
+   "passage": {
+    "mir": "Let Mir's land stand long enough and it fills with meaning: a heritage, a name, a story. That is Ora.",
+    "ora": "Push Ora's idea of wild land far enough and it needs fences removed, animals moved, and bills paid. That is Mir."
+   }
+  },
+  "structure_harmony": {
+   "doria": {
+    "answer": "I don't like how this is done. Farm families, neighbours and old routines made a whole here. Their work, their church, their shop, their school all fit together. Now a plan from outside removes a part of that whole. The wild animals may bring a new balance. But the people who leave will be missed, and their voices should not be silenced.",
+    "imprint": "Emptier villages. A new balance with animals, and a gap where neighbours were.",
+    "impulse": "Resists the plan that removes families from the land's old rhythm.",
+    "instruments": [
+     "Communities",
+     "Kinship"
+    ],
+    "stance": "opposes"
+   },
+   "idrom": {
+    "answer": "A park has a charter. Boundaries are surveyed. Ownership is transferred in writing. Rules say what may live here, what may be hunted, who may walk where. Farms were many separate claims. Now there is one authority and one set of laws. That is order, and order lasts. The protected area stays protected because the law says so.",
+    "imprint": "Protection that outlasts any one owner, and a clear line between park and not-park.",
+    "impulse": "Replaces many private deeds with one boundary, one authority and one set of rules.",
+    "instruments": [
+     "Law",
+     "Institutions"
+    ],
+    "stance": "embraces"
+   },
+   "passage": {
+    "doria": "If Doria's new balance of people and wildlife holds for years, it hardens into custom and then into law. That is Idrom.",
+    "idrom": "If the park's rules must bend again and again to fit local life and wild animals, they begin to live like Doria's balance."
+   }
+  }
+ },
+ "schema": 5,
+ "subject": {
+  "background": {
+   "brief": "In one South American country, conservation groups bought former cattle ranches and donated the land to the state, which created a 1,370 km² national park in 2018; about 4,000 species live there.\nOn one 14 km² farm in England that had fallen into debt, letting the land go wild brought back hundreds of species and made the estate profitable.\nAcross a network of rewilded sites in Scotland, the number of bird species rose by 261%, and bumblebee and butterfly numbers rose more than tenfold.\nTenant farmers' groups have documented cases of farm tenancies lost when conservation bodies bought land, though no full national analysis exists.\nIn 2022, nearly 200 countries agreed to protect 30% of land and sea for nature by 2030.",
+   "preparedAt": "2026-11-06",
+   "sources": [
+    {
+     "title": "NASA Earth Observatory: A new start for Iberá",
+     "url": "https://earthobservatory.nasa.gov/images/149270/a-new-start-for-ibera"
+    },
+    {
+     "title": "Fix the News: Rewilding turns a debt-ridden farm into a biodiversity haven",
+     "url": "https://fixthenews.com/s/159-16"
+    },
+    {
+     "title": "Liverpool John Moores University: Rewilding delivers dramatic wildlife recovery",
+     "url": "https://www.ljmu.ac.uk/about-us/news/articles/2026/3/6/rewilding"
+    },
+    {
+     "title": "Plinth: Rewilding and farmland",
+     "url": "https://www.plinth.org.uk/debates/rewilding"
+    }
+   ]
+  },
+  "statement": "A government and conservation groups buy a block of private farms and merge them into a new national park. Fences come down, cattle leave and wild animals are brought back. Some farm families sell gladly; others worry about jobs and the local economy.",
+  "title": "Farms are joined into a new national park"
+ }
+}

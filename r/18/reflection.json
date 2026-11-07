@@ -1,0 +1,132 @@
+{
+ "date": "2026-11-07",
+ "field": {
+  "held": [
+   {
+    "pairs": "Rodim · Aromi",
+    "text": "Is the vote a final line, or the first of many choices the town will keep making?"
+   },
+   {
+    "pairs": "Mir · Ora",
+    "text": "Will the town be judged by what the site takes from its land, or by the meaning it gives that land?"
+   },
+   {
+    "pairs": "Idrom · Doria",
+    "text": "Can written terms ever be as alive as the town they are meant to protect?"
+   }
+  ],
+  "paragraphs": [
+   "Three forces want something here. Rodim wants the vote, Ora wants the meaning, Idrom wants the contract. Three oppose. Aromi fears the fixed shell, Mir counts the water and power, and Doria defends the town's own rhythm. None of them is being unfair. Each is only itself.",
+   "The council holds all six at once. It is a decision and a bet on change, a body of wells and wires and a story about thinking machines, a set of terms and a web of neighbours.",
+   "The line between yes and no may be softer than it looks. A yes with strict, renewable terms starts to behave like a living agreement. A no may harden into a rule that shapes the next offer. Each side can turn into its partner."
+  ]
+ },
+ "number": "18",
+ "pairs": {
+  "decision_adaptation": {
+   "aromi": {
+    "answer": "I don't want this. A data centre is a fixed thing on a moving land. It locks in a plan for decades, while the water, the power and the technology keep changing. Machines grow old and the demand shifts. Then a huge shell sits on the field with nothing left to do. I am against walls this big. A town should keep its paths open.",
+    "imprint": "A building that outlasts the need for it. Fewer paths left for the land.",
+    "impulse": "Pushes against a fixed site that cannot follow change.",
+    "instruments": [
+     "Trends",
+     "Networks"
+    ],
+    "stance": "opposes"
+   },
+   "passage": {
+    "aromi": "If Aromi keeps drifting toward the same offer, the drift hardens into a choice. That is Rodim.",
+    "rodim": "If Rodim's vote must be made again each year, as water, prices and complaints change, it becomes Aromi's flow."
+   },
+   "rodim": {
+    "answer": "Vote. Now. The town has talked long enough. A company has made an offer, and the council must say yes or no. No more drifting. No more meetings that end in maybes. Pick one line and stand on it. Some will lose. That is what choosing means. I do not wait for everyone to agree.",
+    "imprint": "A clear before and after. The losers must live beside the result.",
+    "impulse": "Forces a long argument into one vote.",
+    "instruments": [
+     "Verdicts",
+     "Enterprise"
+    ],
+    "stance": "embraces"
+   }
+  },
+  "mind_matter": {
+   "mir": {
+    "answer": "Count the real things. Millions of litres of water for cooling. Power drawn from a grid that has limits. In one European country, data centres now use almost a quarter of all electricity. Farmland is paved over. Fans run day and night. Promises of jobs do not fill a well or carry current. The body of the town has limits, and this thing eats them.",
+    "imprint": "Lower wells, higher bills, a field turned to concrete.",
+    "impulse": "Measures the water, power and land the site will take.",
+    "instruments": [
+     "Infrastructure",
+     "Nature"
+    ],
+    "stance": "opposes"
+   },
+   "ora": {
+    "answer": "I see a mind being given a home. These machines hold language, images and questions from millions of people. Something new is learning to think in rooms at the edge of a farm town. The town is part of a story much larger than itself. What residents feel matters too: the quiet they love, the place they call home. Both want to be heard.",
+    "imprint": "A new story for the town, as host to the machines, or as the one that said no.",
+    "impulse": "Gives the site a meaning: a place where a new kind of thinking lives.",
+    "instruments": [
+     "Science",
+     "Stories"
+    ],
+    "stance": "embraces"
+   },
+   "passage": {
+    "mir": "Pile up enough chips, power and cooling and they begin to sense, remember and answer. That is Ora.",
+    "ora": "Follow Ora's idea far enough and it needs land, water and wires. That is Mir."
+   }
+  },
+  "structure_harmony": {
+   "doria": {
+    "answer": "I don't want this here. The town has its own rhythm: farms, schools, neighbours who know each other's names. A giant plant arrives from outside with its own plan, and the town must bend to it. Some voices will be loud, some will be paid, and some will be quietly pushed out. A whole cannot live well when one part is made to give way.",
+    "imprint": "A divided town, or a closer one, depending on how the quarrel ends.",
+    "impulse": "Resists a plan from outside and holds the neighbours together.",
+    "instruments": [
+     "Communities",
+     "Ecosystems"
+    ],
+    "stance": "opposes"
+   },
+   "idrom": {
+    "answer": "Put it under rules. Zoning, permits, contracts. Set limits on water use and noise, and fix the tax payment in writing. Then the company is bound, and the town is protected. A clear agreement lasts longer than anyone's goodwill. This is what councils are for. A large project is not a danger when the terms are exact.",
+    "imprint": "A binding agreement that outlives the people who signed it.",
+    "impulse": "Turns a promise into clauses, limits and penalties.",
+    "instruments": [
+     "Contracts",
+     "Law"
+    ],
+    "stance": "embraces"
+   },
+   "passage": {
+    "doria": "If the town's shared habits of water and quiet last long enough, they become rules. That is Idrom.",
+    "idrom": "If the rules keep being revised as the town learns what the site does, they start to live like Doria's balance."
+   }
+  }
+ },
+ "schema": 5,
+ "subject": {
+  "background": {
+   "brief": "In one European country, data centres used 21% of all metered electricity in 2023, up from 5% in 2015 and more than all urban homes combined.\nIn 2021, that country's grid operators stopped connecting new data centres around the capital for several years because of the strain on supply.\nData centres there still raised their electricity use by about 10% in 2025, to 23% of the national total.\nIn one large country, data centres were estimated to use about 620 billion litres of water in 2021, much of it for cooling.",
+   "preparedAt": "2026-11-06",
+   "sources": [
+    {
+     "title": "Friends of the Earth Ireland: Data centre electricity use",
+     "url": "https://friendsoftheearth.ie/news/friends-of-the-earth-calls-for-moratorium-on-runaway-data-ce"
+    },
+    {
+     "title": "Irish Times: Data centres consume as much electricity as urban houses",
+     "url": "https://www.irishtimes.com/business/2023/06/12/data-centres-consume-as-much-electricity-as-urban-houses-cso"
+    },
+    {
+     "title": "Computing: Datacentres now consume nearly a quarter of national electricity",
+     "url": "https://www.computing.co.uk/news/2026/datacentre/ireland-datacentres-quarter-electricity-consumption"
+    },
+    {
+     "title": "The Wire: Betting big on data centres, at what cost",
+     "url": "https://thewire.in/tech/india-is-betting-big-on-data-centres-but-at-what-cost"
+    }
+   ]
+  },
+  "statement": "A tech company plans a huge AI data centre on farmland at the edge of a small town. It promises jobs and tax income; residents fear for their water, their power bills and their quiet. The town council must decide whether to approve it.",
+  "title": "A small town fights a giant AI data centre"
+ }
+}

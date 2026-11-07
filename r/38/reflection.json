@@ -1,0 +1,130 @@
+{
+ "date": "2026-11-07",
+ "field": {
+  "held": [
+   {
+    "pairs": "Rodim · Aromi",
+    "text": "Does a wider field blur the line between in and out, or make a new line that is clearer?"
+   },
+   {
+    "pairs": "Mir · Ora",
+    "text": "Will the strain on bodies and budgets decide the meaning of the event, or will the meaning decide what is worth the strain?"
+   },
+   {
+    "pairs": "Idrom · Doria",
+    "text": "How many rules does a gathering of forty-eight need before its own rhythm can carry it?"
+   }
+  ],
+  "paragraphs": [
+   "Three forces welcome the change and three do not. Aromi wants the open gate, Ora the new stories, Doria the wider circle. Rodim wants a harder cut, Mir counts the strain, Idrom fears the loose rules. Each is simply being itself.",
+   "The tournament holds all six at once. It is a softer line and a wider door, a heavier load and a bigger dream, a tangle of rules and a larger family.",
+   "Opposites become partners here. A wider field may sharpen into new hard choices at each stage. Rules written for many hosts may grow their own shared rhythm. That is where each force turns into its partner."
+  ]
+ },
+ "number": "38",
+ "pairs": {
+  "decision_adaptation": {
+   "aromi": {
+    "answer": "I like this. The tournament was a closed gate, and now it opens wider. More nations arrive, bringing their own styles and their own surprises. Teams from far away meet and learn from each other. A first-time qualifier can go deep, and nobody can say beforehand how. Let it spread over a whole continent and move from city to city.",
+    "imprint": "New paths for unknown teams, and fans travelling between countries.",
+    "impulse": "Opens the gate wider and lets many styles flow in.",
+    "instruments": [
+     "Networks",
+     "Migration"
+    ],
+    "stance": "embraces"
+   },
+   "passage": {
+    "aromi": "If Aromi's widening keeps going, someone must finally say how many and where to stop. That is Rodim.",
+    "rodim": "If Rodim's hard cut is repeated every few years and always moved, it turns into Aromi's slow flow of change."
+   },
+   "rodim": {
+    "answer": "I oppose this. A tournament should cut. Sixteen teams, then thirty-two, each time the line got blurrier. Now forty-eight. The line between in and out goes soft. A real contest names a few and sends the rest home. More places means less at stake in every game. Make the line hard again. Let it hurt to miss it.",
+    "imprint": "A softer line between in and out, and fewer games where one loss ends everything.",
+    "impulse": "Pushes back on a wider field and demands a harder cut.",
+    "instruments": [
+     "Competition"
+    ],
+    "stance": "opposes"
+   }
+  },
+  "mind_matter": {
+   "mir": {
+    "answer": "I count the cost. More matches means more pitches, more flights, more hotel beds, more tired legs. Several countries means long journeys for players and fans. A body only has so many games in it. The grass wears out and so do knees. Add games and you add injuries, bills and smoke in the sky. I do not like it.",
+    "imprint": "More travel, more wear, bigger bills, and a heavier load on stadiums and bodies.",
+    "impulse": "Counts the matches, the miles and the strain on players.",
+    "instruments": [
+     "Bodies",
+     "Infrastructure"
+    ],
+    "stance": "opposes"
+   },
+   "ora": {
+    "answer": "I see a bigger story. Forty-eight nations means forty-eight dreams. A small country that never expected to appear can now tell its children it played the World Cup. That changes how a whole people sees itself. Some games will be uneven. Still, every shirt on the pitch carries a flag, and each flag carries a meaning.",
+    "imprint": "New national memories, and a first-ever appearance that a country keeps telling.",
+    "impulse": "Gives more peoples a place in the story of the game.",
+    "instruments": [
+     "Stories"
+    ],
+    "stance": "embraces"
+   },
+   "passage": {
+    "mir": "Mir's pitches, flights and tired bodies pile up until players and fans start to feel what the tournament means. That is Ora.",
+    "ora": "Ora's dream of a place for everyone needs stadiums, schedules and beds. That is Mir."
+   }
+  },
+  "structure_harmony": {
+   "doria": {
+    "answer": "I welcome this. For too long many nations stood outside the circle and watched. Now more of them sit at the table. Fans from different countries share stands, streets and songs. Hosting together means neighbours work side by side. A bigger gathering can hold more voices, and the whole game grows richer for hearing them.",
+    "imprint": "Neighbouring hosts bound by shared work, and more countries feeling they belong.",
+    "impulse": "Draws more nations and fans into one shared gathering.",
+    "instruments": [
+     "Diplomacy",
+     "Communities"
+    ],
+    "stance": "embraces"
+   },
+   "idrom": {
+    "answer": "I find the new format loose. Forty-eight teams need new groups, new rounds, new tiebreak rules and new qualifying slots. Every change opens room for exceptions. Spread across several hosts, the rules must work in many places at once. Standards may differ between countries. Keep the structure simple and the same everywhere. Complexity invites dispute.",
+    "imprint": "Bigger rulebooks, more exceptions to manage, and more arguments over slots.",
+    "impulse": "Demands one clear set of rules and fixed standards across every host.",
+    "instruments": [
+     "Standards",
+     "Institutions"
+    ],
+    "stance": "opposes"
+   },
+   "passage": {
+    "doria": "If Doria's shared gathering repeats every four years, its habits harden into rules. That is Idrom.",
+    "idrom": "If Idrom's rules must bend to fit many hosts and many teams, they begin to breathe like Doria's balance."
+   }
+  }
+ },
+ "schema": 5,
+ "subject": {
+  "background": {
+   "brief": "The tournament began with 13 teams in 1930, settled at 16 from 1954, grew to 24 in 1982 and to 32 in 1998.\nEach expansion was criticised in advance for diluting quality, but one analysis found competitive balance stayed above 80% after the move to 32 teams.\nIn the 32-team era, the teams that finished bottom of their groups won only three of 120 games across five tournaments.\nThe share of entering nations that qualified fell from about 21% in 1990 to about 15% by 2018, as more countries entered.\nWhen a continental championship grew from 16 to 24 teams in 2016, it averaged 2.12 goals per game, and some first-time qualifiers went deep into the tournament.",
+   "preparedAt": "2026-11-06",
+   "sources": [
+    {
+     "title": "Scroll.in: How many teams should play in the World Cup?",
+     "url": "https://scroll.in/field/840053/scroll_in"
+    },
+    {
+     "title": "SBS: Why there is nothing wrong with an expanded World Cup",
+     "url": "https://www.sbs.com.au/sport/article/why-there-is-nothing-wrong-with-an-expanded-world-cup/leowhw40n"
+    },
+    {
+     "title": "Soccer America: Will a bigger World Cup hurt quality?",
+     "url": "https://www.socceramerica.com/will-a-48-team-world-cup-really-hurt-the-quality-o/"
+    },
+    {
+     "title": "Not The Footy Show: World Cup expansion",
+     "url": "https://notthefootyshow.ashleymorrisonmedia.com/world-cup-expansion-makes-no-sense/"
+    }
+   ]
+  },
+  "statement": "The world's biggest football tournament expands from 32 to 48 national teams, hosted across several countries on one continent. More nations get a place, and the number of matches rises sharply. Fans and players argue over whether quality and fairness suffer.",
+  "title": "The football World Cup grows to 48 teams across a continent"
+ }
+}

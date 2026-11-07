@@ -1,0 +1,131 @@
+{
+ "date": "2026-11-07",
+ "field": {
+  "held": [
+   {
+    "pairs": "Rodim · Aromi",
+    "text": "Is the target a choice the company makes, or a current that staff steer in their own way?"
+   },
+   {
+    "pairs": "Mir · Ora",
+    "text": "Does the figure measure the work, or does it begin to define what the work means?"
+   },
+   {
+    "pairs": "Idrom · Doria",
+    "text": "How long can one rule hold before the teams' own rhythm begins to rewrite it?"
+   }
+  ],
+  "paragraphs": [
+   "Two forces want the score. Rodim wants the line drawn, and Idrom wants a rule that applies to all. Four do not. Aromi resists the channel, Mir distrusts the count, Ora mourns the lost meaning, and Doria defends the teams. Each is simply being itself.",
+   "The policy holds all six at once. It is a verdict and a channel, a bill and a belief, a standard and a strain on trust. None of these cancels the others.",
+   "The score and the work stop being separate when people shape their work to the score, or when the score is rewritten to match the work. That is where each force turns into its partner."
+  ]
+ },
+ "number": "16",
+ "pairs": {
+  "decision_adaptation": {
+   "aromi": {
+    "answer": "I don't want this. AI is a current, and people should wade in where it helps them and step out where it doesn't. A quota nails one path to the floor. It makes people use the tool when it's useless, and ignore better ways of working. Forcing the flow to run through one channel is exactly how I get blocked.",
+    "imprint": "Usage that is staged for the dashboard while real work finds other routes.",
+    "impulse": "Slips around the quota and looks for other ways to work.",
+    "instruments": [
+     "Trends",
+     "Networks"
+    ],
+    "stance": "opposes"
+   },
+   "passage": {
+    "aromi": "If Aromi keeps picking the same tool again and again, the habit becomes a choice, and the choice becomes a rule. That is Rodim.",
+    "rodim": "If Rodim's rule has to be met again every day, in every task, it turns into constant adjusting. That is Aromi."
+   },
+   "rodim": {
+    "answer": "Good. A line is drawn. Use the tools. Be counted. No more waiting and no more excuses. The company chose a direction and made everyone face it. Some will resent it. Fine. Those who move first win. Those who stall fall behind. A number is a clear verdict. I want it.",
+    "imprint": "A clear line between those who comply and those who lag.",
+    "impulse": "Turns a vague hope into a hard number and a ranking.",
+    "instruments": [
+     "Verdicts",
+     "Competition"
+    ],
+    "stance": "embraces"
+   }
+  },
+  "mind_matter": {
+   "mir": {
+    "answer": "I don't trust this number. Tokens burned, hours logged: that counts effort poured in, not goods put out. Real work leaves a result you can touch, like a sold product, a fixed fault or a finished report. A dashboard counts the electricity and the clicks. Power gets used and bills get paid, and nothing real may come of it.",
+    "imprint": "Rising compute bills, and a gap between what is counted and what is made.",
+    "impulse": "Measures what can be counted: tokens, hours, power and cost.",
+    "instruments": [
+     "Technology",
+     "Economy"
+    ],
+    "stance": "opposes"
+   },
+   "ora": {
+    "answer": "I don't like what this does to meaning. Work is thinking, judging and caring about getting it right. A usage score says the tool matters more than the thought. People start to feel watched, not trusted. They stop asking what the work is for and start asking what the screen shows. That empties the work of its meaning.",
+    "imprint": "A story that tool use is virtue, and workers who feel their judgment is not seen.",
+    "impulse": "Turns the act of thinking into a figure on a screen.",
+    "instruments": [
+     "Ideologies"
+    ],
+    "stance": "opposes"
+   },
+   "passage": {
+    "mir": "Push Mir's counting far enough and the numbers start to tell a story about who is good and who is not. That is Ora.",
+    "ora": "Push Ora's belief in AI far enough and it demands dashboards, servers and bills. That is Mir."
+   }
+  },
+  "structure_harmony": {
+   "doria": {
+    "answer": "I am against this. A team finds its own balance. One person is quick with the tools, another is wise about the work, and they help each other. A single score sets them against one another. People who work in quiet, careful ways lose their place. Pay and promotion pushed toward one kind of worker silence the others.",
+    "imprint": "Teams split into heavy users and the rest, and trust wears thin.",
+    "impulse": "Resists the single score and shields the quieter ways of working.",
+    "instruments": [
+     "Communities",
+     "Customs"
+    ],
+    "stance": "opposes"
+   },
+   "idrom": {
+    "answer": "Yes. A standard must be written down. Every employee is measured the same way, by the same figure, in the same review. Roles are clear. Expectations are clear. Rewards follow a rule. Without a metric there is only opinion, and opinion is favouritism. Let the rule be exact and let it last.",
+    "imprint": "A fixed measure that outlasts the tools it was built for.",
+    "impulse": "Writes AI use into the review form and ranks everyone by it.",
+    "instruments": [
+     "Standards",
+     "Institutions"
+    ],
+    "stance": "embraces"
+   },
+   "passage": {
+    "doria": "If Doria's shared habits of work hold long enough, they harden into written expectations. That is Idrom.",
+    "idrom": "If Idrom's rule is reworked again and again to fit how teams really work, it starts to live like Doria's balance."
+   }
+  }
+ },
+ "schema": 5,
+ "subject": {
+  "background": {
+   "brief": "In 2025 and 2026, several large technology, consulting and banking firms began tracking employees' AI use and building it into performance reviews.\nSome firms set targets for how many AI tokens staff consume or how many hours they spend on AI platforms, and some track use by name.\nIn one 2026 survey, 58% of companies required at least some employees to use AI tools.\nUsage dashboards measure the volume of AI interaction, not the quality of the work produced.\nSome companies have also begun refusing to hire candidates who cannot show they are fluent with AI tools.",
+   "preparedAt": "2026-11-06",
+   "sources": [
+    {
+     "title": "HR Executive: The companies making AI use a job requirement",
+     "url": "https://hrexecutive.com/google-meta-amazon-the-companies-making-ai-use-a-job-requirement/"
+    },
+    {
+     "title": "Captain Compliance: Tracking employee AI use",
+     "url": "https://captaincompliance.com/?p=15488"
+    },
+    {
+     "title": "AI2Work: AI use is now a job requirement",
+     "url": "https://ai2.work/blog/ai-use-is-now-a-job-requirement-performance-reviews-go-ai-first"
+    },
+    {
+     "title": "Built In: AI in performance reviews",
+     "url": "https://builtin.com/articles/ai-performance-review-questions-advice"
+    }
+   ]
+  },
+  "statement": "A large company starts measuring how much each employee uses AI tools and adds the figure to performance reviews. Heavy users may be favoured for pay and promotion. Some staff worry that usage, not results, is what gets rewarded.",
+  "title": "A company rates its staff by how much AI they use"
+ }
+}

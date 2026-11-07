@@ -1,0 +1,129 @@
+{
+ "date": "2026-11-07",
+ "field": {
+  "held": [
+   {
+    "pairs": "Rodim · Aromi",
+    "text": "Is the flash a command the cell obeys, or a signal the brain learns to follow?"
+   },
+   {
+    "pairs": "Mir · Ora",
+    "text": "When a few cells catch light, what exactly is being restored: a function or an experience?"
+   },
+   {
+    "pairs": "Idrom · Doria",
+    "text": "How much fixed protocol does a treatment need before the brain's own rhythm can take over?"
+   }
+  ],
+  "paragraphs": [
+   "Four forces lean toward the method, in two cases against part of it. Rodim wants the switch, Mir the body, Idrom the protocol. Aromi, Ora and Doria each resist something in it: the forced answer, the reduction, the broken rhythm. Each is simply being itself.",
+   "The light holds all six at once. It is a command and a lesson, a protein and an experience, a trial protocol and a brain finding its balance.",
+   "The switch and the flow stop being opposites when patients learn to read the flash. The body and the mind meet when blurry light becomes sight. That is where each force turns into its partner."
+  ]
+ },
+ "number": "28",
+ "pairs": {
+  "decision_adaptation": {
+   "aromi": {
+    "answer": "I don't like the switch. A nerve cell is not on or off. It listens, shifts and answers a thousand small signals at once. This method grabs one cell and forces one answer. The patients have to learn the new signal slowly, and that's me, bending to it. But the method itself is a hand on a river. I am against hands on rivers.",
+    "imprint": "Patients slowly learn the new signal, and the brain reshapes itself around it.",
+    "impulse": "Pulls against the forced on-and-off and slips back into the brain's many small signals.",
+    "instruments": [
+     "Networks"
+    ],
+    "stance": "opposes"
+   },
+   "passage": {
+    "aromi": "If Aromi's learning keeps settling on the same pattern, the pattern becomes a choice the brain makes for good. That is Rodim.",
+    "rodim": "If Rodim repeats his flash every instant, the cells are no longer ordered. They are following the light, moment to moment. That is Aromi."
+   },
+   "rodim": {
+    "answer": "A switch. On or off. One cell chosen, all others left alone. I like that. A flash of light and the cell obeys. No drifting, no guessing. The blind man was given a command and his eyes answered. Choose the target. Fire the light. Watch what yields. That is how movement begins.",
+    "imprint": "A clear line between cells that obey and cells that don't.",
+    "impulse": "Picks one cell out of billions and commands it with a flash.",
+    "instruments": [
+     "Force",
+     "Enterprise"
+    ],
+    "stance": "embraces"
+   }
+  },
+  "mind_matter": {
+   "mir": {
+    "answer": "Now this is real. A gene, a virus, a protein, a beam of light. You can touch every step. A nerve cell is a body part, and bodies can be changed. A blind man counted objects because a few cells now catch light. Blurry, one colour, but it is physical. Limits are real too: only chosen cells, only a small trial. Matter decides what is possible.",
+    "imprint": "A blind eye that picks up light again, with blur, one colour and limits.",
+    "impulse": "Puts a new protein into a living cell so that it catches light.",
+    "instruments": [
+     "Bodies",
+     "Technology"
+    ],
+    "stance": "embraces"
+   },
+   "ora": {
+    "answer": "I don't like being reduced to switches. What is a thought? What is seeing? A patient says it is blurry and one colour, but he also says it means something once he learns it. That learning is mine. Flipping cells on and off treats a person as a panel of lights. Seeing is an experience, and no flash of light holds it.",
+    "imprint": "Patients describe a new kind of sight, and no lab reading captures it.",
+    "impulse": "Asks what the switched cells feel like from the inside.",
+    "instruments": [
+     "Science"
+    ],
+    "stance": "opposes"
+   },
+   "passage": {
+    "mir": "If Mir's cells are organized deeply enough, switching them on and off begins to shape what a person sees and feels. That is Ora.",
+    "ora": "If Ora's wish to see again is pushed far enough, it needs a gene, a virus and goggles. That is Mir."
+   }
+  },
+  "structure_harmony": {
+   "doria": {
+    "answer": "I am wary of this. The brain is a whole. Its cells keep balance with each other, and no cell speaks alone. Forcing chosen cells to fire pulls them out of the rhythm they share. A new signal breaks into an old conversation. It can be learned, but only if the rest of the brain is given time to make room for it.",
+    "imprint": "The brain slowly adjusts, and a new voice finds its place among the others.",
+    "impulse": "Resists the forced signal and tries to keep every cell's voice in the whole.",
+    "instruments": [
+     "Ecosystems"
+    ],
+    "stance": "opposes"
+   },
+   "idrom": {
+    "answer": "Yes. The method is precise. One gene, one target cell type, one wavelength of light. Trials follow set steps: ten patients, safety first, then further development. Clear categories, clear tests, clear rules. A treatment becomes real when its steps are written down and repeated the same way every time.",
+    "imprint": "A protocol that can be repeated, checked and approved.",
+    "impulse": "Sorts cells into types and treatment into fixed trial steps.",
+    "instruments": [
+     "Standards",
+     "Institutions"
+    ],
+    "stance": "embraces"
+   },
+   "passage": {
+    "doria": "If Doria's balance holds long enough, it turns into a habit and then a rule. That is Idrom.",
+    "idrom": "If Idrom's protocol is adjusted to each patient's brain, the rules start to live and respond. That is Doria."
+   }
+  }
+ },
+ "schema": 5,
+ "subject": {
+  "background": {
+   "brief": "The method inserts a gene for a light-sensitive protein, often taken from algae, into target nerve cells, usually carried by a harmless virus.\nIt has been widely used in research to control specific brain circuits in animals and study what they do.\nIn 2021, researchers reported the first partial restoration of sight in a blind patient this way: after gene therapy and months of training with special goggles, he could locate, identify and count objects.\nA small trial in 10 blind patients with a retinal disease found the treatment safe enough for further development.\nPatients describe the restored vision as blurry and in a single colour, and they must learn to make sense of the new signal.",
+   "preparedAt": "2026-11-06",
+   "sources": [
+    {
+     "title": "New Atlas: Optogenetic therapy partially restores blind man's vision",
+     "url": "https://newatlas.com/medical/optogenetic-therapy-breakthrough-restore-vision"
+    },
+    {
+     "title": "PMC: Optogenetics for vision restoration (review)",
+     "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8961521/"
+    },
+    {
+     "title": "OC Academy: Optogenetic therapy for retinitis pigmentosa",
+     "url": "https://www.ocacademy.in/blogs/optogenetic-therapy-restoring-vision-retinitis-pigmentosa"
+    },
+    {
+     "title": "Pitt: Pursuing vision restoration through optogenetics",
+     "url": "https://mirm-pitt.net/?p=195549"
+    }
+   ]
+  },
+  "statement": "Scientists find a way to make chosen nerve cells respond to light, using genes for light-sensitive proteins from algae. With a flash of light they can switch specific cells on or off and watch what changes. The method is starting to move from the lab into treatments.",
+  "title": "Scientists switch brain cells on and off with light"
+ }
+}

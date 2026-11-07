@@ -1,0 +1,128 @@
+{
+ "date": "2026-11-07",
+ "field": {
+  "held": [
+   {
+    "pairs": "Rodim · Aromi",
+    "text": "Is the government's answer a single decision, or a response to something still changing?"
+   },
+   {
+    "pairs": "Mir · Ora",
+    "text": "Will the gates and the empty classrooms matter more, or the meaning the students give to them?"
+   },
+   {
+    "pairs": "Idrom · Doria",
+    "text": "Can the school's rules hear the students' voices without ceasing to be rules?"
+   }
+  ],
+  "paragraphs": [
+   "Five forces find something to embrace here. Rodim wants the line drawn and the verdict made. Aromi wants the spreading, shifting protest. Mir sees the gate and the bodies, Ora the story of a generation, Doria the voices joined together. Idrom alone opposes, because the school's rules have been broken.",
+   "The blockade is all of these at once. It is a decision and a flow, a door and a dream, a breach of order and a new kind of harmony. None of them cancels the others.",
+   "Each force can turn into its partner. A choice repeated daily becomes a response, and a movement that repeats itself becomes a decision. Bodies at a gate carry meaning, and a strong idea ends up in law. A harmony that lasts makes rules, and rules that live become a community."
+  ]
+ },
+ "number": "13",
+ "pairs": {
+  "decision_adaptation": {
+   "aromi": {
+    "answer": "I love how it spread. One school closes its gates, and the news moves from phone to phone. Another school follows, then a whole city. Nobody planned it from one place. The students answer what is happening right now, and the protest changes shape each day. It takes new roads as the old ones close.",
+    "imprint": "A web of schools that keeps changing form, with no single centre.",
+    "impulse": "Moves from school to school along phones and friendships.",
+    "instruments": [
+     "Networks",
+     "Trends"
+    ],
+    "stance": "embraces"
+   },
+   "passage": {
+    "aromi": "If the flow of protest keeps returning to the same demand, that demand becomes a firm choice. That is Rodim.",
+    "rodim": "If the students must choose again each morning whether to hold the gates, the choice turns into a constant response to the day. That is Aromi."
+   },
+   "rodim": {
+    "answer": "They drew a line, and I respect it. Gates shut. Classes stop. No more waiting. The government now has to choose: talk or refuse. There is no third door. Teenagers took the first move, and everyone else must answer. A line like this forces a verdict. I want it made now.",
+    "imprint": "A clear line. Whatever is decided, there is a before and an after.",
+    "impulse": "Shuts the gates and forces the government to choose.",
+    "instruments": [
+     "Force",
+     "Verdicts"
+    ],
+    "stance": "embraces"
+   }
+  },
+  "mind_matter": {
+   "mir": {
+    "answer": "Gates are real. Chains, chairs and bodies in a doorway. A blockade works because a body takes up space and a door cannot be both open and shut. Classes stop because the rooms are empty. But bodies get cold and tired, and food runs out. The reform will also be real: bigger classes, fewer teachers, certain buildings. That is what counts.",
+    "imprint": "Empty classrooms, tired students, and a reform that will change real schools.",
+    "impulse": "Puts bodies in doorways and takes over the school buildings.",
+    "instruments": [
+     "Bodies",
+     "Territory"
+    ],
+    "stance": "embraces"
+   },
+   "ora": {
+    "answer": "I see a generation asking what school is for. This is more than a fight over a rule. The students are telling a story about their own future and refusing to let others write it. Many will remember these weeks as the time they first spoke as themselves. An idea like that outlives any gate.",
+    "imprint": "A shared memory and a new sense of self among those who took part.",
+    "impulse": "Turns a reform into a question: what is school for, and whose future is it?",
+    "instruments": [
+     "Ideologies",
+     "Education"
+    ],
+    "stance": "embraces"
+   },
+   "passage": {
+    "mir": "Stand at a gate long enough, and the body begins to carry meaning: a sense of who we are and what we stand for. That is Ora.",
+    "ora": "If the students' idea is strong enough, it must find a body. It becomes chains on a gate, then a signed law. That is Mir."
+   }
+  },
+  "structure_harmony": {
+   "doria": {
+    "answer": "I hear many voices becoming one sound. Students who rarely met now stand together, share food and take turns at the gates. Each one counts. They say a reform was imposed on them without asking, and this is how a silenced part speaks. I am glad. A whole that cannot listen to its youngest members is out of tune.",
+    "imprint": "Friendships and trust that last long after the gates open.",
+    "impulse": "Gathers the students into a shared rhythm and gives every voice a place.",
+    "instruments": [
+     "Solidarity",
+     "Communities"
+    ],
+    "stance": "embraces"
+   },
+   "idrom": {
+    "answer": "I oppose this. A school has hours, rules and roles. Students attend, teachers teach, officials decide. Locked gates break all three. If pupils may close the school whenever they disagree, no rule is safe. A reform must be settled by the proper bodies, and objections must go through the proper channels. Order that bends to pressure is not order.",
+    "imprint": "A demand for lines of authority to be restored, and for rules to be applied.",
+    "impulse": "Insists that the school's rules and chain of authority stay unbroken.",
+    "instruments": [
+     "Institutions",
+     "Law"
+    ],
+    "stance": "opposes"
+   },
+   "passage": {
+    "doria": "If the students' shared rhythm keeps going, it sets habits, roles and spokespeople. That is Idrom.",
+    "idrom": "If Idrom's rules are held firmly for long enough, they start to bring people together and form a living community. That is Doria."
+   }
+  }
+ },
+ "schema": 5,
+ "subject": {
+  "background": {
+   "brief": "In 2006, secondary students in one South American country occupied their schools in a nationwide protest; at its peak about 320 schools were occupied and up to a million students were on strike.\nThat movement began over bus fares, exam fees and run-down buildings, and widened into a demand to change the school system.\nIt ended with a presidential commission that included students and, later, a new legal framework for education.\nStudents from that movement went on to help lead larger university protests five years later.",
+   "preparedAt": "2026-11-06",
+   "sources": [
+    {
+     "title": "Global Nonviolent Action Database: Chilean high school students strike (2006)",
+     "url": "https://nvdatabase.swarthmore.edu/index.php/node/4416"
+    },
+    {
+     "title": "Wikipedia: 2006 student protests in Chile",
+     "url": "https://en.wikipedia.org/wiki/2006_student_protests_in_Chile"
+    },
+    {
+     "title": "Institute for Policy Studies: The student movement in Chile",
+     "url": "https://www.ips-dc.org/event/the_student_movement_in_chile/"
+    }
+   ]
+  },
+  "statement": "Teenage students block the gates of their schools in cities across the country. They protest against a government reform they say will harm their education and their future. Classes stop in many schools, and the government must decide whether to negotiate.",
+  "title": "Secondary-school students blockade schools across a country"
+ }
+}

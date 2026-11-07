@@ -1,0 +1,127 @@
+{
+ "date": "2026-11-07",
+ "field": {
+  "held": [
+   {
+    "pairs": "Rodim · Aromi",
+    "text": "Is protection something decided once and held, or something followed and renewed with every outbreak?"
+   },
+   {
+    "pairs": "Mir · Ora",
+    "text": "Is the gap a matter of bodies and supplies, or of meanings and trust, and can either be changed alone?"
+   },
+   {
+    "pairs": "Idrom · Doria",
+    "text": "Does a schedule keep a community safe, or does a community's rhythm keep the schedule alive?"
+   }
+  ],
+  "paragraphs": [
+   "Two forces welcome the response. Rodim wants the firm line, Aromi the following of the outbreak, and Mir the hard facts of bodies and beds. Ora, Idrom and Doria oppose what happened. Ora opposes the reduction to counts, Idrom the broken schedule, Doria the torn circle. Each is simply being itself.",
+   "The Subject holds all six at once. It is a decision and a drift, a virus and a story, a broken rule and a broken bond. Sick children and busy vaccinators sit in the same hospital.",
+   "The pairs turn into each other here. A decision repeated every day becomes a constant response. Fear and trust become bodies in beds. A schedule kept long enough becomes a shared habit, and shared habits become a schedule."
+  ]
+ },
+ "number": "35",
+ "pairs": {
+  "decision_adaptation": {
+   "aromi": {
+    "answer": "The virus follows the open doors. It moves where people gather and where the gaps are. I move the same way. Health workers now change course with each outbreak, going where the cases rise and the doses are missing. Nothing stays fixed. The map shifts and the response shifts with it. That is how flow answers flow.",
+    "imprint": "Outbreak maps that keep redrawing, and a response that keeps moving with them.",
+    "impulse": "Sends the virus and the vaccinators down every open path.",
+    "instruments": [
+     "Networks",
+     "Migration"
+    ],
+    "stance": "embraces"
+   },
+   "passage": {
+    "aromi": "If Aromi keeps going to the same gaps again and again, the route hardens into a schedule and a rule. That is Rodim.",
+    "rodim": "If Rodim's order to vaccinate must be renewed at every clinic, every day, it becomes Aromi's constant following of the outbreak."
+   },
+   "rodim": {
+    "answer": "Now the line is clear. Vaccinate or don't. The gap came from drift: doses put off, choices left open. The virus punished that. Now the workers act. Clinics open. Doses go in arms. No more waiting. A shot is a choice that holds. I want that, and I want it fast.",
+    "imprint": "A clear line between the protected and the exposed.",
+    "impulse": "Turns drift into a hard order: vaccinate now, child by child.",
+    "instruments": [
+     "Force",
+     "Verdicts"
+    ],
+    "stance": "embraces"
+   }
+  },
+  "mind_matter": {
+   "mir": {
+    "answer": "This is bodies and facts. A virus enters a child's lungs. Fever, rash, beds, oxygen, staff, supplies. Hospitals have a fixed number of beds, and sick children fill them. A dose in the arm is a real thing that stops a real virus. Nothing else counts here. Beds and doses are the whole story.",
+    "imprint": "Crowded hospitals, strained supplies, and some bodies that do not recover.",
+    "impulse": "Fills lungs with virus and wards with sick children.",
+    "instruments": [
+     "Bodies",
+     "Infrastructure"
+    ],
+    "stance": "embraces"
+   },
+   "ora": {
+    "answer": "I won't accept that this is only bodies and beds. The gap began in minds. Fear, rumor, doubt, tiredness. People told stories about vaccines, and the stories moved them more than the numbers did. A child is not a case. Each is a frightened family with a name and a memory of this season. Reducing it to counts erases the experience.",
+    "imprint": "Lasting memories of fear, blame and loss in each household.",
+    "impulse": "Carries doubt and trust through families as stories.",
+    "instruments": [
+     "Stories"
+    ],
+    "stance": "opposes"
+   },
+   "passage": {
+    "mir": "Push Mir's facts far enough and the pain, the fear and the memory of the ward become experience. That is Ora.",
+    "ora": "Push Ora's doubts and trust far enough and they become empty clinics, full wards and a virus in the body. That is Mir."
+   }
+  },
+  "structure_harmony": {
+   "doria": {
+    "answer": "I oppose this. Protection was shared. When most families vaccinate, the weak are kept safe by the many around them, and that is my harmony. The gap tore holes in it. The babies too young for a dose, the sick who cannot be vaccinated: all of them lost the shelter of the whole. A community that leaves some behind is out of tune.",
+    "imprint": "Broken trust in some communities, and a stronger shared effort to mend the circle.",
+    "impulse": "Shows how each person's protection depends on the people around them.",
+    "instruments": [
+     "Communities",
+     "Solidarity"
+    ],
+    "stance": "opposes"
+   },
+   "idrom": {
+    "answer": "The schedule was clear. Two doses, set ages, recorded in the books. The rule was broken, and the order failed. Missed and delayed doses are exceptions, and exceptions let the whole structure crack. I oppose the gap. A rule that is not kept is no rule at all. It must be enforced, tracked and kept.",
+    "imprint": "Tighter registries, stricter checks and a firmer schedule.",
+    "impulse": "Demands the schedule be kept and every record be complete.",
+    "instruments": [
+     "Standards",
+     "Institutions"
+    ],
+    "stance": "opposes"
+   },
+   "passage": {
+    "doria": "If Doria's shared protection lasts long enough, it becomes a custom, then a standard. That is Idrom.",
+    "idrom": "If Idrom's schedule is kept so well that people live by it as a habit, it stops being a rule and becomes Doria's shared rhythm."
+   }
+  }
+ },
+ "schema": 5,
+ "subject": {
+  "background": {
+   "brief": "About 95% of people need two doses of measles vaccine to stop the virus from spreading.\nOne person with measles can infect up to 18 unvaccinated people.\nIn 2024 there were an estimated 11 million measles cases worldwide, about 800,000 more than in 2019, before the pandemic disrupted routine vaccination.\n59 countries reported large or disruptive outbreaks in 2024, nearly three times as many as in 2021.\nVaccination cut measles deaths by 88% between 2000 and 2024, saving an estimated 59 million lives.\nEven where national coverage is high, pockets of unvaccinated communities can still sustain outbreaks.",
+   "preparedAt": "2026-11-06",
+   "sources": [
+    {
+     "title": "Health Policy Watch: Measles is surging as vaccination coverage dips below 95%",
+     "url": "https://healthpolicy-watch.news/measles-is-surging-as-vaccination-coverage-dips-below-95/"
+    },
+    {
+     "title": "Indian Pharma Post: Global measles deaths plunge but cases surge, says WHO",
+     "url": "https://www.indianpharmapost.com/healthcare/global-measles-deaths-plunge-but-cases-surge-says-who-18412"
+    },
+    {
+     "title": "Iceland Directorate of Health: Measles and vaccination coverage",
+     "url": "https://island.is/en/o/directorate-of-health/news/ekki-hafa-greinst-fleiri-tilfelli-mislinga"
+    }
+   ]
+  },
+  "statement": "After years of missed or delayed childhood vaccinations, measles spreads again in a country where it had become rare. Hospitals fill with sick children. Health workers rush to vaccinate those who missed their doses.",
+  "title": "Measles returns after a gap in childhood vaccination"
+ }
+}

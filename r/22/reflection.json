@@ -1,0 +1,132 @@
+{
+ "date": "2026-11-07",
+ "field": {
+  "held": [
+   {
+    "pairs": "Rodim · Aromi",
+    "text": "Is the theft a single choice, or a long drift from hand to hand?"
+   },
+   {
+    "pairs": "Mir · Ora",
+    "text": "Is a stolen painting still the painting if no one can see it?"
+   },
+   {
+    "pairs": "Idrom · Doria",
+    "text": "Does a stronger lock protect what a community shares, or take it further away?"
+   }
+  ],
+  "paragraphs": [
+   "Two forces welcome the theft, in different ways. Rodim sees a bold choice and a race. Aromi sees paintings set free to travel. Mir sees objects that can be carried and can decay. Ora, Idrom and Doria oppose it: a meaning cut off, an order broken, a community robbed.",
+   "The paintings are all of these at once: a prize, a trail, a body in the dark, a missing story, a broken rule and a shared wound. Most never return, and some are found. Both outcomes belong to the same event.",
+   "The lines blur at the edges. A theft is a decision that becomes a long chase. A hidden canvas becomes a legend. A broken rule becomes a stronger one. A wound shared by many becomes a new lock on the door."
+  ]
+ },
+ "number": "22",
+ "pairs": {
+  "decision_adaptation": {
+   "aromi": {
+    "answer": "The paintings are loose now, and I like that. They leave the walls where they were fixed for a century. They move through hands, cars, rooms and borders. Nobody knows the path. The search must follow it, and every tip changes the route. A frame hangs still for years. Then it travels.",
+    "imprint": "A trail that bends and branches. The works may surface anywhere.",
+    "impulse": "Sets the paintings moving along hidden routes.",
+    "instruments": [
+     "Networks",
+     "Trade"
+    ],
+    "stance": "embraces"
+   },
+   "passage": {
+    "aromi": "If the paintings keep taking the same quiet route, that route becomes a choice. That is Rodim.",
+    "rodim": "If the thieves must decide again at every border and every buyer, their plan turns into constant adjusting. That is Aromi."
+   },
+   "rodim": {
+    "answer": "They chose. I respect that. A plan, a night, a door forced open. No drifting. They took what they wanted and left. Now the hunt starts, and the hunters must choose too. Who to chase. Where to look. Hesitation loses the trail. The one who acts first and hardest wins the paintings.",
+    "imprint": "A line is crossed. Thieves and hunters race each other.",
+    "impulse": "Breaks the lock and splits the night into before and after.",
+    "instruments": [
+     "Force",
+     "Competition"
+    ],
+    "stance": "embraces"
+   }
+  },
+  "mind_matter": {
+   "mir": {
+    "answer": "Canvas, wood, paint and a few feet of wall. That is what was taken. Real things are heavy, and these can be carried, rolled, hidden in a cellar or a truck. They can also rot there. Damp and heat do not care how famous a painting is. Only a small share of stolen art ever comes back. The body decides.",
+    "imprint": "Fragile objects in the dark, slowly damaged by damp, heat and handling.",
+    "impulse": "Lifts the canvases off the wall and puts them in a hiding place.",
+    "instruments": [
+     "Bodies",
+     "Territory"
+    ],
+    "stance": "embraces"
+   },
+   "ora": {
+    "answer": "I am against this. A painting is not a thing to carry off. It is a way of seeing, handed down from one person to many. Taking it cuts that line. The thieves hold paint and cloth, but they cannot hold what it means. A work no one can see is a story with no listeners. Its fame is what makes it unsellable.",
+    "imprint": "A story of loss that grows. The missing works become more famous.",
+    "impulse": "Mourns the empty frames and the gap where the seeing used to happen.",
+    "instruments": [
+     "Art",
+     "Stories"
+    ],
+    "stance": "opposes"
+   },
+   "passage": {
+    "mir": "If Mir's hidden canvases are talked about long enough, the empty walls fill with legend. That is Ora.",
+    "ora": "If Ora's fame is pushed far enough, it becomes a price, a risk and a hiding place. That is Mir."
+   }
+  },
+  "structure_harmony": {
+   "doria": {
+    "answer": "I am hurt by this. The paintings belonged to a whole city. Many people grew up beside them, and a visit felt like going home. Now a hole is left, and the community feels it. A shared thing was taken by a few. The search must not turn people against each other. Let those who loved the works hold onto them together.",
+    "imprint": "A shared grief, and a wish to see the works come home.",
+    "impulse": "Gathers visitors and neighbours around the loss.",
+    "instruments": [
+     "Communities",
+     "Solidarity"
+    ],
+    "stance": "opposes"
+   },
+   "idrom": {
+    "answer": "This breaks the order. Property has an owner. A museum has locks, guards, alarms and insurance. Those are the rules, and they failed. The thieves treated a wall as an exception. Many great works are uninsured, which is another gap. I want the law applied, the file opened and every role filled: detective, insurer, court. Order must be restored.",
+    "imprint": "Stricter locks, new standards and a record that never closes.",
+    "impulse": "Opens a case file and assigns each office its task.",
+    "instruments": [
+     "Law",
+     "Institutions"
+    ],
+    "stance": "opposes"
+   },
+   "passage": {
+    "doria": "If Doria's shared grief lasts, it hardens into guards, locks and procedures. That is Idrom.",
+    "idrom": "If Idrom's rules are tested and rewritten after every theft, they begin to adapt like a living body. That is Doria."
+   }
+  }
+ },
+ "schema": 5,
+ "subject": {
+  "background": {
+   "brief": "Only an estimated 5 to 10% of stolen art is ever recovered.\nRecovery rates are reported to be much higher for famous masterpieces, which are almost impossible to sell openly; one estimate puts the rate as high as 80%.\nStolen art is often sold on the black market for a fraction of its value or used by criminals as collateral for loans.\nMost art theft is from private homes, and many famous museum works are uninsured because theft insurance is so costly.\nSome major museum thefts stay unsolved for decades: none of about a dozen paintings worth some $300 million taken from one museum in 1990 has been recovered.",
+   "preparedAt": "2026-11-06",
+   "sources": [
+    {
+     "title": "Wikipedia: Art theft",
+     "url": "https://en.wikipedia.org/wiki/Art_theft"
+    },
+    {
+     "title": "Washington Times: Review of Stealing Rembrandts",
+     "url": "https://m.washingtontimes.com/news/2011/aug/19/book-review-stealing-rembrandts/"
+    },
+    {
+     "title": "Insurance Journal: What happens to stolen art after a heist",
+     "url": "https://www.insurancejournal.com/news/national/2015/06/15/371743.htm"
+    },
+    {
+     "title": "Baltimore Sun: Rogues' gallery",
+     "url": "https://www.baltimoresun.com/2005/09/17/rogues-gallery-4"
+    }
+   ]
+  },
+  "statement": "Thieves break into a museum and escape with several well-known paintings. The works are too famous to sell openly. Police, insurers and the art world begin the search.",
+  "title": "Thieves steal famous paintings from a museum"
+ }
+}

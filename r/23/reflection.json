@@ -1,0 +1,131 @@
+{
+ "date": "2026-11-07",
+ "field": {
+  "held": [
+   {
+    "pairs": "Rodim · Aromi",
+    "text": "Can one hard decision hold if the thing it faces keeps changing shape?"
+   },
+   {
+    "pairs": "Mir · Ora",
+    "text": "What do walls and numbers leave behind in the minds of those inside and outside?"
+   },
+   {
+    "pairs": "Idrom · Doria",
+    "text": "Can an order built by arrest ever become a harmony that people live in freely?"
+   }
+  ],
+  "paragraphs": [
+   "Three forces want the prison. Rodim wants the hard choice, Mir the walls, Idrom the order. Three do not. Aromi resists the wall, Ora the reduction of people to bodies, Doria the tearing of families. Each is simply being itself.",
+   "The prison holds all six at once. It is a decision and a dam, a building and a story, a chain of command and a wound in many neighbourhoods. Murders fell, and deaths and torture were reported inside. Both facts stand.",
+   "The two sides stop being opposites at the edges. A prison that must keep adjusting begins to flow. A prison that fills with fear and memory becomes a story. A rule that reaches into every family begins to shape the community's own rhythm."
+  ]
+ },
+ "number": "23",
+ "pairs": {
+  "decision_adaptation": {
+   "aromi": {
+    "answer": "I don't want this. A huge prison is a wall, and a wall is a final answer. Gangs are a current. Block one channel and the water finds another. Leaders are replaced, routes change, money moves. A fixed plan against a moving thing will always be one step behind. Locking up thousands stops everything from flowing, and I stand against that.",
+    "imprint": "New leaders, new methods and new places to hide.",
+    "impulse": "Seeps around the walls and finds new routes.",
+    "instruments": [
+     "Networks"
+    ],
+    "stance": "opposes"
+   },
+   "passage": {
+    "aromi": "If Aromi's many paths all lead to the same cell door, the flow has become one decision. That is Rodim.",
+    "rodim": "If the state must decide again every day who to arrest and who to free, Rodim's order turns into Aromi's constant adjusting."
+   },
+   "rodim": {
+    "answer": "Good. A line is drawn. Gangs on one side, the state on the other. Years of drift are over. Leaders go in and the door shuts. Murders fall. Some will be taken by mistake. Hard choices cost. I don't wait for perfect. I choose, and I act now.",
+    "imprint": "A clear line between before and after. Some people are caught on the wrong side of it.",
+    "impulse": "Turns years of fear into one hard order: lock them up.",
+    "instruments": [
+     "Force",
+     "Verdicts"
+    ],
+    "stance": "embraces"
+   }
+  },
+  "mind_matter": {
+   "mir": {
+    "answer": "Concrete works. Forty thousand beds behind thick walls. A man in a cell cannot pull a trigger on the street. Distance and locks are real. But bodies pay too. Crowded cells, thin food, heat, disease. Beat a body enough and it breaks. A prison this size has limits, and it will meet them.",
+    "imprint": "A place that holds thousands of bodies, and the strain of holding them.",
+    "impulse": "Puts walls, guards and cells between gang leaders and the street.",
+    "instruments": [
+     "Infrastructure",
+     "Bodies"
+    ],
+    "stance": "embraces"
+   },
+   "ora": {
+    "answer": "I don't like how this sees people. It counts bodies and cells and nothing else. A man becomes a number, a gang member, a problem to store. Inside, people lose their names and their stories. Young men who joined for belonging or respect are treated as only that. What a prison says about a person tends to become what that person believes.",
+    "imprint": "A tale of rescue for some, and a memory of fear and loss for others.",
+    "impulse": "Resists a story that turns people into inmates and nothing more.",
+    "instruments": [
+     "Stories",
+     "Ideologies"
+    ],
+    "stance": "opposes"
+   },
+   "passage": {
+    "mir": "Keep enough bodies in a place long enough and the place fills with memory, fear and meaning. That is Ora.",
+    "ora": "Push Ora's idea of order far enough and it demands walls, guards and beds. That is Mir."
+   }
+  },
+  "structure_harmony": {
+   "doria": {
+    "answer": "I mourn what this does. Mass arrests tear whole neighbourhoods. Mothers lose sons, children lose fathers, and some of those taken did nothing. Streets may grow quiet, but the quiet comes from fear, and a silenced voice is not harmony. Gangs hurt the community too. Yet cutting out thousands at once is not healing. It is an amputation.",
+    "imprint": "Quiet streets and broken households, with trust slow to return.",
+    "impulse": "Grieves for the families and streets torn by sweeping arrests.",
+    "instruments": [
+     "Communities",
+     "Kinship"
+    ],
+    "stance": "opposes"
+   },
+   "idrom": {
+    "answer": "The law must be obeyed, and gangs made their own law. This prison puts the state back in charge. One building, one chain of command, clear rules for who goes in and who stays. Order has to be firm to last. Courts and procedure matter too, because a rule applied to the wrong man is a broken rule. But disorder is the greater breach.",
+    "imprint": "A lasting apparatus of arrest and custody that is hard to undo.",
+    "impulse": "Replaces the gangs' rule with one chain of command.",
+    "instruments": [
+     "Institutions",
+     "Hierarchy"
+    ],
+    "stance": "embraces"
+   },
+   "passage": {
+    "doria": "If a community's rhythm hardens into rules that nobody questions, it becomes Idrom's law.",
+    "idrom": "If a structure learns to respond to the people it holds, and to renew itself, it begins to live like Doria's whole."
+   }
+  }
+ },
+ "schema": 5,
+ "subject": {
+  "background": {
+   "brief": "One Central American country opened a prison for 40,000 inmates in 2023 and now has the world's highest incarceration rate, over 1,600 prisoners per 100,000 people.\nUnder a state of emergency with mass arrests, its homicide rate fell from 106.8 per 100,000 in 2015 to 7.8 in 2022.\nRights groups have reported deaths and torture of inmates in its mega-prison.\nA neighbouring country announced a 20,000-place mega-prison in 2024 and an island prison for gang leaders, with a homicide rate of 34 per 100,000, almost six times the world average.\nIn the region, overcrowded prisons have often served as bases from which gangs run crime outside.",
+   "preparedAt": "2026-11-06",
+   "sources": [
+    {
+     "title": "Semafor: El Salvador opens huge new prison",
+     "url": "https://www.semafor.com/article/02/02/2023/el-salvador-opens-huge-new-prison-as-2-of-its-population-is-now-behind-bars"
+    },
+    {
+     "title": "Statista: Countries with the most prisoners per 100,000",
+     "url": "https://www.statista.com/statistics/262962/countries-with-the-most-prisoners-per-100-000-inhabitants"
+    },
+    {
+     "title": "Semafor: Honduras megaprison plan",
+     "url": "https://www.semafor.com/article/06/17/2024/honduras-megaprison-plan-will-double-countrys-capacity"
+    },
+    {
+     "title": "Blick: New images from the mega-prison",
+     "url": "https://www.blick.ch/ausland/el-salvadors-hoelle-neue-bilder-aus-el-salvadors-mega-gefaengnis-fuer-gangmitglieder-id19839406.html"
+    }
+   ]
+  },
+  "statement": "After years of rising murders, a government builds a huge maximum-security prison for gang members. It promises to lock up leaders fast and cut their contact with the outside. Critics raise concerns about mass arrests, due process and prison conditions.",
+  "title": "A country opens a mega-prison to fight record violence"
+ }
+}

@@ -1,0 +1,135 @@
+{
+ "date": "2026-11-04",
+ "field": {
+  "held": [
+   {
+    "pairs": "Rodim · Aromi",
+    "text": "Can a decision about where people live hold, when people keep moving?"
+   },
+   {
+    "pairs": "Mir · Ora",
+    "text": "Is a person defined by legal status, by the work they do, or by the life they have lived?"
+   },
+   {
+    "pairs": "Idrom · Doria",
+    "text": "When long belonging and written law disagree, which one becomes the other?"
+   }
+  ],
+  "paragraphs": [
+   "Two forces want this. Rodim wants the choice made and held, and Idrom wants the law to mean what it says. Four do not. Aromi resists the stopping of movement, Mir points to the lost work and strained places, Ora defends the lives behind the labels, and Doria defends the households and towns being split.",
+   "The plan holds all six at once. It is a decision and a dam, a category and a life, a rule and a web of families. None of these cancels the others.",
+   "The line between legal and illegal stops being simple when years of living in a place turn into belonging, and belonging presses on the law. That is where each force begins to turn into its partner."
+  ]
+ },
+ "number": "8",
+ "pairs": {
+  "decision_adaptation": {
+   "aromi": {
+    "answer": "I am against this. People move. They always have. They follow work, family, safety, and they settle where life lets them. Arrests and flights try to stop that flow and send it backwards. It won't hold the way the plan says. In Pakistan most people left under threat, not on flights. Movement goes around walls. It goes underground, sideways, back again. A country cannot freeze the way people live.",
+    "imprint": "New paths, new hidden networks, and movement that keeps finding a way.",
+    "impulse": "Pushes people into side routes, hiding and return journeys.",
+    "instruments": [
+     "Migration",
+     "Networks"
+    ],
+    "stance": "opposes"
+   },
+   "passage": {
+    "aromi": "If Aromi's flow keeps choosing the same routes and the same towns, those choices harden into decisions. That is Rodim.",
+    "rodim": "If Rodim's order has to be renewed every day, at every door and every border, it becomes constant reacting. That is Aromi."
+   },
+   "rodim": {
+    "answer": "A line drawn. Finally. For years the question hung open. Nobody chose. Now someone has. A deadline, a target, a plan with flights and dates. I want that. Open questions rot. This one is closed. It will be hard. It will cost. Some will fight it. Good. Let them. A choice is only real when it holds against resistance. This one must hold.",
+    "imprint": "A sharp before and after, and a state that has shown it will act.",
+    "impulse": "Turns a long open question into one order with a deadline.",
+    "instruments": [
+     "Verdicts",
+     "Force"
+    ],
+    "stance": "embraces"
+   }
+  },
+  "mind_matter": {
+   "mir": {
+    "answer": "Look at the facts, not the promise. In the US in 2024, about 3.2% of workers were unauthorized, packed into farming, construction and factories. One model says removing half of them lifts native wages 0.15% at first, then cuts them 0.33% long term, with farm prices up about 1%. A 2026 study found no job or wage gain for US-born workers. Fields go unpicked. Houses go unbuilt. Afghanistan strained under five million returns. That is the real weight.",
+    "imprint": "Empty jobs, higher prices, and strained places where people are sent.",
+    "impulse": "Pulls workers out of fields, building sites and factories.",
+    "instruments": [
+     "Economy",
+     "Bodies"
+    ],
+    "stance": "opposes"
+   },
+   "ora": {
+    "answer": "A legal status is a label. It is not who someone is. A person who has worked somewhere for years, raised children there, dreamed in that place, lives as part of it. This plan treats that inner life as if it did not count. In the 1930s US drive, between 40 and 60% of those sent to Mexico were citizens, mostly children. The label swallowed the lives. The stories of what happened will outlast the plan.",
+    "imprint": "Family memories of loss and exile that shape identity for generations.",
+    "impulse": "Insists on the lived life behind each legal category.",
+    "instruments": [
+     "Stories"
+    ],
+    "stance": "opposes"
+   },
+   "passage": {
+    "mir": "When Mir's facts about lost workers and broken households are lived through and told, they become memory and meaning. That is Ora.",
+    "ora": "When Ora's idea of who belongs is pushed far enough, it becomes laws, flights and borders. That is Mir."
+   }
+  },
+  "structure_harmony": {
+   "doria": {
+    "answer": "I oppose this. These people are woven into neighbourhoods, schools, churches, teams, families. Many households mix statuses: a parent without papers, a child born here. Pulling one thread tears the whole cloth. A plan imposed from above decides who gets cut out of the whole. A community lives by keeping its voices. This silences millions of them at once, and the neighbours left behind feel it too.",
+    "imprint": "Split households, thinner communities, and new ties of solidarity.",
+    "impulse": "Holds families and neighbours together against removal.",
+    "instruments": [
+     "Communities",
+     "Kinship"
+    ],
+    "stance": "opposes"
+   },
+   "idrom": {
+    "answer": "A law that is not enforced is not a law. It is a suggestion. For years the category of legal status existed on paper and was blurred in practice. Now the state makes it mean what it says. Clear categories. Clear procedures. Clear institutions to carry them out. Order requires that the rule apply as written. An architecture begins to live when its rules are actually used.",
+    "imprint": "Larger enforcement institutions and categories that now carry real force.",
+    "impulse": "Makes the line between legal and illegal status enforced in practice.",
+    "instruments": [
+     "Law",
+     "Institutions"
+    ],
+    "stance": "embraces"
+   },
+   "passage": {
+    "doria": "If Doria's belonging lasts long enough, it becomes custom and then a claim to legal status. That is Idrom.",
+    "idrom": "If Idrom's laws are rewritten to fit the families and towns they touch, the rules begin to breathe like Doria's balance."
+   }
+  }
+ },
+ "schema": 5,
+ "subject": {
+  "background": {
+   "brief": "Large deportation drives have happened several times: in the United States in the 1930s, in Pakistan since 2023 and in Iran in 2025.\nIn the 1930s drive, estimates of the number of people sent to Mexico range from about 300,000 to 2 million. Between 40 and 60% of them were US citizens, most of them children.\nSince Pakistan's drive began in late 2023, more than 1.8 million Afghans have returned to Afghanistan. Most left under threat of arrest rather than through formal deportation.\nFrom January to November 2025, more than 5.2 million Afghans returned from Iran and Pakistan, including over 1.3 million who were deported. Aid agencies reported heavy strain on Afghanistan's resources.\nIn the United States in 2024, about 3.2% of workers were unauthorized. They were concentrated in some regions and in farming, construction and manufacturing.\nOne economic model estimates the effect of removing half of them. Average native wages would rise slightly (0.15%) at first, then fall by about 0.33% in the long run. Prices in farming and similar sectors would rise by about 1%.\nA 2026 study compared US areas with sudden surges in enforcement to areas without them. It found that fewer undocumented people kept working, and it found no rise in jobs or wages for US-born workers.",
+   "preparedAt": "2026-11-04",
+   "sources": [
+    {
+     "title": "CEPR: The Economic Impact of Mass Deportations",
+     "url": "https://cepr.org/publications/dp21155"
+    },
+    {
+     "title": "OSV News: labour-market study",
+     "url": "https://www.osvnews.com/?p=28990"
+    },
+    {
+     "title": "Dawn: UNHCR figures on Afghans in Pakistan",
+     "url": "https://www.dawn.com/news/1963312"
+    },
+    {
+     "title": "Amu TV: IFRC return figures",
+     "url": "https://amu.tv/244074/"
+    },
+    {
+     "title": "Wikipedia: Mexican Repatriation",
+     "url": "https://en.wikipedia.org/wiki/Mexican_Repatriation"
+    }
+   ]
+  },
+  "statement": "A national government decides to remove most of the people living in the country without legal status, within a few years. It expands arrests, detention and removal flights. Many of those affected have worked and raised families there for years.",
+  "title": "A country deports most of its undocumented migrants"
+ }
+}

@@ -1,0 +1,132 @@
+{
+ "date": "2026-11-07",
+ "field": {
+  "held": [
+   {
+    "pairs": "Rodim · Aromi",
+    "text": "Is the later landing already chosen, or will the flight itself decide what comes next?"
+   },
+   {
+    "pairs": "Mir · Ora",
+    "text": "Will the sight of the Moon or the cost of going back decide how far people go?"
+   },
+   {
+    "pairs": "Idrom · Doria",
+    "text": "When the rules are lived long enough, do they become the crew's own rhythm?"
+   }
+  ],
+  "paragraphs": [
+   "All six forces lean toward this flight. Rodim wants the choice, Aromi the open route, Mir the hardware, Ora the wonder, Idrom the rules, Doria the shared breath. Here, none of them opposes. That is rare, and it does not make the Subject simple.",
+   "The flight is a decision and a curve, a machine and a story, a rulebook and a crew living as one. It is also only a test. What it tests may be more than the ship.",
+   "Each pair meets at the edge of its own force. A decision repeated becomes adjusting, and adjusting becomes decision. Bodies become sight, and sight asks for bodies. Procedure becomes rhythm, and rhythm becomes procedure."
+  ]
+ },
+ "number": "31",
+ "pairs": {
+  "decision_adaptation": {
+   "aromi": {
+    "answer": "I like how this moves. The crew goes out and the plan bends as they go. A path around the Moon is not a wall. It is a curve, and curves keep options open. Every reading from the ship changes the next step. Later landings are not fixed yet, and I'm glad. The test teaches the route, and the route can change.",
+    "imprint": "Many future paths stay open, each one shaped by what the flight showed.",
+    "impulse": "Sends the crew out to learn, and lets each reading reshape the next step.",
+    "instruments": [
+     "Networks",
+     "Evolution"
+    ],
+    "stance": "embraces"
+   },
+   "passage": {
+    "aromi": "If Aromi's adjusting keeps selecting the same course, it hardens into a decision. That is Rodim.",
+    "rodim": "If Rodim's choice must be made again at every moment of the flight, it becomes Aromi's constant adjusting."
+   },
+   "rodim": {
+    "answer": "Good. Someone chose. Fifty years of staying close to home, and now a crew goes out. One launch date. One target. One loop and back. No more talk about someday. The Moon was picked, and it stays picked. This is a test, and a test has a result. Pass or fail. I want that line drawn.",
+    "imprint": "A clear mark in time: before the crew left, and after.",
+    "impulse": "Turns long waiting into one launch and one destination.",
+    "instruments": [
+     "Leaders",
+     "Enterprise"
+    ],
+    "stance": "embraces"
+   }
+  },
+  "mind_matter": {
+   "mir": {
+    "answer": "Now this is real. A rocket, a capsule, fuel, heat shields, air, water. Human bodies in a small can, far from home. Radiation is real. Cold is real. Cost is real. The last era took about $309 billion in today's money and 400,000 workers. The Moon doesn't care about hopes. It answers to mass and burn time. I say go, and count everything.",
+    "imprint": "Hardware, data and bodies that came back, and a bill that has to be paid.",
+    "impulse": "Puts bodies, metal and fuel into the empty space around the Moon.",
+    "instruments": [
+     "Technology",
+     "Bodies"
+    ],
+    "stance": "embraces"
+   },
+   "ora": {
+    "answer": "I feel the pull of this. People looked up for fifty years and wondered if we would go again. Now a few of us see the far side with their own eyes. They will carry that sight home and tell it. The Moon becomes a place again, not just a picture. A story starts here, and the next landing will grow out of it.",
+    "imprint": "New images and new words that people carry for a lifetime.",
+    "impulse": "Gives the Moon back to the human imagination as a place we visit.",
+    "instruments": [
+     "Stories",
+     "Science"
+    ],
+    "stance": "embraces"
+   },
+   "passage": {
+    "mir": "Push Mir's hardware far enough and the crew inside begins to see, remember and wonder. That is Ora.",
+    "ora": "Push Ora's wonder far enough and it demands a rocket, a budget and a heat shield. That is Mir."
+   }
+  },
+  "structure_harmony": {
+   "doria": {
+    "answer": "I feel the whole of it. A small crew lives together in a tiny space, each voice needed, each rhythm matched to the others. Thousands on the ground listen and answer them. Far away, many people hold their breath at once. For a few days, a very large group moves in step. I want that closeness to last, and to include more voices each time.",
+    "imprint": "A shared memory of waiting together and welcoming the crew home.",
+    "impulse": "Ties crew, ground teams and watching millions into one shared rhythm.",
+    "instruments": [
+     "Communities",
+     "Solidarity"
+    ],
+    "stance": "embraces"
+   },
+   "idrom": {
+    "answer": "Yes. This is order at its best. Checklists, mission rules, chains of command, tested standards. Every step is written before it is taken. Every part has a role. A flight like this works because nothing is left to chance. Exceptions are failures. Four people can go around the Moon because thousands follow the same rules without question.",
+    "imprint": "A tested method that later missions can copy exactly.",
+    "impulse": "Sets procedures, roles and standards around every step of the flight.",
+    "instruments": [
+     "Institutions",
+     "Standards"
+    ],
+    "stance": "embraces"
+   },
+   "passage": {
+    "doria": "If Doria's shared rhythm repeats long enough, it hardens into procedure. That is Idrom.",
+    "idrom": "If Idrom's procedures are lived long enough by the crew, they become habits and a shared rhythm. That is Doria."
+   }
+  }
+ },
+ "schema": 5,
+ "subject": {
+  "background": {
+   "brief": "The first crewed flight around the Moon took place in December 1968.\nBetween 1968 and 1972, 24 astronauts travelled to the Moon, and 12 of them walked on its surface.\nThe lunar programme of that era cost $25.8 billion between 1960 and 1973, about $309 billion in 2025 dollars.\nAt its height, about 400,000 people worked on the effort to land people on the Moon.",
+   "preparedAt": "2026-11-06",
+   "sources": [
+    {
+     "title": "Space.com: The Apollo program",
+     "url": "https://www.space.com/apollo-program-overview.html"
+    },
+    {
+     "title": "The Planetary Society: How much did the Apollo program cost?",
+     "url": "https://www.planetary.org/space-policy/cost-of-apollo"
+    },
+    {
+     "title": "I'm a Scientist: How much does it cost to go to the Moon?",
+     "url": "https://archive.imascientist.org.uk/spacem11-zone/question/how-much-does-it-cost-to-go-to-the-moon.html"
+    },
+    {
+     "title": "Fox Business: The Apollo 11 Moon landing cost breakdown",
+     "url": "https://foxbusiness.com/features/apollo-moon-landing-cost-breakdown"
+    }
+   ]
+  },
+  "statement": "A crew of astronauts launches on a mission to loop around the Moon and return to Earth. No human has travelled beyond low Earth orbit since the early 1970s. The flight is a test for later landings.",
+  "title": "People fly around the Moon for the first time in half a century"
+ }
+}

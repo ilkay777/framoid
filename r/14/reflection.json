@@ -1,0 +1,124 @@
+{
+ "date": "2026-11-07",
+ "field": {
+  "held": [
+   {
+    "pairs": "Rodim · Aromi",
+    "text": "Is the rollback a firm choice to open trade, or one more step in a policy that keeps shifting?"
+   },
+   {
+    "pairs": "Mir · Ora",
+    "text": "Which will shape the country more: the factories that survive, or the story it tells about what protection cost?"
+   },
+   {
+    "pairs": "Idrom · Doria",
+    "text": "How much can a rule change before people stop trusting it, and how much can a shared burden grow before it becomes a rule?"
+   }
+  ],
+  "paragraphs": [
+   "Three forces stand against the rollback. Rodim hates the flinch, Mir guards the plants, and Idrom guards the promised rules. Three welcome it. Aromi wants the goods to flow, Ora hears what people lived through, and Doria wants the burden shared. Each is simply being itself.",
+   "The rollback is a reversed decision and an opened channel. It is a risk to factories and a relief at the checkout. It breaks a schedule and eases a strain on households. None of this cancels out.",
+   "A line that keeps being redrawn becomes a way of responding. A flow that settles into the same routes becomes a rule. The story that prices tell and the plants that stand or close each turn into the other. That is where the forces meet."
+  ]
+ },
+ "number": "14",
+ "pairs": {
+  "decision_adaptation": {
+   "aromi": {
+    "answer": "This is the right motion. The tariffs were a wall, and prices showed the wall was blocking the water. Now goods move again. Cheaper imports return, and shelves fill with more variety. Trade finds its paths the way a stream does. Some firms will feel the current. Everything that lives has to. I go where things are moving.",
+    "imprint": "More variety on shelves, and prices that follow the world again.",
+    "impulse": "Reopens the channels and lets goods flow to where people want them.",
+    "instruments": [
+     "Trade",
+     "Trends"
+    ],
+    "stance": "embraces"
+   },
+   "passage": {
+    "aromi": "If Aromi's flow keeps choosing the same cheap sources, that habit hardens into a firm commitment. That is Rodim.",
+    "rodim": "If Rodim's rule is reversed again and again, each time prices shift, it stops being a fixed line and becomes constant response. That is Aromi."
+   },
+   "rodim": {
+    "answer": "I don't like this. A line was drawn. Then prices rose and the line was erased. That is a flinch, not a choice. A decision that folds at the first complaint was never a decision. Industries bet on the wall. Now the wall is gone. Pick a side and hold it, or don't pick at all. I stand against the retreat.",
+    "imprint": "Firms that no longer trust any line the government draws.",
+    "impulse": "Demands that the first choice stay fixed, whatever the cost.",
+    "instruments": [
+     "Verdicts",
+     "Enterprise"
+    ],
+    "stance": "opposes"
+   }
+  },
+  "mind_matter": {
+   "mir": {
+    "answer": "I oppose the rollback. A steel mill is real. A factory floor is real. Machines, workers and supply lines take years to build and one season to lose. Cheap imports can wipe out what took decades to make. Once a plant is closed, the skills scatter and the furnace goes cold. You can't rebuild that with a press release.",
+    "imprint": "Idle factories and lost skills that are slow and costly to restore.",
+    "impulse": "Defends the plants, jobs and machines that the tariffs shielded.",
+    "instruments": [
+     "Economy",
+     "Infrastructure"
+    ],
+    "stance": "opposes"
+   },
+   "ora": {
+    "answer": "I see a government admitting its story was wrong. The tale was that protection makes us strong. Households told another tale at the checkout, and the government listened. Ideas should bend when experience speaks. People feel what they pay and what they can choose. That lived pressure is the truth here, and the rollback answers it.",
+    "imprint": "A new story: protection has a price that people feel in daily life.",
+    "impulse": "Lets the lived experience of households overturn a favoured idea.",
+    "instruments": [
+     "Ideologies",
+     "Stories"
+    ],
+    "stance": "embraces"
+   },
+   "passage": {
+    "mir": "If Mir's factories and prices are felt long enough, they become experience and belief about what the country is. That is Ora.",
+    "ora": "If Ora's belief in open trade is pushed far enough, it becomes ships, ports and shuttered plants. That is Mir."
+   }
+  },
+  "structure_harmony": {
+   "doria": {
+    "answer": "I welcome it. Households were carrying a cost they did not choose. Protected industries gained, and families paid. That is a harmony tilted to one side. Easing the burden lets more voices be heard at the same table. Protected firms feel the loss, and that matters too, but the whole is healthier when the cost is shared.",
+    "imprint": "Lighter bills for families, and strain for towns built around protected work.",
+    "impulse": "Lifts the weight from households and spreads the cost more evenly.",
+    "instruments": [
+     "Communities",
+     "Solidarity"
+    ],
+    "stance": "embraces"
+   },
+   "idrom": {
+    "answer": "I oppose this. A tariff schedule is law. Firms planned around it and signed contracts on it. Cutting it in reaction to a price rise tells everyone that rules last only until they are unpopular. A rule that bends under pressure is not a rule. Industries now stand exposed because the order they relied on was dropped without warning.",
+    "imprint": "Broken contracts and doubt about whether any rule will hold.",
+    "impulse": "Insists that the published tariff schedule stay binding as written.",
+    "instruments": [
+     "Law",
+     "Contracts"
+    ],
+    "stance": "opposes"
+   },
+   "passage": {
+    "doria": "If Doria's shared sense of fair prices lasts long enough, it becomes a standing rule and a standard. That is Idrom.",
+    "idrom": "If Idrom's tariff rules are adjusted often enough to suit what people need, the law starts to live and breathe like Doria's balance."
+   }
+  }
+ },
+ "schema": 5,
+ "subject": {
+  "background": {
+   "brief": "Studies of one large tariff round in 2018 found that the tariffs were passed almost fully into domestic prices, paid by importers and consumers rather than by foreign exporters.\nPrices of goods hit by those tariffs rose by 5% to 25%, while prices of other imports stayed flat.\nBy 2019 the tariffs were costing consumers and firms about $3.2 billion a month in added taxes, plus about $1.4 billion a month in lost trade.\nAnother country's 2018 counter-tariffs were also passed on to consumers at a high but incomplete rate; its central bank now assumes about 75% of tariff costs reach consumer prices within six quarters.\nThe tariffs also reduced the variety of goods available to consumers.",
+   "preparedAt": "2026-11-06",
+   "sources": [
+    {
+     "title": "American Economic Association: The price tag for the trade wars",
+     "url": "https://swlb1.aeaweb.org/research/charts/tariffs-2018-impact-prices-importers"
+    },
+    {
+     "title": "Bank of Canada: Assessing tariff pass-through to consumer prices, lessons from 2018",
+     "url": "https://www.bankofcanada.ca/2025/06/staff-analytical-note-2025-18/"
+    }
+   ]
+  },
+  "statement": "A government that raised import tariffs to protect home industries cuts many of them again after consumer prices climb. It says the rollback will ease household costs. Industries that gained protection argue it leaves them exposed.",
+  "title": "A government rolls back tariffs after prices rise"
+ }
+}

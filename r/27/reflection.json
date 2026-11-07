@@ -1,0 +1,132 @@
+{
+ "date": "2026-11-07",
+ "field": {
+  "held": [
+   {
+    "pairs": "Rodim · Aromi",
+    "text": "Is the strike one decision, or one wave in a steady flow of prices and wages?"
+   },
+   {
+    "pairs": "Mir · Ora",
+    "text": "Is the fight about what households can buy, or about what their work is held to be worth?"
+   },
+   {
+    "pairs": "Idrom · Doria",
+    "text": "When a strike becomes a custom, does it break the rules or become one of them?"
+   }
+  ],
+  "paragraphs": [
+   "Four forces lean toward the strike. Rodim wants the line drawn, Mir the pay packet, Ora the story, Doria the shared voice. Two forces resist. Aromi dislikes a frozen day, and Idrom dislikes pressure outside the rules. Each is simply being itself.",
+   "The strike holds all six at once. It is a hard demand and a halt in motion, a count of costs and a story of fairness, a break in the rules and a gathering of voices.",
+   "The forces turn into one another along the way. A strike repeated becomes a habit of response. A feeling of unfairness becomes a number. A shared day becomes a custom, and a custom becomes a rule."
+  ]
+ },
+ "number": "27",
+ "pairs": {
+  "decision_adaptation": {
+   "aromi": {
+    "answer": "I don't want this stop. I am movement, and a strike freezes it. Trains halt, schools close, offices go dark. The day is fixed in advance, and the demands are fixed too. Prices and wages shift all the time. A single blunt day cannot follow that. I would rather people keep moving, trade and find new paths around the squeeze.",
+    "imprint": "People find side routes. Some of the new habits stay.",
+    "impulse": "Cuts the flow of people, goods and messages for a day.",
+    "instruments": [
+     "Networks",
+     "Trade"
+    ],
+    "stance": "opposes"
+   },
+   "passage": {
+    "aromi": "If Aromi's many small adjustments all point the same way, they harden into one demand. That is Rodim.",
+    "rodim": "If Rodim's strike is called again and again, it becomes a steady reaction to every price rise. That is Aromi."
+   },
+   "rodim": {
+    "answer": "A line is drawn. Stop work. Everyone must pick a side. No drifting today. The unions name a demand and a date. The government must answer yes or no. I like that. Prices rose and wages stood still, and now the country halts until someone decides. Pressure is how a choice gets forced.",
+    "imprint": "A hard answer from the government. A clear before and after.",
+    "impulse": "Turns a long grumble into one day and one demand.",
+    "instruments": [
+     "Force",
+     "Verdicts"
+    ],
+    "stance": "embraces"
+   }
+  },
+  "mind_matter": {
+   "mir": {
+    "answer": "This is about the body. Rent, food, heating, fares. Wages buy less each month, and empty stomachs don't care about slogans. The strike is real too. Trains stop, flights stop, money is lost. Pay is a number you can count. A raise fills a pantry. I trust a fight about that. Whether the country can afford it is a fact, and the numbers will show it.",
+    "imprint": "Lost output on one side and bigger pay packets on the other.",
+    "impulse": "Stops the trains and flights and counts the cost.",
+    "instruments": [
+     "Economy",
+     "Infrastructure"
+    ],
+    "stance": "embraces"
+   },
+   "ora": {
+    "answer": "I see a story about fairness. People say their work is worth more than what they are paid. They share a word, solidarity, and a day of silence says it louder than speeches. Prices are numbers, but feeling cheated is an experience. Each worker carries it inside. The strike lets thousands feel it together and gives it a name.",
+    "imprint": "A story of the strike day that people tell for years.",
+    "impulse": "Gives a private worry a shared meaning: we are worth more.",
+    "instruments": [
+     "Stories",
+     "Ideologies"
+    ],
+    "stance": "embraces"
+   },
+   "passage": {
+    "mir": "Hungry households, pushed far enough, begin to feel they are being wronged. That is Ora.",
+    "ora": "Push Ora's sense of fairness far enough and it demands a pay rise in euros. That is Mir."
+   }
+  },
+  "structure_harmony": {
+   "doria": {
+    "answer": "I welcome it. When prices climb and wages lag, part of the whole is going unheard. Many people, many trades, one shared day. Teachers, drivers and clerks stand together. That is belonging. A country is a body of many voices, and today the quiet ones speak. A strike like this is harmony asking to be restored.",
+    "imprint": "Stronger bonds among workers, and a louder place for them in the country.",
+    "impulse": "Joins many trades into one shared rhythm for a day.",
+    "instruments": [
+     "Solidarity",
+     "Communities"
+    ],
+    "stance": "embraces"
+   },
+   "idrom": {
+    "answer": "I oppose the strike. Contracts set pay. Law sets the minimum wage. Institutions exist to change them in order. A general strike steps outside that. It stops public offices and breaks the daily rules everyone relies on. Roles blur: the worker acts as the lawmaker. Let the proper bodies hear the case. Order is not a favour to the powerful. It is what lasts.",
+    "imprint": "The rules bend under pressure. Wage law may change, and the precedent stays.",
+    "impulse": "Resists the pressure from outside the rule-making process.",
+    "instruments": [
+     "Law",
+     "Institutions"
+    ],
+    "stance": "opposes"
+   },
+   "passage": {
+    "doria": "If Doria's shared day of action is repeated often enough, it becomes a custom, then a rule. That is Idrom.",
+    "idrom": "If Idrom's wage rules are rewritten after every strike, they start to breathe like Doria's balance."
+   }
+  }
+ },
+ "schema": 5,
+ "subject": {
+  "background": {
+   "brief": "One-day general strikes have been used in parts of Europe since the 1890s; one country counts its first in 1893.\nIn late 2022, with eurozone inflation at a record 10.7%, two countries held 24-hour general strikes on the same day over the cost of living.\nIn one, train services were cut by 75% and about 60% of flights at the capital's airport were cancelled; in the other, ferries, state schools and most public transport stopped.\nUnions in both strikes demanded higher wages and a higher minimum wage to keep pace with prices.\nStrikes impose costs on national economies, and in many European countries they have also been a main way workers have won pay rises and rights.",
+   "preparedAt": "2026-11-06",
+   "sources": [
+    {
+     "title": "Wikipedia: General strikes in Belgium",
+     "url": "https://www.wikipedia.org/wiki/Belgian_general_strikes"
+    },
+    {
+     "title": "Morning Star: General strikes in Greece and Belgium over the cost of living",
+     "url": "https://morningstaronline.co.uk/article/w/thousands-take-part-in-general-strike-in-greece-and-belgium-in-protest-against-rising-cost-of-living"
+    },
+    {
+     "title": "Dhaka Tribune (AFP): Strikes flare in Europe amid soaring cost of living",
+     "url": "https://www.dhakatribune.com/world/europe/279017/strikes-flare-in-europe-amid-soaring-cost-of"
+    },
+    {
+     "title": "Anadolu Agency: 3 questions on strikes in Europe",
+     "url": "https://aa.com.tr/en/analysis/3-questions-strikes-in-europe/2835165"
+    }
+   ]
+  },
+  "statement": "Unions call a one-day general strike across a country to protest rising prices and wages that lag behind. Trains, schools and public offices stop. The government faces pressure to raise pay or cut costs for households.",
+  "title": "A nationwide general strike over the cost of living"
+ }
+}

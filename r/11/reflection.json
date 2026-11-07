@@ -1,0 +1,128 @@
+{
+ "date": "2026-11-07",
+ "field": {
+  "held": [
+   {
+    "pairs": "Rodim · Aromi",
+    "text": "Is the strait shut by one decision, or by countless shifts that follow it?"
+   },
+   {
+    "pairs": "Mir · Ora",
+    "text": "Do the tankers and miles decide this, or the fears and stories that sent them?"
+   },
+   {
+    "pairs": "Idrom · Doria",
+    "text": "When the old rules fail, do new rules or new shared habits hold the world's trade together?"
+   }
+  ],
+  "paragraphs": [
+   "Two forces welcome the closure. Rodim sees a decision and Mir sees the hard limits of water and distance. Four do not. Aromi sees a wall, Ora a story reduced to barrels, Idrom a broken rule, Doria a cut vein. Each is simply being itself.",
+   "The Subject holds all six at once. It is a deliberate act and a scramble, a fixed map and a set of fears, a lapse in law and a strain on a shared world.",
+   "Closure and flow stop being opposites when the detours harden into new routes and new rules. That is where each force turns into its partner."
+  ]
+ },
+ "number": "11",
+ "pairs": {
+  "decision_adaptation": {
+   "aromi": {
+    "answer": "I don't want this closed. I am water finding its way, and a shut strait is a wall. Cargoes want many roads, and now they have one road fewer. Tankers swing around Africa, and that is slow and costly. I will still seep through. Pipelines, new buyers, new routes. But a closed passage is a freeze, and I am against freezing.",
+    "imprint": "New trade routes and new suppliers, some of which last after the fighting ends.",
+    "impulse": "Pushes tankers and buyers to find side routes at once.",
+    "instruments": [
+     "Trade",
+     "Networks"
+    ],
+    "stance": "opposes"
+   },
+   "passage": {
+    "aromi": "If Aromi's scramble keeps choosing the same new routes and suppliers, those choices harden into decisions. That is Rodim.",
+    "rodim": "If Rodim's closing must be enforced and answered every hour, it becomes a constant reaction to the sea and the market. That is Aromi."
+   },
+   "rodim": {
+    "answer": "Someone chose to close it. One line, one strait, one act. Now the whole world must answer. Tankers stop. Prices jump. Nothing is vague here. Force decides who passes and who waits. I respect a hand that closes a door and makes everyone else move. Importers must choose a side, a supplier, a price. Now.",
+    "imprint": "A hard before and after, and every importer forced to pick a new supplier.",
+    "impulse": "Turns a narrow strait into a line that armed will can close.",
+    "instruments": [
+     "Force",
+     "Verdicts"
+    ],
+    "stance": "embraces"
+   }
+  },
+  "mind_matter": {
+   "mir": {
+    "answer": "This is real. Oil is heavy. Ships are slow. A strait is a strip of water you can't move. Close it and barrels stop, and no argument changes that. Going around Africa adds about 6,000 miles of sailing. Pipelines carry only so much. Limits decide everything here, and prices simply count them.",
+    "imprint": "Longer voyages, fuller costs, and a harder look at pipelines and stockpiles.",
+    "impulse": "Shows how few narrow places the world's energy depends on.",
+    "instruments": [
+     "Infrastructure",
+     "Territory"
+    ],
+    "stance": "embraces"
+   },
+   "ora": {
+    "answer": "I don't want this reduced to barrels and miles. A strait is also a fear, a claim, an old grievance. People closed it because of what they believe and what they were told. Prices jump because everyone imagines what comes next. Counting tankers misses the minds that sent them. I stand against the idea that this is only a plumbing problem.",
+    "imprint": "Fear that moves markets, and a memory that shapes policy for years.",
+    "impulse": "Gives the closure a meaning: pride, threat and a story of who is at war.",
+    "instruments": [
+     "Ideologies",
+     "Stories"
+    ],
+    "stance": "opposes"
+   },
+   "passage": {
+    "mir": "Live with a chokepoint long enough and it fills with fear, history and belief. That is Ora.",
+    "ora": "Push Ora's fears and claims far enough and they need ships, mines and missiles. That is Mir."
+   }
+  },
+  "structure_harmony": {
+   "doria": {
+    "answer": "I don't like this at all. The world's trade is one body, and a strait is a narrow vein. Cut it and every far-off country feels the pain. Households pay more for fuel and food. Poorer buyers lose out first. Some voices are shut out of the whole. I want shared flow, and war silences it.",
+    "imprint": "Strained ties, and new bargains between buyers and sellers who need each other.",
+    "impulse": "Feels the whole trading world strained when one vein is cut.",
+    "instruments": [
+     "Diplomacy",
+     "Solidarity"
+    ],
+    "stance": "opposes"
+   },
+   "idrom": {
+    "answer": "I oppose this. Sea lanes run on rules: free passage, insurance terms, shipping contracts, agreed standards. War tears them up. A strait where law is suspended is a strait with no order. Tankers do not know whom to obey. Contracts fail and insurers withdraw. This is exception becoming normal, and I cannot accept it.",
+    "imprint": "Broken contracts, higher insurance and new rules written to prevent a repeat.",
+    "impulse": "Insists that passage and contracts follow the law, and condemns the breach.",
+    "instruments": [
+     "Law",
+     "Contracts"
+    ],
+    "stance": "opposes"
+   },
+   "passage": {
+    "doria": "If Doria's shared arrangements hold long enough, they become habits, then treaties and standards. That is Idrom.",
+    "idrom": "If Idrom's rules must keep adjusting to a changing crisis, they start to live and respond like Doria's balance."
+   }
+  }
+ },
+ "schema": 5,
+ "subject": {
+  "background": {
+   "brief": "About half of the world's crude oil is moved by tanker, so a few narrow sea passages are critical to energy supply.\nEven a short closure of a major passage can cause long supply delays, higher shipping costs and higher world energy prices.\nSome passages can be bypassed by pipelines or longer routes; closing one key canal route adds about 6,000 miles of sailing around Africa.\nWhen attacks on shipping hit one strait in 2024, oil flows through it fell by about half as tankers switched to longer routes.",
+   "preparedAt": "2026-11-06",
+   "sources": [
+    {
+     "title": "EIA: World oil transit chokepoints",
+     "url": "https://www.eia.gov/todayinenergy/detail.php?id=330"
+    },
+    {
+     "title": "Talk Business: 61% of crude oil and petroleum products moved by sea",
+     "url": "https://talkbusiness.net/2017/08/61-of-global-crude-oil-and-petroleum-products-transported-by-sea/"
+    },
+    {
+     "title": "Offshore Technology: Red Sea oil tanker traffic dropped by 50%",
+     "url": "https://www.offshore-technology.com/news/red-sea-oil-tanker-traffic-has-dropped-by-50-this-year-says-eia/"
+    }
+   ]
+  },
+  "statement": "Fighting in a region shuts a narrow strait that a large share of the world's seaborne oil passes through. Tankers stop or take long detours, and oil prices jump. Importing countries scramble for other supplies.",
+  "title": "War closes a sea passage that carries much of the world's oil"
+ }
+}

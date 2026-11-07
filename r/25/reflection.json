@@ -1,0 +1,128 @@
+{
+ "date": "2026-11-07",
+ "field": {
+  "held": [
+   {
+    "pairs": "Rodim · Aromi",
+    "text": "When a strike is answered by a strike, who is still choosing, and who is just following?"
+   },
+   {
+    "pairs": "Mir · Ora",
+    "text": "Will the war be remembered by its ruins, or will its story decide what is rebuilt?"
+   },
+   {
+    "pairs": "Idrom · Doria",
+    "text": "Can a border be a rule and also a place where people live, without one erasing the other?"
+   }
+  ],
+  "paragraphs": [
+   "Rodim and Mir embrace this war. Rodim wants the line crossed and the choice made. Mir wants the ground, the bases and the facts. Aromi, Ora, Idrom and Doria oppose it. Each sees something broken: a flow frozen, a meaning flattened, a rule dissolved, a web torn.",
+   "The war holds all six at once. It is a decision and a wandering, a map and a story, a broken rule and a broken bond.",
+   "Each force leans toward its partner. Repeated strikes become a constant adjustment. Ruins become memory. A border crossed every day becomes a shared place, and a shared place hardens into a border again."
+  ]
+ },
+ "number": "25",
+ "pairs": {
+  "decision_adaptation": {
+   "aromi": {
+    "answer": "I don't want this war. The border is a line on a map, and people have always crossed it. Families, traders, herders and fighters move through it. Now both armies try to freeze it into a front. A front is a wall made of fire. I am against walls. Fighters will slip away, new groups will form, and the war will wander where nobody planned.",
+    "imprint": "Scattered groups, moving refugees, and a war that spreads beyond its first lines.",
+    "impulse": "Seeps around the front and finds new crossings.",
+    "instruments": [
+     "Migration",
+     "Networks"
+    ],
+    "stance": "opposes"
+   },
+   "passage": {
+    "aromi": "If Aromi's drifting fighters keep using the same routes and bases, those routes become fixed choices. That is Rodim.",
+    "rodim": "If Rodim keeps answering every strike with a new strike, each hour needs a new choice. That is Aromi's flow."
+   },
+   "rodim": {
+    "answer": "Enough attacks. Now the strike. One line is drawn and one side has crossed it. No more warnings, no more waiting. The bases are hit. The neighbour answers, and the answer is a choice too. War is the last decision, and it is clear. Every leader must now pick a side. I don't care for those who hide behind the border.",
+    "imprint": "A clear line between before and after, and a war that must be won or lost.",
+    "impulse": "Turns repeated attacks into one order to strike.",
+    "instruments": [
+     "Force",
+     "Verdicts"
+    ],
+    "stance": "embraces"
+   }
+  },
+  "mind_matter": {
+   "mir": {
+    "answer": "This is real. Bombs, fuel, roads, ground, bodies. Bases are places you can hit. Mountains and rivers decide where armies can go. A border wall only works where terrain and roads let soldiers patrol it. Hunger, wounds and ruined bridges are the facts of this war. Whoever has the supplies and the ground holds the line.",
+    "imprint": "Ruined roads, dead and wounded, and a border shaped by who held the ground.",
+    "impulse": "Turns a grievance into trucks, fuel, targets and ground to hold.",
+    "instruments": [
+     "Territory",
+     "Bodies"
+    ],
+    "stance": "embraces"
+   },
+   "ora": {
+    "answer": "I don't accept that this is only ground and weapons. For each side, this war is a story. One tells of a neighbour who shelters killers. The other tells of an invasion by a bully. People fight for those stories, and they die for them. Counting bases and bridges misses what they mean. Reduce it to targets, and you cannot see why it never ends.",
+    "imprint": "Two memories of the same war, each one carried for generations.",
+    "impulse": "Gives each side a tale of wrong done to it and a reason to go on.",
+    "instruments": [
+     "Stories",
+     "Ideologies"
+    ],
+    "stance": "opposes"
+   },
+   "passage": {
+    "mir": "If Mir's ruins and graves are lived in long enough, they fill with grief and meaning. That is Ora.",
+    "ora": "If Ora's story of the enemy is believed fully enough, it asks for weapons and borders. That is Mir."
+   }
+  },
+  "structure_harmony": {
+   "doria": {
+    "answer": "I don't like this at all. Villages on both sides share kin, markets and seasons. The war cuts them apart. Refugees are pushed into camps, and the militants hide among them. Every voice is silenced by gunfire. A people who lived as one whole are told to pick a side. I mourn each tie that is broken by this fight.",
+    "imprint": "Split families, crowded camps, and trust that takes generations to rebuild.",
+    "impulse": "Pulls at the cut ties between border families and neighbours.",
+    "instruments": [
+     "Kinship",
+     "Communities"
+    ],
+    "stance": "opposes"
+   },
+   "idrom": {
+    "answer": "This breaks the order. A border is a rule: one state here, another there. Strikes across it erase the rule. The accusation was never proven by any court. Both states now act outside law. A host state must control its own soil. A victim state must not cross. Both failed. I oppose this war because it dissolves the categories that keep states apart.",
+    "imprint": "Damaged treaties, and new rules written to answer the breach.",
+    "impulse": "Insists that borders and duties are fixed, and condemns every breach.",
+    "instruments": [
+     "Law",
+     "Institutions"
+    ],
+    "stance": "opposes"
+   },
+   "passage": {
+    "doria": "If Doria's bonds hold for long enough, they harden into customs and claims. That is Idrom.",
+    "idrom": "If Idrom's strict border is crossed daily by people, goods and kin, it starts to behave like Doria's living web."
+   }
+  }
+ },
+ "schema": 5,
+ "subject": {
+  "background": {
+   "brief": "Armed groups that cannot beat a state at home often set up bases in a neighbouring country, where that state's forces cannot legally follow.\nSuch bases are easiest to build where the neighbour is too weak to stop them, wants to weaken its rival, or hosts large refugee communities.\nStates that host rebels can block peace talks between the rebels and the government they fight.\nPast wars have started this way: a 1982 invasion and a 1996 invasion of neighbouring countries were both largely driven by the aim of destroying militant bases across the border.\nResearch on border walls finds they limit the spread of militancy only where terrain and roads let states patrol them.",
+   "preparedAt": "2026-11-06",
+   "sources": [
+    {
+     "title": "Salehyan: Rebels without Borders (Cornell University Press)",
+     "url": "https://muse.jhu.edu/book/43917"
+    },
+    {
+     "title": "Salehyan: The Externalities of Civil Strife (American Journal of Political Science)",
+     "url": "https://www.scribd.com/document/304435505/25193850"
+    },
+    {
+     "title": "Do Walls Work? Border barriers and the spread of militancy",
+     "url": "https://core.ac.uk/works/245650890"
+    }
+   ]
+  },
+  "statement": "One state accuses its neighbour of sheltering armed groups that attack across their shared border. After repeated attacks, it strikes their bases on the neighbour's soil, and the neighbour hits back. The fighting turns into open war between the two states.",
+  "title": "Two neighbours go to war over militants sheltering across the border"
+ }
+}

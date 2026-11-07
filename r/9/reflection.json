@@ -1,0 +1,123 @@
+{
+ "date": "2026-11-07",
+ "field": {
+  "held": [
+   {
+    "pairs": "Rodim · Aromi",
+    "text": "Is the next chief a fixed choice, or a long series of small responses to events?"
+   },
+   {
+    "pairs": "Mir · Ora",
+    "text": "Will the former chief's words, or the numbers on prices, shape what people trust?"
+   },
+   {
+    "pairs": "Idrom · Doria",
+    "text": "How much silence does an independent office need before it can listen?"
+   }
+  ],
+  "paragraphs": [
+   "Three forces welcome the exit. Rodim wants the choice, Ora the voice, Doria the opened room. Three do not. Aromi dislikes the slammed door, Mir fears the cost, and Idrom guards the rule. Each is simply being itself.",
+   "The seat is empty and must be filled. The filling will be a decision, a rule, a bill and a story all at once. The same act is a breach to one god and a release to another.",
+   "Neutrality and speech stop being opposites when silence is itself a stance and speech is bound by duty. A rule that cannot hear becomes brittle. A voice with no rule loses its weight. That is where each force turns into its partner."
+  ]
+ },
+ "number": "9",
+ "pairs": {
+  "decision_adaptation": {
+   "aromi": {
+    "answer": "I don't like the rule that forbids speech, and I don't like the fixed term either. But I like this exit less. It is a loud, final step, a door slammed shut. The choice of a successor is another hard wall. I prefer a bank that listens to the moment and keeps turning with it, not one that jumps by decree.",
+    "imprint": "Talk that keeps moving long after the chair is filled.",
+    "impulse": "Slips around the closed door and spreads the words through many channels.",
+    "instruments": [
+     "Language",
+     "Networks"
+    ],
+    "stance": "opposes"
+   },
+   "passage": {
+    "aromi": "If Aromi keeps picking the same path, each pick becomes a decision. That is Rodim.",
+    "rodim": "If Rodim's choice is renewed every day, it turns into steady responding. That is Aromi."
+   },
+   "rodim": {
+    "answer": "He chose. He saw the line and crossed it on purpose. No hiding behind neutrality. He gave up the seat to say what he thinks. That is will. Now the government must choose too. One name. One hand on the rate. I want that. No drift, no vague silence.",
+    "imprint": "A clear before and after, and a new chief with a name.",
+    "impulse": "Breaks the term with one hard decision and forces the next.",
+    "instruments": [
+     "Leaders",
+     "Verdicts"
+    ],
+    "stance": "embraces"
+   }
+  },
+  "mind_matter": {
+   "mir": {
+    "answer": "I don't trust this. Money is prices, jobs, savings and rent. The data is clear: when politicians lean on a bank, inflation runs higher and lasts longer. Words from a former chief are cheap. A new chief picked for loyalty can cost people real bread. I stand with what can be counted, and I oppose anything that puts opinion above it.",
+    "imprint": "Costs that land in shops and pay packets, whatever was said.",
+    "impulse": "Weighs the move against prices, wages and savings.",
+    "instruments": [
+     "Economy"
+    ],
+    "stance": "opposes"
+   },
+   "ora": {
+    "answer": "I love this. A person steps out of a role to speak what is inside. Neutrality is a mask, and he takes it off. Now the public hears a real voice and a real argument. Ideas about money, power and duty get a face. People will tell this story, and it will change how they think of the bank.",
+    "imprint": "A story about duty and voice that people keep retelling.",
+    "impulse": "Turns a resignation into a statement of belief.",
+    "instruments": [
+     "Stories",
+     "Ideologies"
+    ],
+    "stance": "embraces"
+   },
+   "passage": {
+    "mir": "Count prices long enough and the numbers start to carry beliefs about trust. That is Ora.",
+    "ora": "Push Ora's beliefs far enough and they move rates, wages and bills. That is Mir."
+   }
+  },
+  "structure_harmony": {
+   "doria": {
+    "answer": "I welcome a voice that was kept quiet. A bank sits inside a society, and the society has a right to hear from those who guide it. When one part is silenced, the whole grows tense. His words let more voices into the room. A fitting successor will be one who can listen to many sides.",
+    "imprint": "A wider debate, and a bank that must hear more than before.",
+    "impulse": "Lets a silenced voice rejoin the public conversation.",
+    "instruments": [
+     "Communities",
+     "Diplomacy"
+    ],
+    "stance": "embraces"
+   },
+   "idrom": {
+    "answer": "This is a breach. The office has a term and a rule of silence. Independence exists so that no one person and no government can bend it. He leaves early and speaks freely, and the line blurs between officer and politician. The successor must be chosen by the law, by fixed process, never by favour. I oppose any exit that treats the rules as optional.",
+    "imprint": "Tighter vetting for the next chief, and a stricter rule on leaving.",
+    "impulse": "Defends the term, the silence rule and the appointment process.",
+    "instruments": [
+     "Law",
+     "Institutions"
+    ],
+    "stance": "opposes"
+   },
+   "passage": {
+    "doria": "If Doria's balance holds for years, it settles into habit and then into rule. That is Idrom.",
+    "idrom": "If Idrom's rules grow able to answer and adjust to those they govern, they begin to live. That is Doria."
+   }
+  }
+ },
+ "schema": 5,
+ "subject": {
+  "background": {
+   "brief": "Central banks in most advanced economies are legally independent, so that elected politicians do not set interest rates directly.\nA study of 118 central banks from 2010 to 2018 found that about 10% faced political pressure in an average year, almost always to loosen policy.\nIn that study, pressure on the central bank went with higher and more persistent inflation.\nResearch reviews find that inflation and inflation expectations are higher under governors appointed for political reasons.\nSince 2016, changes to central bank laws raised independence in 35 cases and lowered it in seven.",
+   "preparedAt": "2026-11-06",
+   "sources": [
+    {
+     "title": "Binder: Political Pressure on Central Banks (Journal of Money, Credit and Banking)",
+     "url": "https://econpapers.repec.org/RePEc:wly:jmoncb:v:53:y:2021:i:4:p:715-744"
+    },
+    {
+     "title": "VoxEU: Central bank independence, an update",
+     "url": "https://cepr.org/voxeu/columns/central-bank-independence-update"
+    }
+   ]
+  },
+  "statement": "The head of a central bank steps down before the end of the term. The stated reason is to speak openly on political questions, which the job's neutrality rules forbid. The government must now choose a successor.",
+  "title": "A central bank chief resigns early to speak freely on politics"
+ }
+}
