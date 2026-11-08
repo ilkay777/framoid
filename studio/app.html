@@ -493,8 +493,9 @@ textarea { flex: 1; resize: none; font: 15px/1.45 var(--text); color: var(--ink)
 })();
 
 /* Framoid toolbar: floating glass islands, separate, with transparent space between them, in two modes.
-   List mode (home): one bottom row: search (grows while in use) | filter | settings | balance.
-   Reading mode (a Reflection): top right: previous / next | share; bottom row: home | sections | balance.
+   Both modes share one bottom row with the same ends: far left settings (list) or home (Reflection), far right
+   the balance of the gods; in the middle search (grows while in use) and filter, or the sections.
+   Reading mode also has previous / next and share at the top right.
    Copied into the pages with balance.js by tools/sync_balance.py. */
 (function () {
   "use strict";
@@ -509,12 +510,13 @@ textarea { flex: 1; resize: none; font: 15px/1.45 var(--text); color: var(--ink)
     share: svg('<path d="M12 3v12"/><path d="M7.5 7.5L12 3l4.5 4.5"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/>'),
     settings: svg('<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>'),
     search: svg('<circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/>'),
-    filter: svg('<path d="M4 6h16"/><path d="M7 12h10"/><path d="M10 18h4"/>')
+    filter: svg('<path d="M4 6h16"/><path d="M7 12h10"/><path d="M10 18h4"/>'),
+    clear: svg('<circle cx="12" cy="12" r="9" fill="currentColor" stroke="none" opacity=".22"/><path d="M9 9l6 6M15 9l-6 6"/>')
   };
   const css = `
 .fbar { position: fixed; z-index: 30; left: 0; right: 0; top: max(12px, env(safe-area-inset-top, 0px)); box-sizing: border-box; max-width: 1272px; margin: 0 auto;
   padding: 0 max(16px, env(safe-area-inset-right, 0px)) 0 max(16px, env(safe-area-inset-left, 0px)); display: flex; align-items: center; gap: 10px; pointer-events: none; }
-.fbar.bottom { top: auto; bottom: calc(12px + env(safe-area-inset-bottom, 0px)); justify-content: center; }
+.fbar.bottom { top: auto; bottom: calc(12px + env(safe-area-inset-bottom, 0px)); }
 .fbar.right { justify-content: flex-end; }
 .fbar > * { pointer-events: auto; }
 .fbar [hidden] { display: none !important; }
@@ -537,12 +539,15 @@ textarea { flex: 1; resize: none; font: 15px/1.45 var(--text); color: var(--ink)
 @media (max-width: 900px) {
   .fsearch { width: 132px; padding: 0 12px; }
   .fbar.searching .fsearch { flex: 1 1 auto; width: auto; }
-  .fbar.searching > .fisl:not(.fsearch) { display: none; }
+  .fbar.searching > .fisl:not(.fsearch), .fbar.searching > .fgap { display: none; }
   .fsecs > button { padding: 0 8px; }
   .fsecs .fdots { display: none; }
 }
 @media (prefers-reduced-motion: reduce) { .fsearch { transition: none; } }
-.fsearch input { flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; color: var(--ink, #14151a); font: 400 14px/1 var(--text, system-ui); }
+.fsearch input { flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; color: var(--ink, #14151a); font: 400 16px/1 var(--text, system-ui); -webkit-appearance: none; appearance: none; padding: 0; }
+.fsearch input::-webkit-search-cancel-button, .fsearch input::-webkit-search-decoration { -webkit-appearance: none; display: none; }
+.fsearch .fclear { flex: none; width: 30px; height: 30px; margin-right: -8px; padding: 0; border: 0; border-radius: 50%; background: transparent; color: var(--muted, #5c606e); cursor: pointer; display: grid; place-items: center; }
+.fsearch .fclear svg { width: 20px; height: 20px; }
 .fsearch input::placeholder { color: var(--muted, #5c606e); }
 .fsearch:focus-within { box-shadow: inset 0 1px 0 var(--hl, #fff), 0 0 0 2px color-mix(in srgb, var(--focus, #0a6cff) 55%, transparent); }
 .fbar :focus-visible { outline: 2px solid var(--focus, #0a6cff); outline-offset: 2px; }
@@ -638,14 +643,20 @@ textarea { flex: 1; resize: none; font: 15px/1.45 var(--text); color: var(--ink)
     let filter = "all";
     const filters = [["all", "All"], ["embraced", "Embraced"], ["opposed", "Opposed"]];
     const seg = () => filters.map(([v, l]) => `<button type="button" data-filter="${v}" aria-pressed="${filter === v}">${l}</button>`).join("");
-    const el = bar(`<label class="fisl fsearch">${ICON.search}<input type="search" id="fb-q" placeholder="Search" aria-label="Search Reflections" autocomplete="off"></label>
+    const el = bar(`${island(iconBtn("fb-settings", "settings", "Settings", 'aria-haspopup="menu" data-fmenu-anchor'))}<div class="fgap"></div>
+      <label class="fisl fsearch">${ICON.search}<input type="search" id="fb-q" placeholder="Search" aria-label="Search Reflections" autocomplete="off" enterkeyhint="search"><button type="button" class="fclear" id="fb-clear" aria-label="Clear search" hidden>${ICON.clear}</button></label>
       ${island(seg(), "fseg")}${island(iconBtn("fb-filter", "filter", "Filter", 'aria-haspopup="menu" data-fmenu-anchor aria-pressed="false"'), "ffilter")}
-      ${island(iconBtn("fb-settings", "settings", "Settings", 'aria-haspopup="menu" data-fmenu-anchor'))}${balanceIsland()}`, "bottom");
-    const q = el.querySelector("#fb-q"), box = el.querySelector(".fsearch");
+      <div class="fgap"></div>${balanceIsland()}`, "bottom");
+    const q = el.querySelector("#fb-q"), box = el.querySelector(".fsearch"), clear = el.querySelector("#fb-clear");
     const grow = on => { box.classList.toggle("open", on); el.classList.toggle("searching", on); };
+    const changed = () => { clear.hidden = !q.value; opts.onSearch && opts.onSearch(q.value); };
     q.addEventListener("focus", () => grow(true));
     q.addEventListener("blur", () => grow(false));
-    q.addEventListener("input", () => opts.onSearch && opts.onSearch(q.value));
+    q.addEventListener("input", changed);
+    q.addEventListener("keydown", e => { if (e.key === "Enter") q.blur(); });
+    // The clear button works without opening the field: pointerdown keeps the focus where it is.
+    clear.addEventListener("pointerdown", e => e.preventDefault());
+    clear.addEventListener("click", e => { e.preventDefault(); q.value = ""; changed(); });
     const setFilter = v => {
       filter = v; el.querySelector(".fseg").innerHTML = seg(); opts.onFilter && opts.onFilter(v);
       el.querySelector("#fb-filter").setAttribute("aria-pressed", String(v !== "all"));
@@ -674,7 +685,7 @@ textarea { flex: 1; resize: none; font: 15px/1.45 var(--text); color: var(--ink)
     const top = chrome ? bar(`${steps}${island(iconBtn("fb-share", "share", "Share"))}`, "top right") : null;
     if (top) top.querySelector("#fb-share").onclick = () => share(opts.title || document.title);
     const bottom = bar(`${chrome && opts.home ? island(`<a href="${opts.home}" class="ficon" id="fb-home" aria-label="All Reflections" title="All Reflections">${ICON.home}</a>`) : ""}
-      ${secs ? island(secs, "fsecs") : ""}${chrome ? balanceIsland() : ""}`, "bottom");
+      <div class="fgap"></div>${secs ? island(secs, "fsecs") : ""}<div class="fgap"></div>${chrome ? balanceIsland() : ""}`, "bottom");
     if (chrome) wireBalance(bottom, opts.stances);
     bottom.addEventListener("click", e => { const b = e.target.closest(".fsecs [data-view]"); if (b && opts.onSection) opts.onSection(b.dataset.view); });
     const api = {
