@@ -64,10 +64,13 @@
   window.addEventListener("framoid:theme", () => push());
 
   /* ---------- sign in / out / delete ---------- */
-  async function google() {
-    const { auth, A } = await load();
-    await A.signInWithPopup(auth, new A.GoogleAuthProvider());
+  // The popup must open in the same tap, with nothing awaited before it, or browsers block it.
+  // The sheet preloads Firebase so it's ready by the time the reader taps.
+  function google() {
+    if (fb) return fb.A.signInWithPopup(fb.auth, new fb.A.GoogleAuthProvider());
+    return load().then(() => { throw { code: "fac/not-ready" }; });
   }
+  const preload = () => { load().catch(() => {}); };
   async function sendLink(email) {
     const { auth, A } = await load();
     await A.sendSignInLinkToEmail(auth, email, { url: location.origin + location.pathname, handleCodeInApp: true });
@@ -115,14 +118,13 @@
         <form class="fac-form" data-fac-form="finish"><input type="email" name="email" required autocomplete="email" placeholder="you@example.com" aria-label="Email address"><button type="submit" class="fb-primary">Sign in</button></form>`;
       if (mode === "sent") return `<h2 id="fac-title">Check your email</h2><p>We sent a sign-in link to <strong>${esc(ls.get(MAILKEY) || "")}</strong>. Open it on this device to finish signing in.</p>
         <div class="fb-row"><button type="button" class="fb-primary" data-fac="close">Done</button></div>`;
-      return `<h2 id="fac-title">Sign in to Framoid</h2><p>Optional. Keeps your balance of the gods and appearance on every device. More is coming: saved Reflections and your own stances.</p>
-        <div class="fb-row fac-col"><button type="button" class="fac-google" data-fac="google">${GLOGO}<span>Continue with Google</span></button></div>
-        <p class="fac-or">or get a sign-in link by email</p>
-        <form class="fac-form" data-fac-form="link"><input type="email" name="email" required autocomplete="email" placeholder="you@example.com" aria-label="Email address"><button type="submit">Send link</button></form>
-        <p class="fac-small">By signing in you agree to Framoid storing your email address and these settings, as described in <button type="button" class="flink" data-about>About</button>.</p>
-        <div class="fb-row"><button type="button" data-fac="close">Not now</button></div>`;
+      return `<h2 id="fac-title">Sign in</h2>
+        <button type="button" class="fac-google" data-fac="google">${GLOGO}<span>Continue with Google</span></button>
+        <form class="fac-form" data-fac-form="link"><input type="email" name="email" required autocomplete="email" placeholder="Or email me a link" aria-label="Email address for a sign-in link"><button type="submit">Send</button></form>
+        <p class="fac-small">Syncs your balance and appearance. <button type="button" class="flink" data-about>Privacy</button></p>`;
     };
-    const render = () => { scrim.innerHTML = `<div class="fb-sheet fac" role="dialog" aria-modal="true" aria-labelledby="fac-title">${draw()}<p class="fb-status fac-status" aria-live="polite"></p></div>`; };
+    const render = () => { scrim.innerHTML = `<div class="fb-sheet fac" role="dialog" aria-modal="true" aria-labelledby="fac-title"><button type="button" class="fac-x" data-fac="close" aria-label="Close">&times;</button>${draw()}<p class="fb-status fac-status" aria-live="polite"></p></div>`; };
+    if (!user) preload();
     render();
     document.body.appendChild(scrim);
     const status = t => { const s = scrim.querySelector(".fac-status"); if (s) s.textContent = t || ""; };
@@ -132,13 +134,13 @@
     const onAcc = () => { mode = ""; render(); };
     document.addEventListener("keydown", onKey);
     window.addEventListener("framoid:account", onAcc);
-    const fail = e => status((e && e.code === "auth/popup-closed-by-user") ? "" : (e && e.code === "auth/popup-blocked") ? "Your browser blocked the sign-in window. Allow pop-ups for framoid.com and try again." : "Couldn't complete that. Try again.");
+    const fail = e => status((e && (e.code === "auth/popup-closed-by-user" || e.code === "auth/cancelled-popup-request")) ? "" : (e && e.code === "fac/not-ready") ? "Ready. Tap again." : (e && e.code === "auth/popup-blocked") ? "Your browser blocked the sign-in window. Allow pop-ups for framoid.com and try again." : "Couldn't complete that. Try again.");
     scrim.addEventListener("click", async e => {
       if (e.target === scrim) return close();
       const a = e.target.closest("[data-fac]"); if (!a) return;
       const act = a.dataset.fac;
       if (act === "close") return close();
-      if (act === "google") { status("Opening Google…"); try { await google(); } catch (err) { fail(err); } return; }
+      if (act === "google") { status(""); try { await google(); } catch (err) { console.warn("Framoid sign-in", err); fail(err); } return; }
       if (act === "signout") { await signOut(); return close(); }
       if (act === "delete") {
         if (!confirmDelete) { confirmDelete = true; a.textContent = "Tap again to delete everything"; status("This removes your account, settings and anything you saved. It can't be undone."); setTimeout(() => { confirmDelete = false; if (a.isConnected) { a.textContent = "Delete my account and data"; status(""); } }, 5000); return; }
@@ -155,22 +157,25 @@
         else { status("Signing in…"); await finishLink(email); }
       } catch (err) { btn.disabled = false; status(f.dataset.facForm === "link" ? "Couldn't send the link. Check the address and try again." : "That link didn't work. It may have expired; request a new one."); }
     });
-    const first = scrim.querySelector("input, .fb-primary, button"); if (first) first.focus();
+    const box = scrim.querySelector(".fac"); box.tabIndex = -1; box.style.outline = "none"; box.focus({ preventScroll: true });
   }
 
   /* ---------- styles ---------- */
   const css = `
-.fb-sheet.fac { max-width: 420px; }
+.fb-sheet.fac { max-width: 360px; position: relative; }
+.fb-sheet.fac h2 { margin-bottom: 14px; }
+.fac-x { position: absolute; top: 12px; right: 12px; width: 30px; height: 30px; border-radius: 50%; border: 0; padding: 0; cursor: pointer;
+  background: var(--hairline, rgba(20,24,40,.08)); color: var(--muted, #5c606e); font: 400 20px/30px var(--text, system-ui); }
+.fac-google { width: 100%; height: 44px; margin-bottom: 10px; display: inline-flex; align-items: center; justify-content: center; gap: 10px; cursor: pointer;
+  border-radius: 999px; background: #fff; color: #1f1f1f; border: 1px solid #dadce0; font: 600 15px/1 var(--text, system-ui); }
 .fb-sheet.fac p { font-size: 14px; line-height: 1.5; }
 .fac-col { flex-direction: column; align-items: stretch; }
-.fac-google { display: inline-flex !important; align-items: center; justify-content: center; gap: 10px; background: #fff !important; color: #1f1f1f !important; border: 1px solid #dadce0 !important; }
-.fac-or { margin: 14px 0 6px !important; font-size: 12px !important; color: var(--muted, #5c606e) !important; }
 .fac-form { display: flex; gap: 8px; }
-.fac-form input { flex: 1; min-width: 0; height: 40px; box-sizing: border-box; padding: 0 14px; border-radius: 999px; border: 1px solid var(--hairline, rgba(20,24,40,.15));
+.fac-form input { flex: 1; min-width: 0; height: 44px; box-sizing: border-box; padding: 0 14px; border-radius: 999px; border: 1px solid var(--hairline, rgba(20,24,40,.15));
   background: var(--glass, rgba(255,255,255,.6)); color: var(--ink, #14151a); font: 400 16px/1 var(--text, system-ui); }
 .fac-form button { flex: none; font: 600 14px/1 var(--text, system-ui); padding: 0 16px; border-radius: 999px; border: 1px solid var(--stroke, rgba(255,255,255,.7));
   background: var(--ink, #14151a); color: var(--bg, #fff); cursor: pointer; }
-.fac-small { margin-top: 10px !important; font-size: 12px !important; color: var(--muted, #5c606e) !important; }
+.fac-small { margin-top: 12px !important; text-align: center; font-size: 12px !important; color: var(--muted, #5c606e) !important; }
 .fac-danger { color: var(--fb-no, #dc3b34) !important; }`;
   function addStyle() {
     if (document.getElementById("fac-style")) return;
@@ -189,5 +194,5 @@
     }).catch(e => console.warn("Framoid: sign-in unavailable", e));
   }
 
-  window.FramoidAccount = { state, open: () => sheet(""), signOut };
+  window.FramoidAccount = { state, open: () => sheet(""), signOut, preload };
 })();

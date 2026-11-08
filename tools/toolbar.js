@@ -125,6 +125,7 @@
   }
   document.addEventListener("keydown", e => { if (e.key === "Escape") closeMenu(); });
   function settings(anchor) {
+    if (window.FramoidAccount && window.FramoidAccount.preload && !window.FramoidAccount.state().signedIn) window.FramoidAccount.preload();
     const draw = () => `<h3>Appearance</h3><div class="fopts" role="group" aria-label="Appearance">${[["auto", "Auto"], ["light", "Light"], ["dark", "Dark"]]
       .map(([v, l]) => `<button type="button" data-theme-set="${v}" aria-pressed="${getTheme() === v}">${l}</button>`).join("")}</div>
       <div class="fsep"></div>${accountItem()}<button type="button" class="fitem" data-about>About Framoid</button>`;
