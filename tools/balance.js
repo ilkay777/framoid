@@ -145,8 +145,13 @@
     // Framoid's centre: an orb with an aura. On a Reflection its colour runs red → amber → green with the
     // weighted result; elsewhere it blends the gods' colours (six blurred sectors). When the balance can be
     // reset it carries a small "Reset" hint; the first click asks "Reset?" in place, the second resets.
-    const sectors = GODS.map(g => { const a0 = (ANG[g] - 30) * Math.PI / 180, a1 = (ANG[g] + 30) * Math.PI / 180, R = 80;
-      return `<path d="M0 0L${(R * Math.cos(a0)).toFixed(1)} ${(R * Math.sin(a0)).toFixed(1)}A${R} ${R} 0 0 1 ${(R * Math.cos(a1)).toFixed(1)} ${(R * Math.sin(a1)).toFixed(1)}Z" style="fill:var(--${g})"/>`; }).join("");
+    // The blend gives each god a slice as wide as its weight, in dial order, the first one centred on Rodim.
+    let at = ANG[GODS[0]] - w[GODS[0]] / T * 180;
+    const sectors = GODS.map(g => {
+      const span = w[g] / T * 360, a0 = at * Math.PI / 180, a1 = (at + span) * Math.PI / 180, R = 80; at += span;
+      if (span < 0.5) return "";
+      if (span > 359.5) return `<circle r="${R}" style="fill:var(--${g})"/>`;
+      return `<path d="M0 0L${(R * Math.cos(a0)).toFixed(1)} ${(R * Math.sin(a0)).toFixed(1)}A${R} ${R} 0 ${span > 180 ? 1 : 0} 1 ${(R * Math.cos(a1)).toFixed(1)} ${(R * Math.sin(a1)).toFixed(1)}Z" style="fill:var(--${g})"/>`; }).join("");
     const body = t ? `<circle r="48" style="fill:${t.color}"/>` : `<g filter="url(#fb-soft)">${sectors}</g>`;
     const aura = t ? `<circle class="aura" r="62" style="fill:${t.color}" filter="url(#fb-glow)" opacity=".6"/>`
                    : `<g class="aura" filter="url(#fb-glow)" opacity=".45"><g transform="scale(.72)">${sectors}</g></g>`;
