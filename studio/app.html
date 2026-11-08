@@ -798,7 +798,12 @@ textarea { flex: 1; resize: none; font: 15px/1.45 var(--text); color: var(--ink)
       import(SDK + "firebase-app.js"), import(SDK + "firebase-auth.js"), import(SDK + "firebase-firestore.js")]);
     const app = initializeApp(CONFIG);
     fb = { auth: A.getAuth(app), db: F.getFirestore(app), A, F };
-    fb.A.onAuthStateChanged(fb.auth, u => { user = u; if (u) { ls.set(FLAG, "1"); pull(); } else ls.del(FLAG); emit(); });
+    fb.A.onAuthStateChanged(fb.auth, u => {
+      const fresh = u && !ls.get(FLAG); // just signed in on this device (not a returning visit)
+      user = u; ready = false; if (unsub) { unsub(); unsub = null; }
+      if (u) { ls.set(FLAG, "1"); listen(fresh); } else ls.del(FLAG);
+      emit();
+    });
     return fb;
   }
   const emit = () => window.dispatchEvent(new CustomEvent("framoid:account", { detail: state() }));
@@ -806,20 +811,38 @@ textarea { flex: 1; resize: none; font: 15px/1.45 var(--text); color: var(--ink)
   const userDoc = () => fb.F.doc(fb.db, "users", user.uid);
 
   /* ---------- settings sync: balance of the gods and appearance ---------- */
-  async function pull() {
-    try {
-      const snap = await fb.F.getDoc(userDoc());
+  // Live: every device follows the account's settings as they change.
+  let unsub = null, ready = false;
+  const hasOwn = b => b && Object.values(b).some(v => Number(v) > 0);
+  function listen(fresh) {
+    let first = true;
+    unsub = fb.F.onSnapshot(userDoc(), snap => {
+      if (snap.metadata.hasPendingWrites) return; // our own write echoing back
       const d = snap.exists() ? snap.data() : null;
-      applying = true;
-      if (d && d.balance && window.FramoidBalance) window.FramoidBalance.setReader(d.balance);
-      if (d && d.theme && window.FramoidBar) window.FramoidBar.setTheme(d.theme);
-      applying = false;
-      if (!d) push(true); // first sign-in: keep what this browser already has
-    } catch (e) { applying = false; console.warn("Framoid: couldn't read your settings", e); }
+      if (first) {
+        first = false; ready = true;
+        // New account, or signing in here with a balance of your own while the account has none: keep this device's.
+        const local = window.FramoidBalance && window.FramoidBalance.readerOwn();
+        if (!d) return push(true);
+        if (fresh && !hasOwn(d.balance) && local) { apply({ theme: d.theme }); return push(); }
+      }
+      apply(d);
+    }, e => { ready = true; console.warn("Framoid: couldn't read your settings", e); });
+  }
+  function apply(d) {
+    if (!d) return;
+    applying = true;
+    try {
+      if ("balance" in d && window.FramoidBalance) {
+        const cur = window.FramoidBalance.readerOwn(), next = hasOwn(d.balance) ? d.balance : null;
+        if (JSON.stringify(cur) !== JSON.stringify(next && window.FramoidBalance.norm(next))) window.FramoidBalance.setReader(d.balance);
+      }
+      if (d.theme && window.FramoidBar && window.FramoidBar.getTheme() !== d.theme) window.FramoidBar.setTheme(d.theme);
+    } finally { applying = false; }
   }
   let timer = null;
   function push(first) {
-    if (!user || applying) return;
+    if (!user || applying || !ready) return;
     clearTimeout(timer);
     timer = setTimeout(async () => {
       const data = { theme: window.FramoidBar ? window.FramoidBar.getTheme() : "auto", updatedAt: fb.F.serverTimestamp() };
