@@ -376,7 +376,7 @@ textarea { flex: 1; resize: none; font: 15px/1.45 var(--text); color: var(--ink)
     holder.addEventListener("keydown", e => {
       const o = e.target.closest(".orb"); if (!o) return;
       const g = o.dataset.god, step = { ArrowUp: 1, ArrowRight: 1, "+": 1, "=": 1, ArrowDown: -1, ArrowLeft: -1, "-": -1 }[e.key];
-      if (!step) return; e.preventDefault();
+      if (!step) return; e.preventDefault(); e.stopPropagation(); // keep the page's arrow-key navigation out of the dial
       change(setOne(w, g, w[g] + step * 1.5), g);
     });
     const close = () => { scrim.remove(); document.removeEventListener("keydown", onKey); if (prevFocus && prevFocus.focus) prevFocus.focus(); opts.onClose && opts.onClose(); };
