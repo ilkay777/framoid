@@ -95,7 +95,7 @@ footer { text-align: center; color: var(--muted); font-size: 12px; margin-top: 2
     </div>
   </header>
   <section class="list" id="list" aria-label="Reflections"><div class="glass empty">Loading Reflections…</div></section>
-  <footer>framoid.com</footer>
+  <footer id="foot">Mostly AI-generated · Not advice · <a href="mailto:hello@framoid.com">hello@framoid.com</a></footer>
 </main>
 <!-- balance:start --><script id="fb-balance">
 /* Framoid balance: how much each god's Reading counts. Shared by framoid.com (home and every Reflection
@@ -463,6 +463,16 @@ footer { text-align: center; color: var(--muted); font-size: 12px; margin-top: 2
 .fmenu .fitem { display: block; width: 100%; text-align: left; border: 0; background: transparent; color: inherit; border-radius: 10px; padding: 9px 10px; font: 600 14px/1.2 var(--text, system-ui); cursor: pointer; }
 .fmenu .fitem:hover { background: var(--seg, rgba(20,24,40,.06)); }
 .fmenu .fitem[aria-checked="true"]::after { content: "✓"; float: right; }
+.fmenu .fsep { height: 1px; margin: 8px 4px; background: var(--hairline, rgba(20,24,40,.1)); }
+.fb-sheet.fabout { text-align: left; max-width: 480px; }
+.fb-sheet.fabout h2 { text-align: center; margin-bottom: 10px; }
+.fb-sheet.fabout h3 { margin: 14px 0 4px; font: 700 11px/1.2 var(--text, system-ui); letter-spacing: .07em; text-transform: uppercase; color: var(--muted, #5c606e); }
+.fb-sheet.fabout p { font-size: 14px; line-height: 1.5; color: var(--ink, #14151a); }
+.fb-sheet.fabout a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+.fb-sheet.fabout .fb-row { margin-top: 16px; }
+.fdisc { font-size: 12px; color: var(--muted, #5c606e); }
+.flink { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; text-decoration-color: color-mix(in srgb, currentColor 40%, transparent); text-underline-offset: 2px; }
+.flink:hover { color: var(--ink, #14151a); }
 .ftoast { position: fixed; z-index: 60; left: 50%; bottom: calc(80px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); padding: 10px 16px; border-radius: 999px;
   font: 600 13px/1 var(--text, system-ui); color: var(--bg, #fff); background: var(--ink, #14151a); box-shadow: 0 8px 24px -8px rgba(0,0,0,.4); }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --fbar-on: rgba(255,255,255,.16); } }
@@ -508,12 +518,47 @@ footer { text-align: center; color: var(--muted); font-size: 12px; margin-top: 2
   document.addEventListener("keydown", e => { if (e.key === "Escape") closeMenu(); });
   function settings(anchor) {
     const draw = () => `<h3>Appearance</h3><div class="fopts" role="group" aria-label="Appearance">${[["auto", "Auto"], ["light", "Light"], ["dark", "Dark"]]
-      .map(([v, l]) => `<button type="button" data-theme-set="${v}" aria-pressed="${getTheme() === v}">${l}</button>`).join("")}</div>`;
+      .map(([v, l]) => `<button type="button" data-theme-set="${v}" aria-pressed="${getTheme() === v}">${l}</button>`).join("")}</div>
+      <div class="fsep"></div><button type="button" class="fitem" data-about>About Framoid</button>`;
     menu(anchor, draw(), (e, el) => {
+      if (e.target.closest("[data-about]")) { closeMenu(); return about(); }
       const b = e.target.closest("[data-theme-set]"); if (!b) return;
       setTheme(b.dataset.themeSet); el.innerHTML = draw();
     });
   }
+
+  /* ---------- About and disclaimer ---------- */
+  const CONTACT = "hello@framoid.com";
+  const disclaimerLine = () => `<span class="fdisc">Mostly AI-generated · Not advice · <button type="button" class="flink" data-about>About</button> · <a class="flink" href="mailto:${CONTACT}">${CONTACT}</a></span>`;
+  function about() {
+    if (window.FramoidBalance) window.FramoidBalance.addStyle();
+    addStyle();
+    const prev = document.activeElement;
+    const scrim = document.createElement("div");
+    scrim.className = "fb-scrim";
+    scrim.innerHTML = `<div class="fb-sheet fabout" role="dialog" aria-modal="true" aria-labelledby="fa-title">
+      <h2 id="fa-title">About Framoid</h2>
+      <p>Framoid considers one Subject at a time through six paired gods. Each god gives a Reading as one pure, one-sided force; Framoid holds the six together without ranking or resolving them.</p>
+      <h3>Mostly AI-generated</h3>
+      <p>The Readings and Framoid's reflections are written with an AI model (Claude, by Anthropic), then chosen and published by a person. They can contain mistakes or one-sided claims.</p>
+      <h3>Not advice</h3>
+      <p>Nothing here is professional, legal, medical, financial or political advice, or an endorsement of any person, group, view or action. The gods' stances come from their natures, not from the author's opinions.</p>
+      <h3>Sources</h3>
+      <p>Backgrounds summarise public sources, linked on each Reflection. Check the sources before relying on any fact.</p>
+      <h3>Privacy</h3>
+      <p>No accounts, cookies or tracking are added by this site. Your balance of the gods and your appearance setting are kept in your own browser. The host (GitHub Pages) may keep standard server logs.</p>
+      <h3>Contact</h3>
+      <p><a href="mailto:${CONTACT}">${CONTACT}</a></p>
+      <div class="fb-row"><button type="button" class="fb-primary" data-close>Done</button></div></div>`;
+    document.body.appendChild(scrim);
+    const close = () => { scrim.remove(); document.removeEventListener("keydown", onKey); if (prev && prev.focus) prev.focus(); };
+    const onKey = e => { if (e.key === "Escape") close(); };
+    document.addEventListener("keydown", onKey);
+    scrim.addEventListener("click", e => { if (e.target === scrim || e.target.closest("[data-close]")) close(); });
+    scrim.querySelector("[data-close]").focus();
+  }
+  // Any element with data-about (footer lines, menus) opens the About sheet.
+  document.addEventListener("click", e => { const a = e.target.closest("[data-about]"); if (a && !a.closest(".fmenu")) { e.preventDefault(); about(); } });
   function toast(text) {
     addStyle();
     const t = document.createElement("div"); t.className = "ftoast"; t.setAttribute("role", "status"); t.textContent = text;
@@ -599,7 +644,7 @@ footer { text-align: center; color: var(--muted); font-size: 12px; margin-top: 2
     return api;
   }
 
-  window.FramoidBar = { list, reading, share, toast, setTheme, getTheme, ICON };
+  window.FramoidBar = { list, reading, share, toast, setTheme, getTheme, about, disclaimerLine, ICON };
 })();
 </script><!-- balance:end -->
 <script>
@@ -609,6 +654,7 @@ footer { text-align: center; color: var(--muted); font-size: 12px; margin-top: 2
   FB.loadMaster("balance.json");
   // Toolbar (list mode): search by title and statement, filter by the weighted result.
   let q = "", filter = "all";
+  document.getElementById("foot").innerHTML = window.FramoidBar.disclaimerLine();
   window.FramoidBar.list({ onSearch: v => { q = v.trim().toLowerCase(); render(); }, onFilter: v => { filter = v; render(); } });
   const NAME = { rodim: "Rodim", aromi: "Aromi", mir: "Mir", ora: "Ora", idrom: "Idrom", doria: "Doria" };
   const list = document.getElementById("list");
