@@ -69,6 +69,7 @@
 .fmenu .fitem { display: block; width: 100%; text-align: left; border: 0; background: transparent; color: inherit; border-radius: 10px; padding: 9px 10px; font: 600 14px/1.2 var(--text, system-ui); cursor: pointer; }
 .fmenu .fitem:hover { background: var(--seg, rgba(20,24,40,.06)); }
 .fmenu .fitem[aria-checked="true"]::after { content: "✓"; float: right; }
+.fmenu .fsub { display: block; margin-top: 3px; font-size: 12px; font-weight: 400; color: var(--muted, #5c606e); overflow: hidden; text-overflow: ellipsis; }
 .fmenu .fsep { height: 1px; margin: 8px 4px; background: var(--hairline, rgba(20,24,40,.1)); }
 .fb-sheet.fabout { text-align: left; max-width: 480px; }
 .fb-sheet.fabout h2 { text-align: center; margin-bottom: 10px; }
@@ -93,6 +94,7 @@
   function setTheme(t) {
     try { t === "auto" ? localStorage.removeItem(THEME) : localStorage.setItem(THEME, t); } catch {}
     applyTheme();
+    window.dispatchEvent(new CustomEvent("framoid:theme"));
   }
   function applyTheme() {
     const t = getTheme(), el = document.documentElement;
@@ -125,12 +127,20 @@
   function settings(anchor) {
     const draw = () => `<h3>Appearance</h3><div class="fopts" role="group" aria-label="Appearance">${[["auto", "Auto"], ["light", "Light"], ["dark", "Dark"]]
       .map(([v, l]) => `<button type="button" data-theme-set="${v}" aria-pressed="${getTheme() === v}">${l}</button>`).join("")}</div>
-      <div class="fsep"></div><button type="button" class="fitem" data-about>About Framoid</button>`;
+      <div class="fsep"></div>${accountItem()}<button type="button" class="fitem" data-about>About Framoid</button>`;
     menu(anchor, draw(), (e, el) => {
       if (e.target.closest("[data-about]")) { closeMenu(); return about(); }
+      if (e.target.closest("[data-account]")) { closeMenu(); return window.FramoidAccount && window.FramoidAccount.open(); }
       const b = e.target.closest("[data-theme-set]"); if (!b) return;
       setTheme(b.dataset.themeSet); el.innerHTML = draw();
     });
+  }
+
+  // Account entry in Settings: "Sign in", or the signed-in email.
+  function accountItem() {
+    if (!window.FramoidAccount) return "";
+    const s = window.FramoidAccount.state();
+    return `<button type="button" class="fitem" data-account>${s.signedIn ? `Account<span class="fsub">${String(s.email || "").replace(/[&<>"]/g, "")}</span>` : "Sign in"}</button>`;
   }
 
   /* ---------- About and disclaimer ---------- */
@@ -152,7 +162,9 @@
       <h3>Sources</h3>
       <p>Backgrounds summarise public sources, linked on each Reflection. Check the sources before relying on any fact.</p>
       <h3>Privacy</h3>
-      <p>No accounts, cookies or tracking are added by this site. Your balance of the gods and your appearance setting are kept in your own browser. The host (GitHub Pages) may keep standard server logs.</p>
+      <p>No cookies or tracking are added by this site. Your balance of the gods and your appearance setting are kept in your own browser. The host (GitHub Pages) may keep standard server logs.</p>
+      <h3>Accounts</h3>
+      <p>Signing in is optional (Google or an email link). If you sign in, Framoid stores your email address and your settings (balance of the gods, appearance; later also saved Reflections and your own stances) with Google Firebase, on servers in the United States. Only you can see them. Readers who don't sign in never load Firebase. You can delete your account and everything stored with it anytime: Settings, Account, Delete my account and data.</p>
       <h3>Contact</h3>
       <p><a href="mailto:${CONTACT}">${CONTACT}</a></p>
       <div class="fb-row"><button type="button" class="fb-primary" data-close>Done</button></div></div>`;

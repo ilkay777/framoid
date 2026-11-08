@@ -1,0 +1,50 @@
+rules_version = '2';
+// Framoid reader data (Firebase project framoid-567c0). Published in the Firebase console; keep this copy in step.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    function isOwner(uid) { return signedIn() && request.auth.uid == uid; }
+    function isAdmin() {
+      return signedIn() && request.auth.token.email == 'framoid.info@gmail.com' && request.auth.token.email_verified == true;
+    }
+    function okSlug(slug) { return slug.size() > 0 && slug.size() <= 40; }
+
+    // Each reader's own data, private to them: settings, saved Reflections, their own stances.
+    match /users/{uid} {
+      allow read, delete: if isOwner(uid);
+      allow create, update: if isOwner(uid)
+        && request.resource.data.keys().hasOnly(['balance', 'theme', 'createdAt', 'updatedAt'])
+        && (!('balance' in request.resource.data) || request.resource.data.balance is map)
+        && (!('theme' in request.resource.data) || request.resource.data.theme in ['auto', 'light', 'dark']);
+
+      match /saved/{slug} {
+        allow read, delete: if isOwner(uid);
+        allow create, update: if isOwner(uid) && okSlug(slug)
+          && request.resource.data.keys().hasOnly(['savedAt']);
+      }
+
+      // A reader's own overall stance on a Reflection: -1 (opposes) to 1 (embraces).
+      match /stances/{slug} {
+        allow read, delete: if isOwner(uid);
+        allow create, update: if isOwner(uid) && okSlug(slug)
+          && request.resource.data.keys().hasOnly(['value', 'updatedAt'])
+          && request.resource.data.value is number
+          && request.resource.data.value >= -1 && request.resource.data.value <= 1;
+      }
+    }
+
+    // Subject suggestions: a reader sends and sees their own; only Framoid's admin reads and updates all.
+    match /suggestions/{id} {
+      allow create: if signedIn()
+        && request.resource.data.keys().hasOnly(['uid', 'title', 'text', 'createdAt', 'status'])
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.title is string
+        && request.resource.data.title.size() > 0 && request.resource.data.title.size() <= 140
+        && request.resource.data.text is string && request.resource.data.text.size() <= 2000
+        && request.resource.data.status == 'new';
+      allow read: if isAdmin() || (signedIn() && resource.data.uid == request.auth.uid);
+      allow update: if isAdmin();
+      allow delete: if isAdmin() || (signedIn() && resource.data.uid == request.auth.uid);
+    }
+  }
+}

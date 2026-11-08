@@ -289,5 +289,12 @@
     return master;
   }
 
-  window.FramoidBalance = { GODS, NAME, total: T, equal, norm, weights: current, master: () => master, setMaster, loadMaster, tide, orb, setOrb, dot, open, button, addStyle };
+  // Accounts: the reader's own balance (null when they use Framoid's), and setting it from their account.
+  const readerOwn = () => store.get();
+  function setReader(w) {
+    const has = w && GODS.some(g => Number(w[g]) > 0);
+    if (!has || same(norm(w), master)) store.clear(); else store.set(norm(w));
+    emit();
+  }
+  window.FramoidBalance = { GODS, NAME, total: T, equal, norm, weights: current, master: () => master, setMaster, loadMaster, tide, orb, setOrb, dot, open, button, addStyle, readerOwn, setReader };
 })();
