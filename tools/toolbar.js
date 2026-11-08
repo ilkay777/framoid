@@ -16,6 +16,7 @@
     share: svg('<path d="M12 3v12"/><path d="M7.5 7.5L12 3l4.5 4.5"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/>'),
     settings: svg('<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>'),
     search: svg('<circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/>'),
+    bookmark: svg('<path d="M7 3.5h10a1 1 0 0 1 1 1V21l-6-4.2L6 21V4.5a1 1 0 0 1 1-1z"/>'),
     filter: svg('<path d="M4 6h16"/><path d="M7 12h10"/><path d="M10 18h4"/>'),
     clear: svg('<circle cx="12" cy="12" r="9" fill="currentColor" stroke="none" opacity=".22"/><path d="M9 9l6 6M15 9l-6 6"/>')
   };
@@ -35,6 +36,7 @@
 .fisl > button, .fisl > a { height: 32px; min-width: 32px; padding: 0 12px; border: 0; border-radius: 999px; background: transparent; color: inherit; cursor: pointer;
   display: inline-flex; align-items: center; justify-content: center; gap: 6px; font: 600 13px/1 var(--text, system-ui); text-decoration: none; white-space: nowrap; }
 .fisl > .ficon { padding: 0; width: 32px; }
+#fb-save.on svg path { fill: currentColor; }
 .fisl > button:hover, .fisl > a:hover { background: var(--seg, rgba(20,24,40,.06)); }
 .fisl > button:disabled { opacity: .35; cursor: default; background: transparent; }
 .fisl > button[aria-current="true"], .fisl > button[aria-pressed="true"] { background: var(--fbar-on, rgba(255,255,255,.95)); box-shadow: 0 1px 4px var(--shadow, rgba(30,36,70,.15)); }
@@ -201,11 +203,13 @@
   const phone = () => window.matchMedia("(max-width: 900px)").matches;
 
   /* ---------- list mode ---------- */
-  // opts: { onSearch(text), onFilter("all"|"embraced"|"opposed") }
+  // opts: { onSearch(text), onFilter("all"|"embraced"|"opposed"|"saved") }; "Saved" shows only when signed in.
   // One bottom row: search, filter (segmented on wide screens, a menu on phones), settings, balance.
   function list(opts = {}) {
     let filter = "all";
-    const filters = [["all", "All"], ["embraced", "Embraced"], ["opposed", "Opposed"]];
+    const base = [["all", "All"], ["embraced", "Embraced"], ["opposed", "Opposed"]];
+    const signed = () => !!(window.FramoidAccount && window.FramoidAccount.state().signedIn);
+    let filters = signed() ? [...base, ["saved", "Saved"]] : base;
     const seg = () => filters.map(([v, l]) => `<button type="button" data-filter="${v}" aria-pressed="${filter === v}">${l}</button>`).join("");
     const el = bar(`${island(iconBtn("fb-settings", "settings", "Settings", 'aria-haspopup="menu" data-fmenu-anchor'))}<div class="fgap"></div>
       <label class="fisl fsearch">${ICON.search}<input type="search" id="fb-q" placeholder="Search" aria-label="Search Reflections" autocomplete="off" enterkeyhint="search"><button type="button" class="fclear" id="fb-clear" aria-label="Clear search" hidden>${ICON.clear}</button></label>
@@ -231,6 +235,10 @@
       e => { const b = e.target.closest("[data-filter]"); if (b) { setFilter(b.dataset.filter); closeMenu(); } });
     const g = el.querySelector("#fb-settings"); g.onclick = () => settings(g);
     wireBalance(el);
+    window.addEventListener("framoid:account", () => {
+      filters = signed() ? [...base, ["saved", "Saved"]] : base;
+      if (filter === "saved" && !signed()) setFilter("all"); else el.querySelector(".fseg").innerHTML = seg();
+    });
     const place = () => { el.querySelector(".fseg").hidden = phone(); el.querySelector(".ffilter").hidden = !phone(); };
     place(); window.addEventListener("resize", place);
     return { bottom: el };
@@ -238,7 +246,7 @@
 
   /* ---------- reading mode ---------- */
   // opts: { home (href or null), sections [{id, label, icon?, title, dots[]}], onSection(id), prev / next (href or
-  //         null; undefined hides them), stances, title, chrome (false: sections only, for the Studio preview) }
+  //         null; undefined hides them), stances, title, slug (shows Save), chrome (false: sections only, for the Studio preview) }
   // Top right: previous / next and share. Bottom row: home, sections, balance.
   function reading(opts = {}) {
     const chrome = opts.chrome !== false;
@@ -246,8 +254,17 @@
       ? ICON[s.icon] : `${(s.dots || []).length ? `<span class="fdots">${s.dots.map(g => `<b style="background:var(--${g})"></b>`).join("")}</span>` : ""}${s.label}`}</button>`).join("");
     const steps = chrome && (opts.prev !== undefined || opts.next !== undefined)
       ? island(`${iconBtn("fb-prev", "prev", "Previous Reflection", opts.prev ? "" : "disabled")}${iconBtn("fb-next", "next", "Next Reflection", opts.next ? "" : "disabled")}`, "fsteps") : "";
-    const top = chrome ? bar(`${steps}${island(iconBtn("fb-share", "share", "Share"))}`, "top right") : null;
+    const canSave = chrome && opts.slug && window.FramoidAccount;
+    const top = chrome ? bar(`${steps}${island(`${canSave ? iconBtn("fb-save", "bookmark", "Save", 'aria-pressed="false"') : ""}${iconBtn("fb-share", "share", "Share")}`)}`, "top right") : null;
     if (top) top.querySelector("#fb-share").onclick = () => share(opts.title || document.title);
+    if (canSave) {
+      const sv = top.querySelector("#fb-save");
+      const mark = () => { const on = window.FramoidAccount.isSaved(opts.slug); sv.setAttribute("aria-pressed", String(on)); sv.classList.toggle("on", on);
+        sv.setAttribute("aria-label", on ? "Saved" : "Save"); sv.title = on ? "Saved. Tap to remove" : "Save"; };
+      sv.onclick = () => { const was = window.FramoidAccount.isSaved(opts.slug), signed = window.FramoidAccount.state().signedIn;
+        window.FramoidAccount.toggleSave(opts.slug).then(() => { if (signed) toast(was ? "Removed from saved" : "Saved"); }).catch(() => toast("Couldn't save. Try again.")); };
+      window.addEventListener("framoid:saved", mark); mark();
+    }
     const bottom = bar(`${chrome && opts.home ? island(`<a href="${opts.home}" class="ficon" id="fb-home" aria-label="All Reflections" title="All Reflections">${ICON.home}</a>`) : ""}
       <div class="fgap"></div>${secs ? island(secs, "fsecs") : ""}<div class="fgap"></div>${chrome ? balanceIsland() : ""}`, "bottom");
     if (chrome) wireBalance(bottom, opts.stances);

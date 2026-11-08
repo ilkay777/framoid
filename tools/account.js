@@ -32,7 +32,8 @@
     fb.A.onAuthStateChanged(fb.auth, u => {
       const fresh = u && !ls.get(FLAG); // just signed in on this device (not a returning visit)
       user = u; ready = false; if (unsub) { unsub(); unsub = null; }
-      if (u) { ls.set(FLAG, "1"); listen(fresh); } else ls.del(FLAG);
+      if (unsubSaved) { unsubSaved(); unsubSaved = null; } saved = new Set(); emitSaved();
+      if (u) { ls.set(FLAG, "1"); listen(fresh); listenSaved(); } else ls.del(FLAG);
       emit();
     });
     return fb;
@@ -86,6 +87,31 @@
   window.addEventListener("framoid:balance", () => push());
   window.addEventListener("framoid:theme", () => push());
 
+  /* ---------- saved Reflections ---------- */
+  let saved = new Set(), unsubSaved = null, pending = null;
+  const emitSaved = () => window.dispatchEvent(new CustomEvent("framoid:saved"));
+  function listenSaved() {
+    unsubSaved = fb.F.onSnapshot(fb.F.collection(fb.db, "users", user.uid, "saved"), snap => {
+      saved = new Set(snap.docs.map(d => d.id)); emitSaved();
+      if (pending) { const p = pending; pending = null; if (!saved.has(p)) setSaved(p, true); }
+    }, e => console.warn("Framoid: couldn't read your saved Reflections", e));
+  }
+  const isSaved = slug => saved.has(String(slug));
+  function setSaved(slug, on) {
+    slug = String(slug);
+    if (on) saved.add(slug); else saved.delete(slug);
+    emitSaved();
+    const ref = fb.F.doc(fb.db, "users", user.uid, "saved", slug);
+    return (on ? fb.F.setDoc(ref, { savedAt: fb.F.serverTimestamp() }) : fb.F.deleteDoc(ref))
+      .catch(e => { console.warn("Framoid: couldn't update saved", e); if (on) saved.delete(slug); else saved.add(slug); emitSaved(); throw e; });
+  }
+  // Signed out: offer sign-in, and save it once signed in.
+  function toggleSave(slug) {
+    if (!slug) return Promise.resolve();
+    if (!user) { pending = String(slug); sheet("", "Sign in to save Reflections and find them on any device."); return Promise.resolve(); }
+    return setSaved(slug, !isSaved(slug));
+  }
+
   /* ---------- sign in / out / delete ---------- */
   // The popup must open in the same tap, with nothing awaited before it, or browsers block it.
   // The sheet preloads Firebase so it's ready by the time the reader taps.
@@ -128,23 +154,23 @@
   /* ---------- the sheet ---------- */
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   const GLOGO = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.5a5.6 5.6 0 0 1-2.4 3.6v3h3.9c2.3-2.1 3.5-5.2 3.5-8.8z"/><path fill="#34A853" d="M12 24c3.2 0 6-1.1 8-2.9l-3.9-3c-1.1.7-2.5 1.2-4.1 1.2-3.1 0-5.8-2.1-6.7-5H1.3v3.1A12 12 0 0 0 12 24z"/><path fill="#FBBC05" d="M5.3 14.3a7.2 7.2 0 0 1 0-4.6V6.6H1.3a12 12 0 0 0 0 10.8z"/><path fill="#EA4335" d="M12 4.8c1.8 0 3.3.6 4.6 1.8l3.4-3.4A12 12 0 0 0 1.3 6.6l4 3.1c.9-2.9 3.6-4.9 6.7-4.9z"/></svg>';
-  function sheet(mode) {
+  function sheet(mode, note) {
     if (window.FramoidBalance) window.FramoidBalance.addStyle();
     addStyle();
     const prev = document.activeElement;
     const scrim = document.createElement("div");
     scrim.className = "fb-scrim";
     const draw = () => {
-      if (user) return `<h2 id="fac-title">Your account</h2><p>Signed in as <strong>${esc(user.email || "")}</strong>. Your balance of the gods and appearance follow you to every device where you sign in.</p>
+      if (user) return `<h2 id="fac-title">Your account</h2><p>Signed in as <strong>${esc(user.email || "")}</strong>. Your balance of the gods, appearance and saved Reflections follow you to every device where you sign in.</p>
         <div class="fb-row fac-col"><button type="button" data-fac="signout">Sign out</button><button type="button" class="fac-danger" data-fac="delete">Delete my account and data</button><button type="button" class="fb-primary" data-fac="close">Done</button></div>`;
       if (mode === "confirm-email") return `<h2 id="fac-title">Finish signing in</h2><p>Enter the email address the sign-in link was sent to.</p>
         <form class="fac-form" data-fac-form="finish"><input type="email" name="email" required autocomplete="email" placeholder="you@example.com" aria-label="Email address"><button type="submit" class="fb-primary">Sign in</button></form>`;
       if (mode === "sent") return `<h2 id="fac-title">Check your email</h2><p>We sent a sign-in link to <strong>${esc(ls.get(MAILKEY) || "")}</strong>. Open it on this device to finish signing in.</p>
         <div class="fb-row"><button type="button" class="fb-primary" data-fac="close">Done</button></div>`;
-      return `<h2 id="fac-title">Sign in</h2>
+      return `<h2 id="fac-title">Sign in</h2>${note ? `<p class="fac-note">${esc(note)}</p>` : ""}
         <button type="button" class="fac-google" data-fac="google">${GLOGO}<span>Continue with Google</span></button>
         <form class="fac-form" data-fac-form="link"><input type="email" name="email" required autocomplete="email" placeholder="Or email me a link" aria-label="Email address for a sign-in link"><button type="submit">Send</button></form>
-        <p class="fac-small">Syncs your balance and appearance. <button type="button" class="flink" data-about>Privacy</button></p>`;
+        <p class="fac-small">Syncs your balance, appearance and saved Reflections. <button type="button" class="flink" data-about>Privacy</button></p>`;
     };
     const render = () => { scrim.innerHTML = `<div class="fb-sheet fac" role="dialog" aria-modal="true" aria-labelledby="fac-title"><button type="button" class="fac-x" data-fac="close" aria-label="Close">&times;</button>${draw()}<p class="fb-status fac-status" aria-live="polite"></p></div>`; };
     if (!user) preload();
@@ -152,9 +178,9 @@
     document.body.appendChild(scrim);
     const status = t => { const s = scrim.querySelector(".fac-status"); if (s) s.textContent = t || ""; };
     let confirmDelete = false;
-    const close = () => { scrim.remove(); document.removeEventListener("keydown", onKey); window.removeEventListener("framoid:account", onAcc); if (prev && prev.focus) prev.focus(); };
+    const close = () => { if (!user) pending = null; scrim.remove(); document.removeEventListener("keydown", onKey); window.removeEventListener("framoid:account", onAcc); if (prev && prev.focus) prev.focus(); };
     const onKey = e => { if (e.key === "Escape") close(); };
-    const onAcc = () => { mode = ""; render(); };
+    const onAcc = () => { if (note && user) return close(); mode = ""; render(); };
     document.addEventListener("keydown", onKey);
     window.addEventListener("framoid:account", onAcc);
     const fail = e => status((e && (e.code === "auth/popup-closed-by-user" || e.code === "auth/cancelled-popup-request")) ? "" : (e && e.code === "fac/not-ready") ? "Ready. Tap again." : (e && e.code === "auth/popup-blocked") ? "Your browser blocked the sign-in window. Allow pop-ups for framoid.com and try again." : "Couldn't complete that. Try again.");
@@ -187,6 +213,7 @@
   const css = `
 .fb-sheet.fac { max-width: 360px; position: relative; }
 .fb-sheet.fac h2 { margin-bottom: 14px; }
+.fb-sheet.fac .fac-note { margin: -8px 0 14px; padding-right: 28px; }
 .fac-x { position: absolute; top: 12px; right: 12px; width: 30px; height: 30px; border-radius: 50%; border: 0; padding: 0; cursor: pointer;
   background: var(--hairline, rgba(20,24,40,.08)); color: var(--muted, #5c606e); font: 400 20px/30px var(--text, system-ui); }
 .fac-google { width: 100%; height: 44px; margin-bottom: 10px; display: inline-flex; align-items: center; justify-content: center; gap: 10px; cursor: pointer;
@@ -217,5 +244,5 @@
     }).catch(e => console.warn("Framoid: sign-in unavailable", e));
   }
 
-  window.FramoidAccount = { state, open: () => sheet(""), signOut, preload };
+  window.FramoidAccount = { state, open: () => sheet(""), signOut, preload, isSaved, toggleSave };
 })();
