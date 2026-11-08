@@ -37,6 +37,24 @@
   display: inline-flex; align-items: center; justify-content: center; gap: 6px; font: 600 13px/1 var(--text, system-ui); text-decoration: none; white-space: nowrap; }
 .fisl > .ficon { padding: 0; width: 32px; }
 #fb-save.on svg path { fill: currentColor; }
+.fbar[hidden] { display: none !important; }
+.fbar.stance { bottom: calc(60px + env(safe-area-inset-bottom, 0px)); justify-content: center; }
+.fstance { flex: 0 1 320px; width: 320px; max-width: 100%; height: 36px; padding: 0 6px 0 14px; gap: 10px; }
+.fstance .fyou { font: 600 12px/1 var(--text, system-ui); color: var(--muted, #5c606e); flex: none; }
+.fstance input { flex: 1; min-width: 0; height: 24px; margin: 0; background: transparent; -webkit-appearance: none; appearance: none; cursor: pointer; --fsv: var(--fb-mid); }
+.fstance input:focus { outline: none; }
+.fstance input::-webkit-slider-runnable-track { height: 6px; border-radius: 3px; background: linear-gradient(90deg, var(--fb-no), var(--fb-mid), var(--fb-yes)); }
+.fstance input::-moz-range-track { height: 6px; border-radius: 3px; background: linear-gradient(90deg, var(--fb-no), var(--fb-mid), var(--fb-yes)); }
+.fstance input::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; margin-top: -8px; border-radius: 50%; border: 2px solid #fff;
+  background: radial-gradient(circle at 34% 28%, rgba(255,255,255,.75), rgba(255,255,255,0) 46%), var(--fsv); box-shadow: 0 2px 8px -1px rgba(20,24,40,.35); }
+.fstance input::-moz-range-thumb { width: 18px; height: 18px; border-radius: 50%; border: 2px solid #fff;
+  background: radial-gradient(circle at 34% 28%, rgba(255,255,255,.75), rgba(255,255,255,0) 46%), var(--fsv); box-shadow: 0 2px 8px -1px rgba(20,24,40,.35); }
+.fstance input:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 3px var(--ink, #14151a); }
+.fstance.unset input::-webkit-slider-runnable-track { opacity: .3; }
+.fstance.unset input::-moz-range-track { opacity: .3; }
+.fstance.unset input::-webkit-slider-thumb { background: var(--glass-strong, #fff); border-color: var(--muted, #5c606e); border-style: dashed; }
+.fstance.unset input::-moz-range-thumb { background: var(--glass-strong, #fff); border-color: var(--muted, #5c606e); border-style: dashed; }
+.fstance .fclear { flex: none; }
 .fisl > button:hover, .fisl > a:hover { background: var(--seg, rgba(20,24,40,.06)); }
 .fisl > button:disabled { opacity: .35; cursor: default; background: transparent; }
 .fisl > button[aria-current="true"], .fisl > button[aria-pressed="true"] { background: var(--fbar-on, rgba(255,255,255,.95)); box-shadow: 0 1px 4px var(--shadow, rgba(30,36,70,.15)); }
@@ -268,16 +286,49 @@
     const bottom = bar(`${chrome && opts.home ? island(`<a href="${opts.home}" class="ficon" id="fb-home" aria-label="All Reflections" title="All Reflections">${ICON.home}</a>`) : ""}
       <div class="fgap"></div>${secs ? island(secs, "fsecs") : ""}<div class="fgap"></div>${chrome ? balanceIsland() : ""}`, "bottom");
     if (chrome) wireBalance(bottom, opts.stances);
+    const stance = chrome && opts.slug && window.FramoidAccount && window.FramoidAccount.setStance ? stanceBar(opts.slug) : null;
     bottom.addEventListener("click", e => { const b = e.target.closest(".fsecs [data-view]"); if (b && opts.onSection) opts.onSection(b.dataset.view); });
     const api = {
       top, bottom,
-      setCurrent(id) { bottom.querySelectorAll(".fsecs [data-view]").forEach(b => b.setAttribute("aria-current", String(b.dataset.view === id))); },
+      setCurrent(id) {
+        bottom.querySelectorAll(".fsecs [data-view]").forEach(b => b.setAttribute("aria-current", String(b.dataset.view === id)));
+        if (stance) { const on = id === (opts.stanceView || "subject"); stance.hidden = !on; document.body.classList.toggle("fb-stance", on); }
+      },
       setSteps(prev, next) {
         if (!top) return;
         [["fb-prev", prev], ["fb-next", next]].forEach(([id, href]) => { const b = top.querySelector("#" + id); if (!b) return; b.disabled = !href; b.onclick = href ? () => { location.href = href; } : null; });
       }
     };
     return api;
+  }
+
+  // The reader's own stance on this Reflection, just above the bottom row: one slider from opposed (red) to embraced (green).
+  // Private to their account; signed-out readers are offered sign-in. Empty until first set; × clears it.
+  function stanceBar(slug) {
+    const A = window.FramoidAccount;
+    const el = bar(`<div class="fisl fstance"><span class="fyou" aria-hidden="true">You</span>
+      <input type="range" min="-100" max="100" step="1" value="0" aria-label="Your stance, from opposed to embraced">
+      <button type="button" class="fclear" aria-label="Clear your stance" title="Clear your stance" hidden>${ICON.clear}</button></div>`, "bottom stance");
+    el.hidden = true;
+    const box = el.querySelector(".fstance"), input = el.querySelector("input"), clr = el.querySelector(".fclear");
+    const colour = f => f < .5 ? `color-mix(in oklch, var(--fb-no), var(--fb-mid) ${Math.round(f * 200)}%)` : `color-mix(in oklch, var(--fb-mid), var(--fb-yes) ${Math.round((f - .5) * 200)}%)`;
+    const paint = v => { input.style.setProperty("--fsv", colour((v + 1) / 2)); };
+    const show = () => {
+      const v = A.stanceOf(slug), set = v !== null;
+      box.classList.toggle("unset", !set); clr.hidden = !set;
+      if (document.activeElement !== input) input.value = set ? Math.round(v * 100) : 0;
+      input.setAttribute("aria-valuetext", set ? (v > .05 ? "Embraced" : v < -.05 ? "Opposed" : "Balanced") + ` (${Math.round(v * 100)})` : "Not set");
+      if (set) paint(v);
+    };
+    const gate = e => { if (!A.state().signedIn) { e.preventDefault(); A.setStance(slug, 0); return true; } return false; };
+    input.addEventListener("pointerdown", gate);
+    input.addEventListener("keydown", e => { if (/^(Arrow|Home|End|Page)/.test(e.key)) gate(e); });
+    input.addEventListener("input", () => { const v = input.value / 100; paint(v); box.classList.remove("unset"); clr.hidden = false; A.setStance(slug, v); });
+    clr.addEventListener("click", () => { A.setStance(slug, null); input.value = 0; toast("Stance cleared"); });
+    window.addEventListener("framoid:stances", show);
+    window.addEventListener("framoid:account", show);
+    show();
+    return el;
   }
 
   window.FramoidBar = { list, reading, share, toast, setTheme, getTheme, about, disclaimerLine, ICON };

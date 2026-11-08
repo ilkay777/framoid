@@ -33,8 +33,9 @@
       const fresh = u && !ls.get(FLAG); // just signed in on this device (not a returning visit)
       user = u; ready = false; if (unsub) { unsub(); unsub = null; }
       if (unsubSaved) { unsubSaved(); unsubSaved = null; }
-      if (!u || cacheUid !== u.uid) { saved = new Set(); cacheUid = u ? u.uid : null; cache(); emitSaved(); }
-      if (u) { ls.set(FLAG, "1"); listen(fresh); listenSaved(); } else ls.del(FLAG);
+      if (unsubStances) { unsubStances(); unsubStances = null; }
+      if (!u || cacheUid !== u.uid) { saved = new Set(); stances = {}; cacheUid = u ? u.uid : null; cache(); emitSaved(); emitStances(); }
+      if (u) { ls.set(FLAG, "1"); listen(fresh); listenSaved(); listenStances(); } else ls.del(FLAG);
       emit();
     });
     return fb;
@@ -91,9 +92,9 @@
   /* ---------- saved Reflections ---------- */
   // Kept in this browser too, so a saved Reflection shows as saved the moment the page opens.
   const SAVEDKEY = "framoid.saved";
-  let saved = new Set(), cacheUid = null, unsubSaved = null, pending = null;
-  if (ls.get(FLAG)) { try { const c = JSON.parse(ls.get(SAVEDKEY) || "null"); if (c && c.uid) { cacheUid = c.uid; saved = new Set(c.slugs || []); } } catch {} }
-  function cache() { if (cacheUid) ls.set(SAVEDKEY, JSON.stringify({ uid: cacheUid, slugs: [...saved] })); else ls.del(SAVEDKEY); }
+  let saved = new Set(), stances = {}, cacheUid = null, unsubSaved = null, unsubStances = null, pending = null;
+  if (ls.get(FLAG)) { try { const c = JSON.parse(ls.get(SAVEDKEY) || "null"); if (c && c.uid) { cacheUid = c.uid; saved = new Set(c.slugs || []); stances = c.stances || {}; } } catch {} }
+  function cache() { if (cacheUid) ls.set(SAVEDKEY, JSON.stringify({ uid: cacheUid, slugs: [...saved], stances })); else ls.del(SAVEDKEY); }
   const emitSaved = () => window.dispatchEvent(new CustomEvent("framoid:saved"));
   function listenSaved() {
     unsubSaved = fb.F.onSnapshot(fb.F.collection(fb.db, "users", user.uid, "saved"), snap => {
@@ -115,6 +116,32 @@
     if (!slug) return Promise.resolve();
     if (!user) { pending = String(slug); sheet("", "Sign in to save Reflections and find them on any device."); return Promise.resolve(); }
     return setSaved(slug, !isSaved(slug));
+  }
+
+  /* ---------- the reader's own stance per Reflection: -1 (opposed) to 1 (embraced), private ---------- */
+  const emitStances = () => window.dispatchEvent(new CustomEvent("framoid:stances"));
+  function listenStances() {
+    unsubStances = fb.F.onSnapshot(fb.F.collection(fb.db, "users", user.uid, "stances"), snap => {
+      if (snap.metadata.hasPendingWrites) return;
+      const next = {}; snap.docs.forEach(d => { const v = d.data().value; if (typeof v === "number") next[d.id] = v; });
+      stances = next; cache(); emitStances();
+    }, e => console.warn("Framoid: couldn't read your stances", e));
+  }
+  const stanceOf = slug => (String(slug) in stances ? stances[String(slug)] : null);
+  const stanceTimers = {};
+  // v = number in -1..1, or null to clear. Saves after the reader stops moving.
+  function setStance(slug, v) {
+    slug = String(slug);
+    if (!user) { sheet("", "Sign in to keep your own stance on each Reflection, private to you."); return false; }
+    if (v === null) delete stances[slug]; else stances[slug] = Math.max(-1, Math.min(1, Math.round(v * 100) / 100));
+    cache(); emitStances();
+    clearTimeout(stanceTimers[slug]);
+    stanceTimers[slug] = setTimeout(() => {
+      const ref = fb.F.doc(fb.db, "users", user.uid, "stances", slug);
+      (slug in stances ? fb.F.setDoc(ref, { value: stances[slug], updatedAt: fb.F.serverTimestamp() }) : fb.F.deleteDoc(ref))
+        .catch(e => console.warn("Framoid: couldn't save your stance", e));
+    }, 500);
+    return true;
   }
 
   /* ---------- sign in / out / delete ---------- */
@@ -249,5 +276,5 @@
     }).catch(e => console.warn("Framoid: sign-in unavailable", e));
   }
 
-  window.FramoidAccount = { state, open: () => sheet(""), signOut, preload, isSaved, toggleSave };
+  window.FramoidAccount = { state, open: () => sheet(""), signOut, preload, isSaved, toggleSave, stanceOf, setStance };
 })();
