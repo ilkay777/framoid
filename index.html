@@ -419,6 +419,7 @@ footer { text-align: center; color: var(--muted); font-size: 12px; margin-top: 2
     search: svg('<circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/>'),
     bookmark: svg('<path d="M7 3.5h10a1 1 0 0 1 1 1V21l-6-4.2L6 21V4.5a1 1 0 0 1 1-1z"/>'),
     filter: svg('<path d="M4 6h16"/><path d="M7 12h10"/><path d="M10 18h4"/>'),
+    reset: svg('<path d="M4 12a8 8 0 1 0 2.4-5.7"/><path d="M4 4.5v4h4"/>'),
     clear: svg('<circle cx="12" cy="12" r="9" fill="currentColor" stroke="none" opacity=".22"/><path d="M9 9l6 6M15 9l-6 6"/>')
   };
   const css = `
@@ -440,9 +441,11 @@ footer { text-align: center; color: var(--muted); font-size: 12px; margin-top: 2
 #fb-save.on svg path { fill: currentColor; }
 .fbar[hidden] { display: none !important; }
 .fbar.stance { bottom: calc(60px + env(safe-area-inset-bottom, 0px)); justify-content: center; }
-.fstance { flex: 0 1 320px; width: 320px; max-width: 100%; height: 36px; padding: 0 6px 0 14px; gap: 10px; }
-.fstance .fyou { font: 600 12px/1 var(--text, system-ui); color: var(--muted, #5c606e); flex: none; }
-.fstance input { flex: 1; min-width: 0; height: 24px; margin: 0; background: transparent; -webkit-appearance: none; appearance: none; cursor: pointer; --fsv: var(--fb-mid); }
+.fstance { flex: 0 1 320px; width: 320px; max-width: 100%; height: 36px; padding: 0 4px 0 14px; gap: 6px; }
+.fstance .frange { position: relative; flex: 1; min-width: 0; display: flex; isolation: isolate; }
+.fstance .fpan { position: absolute; z-index: -1; top: 50%; width: 2px; height: 14px; margin: -7px 0 0 -1px; border-radius: 1px; background: var(--ink, #14151a); opacity: .45;
+  left: calc(11px + var(--fp, .5) * (100% - 22px)); pointer-events: none; }
+.fstance input { position: relative; flex: 1; width: 100%; min-width: 0; height: 24px; margin: 0; background: transparent; -webkit-appearance: none; appearance: none; cursor: pointer; --fsv: var(--fb-mid); }
 .fstance input:focus { outline: none; }
 .fstance input::-webkit-slider-runnable-track { height: 6px; border-radius: 3px; background: linear-gradient(90deg, var(--fb-no), var(--fb-mid), var(--fb-yes)); }
 .fstance input::-moz-range-track { height: 6px; border-radius: 3px; background: linear-gradient(90deg, var(--fb-no), var(--fb-mid), var(--fb-yes)); }
@@ -451,11 +454,8 @@ footer { text-align: center; color: var(--muted); font-size: 12px; margin-top: 2
 .fstance input::-moz-range-thumb { width: 18px; height: 18px; border-radius: 50%; border: 2px solid #fff;
   background: radial-gradient(circle at 34% 28%, rgba(255,255,255,.75), rgba(255,255,255,0) 46%), var(--fsv); box-shadow: 0 2px 8px -1px rgba(20,24,40,.35); }
 .fstance input:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 3px var(--ink, #14151a); }
-.fstance.unset input::-webkit-slider-runnable-track { opacity: .3; }
-.fstance.unset input::-moz-range-track { opacity: .3; }
-.fstance.unset input::-webkit-slider-thumb { background: var(--glass-strong, #fff); border-color: var(--muted, #5c606e); border-style: dashed; }
-.fstance.unset input::-moz-range-thumb { background: var(--glass-strong, #fff); border-color: var(--muted, #5c606e); border-style: dashed; }
-.fstance .fclear { flex: none; }
+.fstance .freset { flex: none; color: var(--muted, #5c606e); }
+.fstance.unset .freset { visibility: hidden; }
 .fisl > button:hover, .fisl > a:hover { background: var(--seg, rgba(20,24,40,.06)); }
 .fisl > button:disabled { opacity: .35; cursor: default; background: transparent; }
 .fisl > button[aria-current="true"], .fisl > button[aria-pressed="true"] { background: var(--fbar-on, rgba(255,255,255,.95)); box-shadow: 0 1px 4px var(--shadow, rgba(30,36,70,.15)); }
@@ -687,7 +687,7 @@ footer { text-align: center; color: var(--muted); font-size: 12px; margin-top: 2
     const bottom = bar(`${chrome && opts.home ? island(`<a href="${opts.home}" class="ficon" id="fb-home" aria-label="All Reflections" title="All Reflections">${ICON.home}</a>`) : ""}
       <div class="fgap"></div>${secs ? island(secs, "fsecs") : ""}<div class="fgap"></div>${chrome ? balanceIsland() : ""}`, "bottom");
     if (chrome) wireBalance(bottom, opts.stances);
-    const stance = chrome && opts.slug && window.FramoidAccount && window.FramoidAccount.setStance ? stanceBar(opts.slug) : null;
+    const stance = chrome && opts.slug && window.FramoidAccount && window.FramoidAccount.setStance ? stanceBar(opts.slug, opts.stances) : null;
     bottom.addEventListener("click", e => { const b = e.target.closest(".fsecs [data-view]"); if (b && opts.onSection) opts.onSection(b.dataset.view); });
     const api = {
       top, bottom,
@@ -704,28 +704,33 @@ footer { text-align: center; color: var(--muted); font-size: 12px; margin-top: 2
   }
 
   // The reader's own stance on this Reflection, just above the bottom row: one slider from opposed (red) to embraced (green).
-  // Private to their account; signed-out readers are offered sign-in. Empty until first set; × clears it.
-  function stanceBar(slug) {
+  // Private to their account; signed-out readers are offered sign-in. Until set, it rests at the Pantheon's weighted stance
+  // (also marked on the track); the reset button (space always kept) returns it there.
+  function stanceBar(slug, stances) {
     const A = window.FramoidAccount;
-    const el = bar(`<div class="fisl fstance"><span class="fyou" aria-hidden="true">You</span>
-      <input type="range" min="-100" max="100" step="1" value="0" aria-label="Your stance, from opposed to embraced">
-      <button type="button" class="fclear" aria-label="Clear your stance" title="Clear your stance" hidden>${ICON.clear}</button></div>`, "bottom stance");
+    const el = bar(`<div class="fisl fstance"><span class="frange"><i class="fpan" aria-hidden="true"></i>
+      <input type="range" min="-100" max="100" step="1" value="0" aria-label="Your stance, from opposed to embraced"></span>
+      <button type="button" class="ficon freset" aria-label="Back to the Pantheon's stance" title="Back to the Pantheon's stance">${ICON.reset}</button></div>`, "bottom stance");
     el.hidden = true;
-    const box = el.querySelector(".fstance"), input = el.querySelector("input"), clr = el.querySelector(".fclear");
+    const box = el.querySelector(".fstance"), input = el.querySelector("input"), clr = el.querySelector(".freset"), pan = el.querySelector(".fpan");
+    // The Pantheon's weighted stance (-1..1) under the current balance: marked on the track; an unset stance rests there.
+    const pantheon = () => { const t = stances && window.FramoidBalance ? window.FramoidBalance.tide(stances) : null; return t ? t.s : 0; };
     const colour = f => f < .5 ? `color-mix(in oklch, var(--fb-no), var(--fb-mid) ${Math.round(f * 200)}%)` : `color-mix(in oklch, var(--fb-mid), var(--fb-yes) ${Math.round((f - .5) * 200)}%)`;
     const paint = v => { input.style.setProperty("--fsv", colour((v + 1) / 2)); };
     const show = () => {
-      const v = A.stanceOf(slug), set = v !== null;
-      box.classList.toggle("unset", !set); clr.hidden = !set;
-      if (document.activeElement !== input) input.value = set ? Math.round(v * 100) : 0;
-      input.setAttribute("aria-valuetext", set ? (v > .05 ? "Embraced" : v < -.05 ? "Opposed" : "Balanced") + ` (${Math.round(v * 100)})` : "Not set");
-      if (set) paint(v);
+      const own = A.stanceOf(slug), set = own !== null, p = pantheon(), v = set ? own : p;
+      pan.style.setProperty("--fp", (p + 1) / 2);
+      box.classList.toggle("unset", !set);
+      if (document.activeElement !== input || !set) input.value = Math.round(v * 100);
+      input.setAttribute("aria-valuetext", (v > .05 ? "Embraced" : v < -.05 ? "Opposed" : "Balanced") + (set ? "" : ", the Pantheon's stance"));
+      paint(v);
     };
     const gate = e => { if (!A.state().signedIn) { e.preventDefault(); A.setStance(slug, 0); return true; } return false; };
     input.addEventListener("pointerdown", gate);
     input.addEventListener("keydown", e => { if (/^(Arrow|Home|End|Page)/.test(e.key)) gate(e); });
-    input.addEventListener("input", () => { const v = input.value / 100; paint(v); box.classList.remove("unset"); clr.hidden = false; A.setStance(slug, v); });
-    clr.addEventListener("click", () => { A.setStance(slug, null); input.value = 0; toast("Stance cleared"); });
+    input.addEventListener("input", () => { const v = input.value / 100; paint(v); box.classList.remove("unset"); A.setStance(slug, v); });
+    clr.addEventListener("click", () => { A.setStance(slug, null); show(); });
+    window.addEventListener("framoid:balance", show);
     window.addEventListener("framoid:stances", show);
     window.addEventListener("framoid:account", show);
     show();
