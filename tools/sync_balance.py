@@ -3,7 +3,7 @@
 and keep the Studio's copy of the template in step. Run after changing balance.js or template/index.html."""
 import pathlib, re
 root = pathlib.Path(__file__).resolve().parent.parent
-js = (root / "tools/balance.js").read_text()
+js = (root / "tools/balance.js").read_text() + "\n" + (root / "tools/toolbar.js").read_text()
 block = '<!-- balance:start --><script id="fb-balance">\n' + js + '</script><!-- balance:end -->'
 for rel in ["template/index.html", "index.html", "studio/app.html"]:
     p = root / rel

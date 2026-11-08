@@ -71,6 +71,11 @@
   -webkit-backdrop-filter: blur(20px) saturate(175%); backdrop-filter: blur(20px) saturate(175%);
   box-shadow: inset 0 1px 0 var(--hl, rgba(255,255,255,.95)), 0 6px 18px -8px var(--shadow, rgba(30,36,70,.2)); }
 .fb-btn:hover { transform: scale(1.05); }
+.fb-btn.inbar { position: relative; top: auto; right: auto; z-index: auto; width: 32px; height: 32px; border: 0; background: transparent; box-shadow: none;
+  -webkit-backdrop-filter: none; backdrop-filter: none; }
+.fb-btn.inbar:hover { transform: none; background: var(--seg, rgba(20,24,40,.06)); }
+.fb-btn.inbar svg { width: 22px; height: 22px; }
+.fb-btn.inbar.custom::after { top: 1px; right: 1px; }
 .fb-btn svg { width: 24px; height: 24px; }
 .fb-btn.custom::after { content: ""; position: absolute; top: 3px; right: 3px; width: 9px; height: 9px; border-radius: 50%;
   background: var(--focus, #0a6cff); border: 2px solid var(--bg, #eceef4); }
@@ -256,13 +261,14 @@
 
   /* ---------- the always-visible button ---------- */
   let btn = null, btnOpts = {};
+  // The reader's balance button: inside opts.container (a toolbar island) or, without one, floating top-right.
   function button(opts = {}) {
     addStyle(); btnOpts = opts;
     if (!btn) {
       btn = document.createElement("button");
-      btn.type = "button"; btn.className = "fb-btn"; btn.innerHTML = ICON;
+      btn.type = "button"; btn.className = "fb-btn" + (opts.container ? " inbar" : ""); btn.innerHTML = ICON;
       btn.addEventListener("click", () => open({ mode: "reader", stances: btnOpts.stances }));
-      document.body.appendChild(btn);
+      (opts.container || document.body).appendChild(btn);
     }
     mark();
     return btn;
