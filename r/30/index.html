@@ -964,7 +964,8 @@ button.chip:hover { transform: translateY(-2px); box-shadow: inset 0 1px 0 var(-
     fb.A.onAuthStateChanged(fb.auth, u => {
       const fresh = u && !ls.get(FLAG); // just signed in on this device (not a returning visit)
       user = u; ready = false; if (unsub) { unsub(); unsub = null; }
-      if (unsubSaved) { unsubSaved(); unsubSaved = null; } saved = new Set(); emitSaved();
+      if (unsubSaved) { unsubSaved(); unsubSaved = null; }
+      if (!u || cacheUid !== u.uid) { saved = new Set(); cacheUid = u ? u.uid : null; cache(); emitSaved(); }
       if (u) { ls.set(FLAG, "1"); listen(fresh); listenSaved(); } else ls.del(FLAG);
       emit();
     });
@@ -1020,11 +1021,15 @@ button.chip:hover { transform: translateY(-2px); box-shadow: inset 0 1px 0 var(-
   window.addEventListener("framoid:theme", () => push());
 
   /* ---------- saved Reflections ---------- */
-  let saved = new Set(), unsubSaved = null, pending = null;
+  // Kept in this browser too, so a saved Reflection shows as saved the moment the page opens.
+  const SAVEDKEY = "framoid.saved";
+  let saved = new Set(), cacheUid = null, unsubSaved = null, pending = null;
+  if (ls.get(FLAG)) { try { const c = JSON.parse(ls.get(SAVEDKEY) || "null"); if (c && c.uid) { cacheUid = c.uid; saved = new Set(c.slugs || []); } } catch {} }
+  function cache() { if (cacheUid) ls.set(SAVEDKEY, JSON.stringify({ uid: cacheUid, slugs: [...saved] })); else ls.del(SAVEDKEY); }
   const emitSaved = () => window.dispatchEvent(new CustomEvent("framoid:saved"));
   function listenSaved() {
     unsubSaved = fb.F.onSnapshot(fb.F.collection(fb.db, "users", user.uid, "saved"), snap => {
-      saved = new Set(snap.docs.map(d => d.id)); emitSaved();
+      saved = new Set(snap.docs.map(d => d.id)); cache(); emitSaved();
       if (pending) { const p = pending; pending = null; if (!saved.has(p)) setSaved(p, true); }
     }, e => console.warn("Framoid: couldn't read your saved Reflections", e));
   }
@@ -1032,10 +1037,10 @@ button.chip:hover { transform: translateY(-2px); box-shadow: inset 0 1px 0 var(-
   function setSaved(slug, on) {
     slug = String(slug);
     if (on) saved.add(slug); else saved.delete(slug);
-    emitSaved();
+    cache(); emitSaved();
     const ref = fb.F.doc(fb.db, "users", user.uid, "saved", slug);
     return (on ? fb.F.setDoc(ref, { savedAt: fb.F.serverTimestamp() }) : fb.F.deleteDoc(ref))
-      .catch(e => { console.warn("Framoid: couldn't update saved", e); if (on) saved.delete(slug); else saved.add(slug); emitSaved(); throw e; });
+      .catch(e => { console.warn("Framoid: couldn't update saved", e); if (on) saved.delete(slug); else saved.add(slug); cache(); emitSaved(); throw e; });
   }
   // Signed out: offer sign-in, and save it once signed in.
   function toggleSave(slug) {
