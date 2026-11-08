@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <filter id="b" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5"/></filter>
+    <clipPath id="c"><circle cx="32" cy="32" r="29"/></clipPath>
+    <radialGradient id="s" cx=".34" cy=".28" r=".8">
+      <stop offset="0" stop-color="#fff" stop-opacity=".6"/>
+      <stop offset=".45" stop-color="#fff" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity=".3"/>
+    </radialGradient>
+  </defs>
+  <g clip-path="url(#c)">
+    <g filter="url(#b)" transform="translate(32 32)">
+      <path d="M0 0L-48 0A48 48 0 0 1 -24 -41.6Z" fill="#c4461a"/>
+      <path d="M0 0L-24 -41.6A48 48 0 0 1 24 -41.6Z" fill="#95661d"/>
+      <path d="M0 0L24 -41.6A48 48 0 0 1 48 0Z" fill="#4b5b6d"/>
+      <path d="M0 0L48 0A48 48 0 0 1 24 41.6Z" fill="#13789a"/>
+      <path d="M0 0L24 41.6A48 48 0 0 1 -24 41.6Z" fill="#5e47b8"/>
+      <path d="M0 0L-24 41.6A48 48 0 0 1 -48 0Z" fill="#2f8443"/>
+    </g>
+    <circle cx="32" cy="32" r="29" fill="url(#s)"/>
+    <ellipse cx="24" cy="17" rx="10" ry="5.5" fill="#fff" opacity=".45"/>
+  </g>
+  <circle cx="32" cy="32" r="29" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="1"/>
+</svg>
