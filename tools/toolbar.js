@@ -1,7 +1,7 @@
 /* Framoid toolbar: floating glass islands, separate, with transparent space between them, in two modes.
    Both start the bottom row with Home and Explore. Explore (list mode): search (grows while in use), filter and
-   settings. Home (feed mode): the reader's stance above the row and Save / Share at the top right; in a pair or
-   Framoid view a back button replaces Home and Explore (the page's compact dial takes the bottom right).
+   settings. Home (feed mode): Save and Share at the right; in a pair or Framoid view a back button replaces Home and
+   Explore (the page's compact dial takes the bottom right corner).
    Copied into the pages with balance.js by tools/sync_balance.py. */
 (function () {
   "use strict";
@@ -41,24 +41,7 @@
 .fisl > .ficon, .fisl > .fnavb { padding: 0; width: 32px; }
 #fb-save.on svg path { fill: currentColor; }
 .fbar[hidden] { display: none !important; }
-.fbar.stance { bottom: calc(60px + env(safe-area-inset-bottom, 0px)); justify-content: center; }
-.fstance { flex: 0 1 320px; width: 320px; max-width: 100%; height: 36px; padding: 0 4px 0 14px; gap: 6px; }
-.fstance .frange { position: relative; flex: 1; min-width: 0; display: flex; isolation: isolate; }
-.fstance .ftrack { position: absolute; z-index: 0; left: 0; right: 0; top: 50%; height: 6px; margin-top: -3px; border-radius: 3px; pointer-events: none;
-  background: linear-gradient(90deg, var(--fb-no), var(--fb-mid), var(--fb-yes)); }
-.fstance .fpan { position: absolute; z-index: 1; top: 50%; width: 3px; height: 14px; margin: -7px 0 0 -1.5px; border-radius: 2px; pointer-events: none;
-  background: #fff; box-shadow: 0 0 0 1px rgba(20,24,40,.45); left: calc(11px + var(--fp, .5) * (100% - 22px)); }
-.fstance input { position: relative; z-index: 2; flex: 1; width: 100%; min-width: 0; height: 24px; margin: 0; background: transparent; -webkit-appearance: none; appearance: none; cursor: pointer; --fsv: var(--fb-mid); }
-.fstance input:focus { outline: none; }
-.fstance input::-webkit-slider-runnable-track { height: 6px; border-radius: 3px; background: transparent; }
-.fstance input::-moz-range-track { height: 6px; border-radius: 3px; background: transparent; }
-.fstance input::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; margin-top: -8px; border-radius: 50%; border: 2px solid #fff;
-  background: radial-gradient(circle at 34% 28%, rgba(255,255,255,.75), rgba(255,255,255,0) 46%), var(--fsv); box-shadow: 0 2px 8px -1px rgba(20,24,40,.35); }
-.fstance input::-moz-range-thumb { width: 18px; height: 18px; border-radius: 50%; border: 2px solid #fff;
-  background: radial-gradient(circle at 34% 28%, rgba(255,255,255,.75), rgba(255,255,255,0) 46%), var(--fsv); box-shadow: 0 2px 8px -1px rgba(20,24,40,.35); }
-.fstance input:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 3px var(--ink, #14151a); }
-.fstance .freset { flex: none; color: var(--muted, #5c606e); }
-.fstance.unset .freset { visibility: hidden; }
+.fbar.bottom.reading .facts { margin-right: 128px; } /* room for the compact dial */
 .fisl > button:hover, .fisl > a:hover { background: var(--seg, rgba(20,24,40,.06)); }
 .fisl > button:disabled { opacity: .35; cursor: default; background: transparent; }
 .fisl > button[aria-current="true"], .fisl > button[aria-pressed="true"], .fisl > a[aria-current="page"] { background: var(--fbar-on, rgba(255,255,255,.95)); box-shadow: 0 1px 4px var(--shadow, rgba(30,36,70,.15)); }
@@ -104,7 +87,7 @@
 .fdisc { font-size: 12px; color: var(--muted, #5c606e); }
 .flink { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; text-decoration-color: color-mix(in srgb, currentColor 40%, transparent); text-underline-offset: 2px; }
 .flink:hover { color: var(--ink, #14151a); }
-.ftoast { position: fixed; z-index: 60; left: 50%; bottom: calc(80px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); padding: 10px 16px; border-radius: 999px;
+.ftoast { position: fixed; z-index: 60; left: 50%; top: calc(14px + env(safe-area-inset-top, 0px)); transform: translateX(-50%); padding: 10px 16px; border-radius: 999px;
   font: 600 13px/1 var(--text, system-ui); color: var(--bg, #fff); background: var(--ink, #14151a); box-shadow: 0 8px 24px -8px rgba(0,0,0,.4); }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --fbar-on: rgba(255,255,255,.16); } }
 :root[data-theme="dark"] { --fbar-on: rgba(255,255,255,.16); }`;
@@ -260,19 +243,20 @@
   }
 
   /* ---------- reading mode (the Home feed and its views) ---------- */
-  // opts: { chrome (false in the Studio preview: no Home/Explore, Save, Share or stance), home, explore (hrefs), onBack() }
-  // Feed: Home and Explore at the bottom left, the reader's stance above the row, Save and Share at the top right.
-  // A pair or Framoid view ("reader"): Home and Explore give way to a back button; the page's compact dial sits at the bottom right.
-  // Returns { setReflection({slug, title, stances}), setMode("feed" | "reader") }.
+  // opts: { chrome (false in the Studio preview: no Home/Explore, Save or Share), onBack() }
+  // One bottom row: Home and Explore at the left; Save and Share at the right (they act on the Reflection in view).
+  // In a pair or Framoid view ("reader") a back button replaces Home and Explore, and Save / Share make room for the
+  // page's compact dial at the bottom right. The reader's own stance is set on the dial (Framoid is the knob).
+  // Returns { setReflection({slug, title}), setMode("feed" | "reader") }.
   function feed(opts = {}) {
     const chrome = opts.chrome !== false;
-    let cur = { slug: "", title: document.title, stances: null }, mode = "feed";
-    const top = chrome ? bar(island(`${window.FramoidAccount ? iconBtn("fb-save", "bookmark", "Save", 'aria-pressed="false"') : ""}${iconBtn("fb-share", "share", "Share")}`), "top right") : null;
-    const bottom = bar(`${chrome ? navIsland("home") : ""}${island(iconBtn("fb-back", "back", "Back to the Reflection"), "fbackisl")}<div class="fgap"></div>`, "bottom");
+    let cur = { slug: "", title: document.title }, mode = "feed";
+    const acts = chrome ? island(`${window.FramoidAccount ? iconBtn("fb-save", "bookmark", "Save", 'aria-pressed="false"') : ""}${iconBtn("fb-share", "share", "Share")}`, "facts") : "";
+    const bottom = bar(`${chrome ? navIsland("home") : ""}${island(iconBtn("fb-back", "back", "Back to the Reflection"), "fbackisl")}<div class="fgap"></div>${acts}`, "bottom");
     const back = bottom.querySelector(".fbackisl"), nav = bottom.querySelector(".fnav");
     back.querySelector("button").onclick = () => opts.onBack && opts.onBack();
-    if (top) top.querySelector("#fb-share").onclick = () => share(cur.title || document.title);
-    const sv = top && top.querySelector("#fb-save");
+    const sh = bottom.querySelector("#fb-share"); if (sh) sh.onclick = () => share(cur.title || document.title);
+    const sv = bottom.querySelector("#fb-save");
     const markSave = () => { if (!sv) return; const on = !!cur.slug && window.FramoidAccount.isSaved(cur.slug);
       sv.setAttribute("aria-pressed", String(on)); sv.classList.toggle("on", on); sv.setAttribute("aria-label", on ? "Saved" : "Save"); sv.title = on ? "Saved. Tap to remove" : "Save"; };
     if (sv) {
@@ -280,14 +264,10 @@
         window.FramoidAccount.toggleSave(slug).then(() => { if (signed) toast(was ? "Removed from saved" : "Saved"); }).catch(() => toast("Couldn't save. Try again.")); };
       window.addEventListener("framoid:saved", markSave);
     }
-    const stance = chrome && window.FramoidAccount && window.FramoidAccount.setStance ? stanceBar(() => cur) : null;
-    const place = () => {
-      back.hidden = mode !== "reader"; if (nav) nav.hidden = mode === "reader";
-      if (stance) { stance.el.hidden = mode !== "feed" || !cur.slug; document.body.classList.toggle("fb-stance", !stance.el.hidden); }
-    };
+    const place = () => { back.hidden = mode !== "reader"; if (nav) nav.hidden = mode === "reader"; bottom.classList.toggle("reading", mode === "reader"); };
     place();
     return {
-      setReflection(r) { cur = Object.assign({ slug: "", title: document.title, stances: null }, r); markSave(); if (stance) stance.show(); place(); },
+      setReflection(r) { cur = Object.assign({ slug: "", title: document.title }, r); markSave(); },
       setMode(m) { mode = m; place(); }
     };
   }
@@ -295,37 +275,6 @@
   function navIsland(current) {
     const a = (id, href, icon, label) => `<a href="${href}" class="fnavb" aria-label="${label}" title="${label}"${current === id ? ' aria-current="page"' : ""}>${ICON[icon]}</a>`;
     return island(`${a("home", "/", "home", "Home")}${a("explore", "/explore/", "explore", "Explore")}`, "fnav");
-  }
-
-  // The reader's own stance on the Reflection in view, just above the bottom row: one slider from opposed (red) to
-  // embraced (green). Private to their account; signed-out readers are offered sign-in. Until set, it rests at the
-  // Pantheon's weighted stance (also marked on the track); the reset button (space always kept) returns it there.
-  function stanceBar(get) {
-    const A = window.FramoidAccount;
-    const el = bar(`<div class="fisl fstance"><span class="frange"><i class="ftrack" aria-hidden="true"></i><i class="fpan" aria-hidden="true"></i>
-      <input type="range" min="-100" max="100" step="1" value="0" aria-label="Your stance, from opposed to embraced"></span>
-      <button type="button" class="ficon freset" aria-label="Back to the Pantheon's stance" title="Back to the Pantheon's stance">${ICON.reset}</button></div>`, "bottom stance");
-    el.hidden = true;
-    const box = el.querySelector(".fstance"), input = el.querySelector("input"), clr = el.querySelector(".freset"), pan = el.querySelector(".fpan");
-    const pantheon = () => { const st = get().stances, t = st && window.FramoidBalance ? window.FramoidBalance.tide(st) : null; return t ? t.s : 0; };
-    const colour = f => f < .5 ? `color-mix(in oklch, var(--fb-no), var(--fb-mid) ${Math.round(f * 200)}%)` : `color-mix(in oklch, var(--fb-mid), var(--fb-yes) ${Math.round((f - .5) * 200)}%)`;
-    const paint = v => { input.style.setProperty("--fsv", colour((v + 1) / 2)); };
-    const show = () => {
-      const slug = get().slug; if (!slug) return;
-      const own = A.stanceOf(slug), set = own !== null, p = pantheon(), v = set ? own : p;
-      pan.style.setProperty("--fp", (p + 1) / 2);
-      box.classList.toggle("unset", !set);
-      if (document.activeElement !== input || !set) input.value = Math.round(v * 100);
-      input.setAttribute("aria-valuetext", (v > .05 ? "Embraced" : v < -.05 ? "Opposed" : "Balanced") + (set ? "" : ", the Pantheon's stance"));
-      paint(v);
-    };
-    const gate = e => { if (!A.state().signedIn) { e.preventDefault(); A.setStance(get().slug, 0); return true; } return false; };
-    input.addEventListener("pointerdown", gate);
-    input.addEventListener("keydown", e => { if (/^(Arrow|Home|End|Page)/.test(e.key)) gate(e); });
-    input.addEventListener("input", () => { const v = input.value / 100; paint(v); box.classList.remove("unset"); A.setStance(get().slug, v); });
-    clr.addEventListener("click", () => { A.setStance(get().slug, null); show(); });
-    ["framoid:stances", "framoid:account", "framoid:balance"].forEach(n => window.addEventListener(n, show));
-    return { el, show };
   }
 
   window.FramoidBar = { list, feed, share, toast, setTheme, getTheme, about, disclaimerLine, ICON };
