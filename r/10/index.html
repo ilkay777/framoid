@@ -9,11 +9,10 @@
 <link rel="icon" href="/favicon.png" type="image/png" sizes="64x64">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <style>
-/* Layout: one screen. A toolbar of floating islands on top (back, sections, utilities; tools/toolbar.js)
-   over a stage that shows the Subject, one pair or Framoid's reflection at a time.
-   The Subject view carries its own orbit: each pair faces the other across Framoid.
-   Colour fields behind the glass shift to the gods in view. On phones the sections move to a
-   floating tab bar at the bottom and each pair becomes a swipeable row of cards. */
+/* Layout: one screen. Home is an endless feed of Reflections (one per swipe) with the dial fixed beneath it;
+   the dial follows the Reflection in view. A god or Framoid on the dial opens that pair or Framoid's reflection,
+   and the dial shrinks to the bottom right. Toolbars are floating islands (tools/toolbar.js).
+   Colour fields behind the glass shift to the gods in view. On phones each pair is a swipeable row of cards. */
 @property --b1 { syntax: "<color>"; inherits: true; initial-value: #b8461f; }
 @property --b2 { syntax: "<color>"; inherits: true; initial-value: #1f6e86; }
 @property --b3 { syntax: "<color>"; inherits: true; initial-value: #5b4a9e; }
@@ -123,28 +122,23 @@ button { font: inherit; color: inherit; }
 .app {
   position: relative; z-index: 1; height: 100%;
   max-width: 1240px; margin: 0 auto;
-  display: grid; grid-template-rows: minmax(0, 1fr); gap: 14px;
-  padding-block: 64px calc(66px + env(safe-area-inset-bottom, 0px)); /* room for the toolbars (tools/toolbar.js) */
+  display: flex; flex-direction: column;
+  padding-block: 64px calc(104px + env(safe-area-inset-bottom, 0px)); /* room for the toolbars (tools/toolbar.js) */
   box-sizing: border-box;
 }
+body.fb-notop .app { padding-top: 14px; }
+body.reading .app { padding-bottom: calc(14px + env(safe-area-inset-bottom, 0px)); }
+body.studio:not(.reading) .app { padding-bottom: 14px; }
 
-/* Subject view: fills the stage without scrolling. A compact header on top (or left);
-   the dial takes the rest and is sized in script to fit both width and height. */
-#view-subject { height: 100%; grid-template-rows: minmax(0, 1fr); align-content: stretch; }
-.subject { height: 100%; box-sizing: border-box; padding: clamp(18px, 3vw, 34px); container-type: inline-size; overflow: hidden; }
-.subject-grid { height: 100%; display: grid; grid-template-rows: fit-content(55%) minmax(0, 1fr); gap: 6px; }
-@container (min-width: 720px) {
-  .subject-grid { grid-template-rows: minmax(0, 1fr); grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: 28px; align-items: center; }
-  .subject-text { max-height: 100%; }
-}
-.subject-text { display: grid; grid-auto-rows: max-content; gap: 8px; align-content: start; min-width: 0; min-height: 0; overflow: auto; scrollbar-width: thin; }
-.subject-top { display: flex; flex-wrap: wrap; gap: 4px 10px; font-size: 12px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); }
-.back-link { font-size: 13px; font-weight: 600; letter-spacing: 0; text-transform: none; color: var(--muted); text-decoration: none; border-radius: 999px; }
-.back-link:hover { color: var(--ink); }
-@media (min-width: 901px) { .subject-top:has(.back-link) { display: none; } } /* desktop: the side orbit carries it */
-.subject h1 { font-family: var(--display); font-weight: 600; text-wrap: balance; font-size: clamp(21px, 3vw, 36px); line-height: 1.12; letter-spacing: -0.025em; max-width: 26ch; margin: 0; }
+/* Home: an endless feed of Reflections, newest first, one per swipe (snaps). The dial below follows the one in view. */
+.feed { flex: 1 1 auto; min-height: 0; overflow-y: auto; scroll-snap-type: y mandatory; overscroll-behavior-y: contain; scrollbar-width: none; }
+.feed::-webkit-scrollbar { display: none; }
+.item { height: 100%; box-sizing: border-box; scroll-snap-align: start; scroll-snap-stop: always; display: flex; align-items: flex-end; justify-content: center; padding: 2px 2px 8px; }
+.subject { width: 100%; max-width: 760px; max-height: 100%; box-sizing: border-box; padding: clamp(18px, 3vw, 30px); overflow: auto; scrollbar-width: thin; }
+.subject-text { display: grid; grid-auto-rows: max-content; gap: 8px; min-width: 0; }
+.subject h1 { font-family: var(--display); font-weight: 600; text-wrap: balance; font-size: clamp(21px, 3vw, 32px); line-height: 1.12; letter-spacing: -0.025em; margin: 0; }
 .subject .lede { margin: 0; font-size: clamp(15px, 1.3vw, 16px); line-height: 1.5; max-width: 62ch;
-  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 .subject-date { display: none; margin: 0; font-size: 13px; font-weight: 600; color: var(--muted); }
 .subject-text.open .lede { display: block; }
 .subject-text.open .subject-date { display: block; }
@@ -158,84 +152,41 @@ button { font: inherit; color: inherit; }
 .subject-bg .bg-src a:hover { color: var(--ink); }
 .more-btn { justify-self: start; border: 1px solid var(--stroke); background: var(--glass-strong); border-radius: 999px;
   padding: 4px 12px; font-size: 13px; font-weight: 600; cursor: pointer; box-shadow: inset 0 1px 0 var(--hl); }
+.feed-msg { margin: auto; color: var(--muted); }
 
-/* Subject orbit: each pair faces the other across Framoid. --d (px) is set in script,
-   and every part is sized from it, so the dial is always a true circle. */
-.sorbit-wrap { min-width: 0; min-height: 0; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; }
-.sorbit { --d: 300px; position: relative; flex: none; width: var(--d); height: var(--d); margin-block: 22px; }
-.sorbit svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
-.sorbit .hoop { fill: none; stroke: var(--hairline); stroke-width: 0.5; }
-.sorbit .axis { stroke-width: 1.2; stroke-linecap: round; opacity: 0.5; transition: opacity .3s, stroke-width .3s; }
-.sorbit[data-hot] .axis { opacity: 0.14; }
-.sorbit[data-hot] .axis.on { opacity: 1; stroke-width: 2; }
-.snode {
-  position: absolute; transform: translate(-50%, -50%);
-  width: calc(var(--d) * 0.15); height: calc(var(--d) * 0.15); border-radius: 50%; padding: 0; cursor: pointer;
-  border: 1px solid rgba(255, 255, 255, 0.55);
-  background: radial-gradient(circle at 34% 28%, color-mix(in srgb, var(--c) 35%, white) 0%, var(--c) 62%, color-mix(in srgb, var(--c) 80%, black) 100%);
-  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.7), 0 10px 24px -8px color-mix(in srgb, var(--c) 75%, transparent);
-  transition: transform .3s, opacity .3s;
-}
-.snode:hover, .snode:focus-visible { transform: translate(-50%, -50%) scale(1.08); }
-.sorbit[data-hot] .snode:not(.on) { opacity: 0.4; }
-.snode .lbl { position: absolute; left: 50%; transform: translateX(-50%); display: grid; justify-items: center; line-height: 1.15; white-space: nowrap; pointer-events: none; }
-.snode.up .lbl { bottom: calc(100% + 6px); }
-.snode.down .lbl { top: calc(100% + 6px); }
-.snode .lbl strong { font-family: var(--rounded); font-size: 15px; font-weight: 700; color: var(--ct, var(--c)); }
-.snode .lbl small { font-size: 10px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
-.score {
-  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
-  width: calc(var(--d) * 0.27); height: calc(var(--d) * 0.27); box-sizing: border-box; border-radius: 50%; padding: 6px; border: 0; cursor: pointer;
-  background: conic-gradient(from 210deg, var(--rodim), var(--aromi), var(--mir), var(--ora), var(--idrom), var(--doria), var(--rodim));
-  box-shadow: 0 12px 32px -10px var(--shadow);
-  transition: transform .3s;
-}
-.score:hover, .score:focus-visible { transform: translate(-50%, -50%) scale(1.05); }
-.score i {
-  display: grid; place-content: center; gap: 1px; width: 100%; height: 100%; border-radius: 50%; font-style: normal; text-align: center;
-  background: var(--glass-strong); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
-}
-.score i b { font-family: var(--rounded); font-size: 16px; font-weight: 700; line-height: 1.1; }
-.score i small { font-size: 10px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); line-height: 1.2; }
-.sorbit-cap { flex: none; margin: 0; min-height: 2.9em; max-width: 36ch; text-align: center; font-size: 13px; line-height: 1.45; color: var(--muted); }
-.sorbit-cap strong { color: var(--ink); font-weight: 600; }
-@media (hover: none) { .sorbit-cap { display: none; } }
-/* Stances on the dial (schema 2+): every god keeps its colour; a small dot shows its stance
-   (green embraces, red opposes; colours from the balance script). */
-.snode .fb-sd { width: calc(var(--d) * 0.032); height: calc(var(--d) * 0.032); right: 4%; top: 4%; bottom: auto; border-width: 2px; }
-/* Framoid's result (schema 2+, weighted by the balance of the gods): Framoid is an orb whose colour runs
-   red → amber → green with the weighted share of the gods that embrace the Subject (--fc, set in script). */
-.score.tallied { --fc: #b0a040; width: calc(var(--d) * 0.3); height: calc(var(--d) * 0.3); padding: 0; isolation: isolate;
-  border: 1px solid rgba(255, 255, 255, 0.55);
-  background: radial-gradient(circle at 34% 28%, color-mix(in srgb, var(--fc) 30%, white) 0%, var(--fc) 52%, color-mix(in srgb, var(--fc) 62%, black) 100%);
-  box-shadow: inset 0 2px 3px rgba(255, 255, 255, 0.6), inset 0 calc(var(--d) * -0.03) calc(var(--d) * 0.05) rgba(0, 0, 0, 0.22),
-    0 0 calc(var(--d) * 0.06) calc(var(--d) * 0.01) color-mix(in srgb, var(--fc) 60%, transparent),
-    0 0 calc(var(--d) * 0.16) calc(var(--d) * 0.03) color-mix(in srgb, var(--fc) 30%, transparent);
-  transition: transform .3s, background .5s, box-shadow .5s; animation: fb-aura 5s ease-in-out infinite; }
-.score.tallied::before { content: ""; position: absolute; inset: 0; border-radius: 50%; opacity: .4; mix-blend-mode: soft-light; background-image: var(--fb-noise); background-size: 80px; pointer-events: none; }
-.score.tallied::after { content: ""; position: absolute; left: 20%; top: 10%; width: 40%; height: 24%; border-radius: 50%; pointer-events: none;
-  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0) 70%); }
-@keyframes fb-aura { 50% { box-shadow: inset 0 2px 3px rgba(255, 255, 255, 0.6), inset 0 calc(var(--d) * -0.03) calc(var(--d) * 0.05) rgba(0, 0, 0, 0.22),
-    0 0 calc(var(--d) * 0.08) calc(var(--d) * 0.015) color-mix(in srgb, var(--fc) 70%, transparent),
-    0 0 calc(var(--d) * 0.22) calc(var(--d) * 0.05) color-mix(in srgb, var(--fc) 34%, transparent); } }
-.score.tallied i { background: transparent; -webkit-backdrop-filter: none; backdrop-filter: none; position: relative; z-index: 1; }
-.score.tallied i b { color: #fff; font-size: 15px; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.35); }
-.sorbit.small .score.tallied i b { font-size: 13px; }
-.sorbit.small .snode .lbl strong { font-size: 13px; }
-.sorbit.small .snode .lbl small { font-size: 10px; }
-.sorbit.small .score i b { font-size: 14px; }
-.sorbit.small .score i small { display: none; }
+/* The dial (tools/balance.js, one dial in two modes): fixed under the feed, above the stance and the toolbar.
+   The tuner switches it to tuning the balance of the gods. In a pair or Framoid view it shrinks to the bottom right. */
+.dock { --dock: clamp(200px, 40vh, 340px); flex: none; position: relative; height: var(--dock); display: flex; justify-content: center; align-items: center; }
+.dial { height: 100%; aspect-ratio: 444 / 416; max-width: 100%; }
+.dial .fb-dial { width: 100%; height: 100%; max-width: none; margin: 0; }
+.dial .fb-dial .name { font-size: 20px; }
+.dial .fb-dial .core-lbl { font-size: 18px; }
+.tuner { position: absolute; top: 4px; right: max(0px, calc(50% - var(--dock) * 0.62 - 18px)); width: 36px; height: 36px; border-radius: 50%; padding: 0; cursor: pointer;
+  display: grid; place-items: center; color: var(--muted); border: 1px solid var(--stroke); background: var(--glass-strong);
+  -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px); box-shadow: inset 0 1px 0 var(--hl), 0 6px 16px -8px var(--shadow); }
+.tuner svg { width: 18px; height: 18px; }
+.tuner[aria-pressed="true"] { color: var(--bg); background: var(--ink); border-color: transparent; }
+.dial.fb-tuning .spoke { stroke: var(--muted); stroke-opacity: .35; }
+/* Compact (pair or Framoid view): the dial alone, at the bottom right; the god names hide; the pair in view stays bright. */
+body.reading .dock { position: fixed; z-index: 31; --dock: 118px; width: var(--dock); border-radius: 50%; box-sizing: border-box; padding: 4px;
+  right: max(10px, env(safe-area-inset-right, 0px)); bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+  background: var(--glass-strong); border: 1px solid var(--stroke); -webkit-backdrop-filter: blur(20px) saturate(175%); backdrop-filter: blur(20px) saturate(175%);
+  box-shadow: inset 0 1px 0 var(--hl), 0 10px 28px -10px var(--shadow); }
+body.reading .dial .fb-dial .hoop, body.reading .dial .fb-dial .mid { display: none; }
+body.reading .dial .fb-dial .core-lbl { display: none; }
+body.reading .tuner { display: none; }
+body.reading .dial .fb-dial .name { display: none; }
+.dial[data-view="decision"] .orb:not([data-god="rodim"]):not([data-god="aromi"]),
+.dial[data-view="matter"] .orb:not([data-god="mir"]):not([data-god="ora"]),
+.dial[data-view="structure"] .orb:not([data-god="idrom"]):not([data-god="doria"]) { opacity: .3 !important; }
+
+/* A pair or Framoid's reflection, opened from the dial */
+.reader { flex: 1 1 auto; min-height: 0; overflow: auto; padding: 2px 2px calc(110px + env(safe-area-inset-bottom, 0px)); scrollbar-width: thin; }
 
 /* Shared type */
 .eyebrow { font-size: 12px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); }
 
-/* Main */
-body.fb-notop .app { padding-top: 14px; }
-body.fb-stance .app { padding-bottom: calc(114px + env(safe-area-inset-bottom, 0px)); }
-.main { min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; }
-
-/* Stage */
-.stage { min-height: 0; overflow: auto; padding: 2px 2px 8px; scrollbar-width: thin; }
+/* Views */
 .view { display: grid; gap: 14px; align-content: start; }
 .view[hidden] { display: none; }
 .view.enter { animation: enter .45s cubic-bezier(.2, .8, .2, 1); }
@@ -439,7 +390,8 @@ button.chip:hover { transform: translateY(-2px); box-shadow: inset 0 1px 0 var(-
 .fb-dial .hoop { fill: none; stroke: var(--hairline, rgba(20,24,40,.1)); stroke-width: 1; }
 .fb-dial .mid { fill: none; stroke: var(--hairline, rgba(20,24,40,.1)); stroke-width: 1; stroke-dasharray: 2 5; }
 .fb-dial .spoke { stroke: var(--hairline, rgba(20,24,40,.1)); stroke-width: 1; }
-.fb-dial .orb { cursor: grab; }
+.fb-dial .orb { cursor: pointer; }
+.fb-dial.tuning .orb { cursor: grab; }
 .fb-dial .orb:focus { outline: none; }
 .fb-dial .orb:focus-visible .disc { stroke: var(--focus, #0a6cff); stroke-width: 3; }
 .fb-dial .name { font: 600 13px/1 var(--rounded, var(--text, system-ui)); fill: var(--ink, #14151a); pointer-events: none; }
@@ -476,7 +428,8 @@ button.chip:hover { transform: translateY(-2px); box-shadow: inset 0 1px 0 var(-
     GODS.forEach(g => { out[g] = g === id ? v : so > 1e-6 ? w[g] * rest / so : rest / 5; });
     return out;
   }
-  function dialSvg(w, stances, resettable, asking) {
+  // tuning: the gods can be dragged (sliders); otherwise each god and Framoid is a button that opens its view.
+  function dialSvg(w, stances, resettable, asking, tuning = true) {
     const t = stances ? tide(stances, w) : null;
     const spokes = GODS.map(g => { const r = ANG[g] * Math.PI / 180;
       return `<line class="spoke" x1="${(RIN * Math.cos(r)).toFixed(1)}" y1="${(RIN * Math.sin(r)).toFixed(1)}" x2="${(ROUT * Math.cos(r)).toFixed(1)}" y2="${(ROUT * Math.sin(r)).toFixed(1)}"/>`; }).join("");
@@ -487,7 +440,9 @@ button.chip:hover { transform: translateY(-2px); box-shadow: inset 0 1px 0 var(-
       const anchor = Math.abs(Math.cos(r)) < 0.2 ? "middle" : Math.cos(r) > 0 ? "start" : "end";
       const label = `${NAME[g]}${st ? (opp ? ", opposes the Subject" : ", embraces the Subject") : ""}: ${zero ? "no weight" : w[g] > T / 6 * 1.4 ? "more weight than most" : w[g] < T / 6 * 0.6 ? "less weight than most" : "about an equal share"}`;
       const X = x.toFixed(1), Y = y.toFixed(1), d = size * 0.72;
-      return `<g class="orb" data-god="${g}" tabindex="0" role="slider" aria-label="${label}" aria-valuemin="0" aria-valuemax="30" aria-valuenow="${Math.round(w[g])}" aria-valuetext="${label}" style="opacity:${zero ? 0.35 : 1}">
+      const role = tuning ? `role="slider" aria-label="${label}" aria-valuemin="0" aria-valuemax="30" aria-valuenow="${Math.round(w[g])}" aria-valuetext="${label}"`
+        : `role="button" aria-label="${NAME[g]}${st ? (opp ? ", opposes" : ", embraces") : ""}: open its pair"`;
+      return `<g class="orb" data-god="${g}" tabindex="0" ${role} style="opacity:${zero ? 0.35 : 1}">
         <circle cx="${X}" cy="${Y}" r="${Math.max(size, 20)}" fill="transparent"/>
         <circle class="disc" cx="${X}" cy="${Y}" r="${size.toFixed(1)}" style="fill:var(--${g});stroke:rgba(255,255,255,.55)" stroke-width="1"/>
         <circle cx="${X}" cy="${Y}" r="${size.toFixed(1)}" fill="url(#fb-shine)" pointer-events="none"/>
@@ -517,21 +472,99 @@ button.chip:hover { transform: translateY(-2px); box-shadow: inset 0 1px 0 var(-
       <filter id="fb-soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="9"/></filter>
       <filter id="fb-grain"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="4"/><feColorMatrix values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .45 0"/></filter>
       <clipPath id="fb-cc"><circle r="48"/></clipPath></defs>`;
-    const core = `<g class="fb-core"${resettable || asking ? ` tabindex="0" role="button" aria-label="${asking ? "Confirm: reset the balance" : "Reset the balance"}"` : ""}>
+    const coreAttr = tuning ? (resettable || asking ? ` tabindex="0" role="button" aria-label="${asking ? "Confirm: reset the balance" : "Reset the balance"}"` : "")
+      : ` tabindex="0" role="button" aria-label="Framoid${t ? ", " + t.say : ""}: open its reflection"`;
+    const core = `<g class="fb-core"${coreAttr}>
       ${aura}<g clip-path="url(#fb-cc)">${body}<rect x="-48" y="-48" width="96" height="96" filter="url(#fb-grain)" style="mix-blend-mode:soft-light"/></g>
       <circle class="core-disc" r="48" fill="url(#fb-shine)" style="stroke:rgba(255,255,255,.55)" stroke-width="1"/>
       <ellipse cx="-14" cy="-26" rx="15" ry="8" fill="#fff" opacity=".35" pointer-events="none"/>${inner}</g>`;
-    return `<svg class="fb-dial" viewBox="-222 -208 444 416" role="group" aria-label="The gods around Framoid${t ? ". The centre is " + t.say : ""}">
+    return `<svg class="fb-dial${tuning ? " tuning" : ""}" viewBox="-222 -208 444 416" role="group" aria-label="The gods around Framoid${t ? ". The centre is " + t.say : ""}">
       ${defs}<circle class="hoop" r="${ROUT}"/><circle class="mid" r="${rad(T / 6).toFixed(1)}"/>${spokes}${core}${orbs}</svg>`;
   }
 
-  /* ---------- the sheet ---------- */
+  /* ---------- one dial, two modes ---------- */
+  // mount(holder, opts) draws the dial into holder and keeps it live.
+  //   view mode: a god opens its pair (opts.onGod(god)), Framoid opens its reflection (opts.onCore()).
+  //   tune mode: drag a god in or out (or arrows / + −); Framoid resets: tap once ("Reset? / Tap again"), again to reset.
+  // opts: { stances, tune, mode: "reader" | "master", weights (master), onTune(on) }.
+  // Returns { setStances(st), tune(on), tuning(), weights(), redraw() }.
+  // A reader's changes apply at once and are kept in this browser; in master mode (Studio) they stay in the dial.
+  function mount(holder, opts = {}) {
+    addStyle();
+    const masterMode = opts.mode === "master";
+    let w = norm(opts.weights || (masterMode ? master : current())), stances = opts.stances || null, tuning = !!opts.tune;
+    const target = () => masterMode ? equal() : norm(master);
+    let asking = null, drag = null;
+    function draw(focusGod, focusCore) {
+      holder.innerHTML = dialSvg(w, stances, tuning && !same(w, target()), !!asking, tuning);
+      holder.classList.toggle("fb-tuning", tuning);
+      if (focusGod) { const o = holder.querySelector(`.orb[data-god="${focusGod}"]`); if (o) o.focus(); }
+      if (focusCore) { const c = holder.querySelector(".fb-core[tabindex]"); if (c) c.focus(); }
+    }
+    const unask = () => { clearTimeout(asking); asking = null; };
+    let own = false; // our own change echoing back as framoid:balance
+    function change(nw, focusGod, focusCore) {
+      if (asking) unask();
+      w = nw; draw(focusGod, focusCore);
+      if (!masterMode) { own = true; if (same(w, master)) store.clear(); else store.set(w); emit(); own = false; }
+    }
+    function coreTap() {
+      if (asking) { unask(); return change(target(), null, true); }
+      if (same(w, target())) return;
+      asking = setTimeout(() => { asking = null; draw(); }, 3000);
+      draw(null, true);
+    }
+    holder.addEventListener("click", e => {
+      if (tuning) { if (e.target.closest(".fb-core")) coreTap(); return; }
+      const o = e.target.closest(".orb"); if (o) return opts.onGod && opts.onGod(o.dataset.god);
+      if (e.target.closest(".fb-core")) opts.onCore && opts.onCore();
+    });
+    // Dragging (tune mode): the god's weight follows its distance from the centre along its own spoke.
+    holder.addEventListener("pointerdown", e => {
+      if (!tuning) return;
+      const o = e.target.closest(".orb"); if (!o) return;
+      drag = o.dataset.god; try { holder.setPointerCapture(e.pointerId); } catch {} e.preventDefault();
+    });
+    holder.addEventListener("pointermove", e => {
+      if (!drag) return;
+      const svg = holder.querySelector("svg"), m = svg.getScreenCTM(); if (!m) return;
+      const p = new DOMPoint(e.clientX, e.clientY).matrixTransform(m.inverse()), a = ANG[drag] * Math.PI / 180;
+      change(setOne(w, drag, wOf(p.x * Math.cos(a) + p.y * Math.sin(a))));
+    });
+    const end = () => { drag = null; };
+    holder.addEventListener("pointerup", end); holder.addEventListener("pointercancel", end);
+    holder.addEventListener("keydown", e => {
+      const enter = e.key === "Enter" || e.key === " ";
+      if (!tuning) {
+        if (!enter) return;
+        const o = e.target.closest(".orb"); if (o) { e.preventDefault(); return opts.onGod && opts.onGod(o.dataset.god); }
+        if (e.target.closest(".fb-core")) { e.preventDefault(); return opts.onCore && opts.onCore(); }
+        return;
+      }
+      if (e.target.closest(".fb-core") && enter) { e.preventDefault(); return coreTap(); }
+      const o = e.target.closest(".orb"); if (!o) return;
+      const g = o.dataset.god, step = { ArrowUp: 1, ArrowRight: 1, "+": 1, "=": 1, ArrowDown: -1, ArrowLeft: -1, "-": -1 }[e.key];
+      if (!step) return; e.preventDefault(); e.stopPropagation(); // keep the page's arrow-key navigation out of the dial
+      change(setOne(w, g, w[g] + step * 1.5), g);
+    });
+    // Follow changes made elsewhere (another tab, the reader's account, /balance.json arriving).
+    if (!masterMode) window.addEventListener("framoid:balance", () => { if (own || drag) return; w = current(); draw(); });
+    draw();
+    return {
+      setStances(st) { stances = st || null; draw(); },
+      tune(on) { tuning = !!on; unask(); draw(); opts.onTune && opts.onTune(tuning); },
+      tuning: () => tuning,
+      weights: () => w,
+      redraw: () => draw()
+    };
+  }
+
+  /* ---------- the sheet (the Studio's master balance) ---------- */
   // mode "reader": changes apply at once and are kept in this browser. mode "master" (Studio): changes
   // stay in the sheet until onSave(weights) resolves.
   function open(opts = {}) {
     addStyle();
     const masterMode = opts.mode === "master";
-    let w = norm(opts.weights || (masterMode ? master : current()));
     const prevFocus = document.activeElement;
     const scrim = document.createElement("div");
     scrim.className = "fb-scrim";
@@ -544,52 +577,9 @@ button.chip:hover { transform: translateY(-2px); box-shadow: inset 0 1px 0 var(-
         : `<button type="button" class="fb-primary" data-fb="done">Done</button>`}</div>
       <p class="fb-status" aria-live="polite"></p></div>`;
     document.body.appendChild(scrim);
-    const holder = scrim.querySelector(".fb-holder"), status = scrim.querySelector(".fb-status");
-    // Reset target: Framoid's balance for a reader, equal weights in the Studio.
-    const target = () => masterMode ? equal() : norm(master);
-    let asking = null; // timer while the centre asks "Reset?"
-    function draw(focusGod, focusCore) {
-      holder.innerHTML = dialSvg(w, opts.stances, !same(w, target()), !!asking);
-      if (focusGod) { const o = holder.querySelector(`.orb[data-god="${focusGod}"]`); if (o) o.focus(); }
-      if (focusCore) { const c = holder.querySelector(".fb-core[tabindex]"); if (c) c.focus(); }
-    }
-    const unask = () => { clearTimeout(asking); asking = null; };
-    function coreTap() {
-      if (asking) { unask(); return change(target(), null, true); }
-      if (same(w, target())) return;
-      asking = setTimeout(() => { asking = null; draw(); }, 3000);
-      draw(null, true);
-    }
-    holder.addEventListener("click", e => { if (e.target.closest(".fb-core")) coreTap(); });
-    function change(nw, focusGod, focusCore) {
-      if (asking) unask();
-      w = nw; draw(focusGod, focusCore);
-      if (!masterMode) { if (same(w, master)) store.clear(); else store.set(w); emit(); }
-    }
-    draw();
-    // Dragging: the god's weight follows its distance from the centre along its own spoke.
-    let drag = null;
-    holder.addEventListener("pointerdown", e => {
-      const o = e.target.closest(".orb"); if (!o) return;
-      drag = o.dataset.god; try { holder.setPointerCapture(e.pointerId); } catch {} e.preventDefault();
-    });
-    holder.addEventListener("pointermove", e => {
-      if (!drag) return;
-      const svg = holder.querySelector("svg"), m = svg.getScreenCTM(); if (!m) return;
-      const p = new DOMPoint(e.clientX, e.clientY).matrixTransform(m.inverse()), a = ANG[drag] * Math.PI / 180;
-      change(setOne(w, drag, wOf(p.x * Math.cos(a) + p.y * Math.sin(a))));
-    });
-    const end = () => { drag = null; };
-    holder.addEventListener("pointerup", end); holder.addEventListener("pointercancel", end);
-    // Keyboard: arrows or +/- move the focused god in or out.
-    holder.addEventListener("keydown", e => {
-      if (e.target.closest(".fb-core") && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); return coreTap(); }
-      const o = e.target.closest(".orb"); if (!o) return;
-      const g = o.dataset.god, step = { ArrowUp: 1, ArrowRight: 1, "+": 1, "=": 1, ArrowDown: -1, ArrowLeft: -1, "-": -1 }[e.key];
-      if (!step) return; e.preventDefault(); e.stopPropagation(); // keep the page's arrow-key navigation out of the dial
-      change(setOne(w, g, w[g] + step * 1.5), g);
-    });
-    const close = () => { unask(); scrim.remove(); document.removeEventListener("keydown", onKey); if (prevFocus && prevFocus.focus) prevFocus.focus(); opts.onClose && opts.onClose(); };
+    const status = scrim.querySelector(".fb-status");
+    const dial = mount(scrim.querySelector(".fb-holder"), { stances: opts.stances, tune: true, mode: opts.mode, weights: opts.weights });
+    const close = () => { scrim.remove(); document.removeEventListener("keydown", onKey); if (prevFocus && prevFocus.focus) prevFocus.focus(); opts.onClose && opts.onClose(); };
     const onKey = e => { if (e.key === "Escape") close(); };
     document.addEventListener("keydown", onKey);
     scrim.addEventListener("click", async e => {
@@ -599,7 +589,7 @@ button.chip:hover { transform: translateY(-2px); box-shadow: inset 0 1px 0 var(-
       if (a === "done" || a === "cancel") return close();
       if (a === "save") {
         act.disabled = true; status.textContent = "Saving…";
-        try { await opts.onSave(w); setMaster(w); status.textContent = "Saved."; setTimeout(close, 700); }
+        try { const w = dial.weights(); await opts.onSave(w); setMaster(w); status.textContent = "Saved."; setTimeout(close, 700); }
         catch (err) { act.disabled = false; status.textContent = (err && err.message) || "Couldn't save. Try again."; }
       }
     });
@@ -643,13 +633,13 @@ button.chip:hover { transform: translateY(-2px); box-shadow: inset 0 1px 0 var(-
     if (!has || same(norm(w), master)) store.clear(); else store.set(norm(w));
     emit();
   }
-  window.FramoidBalance = { GODS, NAME, total: T, equal, norm, weights: current, master: () => master, setMaster, loadMaster, tide, orb, setOrb, dot, open, button, addStyle, readerOwn, setReader };
+  window.FramoidBalance = { GODS, NAME, total: T, equal, norm, weights: current, master: () => master, setMaster, loadMaster, tide, orb, setOrb, dot, open, mount, button, addStyle, readerOwn, setReader, ICON };
 })();
 
 /* Framoid toolbar: floating glass islands, separate, with transparent space between them, in two modes.
-   Both modes share one bottom row with the same ends: far left settings (list) or home (Reflection), far right
-   the balance of the gods; in the middle search (grows while in use) and filter, or the sections.
-   Reading mode also has previous / next and share at the top right.
+   Both start the bottom row with Home and Explore. Explore (list mode): search (grows while in use), filter and
+   settings. Home (feed mode): the reader's stance above the row and Save / Share at the top right; in a pair or
+   Framoid view a back button replaces Home and Explore (the page's compact dial takes the bottom right).
    Copied into the pages with balance.js by tools/sync_balance.py. */
 (function () {
   "use strict";
@@ -666,6 +656,8 @@ button.chip:hover { transform: translateY(-2px); box-shadow: inset 0 1px 0 var(-
     search: svg('<circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/>'),
     bookmark: svg('<path d="M7 3.5h10a1 1 0 0 1 1 1V21l-6-4.2L6 21V4.5a1 1 0 0 1 1-1z"/>'),
     filter: svg('<path d="M4 6h16"/><path d="M7 12h10"/><path d="M10 18h4"/>'),
+    back: svg('<path d="M15 5l-7 7 7 7"/>'),
+    explore: svg('<rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/>'),
     reset: svg('<path d="M4 12a8 8 0 1 0 2.4-5.7"/><path d="M4 4.5v4h4"/>'),
     clear: svg('<circle cx="12" cy="12" r="9" fill="currentColor" stroke="none" opacity=".22"/><path d="M9 9l6 6M15 9l-6 6"/>')
   };
@@ -684,7 +676,7 @@ button.chip:hover { transform: translateY(-2px); box-shadow: inset 0 1px 0 var(-
   box-shadow: inset 0 1px 0 var(--hl, rgba(255,255,255,.95)), 0 8px 24px -10px var(--shadow, rgba(30,36,70,.25)); }
 .fisl > button, .fisl > a { height: 32px; min-width: 32px; padding: 0 12px; border: 0; border-radius: 999px; background: transparent; color: inherit; cursor: pointer;
   display: inline-flex; align-items: center; justify-content: center; gap: 6px; font: 600 13px/1 var(--text, system-ui); text-decoration: none; white-space: nowrap; }
-.fisl > .ficon { padding: 0; width: 32px; }
+.fisl > .ficon, .fisl > .fnavb { padding: 0; width: 32px; }
 #fb-save.on svg path { fill: currentColor; }
 .fbar[hidden] { display: none !important; }
 .fbar.stance { bottom: calc(60px + env(safe-area-inset-bottom, 0px)); justify-content: center; }
@@ -707,7 +699,7 @@ button.chip:hover { transform: translateY(-2px); box-shadow: inset 0 1px 0 var(-
 .fstance.unset .freset { visibility: hidden; }
 .fisl > button:hover, .fisl > a:hover { background: var(--seg, rgba(20,24,40,.06)); }
 .fisl > button:disabled { opacity: .35; cursor: default; background: transparent; }
-.fisl > button[aria-current="true"], .fisl > button[aria-pressed="true"] { background: var(--fbar-on, rgba(255,255,255,.95)); box-shadow: 0 1px 4px var(--shadow, rgba(30,36,70,.15)); }
+.fisl > button[aria-current="true"], .fisl > button[aria-pressed="true"], .fisl > a[aria-current="page"] { background: var(--fbar-on, rgba(255,255,255,.95)); box-shadow: 0 1px 4px var(--shadow, rgba(30,36,70,.15)); }
 .fisl .fdots { display: inline-flex; gap: 3px; } .fisl .fdots b { width: 7px; height: 7px; border-radius: 50%; }
 .fsearch { flex: 0 1 auto; width: 200px; padding: 0 14px; gap: 8px; color: var(--muted, #5c606e); cursor: text; transition: width .3s ease; }
 .fsearch.open { width: 380px; }
@@ -858,12 +850,6 @@ button.chip:hover { transform: translateY(-2px); box-shadow: inset 0 1px 0 var(-
     if (navigator.share) { try { await navigator.share({ title, url }); return; } catch (e) { if (e && e.name === "AbortError") return; } }
     try { await navigator.clipboard.writeText(url); toast("Link copied"); } catch { toast(url); }
   }
-  // The balance of the gods in its own island.
-  const balanceIsland = () => island("", "fb-holder-isl");
-  function wireBalance(root, stances) {
-    const h = root.querySelector(".fb-holder-isl");
-    if (h && window.FramoidBalance) window.FramoidBalance.button({ container: h, stances: stances || null });
-  }
   function bar(html, cls = "") {
     addStyle();
     const el = document.createElement("div"); el.className = "fbar " + cls; el.innerHTML = html; document.body.appendChild(el); return el;
@@ -872,17 +858,17 @@ button.chip:hover { transform: translateY(-2px); box-shadow: inset 0 1px 0 var(-
 
   /* ---------- list mode ---------- */
   // opts: { onSearch(text), onFilter("all"|"embraced"|"opposed"|"saved") }; "Saved" shows only when signed in.
-  // One bottom row: search, filter (segmented on wide screens, a menu on phones), settings, balance.
+  // One bottom row: Home and Explore, search, filter (segmented on wide screens, a menu on phones), settings.
   function list(opts = {}) {
     let filter = "all";
     const base = [["all", "All"], ["embraced", "Embraced"], ["opposed", "Opposed"]];
     const signed = () => !!(window.FramoidAccount && window.FramoidAccount.state().signedIn);
     let filters = signed() ? [...base, ["saved", "Saved"]] : base;
     const seg = () => filters.map(([v, l]) => `<button type="button" data-filter="${v}" aria-pressed="${filter === v}">${l}</button>`).join("");
-    const el = bar(`${island(iconBtn("fb-settings", "settings", "Settings", 'aria-haspopup="menu" data-fmenu-anchor'))}<div class="fgap"></div>
+    const el = bar(`${navIsland("explore")}<div class="fgap"></div>
       <label class="fisl fsearch">${ICON.search}<input type="search" id="fb-q" placeholder="Search" aria-label="Search Reflections" autocomplete="off" enterkeyhint="search"><button type="button" class="fclear" id="fb-clear" aria-label="Clear search" hidden>${ICON.clear}</button></label>
       ${island(seg(), "fseg")}${island(iconBtn("fb-filter", "filter", "Filter", 'aria-haspopup="menu" data-fmenu-anchor aria-pressed="false"'), "ffilter")}
-      <div class="fgap"></div>${balanceIsland()}`, "bottom");
+      <div class="fgap"></div>${island(iconBtn("fb-settings", "settings", "Settings", 'aria-haspopup="menu" data-fmenu-anchor'))}`, "bottom");
     const q = el.querySelector("#fb-q"), box = el.querySelector(".fsearch"), clear = el.querySelector("#fb-clear");
     const grow = on => { box.classList.toggle("open", on); el.classList.toggle("searching", on); };
     const changed = () => { clear.hidden = !q.value; opts.onSearch && opts.onSearch(q.value); };
@@ -902,7 +888,6 @@ button.chip:hover { transform: translateY(-2px); box-shadow: inset 0 1px 0 var(-
     fb.onclick = () => menu(fb, filters.map(([v, l]) => `<button type="button" class="fitem" role="menuitemradio" data-filter="${v}" aria-checked="${filter === v}">${l}</button>`).join(""),
       e => { const b = e.target.closest("[data-filter]"); if (b) { setFilter(b.dataset.filter); closeMenu(); } });
     const g = el.querySelector("#fb-settings"); g.onclick = () => settings(g);
-    wireBalance(el);
     window.addEventListener("framoid:account", () => {
       filters = signed() ? [...base, ["saved", "Saved"]] : base;
       if (filter === "saved" && !signed()) setFilter("all"); else el.querySelector(".fseg").innerHTML = seg();
@@ -912,61 +897,59 @@ button.chip:hover { transform: translateY(-2px); box-shadow: inset 0 1px 0 var(-
     return { bottom: el };
   }
 
-  /* ---------- reading mode ---------- */
-  // opts: { home (href or null), sections [{id, label, icon?, title, dots[]}], onSection(id), prev / next (href or
-  //         null; undefined hides them), stances, title, slug (shows Save), chrome (false: sections only, for the Studio preview) }
-  // Top right: previous / next and share. Bottom row: home, sections, balance.
-  function reading(opts = {}) {
+  /* ---------- reading mode (the Home feed and its views) ---------- */
+  // opts: { chrome (false in the Studio preview: no Home/Explore, Save, Share or stance), home, explore (hrefs), onBack() }
+  // Feed: Home and Explore at the bottom left, the reader's stance above the row, Save and Share at the top right.
+  // A pair or Framoid view ("reader"): Home and Explore give way to a back button; the page's compact dial sits at the bottom right.
+  // Returns { setReflection({slug, title, stances}), setMode("feed" | "reader") }.
+  function feed(opts = {}) {
     const chrome = opts.chrome !== false;
-    const secs = (opts.sections || []).map(s => `<button type="button" data-view="${s.id}" aria-current="false"${s.title ? ` aria-label="${s.title}" title="${s.title}"` : ""}>${s.icon
-      ? ICON[s.icon] : `${(s.dots || []).length ? `<span class="fdots">${s.dots.map(g => `<b style="background:var(--${g})"></b>`).join("")}</span>` : ""}${s.label}`}</button>`).join("");
-    const steps = chrome && (opts.prev !== undefined || opts.next !== undefined)
-      ? island(`${iconBtn("fb-prev", "prev", "Previous Reflection", opts.prev ? "" : "disabled")}${iconBtn("fb-next", "next", "Next Reflection", opts.next ? "" : "disabled")}`, "fsteps") : "";
-    const canSave = chrome && opts.slug && window.FramoidAccount;
-    const top = chrome ? bar(`${steps}${island(`${canSave ? iconBtn("fb-save", "bookmark", "Save", 'aria-pressed="false"') : ""}${iconBtn("fb-share", "share", "Share")}`)}`, "top right") : null;
-    if (top) top.querySelector("#fb-share").onclick = () => share(opts.title || document.title);
-    if (canSave) {
-      const sv = top.querySelector("#fb-save");
-      const mark = () => { const on = window.FramoidAccount.isSaved(opts.slug); sv.setAttribute("aria-pressed", String(on)); sv.classList.toggle("on", on);
-        sv.setAttribute("aria-label", on ? "Saved" : "Save"); sv.title = on ? "Saved. Tap to remove" : "Save"; };
-      sv.onclick = () => { const was = window.FramoidAccount.isSaved(opts.slug), signed = window.FramoidAccount.state().signedIn;
-        window.FramoidAccount.toggleSave(opts.slug).then(() => { if (signed) toast(was ? "Removed from saved" : "Saved"); }).catch(() => toast("Couldn't save. Try again.")); };
-      window.addEventListener("framoid:saved", mark); mark();
+    let cur = { slug: "", title: document.title, stances: null }, mode = "feed";
+    const top = chrome ? bar(island(`${window.FramoidAccount ? iconBtn("fb-save", "bookmark", "Save", 'aria-pressed="false"') : ""}${iconBtn("fb-share", "share", "Share")}`), "top right") : null;
+    const bottom = bar(`${chrome ? navIsland("home") : ""}${island(iconBtn("fb-back", "back", "Back to the Reflection"), "fbackisl")}<div class="fgap"></div>`, "bottom");
+    const back = bottom.querySelector(".fbackisl"), nav = bottom.querySelector(".fnav");
+    back.querySelector("button").onclick = () => opts.onBack && opts.onBack();
+    if (top) top.querySelector("#fb-share").onclick = () => share(cur.title || document.title);
+    const sv = top && top.querySelector("#fb-save");
+    const markSave = () => { if (!sv) return; const on = !!cur.slug && window.FramoidAccount.isSaved(cur.slug);
+      sv.setAttribute("aria-pressed", String(on)); sv.classList.toggle("on", on); sv.setAttribute("aria-label", on ? "Saved" : "Save"); sv.title = on ? "Saved. Tap to remove" : "Save"; };
+    if (sv) {
+      sv.onclick = () => { const slug = cur.slug; if (!slug) return; const was = window.FramoidAccount.isSaved(slug), signed = window.FramoidAccount.state().signedIn;
+        window.FramoidAccount.toggleSave(slug).then(() => { if (signed) toast(was ? "Removed from saved" : "Saved"); }).catch(() => toast("Couldn't save. Try again.")); };
+      window.addEventListener("framoid:saved", markSave);
     }
-    const bottom = bar(`${chrome && opts.home ? island(`<a href="${opts.home}" class="ficon" id="fb-home" aria-label="All Reflections" title="All Reflections">${ICON.home}</a>`) : ""}
-      <div class="fgap"></div>${secs ? island(secs, "fsecs") : ""}<div class="fgap"></div>${chrome ? balanceIsland() : ""}`, "bottom");
-    if (chrome) wireBalance(bottom, opts.stances);
-    const stance = chrome && opts.slug && window.FramoidAccount && window.FramoidAccount.setStance ? stanceBar(opts.slug, opts.stances) : null;
-    bottom.addEventListener("click", e => { const b = e.target.closest(".fsecs [data-view]"); if (b && opts.onSection) opts.onSection(b.dataset.view); });
-    const api = {
-      top, bottom,
-      setCurrent(id) {
-        bottom.querySelectorAll(".fsecs [data-view]").forEach(b => b.setAttribute("aria-current", String(b.dataset.view === id)));
-        if (stance) { const on = id === (opts.stanceView || "subject"); stance.hidden = !on; document.body.classList.toggle("fb-stance", on); }
-      },
-      setSteps(prev, next) {
-        if (!top) return;
-        [["fb-prev", prev], ["fb-next", next]].forEach(([id, href]) => { const b = top.querySelector("#" + id); if (!b) return; b.disabled = !href; b.onclick = href ? () => { location.href = href; } : null; });
-      }
+    const stance = chrome && window.FramoidAccount && window.FramoidAccount.setStance ? stanceBar(() => cur) : null;
+    const place = () => {
+      back.hidden = mode !== "reader"; if (nav) nav.hidden = mode === "reader";
+      if (stance) { stance.el.hidden = mode !== "feed" || !cur.slug; document.body.classList.toggle("fb-stance", !stance.el.hidden); }
     };
-    return api;
+    place();
+    return {
+      setReflection(r) { cur = Object.assign({ slug: "", title: document.title, stances: null }, r); markSave(); if (stance) stance.show(); place(); },
+      setMode(m) { mode = m; place(); }
+    };
+  }
+  // Home and Explore, side by side; the current one is marked.
+  function navIsland(current) {
+    const a = (id, href, icon, label) => `<a href="${href}" class="fnavb" aria-label="${label}" title="${label}"${current === id ? ' aria-current="page"' : ""}>${ICON[icon]}</a>`;
+    return island(`${a("home", "/", "home", "Home")}${a("explore", "/explore/", "explore", "Explore")}`, "fnav");
   }
 
-  // The reader's own stance on this Reflection, just above the bottom row: one slider from opposed (red) to embraced (green).
-  // Private to their account; signed-out readers are offered sign-in. Until set, it rests at the Pantheon's weighted stance
-  // (also marked on the track); the reset button (space always kept) returns it there.
-  function stanceBar(slug, stances) {
+  // The reader's own stance on the Reflection in view, just above the bottom row: one slider from opposed (red) to
+  // embraced (green). Private to their account; signed-out readers are offered sign-in. Until set, it rests at the
+  // Pantheon's weighted stance (also marked on the track); the reset button (space always kept) returns it there.
+  function stanceBar(get) {
     const A = window.FramoidAccount;
     const el = bar(`<div class="fisl fstance"><span class="frange"><i class="ftrack" aria-hidden="true"></i><i class="fpan" aria-hidden="true"></i>
       <input type="range" min="-100" max="100" step="1" value="0" aria-label="Your stance, from opposed to embraced"></span>
       <button type="button" class="ficon freset" aria-label="Back to the Pantheon's stance" title="Back to the Pantheon's stance">${ICON.reset}</button></div>`, "bottom stance");
     el.hidden = true;
     const box = el.querySelector(".fstance"), input = el.querySelector("input"), clr = el.querySelector(".freset"), pan = el.querySelector(".fpan");
-    // The Pantheon's weighted stance (-1..1) under the current balance: marked on the track; an unset stance rests there.
-    const pantheon = () => { const t = stances && window.FramoidBalance ? window.FramoidBalance.tide(stances) : null; return t ? t.s : 0; };
+    const pantheon = () => { const st = get().stances, t = st && window.FramoidBalance ? window.FramoidBalance.tide(st) : null; return t ? t.s : 0; };
     const colour = f => f < .5 ? `color-mix(in oklch, var(--fb-no), var(--fb-mid) ${Math.round(f * 200)}%)` : `color-mix(in oklch, var(--fb-mid), var(--fb-yes) ${Math.round((f - .5) * 200)}%)`;
     const paint = v => { input.style.setProperty("--fsv", colour((v + 1) / 2)); };
     const show = () => {
+      const slug = get().slug; if (!slug) return;
       const own = A.stanceOf(slug), set = own !== null, p = pantheon(), v = set ? own : p;
       pan.style.setProperty("--fp", (p + 1) / 2);
       box.classList.toggle("unset", !set);
@@ -974,19 +957,16 @@ button.chip:hover { transform: translateY(-2px); box-shadow: inset 0 1px 0 var(-
       input.setAttribute("aria-valuetext", (v > .05 ? "Embraced" : v < -.05 ? "Opposed" : "Balanced") + (set ? "" : ", the Pantheon's stance"));
       paint(v);
     };
-    const gate = e => { if (!A.state().signedIn) { e.preventDefault(); A.setStance(slug, 0); return true; } return false; };
+    const gate = e => { if (!A.state().signedIn) { e.preventDefault(); A.setStance(get().slug, 0); return true; } return false; };
     input.addEventListener("pointerdown", gate);
     input.addEventListener("keydown", e => { if (/^(Arrow|Home|End|Page)/.test(e.key)) gate(e); });
-    input.addEventListener("input", () => { const v = input.value / 100; paint(v); box.classList.remove("unset"); A.setStance(slug, v); });
-    clr.addEventListener("click", () => { A.setStance(slug, null); show(); });
-    window.addEventListener("framoid:balance", show);
-    window.addEventListener("framoid:stances", show);
-    window.addEventListener("framoid:account", show);
-    show();
-    return el;
+    input.addEventListener("input", () => { const v = input.value / 100; paint(v); box.classList.remove("unset"); A.setStance(get().slug, v); });
+    clr.addEventListener("click", () => { A.setStance(get().slug, null); show(); });
+    ["framoid:stances", "framoid:account", "framoid:balance"].forEach(n => window.addEventListener(n, show));
+    return { el, show };
   }
 
-  window.FramoidBar = { list, reading, share, toast, setTheme, getTheme, about, disclaimerLine, ICON };
+  window.FramoidBar = { list, feed, share, toast, setTheme, getTheme, about, disclaimerLine, ICON };
 })();
 
 /* Framoid accounts (optional sign-in) with Firebase: Google or an email link, no passwords.
@@ -1282,65 +1262,132 @@ button.chip:hover { transform: translateY(-2px); box-shadow: inset 0 1px 0 var(-
     idrom: { name: "Idrom", epithet: "Iron Law",         q: "When does an architecture begin to live?" },
     doria: { name: "Doria", epithet: "Living Harmony",   q: "What harmony lets this whole live without reducing the voices of its parts?" }
   };
+  // Views of one Reflection, opened from the dial. "subject" is the feed itself; the others open in the reader.
   // The closing view keeps the hash #field so older links still work; it is shown as "Framoid".
-  // VIEWS is the order of the tabs, the stepper and the arrow keys: Reflection, then Framoid, then the
-  // pairs labelled by their gods' initials, so the sequence spells F·RA·MO·ID.
   const VIEWS = [
-    { id: "subject",   title: "Reflection", tab: "Reflection", gods: [] },
-    { id: "field",     title: "Framoid", tab: "Framoid", gods: [] },
-    { id: "decision",  key: "decision_adaptation", title: "Decision and adaptation", tab: "RA", gods: ["rodim", "aromi"] },
-    { id: "matter",    key: "mind_matter",         title: "Matter and mind",         tab: "MO", gods: ["mir", "ora"] },
-    { id: "structure", key: "structure_harmony",   title: "Structure and harmony",   tab: "ID", gods: ["idrom", "doria"] }
+    { id: "subject",   title: "Reflection", gods: [] },
+    { id: "field",     title: "Framoid", gods: [] },
+    { id: "decision",  key: "decision_adaptation", title: "Decision and adaptation", gods: ["rodim", "aromi"] },
+    { id: "matter",    key: "mind_matter",         title: "Matter and mind",         gods: ["mir", "ora"] },
+    { id: "structure", key: "structure_harmony",   title: "Structure and harmony",   gods: ["idrom", "doria"] }
   ];
   const PAIRS = VIEWS.filter(v => v.key);
-  const ORDER = ["rodim", "aromi", "mir", "ora", "idrom", "doria"]; // side orbit, clockwise from top-left
-
+  const READER = VIEWS.filter(v => v.id !== "subject");
+  const GODS = ["rodim", "aromi", "mir", "ora", "idrom", "doria"];
+  const pairOf = id => PAIRS.find(v => v.gods.includes(id));
   const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   const app = document.getElementById("app");
-  // Content lives in reflection.json beside this page; design and data are kept apart.
-  // Fallback: a <script id="reflection" type="application/json"> block in the page, if present.
-  let R;
+  const FB = window.FramoidBalance;
+
+  /* ---------- data ---------- */
+  // On framoid.com every page is this app: "/" starts at the newest Reflection, "/r/<slug>/" at that one.
+  // The feed comes from /reflections.json; each Reflection's full text from /r/<slug>/reflection.json when needed.
+  // The Studio (and the template preview) put one Reflection inline: <script id="reflection" type="application/json">.
+  const inline = document.getElementById("reflection");
+  const ONSITE = !inline && /^https?:$/.test(location.protocol);
+  const pathSlug = (location.pathname.match(/\/r\/([^/]+)\/(index\.html)?$/) || [])[1];
+  const stancesOf = R => { const o = {}; PAIRS.forEach(v => v.gods.forEach(g => { const st = (((R.pairs || {})[v.key] || {})[g] || {}).stance; if (st) o[g] = st; })); return o; };
+  const fromFull = (R, slug) => ({ slug: slug || String(R.number || ""), number: String(R.number || ""), date: R.date || "", title: (R.subject || {}).title || "",
+    statement: (R.subject || {}).statement || "", stances: stancesOf(R), full: Promise.resolve(R) });
+  let items = [];
   try {
-    const inline = document.getElementById("reflection");
-    if (inline) R = JSON.parse(inline.textContent);
+    if (inline) items = [fromFull(JSON.parse(inline.textContent), "")];
     else {
-    const res = await fetch("reflection.json", { cache: "no-store" });
-    if (!res.ok) throw new Error("HTTP " + res.status);
-    R = await res.json();
+      const res = await fetch("/reflections.json", { cache: "no-cache" });
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      items = ((await res.json()).reflections || []).map(x => Object.assign({}, x, { slug: String(x.slug) }));
     }
   } catch (e) {
-    app.innerHTML = '<p style="padding:24px">The Reflection content (reflection.json) could not be loaded: ' + esc(e.message) + '</p>';
-    return;
+    try { const r = await fetch("reflection.json", { cache: "no-store" }); if (!r.ok) throw e; items = [fromFull(await r.json(), pathSlug || "")]; }
+    catch (e2) { app.innerHTML = '<p style="padding:24px">The Reflections could not be loaded: ' + esc(e.message) + '</p>'; return; }
   }
+  const full = it => it.full || (it.full = fetch(`/r/${encodeURIComponent(it.slug)}/reflection.json`, { cache: "no-cache" }).then(r => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); }));
+  const isTallied = st => GODS.every(g => st && (st[g] === "embraces" || st[g] === "opposes"));
 
-  // schema 5: optional subject.background { brief, sources[{title, url}], preparedAt }, researched facts about the Subject.
-  const BG = (R.subject && R.subject.background) || {};
-  const bgLines = String(BG.brief || "").split(/\n+/).map(t => t.trim()).filter(Boolean);
-  const bgSrc = (Array.isArray(BG.sources) ? BG.sources : []).filter(x => x && /^https?:\/\//.test(String(x.url || "")));
-  const bgHtml = bgLines.length ? `<div class="subject-bg"><span class="bg-lbl">Background</span>${bgLines.map(t => `<p>${esc(t)}</p>`).join("")}${bgSrc.length
-    ? `<div class="bg-src"><span>Sources:</span>${bgSrc.map(x => `<a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.title || x.url)}</a>`).join("")}</div>` : ""}</div>` : "";
-  // On framoid.com (pages live at /r/<slug>/) a link leads back to the list; the Studio and previews have their own way back.
-  const ONSITE = /^https?:$/.test(location.protocol) && /\/r\/[^/]+\/(index\.html)?$/.test(location.pathname);
-  // Balance of the gods: Framoid's balance comes from the page (Studio preview: <script id="balance">, which
-  // may also hide the reader's button) or from the site's /balance.json; a reader's own balance overrides it.
-  const FB = window.FramoidBalance;
+  // Balance of the gods: Framoid's balance from the page (Studio preview: <script id="balance">, which also hides the
+  // reader's chrome) or from /balance.json; a reader's own balance overrides it.
   let balFixed = false;
   const balEl = document.getElementById("balance");
   if (balEl) { try { const b = JSON.parse(balEl.textContent); FB.setMaster(b.weights || b); balFixed = !!b.fixed; } catch (e) {} }
-  else if (ONSITE) FB.loadMaster("../../balance.json");
-  const date = R.date ? new Date(R.date + "T12:00:00").toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" }) : "";
+  else if (ONSITE) FB.loadMaster("/balance.json");
+  document.body.classList.toggle("studio", balFixed);
+  const fmtDate = d => d ? new Date(d + "T12:00:00").toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" }) : "";
 
-  /* ---------- Readings ---------- */
-  // schema 2: optional stance per Reading ("embraces" | "opposes"); schema 1 Reflections simply show no badge.
-  const stance = st => st === "embraces" ? '<span class="stance">↑ Embraces</span>'
-                     : st === "opposes"  ? '<span class="stance opp">↓ Opposes</span>' : "";
-  // schema 3: pairs.<pair>.passage is { <god>: text } with one Passage from each god toward its partner.
-  // Schema 1–2 Reflections keep a single passage string, shown as the older shared Passage card.
+  /* ---------- the feed ---------- */
+  const card = (it, i) => `<section class="item" data-i="${i}" aria-label="${esc(it.title)}">
+    <div class="subject glass"><div class="subject-text">
+      <h1>${esc(it.title)}</h1>
+      <p class="lede">${esc(it.statement)}</p>
+      ${it.date ? `<p class="subject-date">${fmtDate(it.date)}</p>` : ""}
+      <div class="bg-slot"></div>
+      <button type="button" class="more-btn" aria-expanded="false">Show more</button>
+    </div></div></section>`;
+  const bgHtml = R => {
+    const BG = (R.subject && R.subject.background) || {};
+    const lines = String(BG.brief || "").split(/\n+/).map(t => t.trim()).filter(Boolean);
+    const src = (Array.isArray(BG.sources) ? BG.sources : []).filter(x => x && /^https?:\/\//.test(String(x.url || "")));
+    return lines.length ? `<div class="subject-bg"><span class="bg-lbl">Background</span>${lines.map(t => `<p>${esc(t)}</p>`).join("")}${src.length
+      ? `<div class="bg-src"><span>Sources:</span>${src.map(x => `<a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.title || x.url)}</a>`).join("")}</div>` : ""}</div>` : "";
+  };
+  const TUNE = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></svg>`;
+  app.innerHTML = `
+    <main class="feed" id="feed" aria-label="Reflections">${items.length ? items.map(card).join("") : '<p class="feed-msg">No Reflections yet.</p>'}</main>
+    <div class="reader" id="reader" hidden></div>
+    <div class="dock" id="dock"><div class="dial" id="dial"></div>
+      ${balFixed ? "" : `<button type="button" class="tuner" id="tuner" aria-pressed="false" aria-label="Tune the balance of the gods" title="Tune the balance of the gods">${TUNE}</button>`}</div>`;
+  const feed = document.getElementById("feed"), reader = document.getElementById("reader"), dialEl = document.getElementById("dial"), tuner = document.getElementById("tuner");
+
+  /* ---------- toolbar ---------- */
+  const BAR = window.FramoidBar.feed({ chrome: !balFixed, onBack: () => back() });
+  document.body.classList.toggle("fb-notop", balFixed);
+
+  /* ---------- the dial (one dial: view, or tuning with the tuner) ---------- */
+  const dial = FB.mount(dialEl, {
+    onGod: g => open(pairOf(g).id, g),
+    onCore: () => open("field"),
+    onTune: on => { if (tuner) { tuner.setAttribute("aria-pressed", String(on)); tuner.title = on ? "Done tuning" : "Tune the balance of the gods"; } }
+  });
+  if (tuner) tuner.onclick = () => { const on = !dial.tuning(); dial.tune(on); if (on) window.FramoidBar.toast("Drag a god in or out · tap Framoid to reset"); };
+
+  /* ---------- the Reflection in view ---------- */
+  let cur = -1;
+  function setCurrent(i) {
+    if (i === cur || !items[i]) return;
+    cur = i; const it = items[i];
+    const st = isTallied(it.stances) ? it.stances : null;
+    dial.setStances(st);
+    BAR.setReflection({ slug: inline ? "" : it.slug, title: pageTitle(it), stances: st });
+    if (ONSITE) {
+      document.title = pageTitle(it);
+      const path = `/r/${encodeURIComponent(it.slug)}/`;
+      if (location.pathname !== path) { try { history.replaceState(null, "", path + location.hash); } catch (e) {} }
+    }
+    [i, i + 1, i - 1].forEach(j => items[j] && fillBg(j));
+  }
+  const pageTitle = it => it.number && it.number.toLowerCase() !== "sample" ? `Framoid Reflection ${it.number}: ${it.title}` : `Framoid Reflection: ${it.title}`;
+  function fillBg(j) {
+    const it = items[j]; if (it.bgDone) return; it.bgDone = true;
+    full(it).then(R => { const slot = feed.querySelector(`.item[data-i="${j}"] .bg-slot`); if (slot) slot.outerHTML = bgHtml(R); }).catch(() => { it.bgDone = false; });
+  }
+  const indexNow = () => Math.max(0, Math.min(items.length - 1, Math.round(feed.scrollTop / Math.max(1, feed.clientHeight))));
+  let ticking = false;
+  feed.addEventListener("scroll", () => { if (ticking) return; ticking = true; requestAnimationFrame(() => { ticking = false; setCurrent(indexNow()); }); }, { passive: true });
+  const goTo = (i, smooth) => { i = Math.max(0, Math.min(items.length - 1, i)); feed.scrollTo({ top: i * feed.clientHeight, behavior: smooth ? "smooth" : "auto" }); setCurrent(i); };
+  // Keep the same Reflection in view when the window changes size.
+  window.addEventListener("resize", () => { if (cur >= 0 && reader.hidden) feed.scrollTop = cur * feed.clientHeight; });
+
+  feed.addEventListener("click", e => {
+    const more = e.target.closest(".more-btn"); if (!more) return;
+    const t = more.closest(".subject-text"), on = t.classList.toggle("open");
+    more.textContent = on ? "Show less" : "Show more"; more.setAttribute("aria-expanded", String(on));
+  });
+
+  /* ---------- a pair or Framoid's reflection ---------- */
+  const stance = st => st === "embraces" ? '<span class="stance">↑ Embraces</span>' : st === "opposes" ? '<span class="stance opp">↓ Opposes</span>' : "";
   const passOut = (from, to, text) => text ? `<button type="button" class="pass" data-to="${to}" style="--a: var(--${from}); --b: var(--${to})"
       aria-label="Passage from ${PANTHEON[from].name} to ${PANTHEON[to].name}: ${esc(text)} Open ${PANTHEON[to].name}'s Reading.">
       <span class="pass-top"><span class="lbl">Passage</span><span class="arrow">→</span><span style="color:var(--${to}-text)">${PANTHEON[to].name}</span></span>
       <span class="pass-text">${esc(text)}</span></button>` : "";
-  // schema 4: optional "instruments" (from the god's list) and "claimed" (new, not yet on the list) per Reading.
   const instruments = (id, r) => {
     const own = Array.isArray(r.instruments) ? r.instruments : [], claimed = Array.isArray(r.claimed) ? r.claimed : [];
     if (!own.length && !claimed.length) return "";
@@ -1357,253 +1404,119 @@ button.chip:hover { transform: translateY(-2px); box-shadow: inset 0 1px 0 var(-
       <p class="answer">${esc(r.answer)}</p>
       ${instruments(id, r)}
       <div class="seg" role="group" aria-label="${g.name}: impulse or imprint">
-        <button type="button" id="seg-${id}-impulse" data-god="${id}" data-show="impulse" aria-pressed="true">Impulse</button>
-        <button type="button" id="seg-${id}-imprint" data-god="${id}" data-show="imprint" aria-pressed="false">Imprint</button>
+        <button type="button" data-show="impulse" aria-pressed="true">Impulse</button>
+        <button type="button" data-show="imprint" aria-pressed="false">Imprint</button>
       </div>
-      <div class="ii">
-        <p data-part="impulse" aria-hidden="false">${esc(r.impulse)}</p>
-        <p data-part="imprint" aria-hidden="true">${esc(r.imprint)}</p>
-      </div>
+      <div class="ii"><p data-part="impulse" aria-hidden="false">${esc(r.impulse)}</p><p data-part="imprint" aria-hidden="true">${esc(r.imprint)}</p></div>
       ${pass}
     </article>`;
   };
-
-  const pairView = v => {
-    const d = (R.pairs || {})[v.key] || {};
-    const [a, b] = v.gods;
-    const ps = d.passage;
-    const split = ps && typeof ps === "object";
-    return `<section class="view" id="view-${v.id}" aria-label="${v.title}">
+  const pairView = (R, v) => {
+    const d = (R.pairs || {})[v.key] || {}, [a, b] = v.gods, ps = d.passage, split = ps && typeof ps === "object";
+    return `<section class="view" id="view-${v.id}" aria-label="${v.title}" hidden>
       <div class="view-head"><h2>${v.title}</h2><span class="sub">${PANTHEON[a].name} ⇄ ${PANTHEON[b].name}</span></div>
       <div class="cards">
         ${reading(a, d[a] || {}, split ? passOut(a, b, ps[a]) : "")}${reading(b, d[b] || {}, split ? passOut(b, a, ps[b]) : "")}
         ${!split && ps ? `<div class="passage glass" style="--a: var(--${a}); --b: var(--${b})">
           <div class="passage-top"><span class="lbl">Passage</span><span style="color:var(--${a}-text)">${PANTHEON[a].name}</span><span class="x">⇄</span><span style="color:var(--${b}-text)">${PANTHEON[b].name}</span></div>
-          <p>${esc(ps)}</p>
-        </div>` : ""}
-      </div>
-    </section>`;
+          <p>${esc(ps)}</p></div>` : ""}
+      </div></section>`;
+  };
+  const chipColors = { "Rodim · Aromi": ["rodim", "aromi"], "Ora · Mir": ["ora", "mir"], "Mir · Ora": ["mir", "ora"], "Idrom · Doria": ["idrom", "doria"] };
+  const fieldView = R => {
+    const f = R.field || {};
+    return `<section class="view" id="view-field" aria-label="Framoid" hidden>
+    <div class="field glass"><div class="sigil" aria-hidden="true"></div><div class="field-body">
+      <span class="eyebrow">${PANTHEON.framoid.epithet}</span><h2>Framoid</h2>
+      <p class="question">${PANTHEON.framoid.q}</p>
+      <div class="field-text">${(f.paragraphs || []).map(p => `<p>${esc(p)}</p>`).join("")}</div>
+      ${(f.held || []).length ? `<span class="held-title">Held open</span><div class="held">${f.held.map(h => {
+        const names = String(h.pairs || "").toLowerCase(), pv = PAIRS.find(v => v.gods.every(g => names.includes(g)));
+        const c = chipColors[h.pairs] || (pv ? pv.gods : []);
+        const inner = `<span class="chip-top">${c.map(x => `<b style="background:var(--${x})"></b>`).join("")}${esc(h.pairs)}</span><p>${esc(h.text)}</p>`;
+        return pv ? `<button type="button" class="chip" data-view="${pv.id}" aria-label="${esc(h.pairs)}: ${esc(h.text)} Open ${pv.title}.">${inner}</button>` : `<div class="chip">${inner}</div>`;
+      }).join("")}</div>` : ""}
+      <p class="note">Each Reading speaks as one pure force. Framoid holds them together; it does not rank them.</p>
+      <p class="note">${window.FramoidBar.disclaimerLine()}</p>
+    </div></div></section>`;
   };
 
-  const f = R.field || {};
-  const chipColors = { "Rodim · Aromi": ["rodim", "aromi"], "Ora · Mir": ["ora", "mir"], "Mir · Ora": ["mir", "ora"], "Idrom · Doria": ["idrom", "doria"] };
-  const fieldView = `<section class="view" id="view-field" aria-label="Framoid">
-    <div class="field glass">
-      <div class="sigil" aria-hidden="true"></div>
-      <div class="field-body">
-        <span class="eyebrow">${PANTHEON.framoid.epithet}</span>
-        <h2>Framoid</h2>
-        <p class="question">${PANTHEON.framoid.q}</p>
-        <div class="field-text">${(f.paragraphs || []).map(p => `<p>${esc(p)}</p>`).join("")}</div>
-        ${(f.held || []).length ? `<span class="held-title">Held open</span><div class="held">${f.held.map(h => {
-          // Each chip links to its pair: the pair is found from the god names in h.pairs.
-          const names = String(h.pairs || "").toLowerCase();
-          const pv = PAIRS.find(v => v.gods.every(g => names.includes(g)));
-          const c = chipColors[h.pairs] || (pv ? pv.gods : []);
-          const inner = `<span class="chip-top">${c.map(x => `<b style="background:var(--${x})"></b>`).join("")}${esc(h.pairs)}</span><p>${esc(h.text)}</p>`;
-          return pv ? `<button type="button" class="chip" data-view="${pv.id}" aria-label="${esc(h.pairs)}: ${esc(h.text)} Open ${pv.title}.">${inner}</button>`
-                    : `<div class="chip">${inner}</div>`;
-        }).join("")}</div>` : ""}
-        <p class="note">Each Reading speaks as one pure force. Framoid holds them together; it does not rank them.</p>
-        <p class="note">${window.FramoidBar ? window.FramoidBar.disclaimerLine() : "Mostly AI-generated · Not advice"}</p>
-      </div>
-    </div>
-  </section>`;
-
-  /* ---------- Subject orbit ---------- */
-  // Each pair sits on one diameter, so the two gods face each other across Framoid.
-  // Upper triangle: Rodim, Mir, Idrom. Lower triangle: Aromi, Ora, Doria.
-  const SANG = { rodim: -150, mir: -90, idrom: -30, aromi: 30, ora: 90, doria: 150 };
-  const SR = 36;
-  const SP = Object.fromEntries(Object.entries(SANG).map(([id, a]) => {
-    const r = a * Math.PI / 180;
-    return [id, { x: +(50 + SR * Math.cos(r)).toFixed(2), y: +(50 + SR * Math.sin(r)).toFixed(2) }];
-  }));
-  const pairOf = id => PAIRS.find(v => v.gods.includes(id));
-  const sAxes = PAIRS.map(v => {
-    const [a, b] = v.gods.map(g => SP[g]);
-    return `<defs><linearGradient id="sg-${v.id}" gradientUnits="userSpaceOnUse" x1="${a.x}" y1="${a.y}" x2="${b.x}" y2="${b.y}">
-      <stop offset="0" stop-color="var(--${v.gods[0]})"/><stop offset="1" stop-color="var(--${v.gods[1]})"/></linearGradient></defs>
-      <line class="axis" data-view="${v.id}" x1="${a.x}" y1="${a.y}" x2="${b.x}" y2="${b.y}" stroke="url(#sg-${v.id})"/>`;
-  }).join("");
-  // Each god's stance, read from its Reading ("embraces" | "opposes"; absent in schema 1 data).
-  const stanceOf = id => { const v = pairOf(id); return (((R.pairs || {})[v.key] || {})[id] || {}).stance; };
-  const sNodes = Object.keys(SANG).map(id => {
-    const p = SP[id], v = pairOf(id), g = PANTHEON[id], st = stanceOf(id);
-    const word = st === "embraces" ? ", embraces the Subject" : st === "opposes" ? ", opposes the Subject" : "";
-    return `<button type="button" class="snode ${p.y < 50 ? "up" : "down"}" id="snode-${id}" data-god="${id}" data-view="${v.id}"
-      style="--c: var(--${id}); --ct: var(--${id}-text); left:${p.x}%; top:${p.y}%" aria-label="${g.name}, ${g.epithet}${word}: open ${v.title}">
-      ${FB.dot(st)}<span class="lbl"><strong>${g.name}</strong><small>${g.epithet}</small></span></button>`;
-  }).join("");
-  // Framoid's result: the weighted share of the gods that embrace the Subject (see the balance script).
-  const STANCES = Object.fromEntries(Object.keys(SANG).map(id => [id, stanceOf(id)]));
-  const tide0 = FB.tide(STANCES), tallied = !!tide0;
-  const coreLabel = t => t ? `Framoid: with the current balance of the gods, ${t.say}. Open its reflection` : "Framoid, Undivided Source: open its reflection";
-  const coreInner = tallied ? `<b>Framoid</b>` : `<b>Framoid</b><small>Undivided<br>Source</small>`;
-  const CAP0 = "Choose a god to open its pair, or Framoid to see them held together.";
-
-  const subjectView = `<section class="view" id="view-subject" aria-label="Reflection">
-    <div class="subject glass">
-      <div class="subject-grid">
-        <div class="subject-text" id="subject-text">
-          <h1>${esc(R.subject?.title)}</h1>
-          <p class="lede" id="subject-lede">${esc(R.subject?.statement)}</p>
-          ${date ? `<p class="subject-date">${date}</p>` : ""}
-          ${bgHtml}
-          <button type="button" class="more-btn" id="subject-more" aria-expanded="false" aria-controls="subject-text">Show more</button>
-        </div>
-        <div class="sorbit-wrap">
-          <div class="sorbit" id="sorbit">
-            <svg viewBox="0 0 100 100" aria-hidden="true"><circle class="hoop" cx="50" cy="50" r="${SR}"/>${sAxes}</svg>
-            ${sNodes}
-            <button type="button" class="score${tallied ? " tallied" : ""}" id="sorbit-framoid" aria-label="${coreLabel(tide0)}"${tallied ? ` style="--fc: ${tide0.color}"` : ""}><i>${coreInner}</i></button>
-          </div>
-          <p class="sorbit-cap" id="sorbit-cap" aria-live="polite">${CAP0}</p>
-        </div>
-      </div>
-    </div>
-  </section>`;
-
-  app.innerHTML = `
-    <div class="main">
-      <main class="stage" id="stage">${subjectView}${fieldView}${PAIRS.map(pairView).join("")}</main>
-    </div>
-`;
-
-  /* ---------- Toolbar (reading mode) ---------- */
-  // Top right: previous / next Reflection and share. Bottom: home, the five sections, the balance of the gods.
-  // In the Studio preview ("fixed" balance) only the sections show.
-  const slug = ONSITE ? decodeURIComponent(location.pathname.split("/").filter(Boolean).filter(x => x !== "index.html").pop() || "") : "";
-  const BAR = window.FramoidBar.reading({
-    chrome: !balFixed, home: ONSITE ? "../../" : null, title: document.title,
-    sections: VIEWS.map(v => ({ id: v.id, label: v.tab, icon: v.id === "subject" ? "reflection" : "", title: v.gods.length ? v.title : v.title, dots: v.gods })),
-    onSection: id => show(indexOf(id)),
-    prev: ONSITE ? null : undefined, next: ONSITE ? null : undefined, stances: tallied ? STANCES : null, slug: ONSITE ? slug : null
+  let view = "subject", built = -1, pushed = false;
+  async function open(id, god) {
+    if (!items[cur]) return;
+    if (dial.tuning()) dial.tune(false);
+    const it = items[cur];
+    if (built !== cur) {
+      let R; try { R = await full(it); } catch (e) { window.FramoidBar.toast("Couldn't load this Reflection"); return; }
+      reader.innerHTML = fieldView(R) + PAIRS.map(v => pairView(R, v)).join(""); built = cur;
+    }
+    if (view === "subject" && location.hash.slice(1) !== id) { try { history.pushState(null, "", "#" + id); pushed = true; } catch (e) {} }
+    else { try { history.replaceState(null, "", "#" + id); } catch (e) {} }
+    show(id, god);
+  }
+  function show(id, god) {
+    view = id;
+    const reading = id !== "subject";
+    document.body.classList.toggle("reading", reading);
+    document.body.dataset.view = id;
+    feed.hidden = reading; reader.hidden = !reading;
+    dialEl.dataset.view = id;
+    BAR.setMode(reading ? "reader" : "feed");
+    if (reading) {
+      READER.forEach(v => { const el = document.getElementById("view-" + v.id); if (el) { el.hidden = v.id !== id; el.classList.remove("enter"); } });
+      const el = document.getElementById("view-" + id); if (el) { void el.offsetWidth; el.classList.add("enter"); }
+      reader.scrollTop = 0;
+      if (god) { const c = document.getElementById("card-" + god); if (c) { c.scrollIntoView({ block: "nearest", inline: "start" }); c.classList.remove("ping"); void c.offsetWidth; c.classList.add("ping"); } }
+    } else requestAnimationFrame(() => { feed.scrollTop = cur * feed.clientHeight; });
+  }
+  function back() {
+    if (pushed) { pushed = false; history.back(); return; }
+    try { history.replaceState(null, "", location.pathname); } catch (e) {}
+    show("subject");
+  }
+  window.addEventListener("popstate", () => {
+    const id = location.hash.slice(1);
+    if (READER.some(v => v.id === id)) open(id); else { pushed = false; show("subject"); }
   });
-  document.body.classList.toggle("fb-notop", !BAR.top);
-  if (ONSITE) fetch("../../reflections.json", { cache: "no-cache" }).then(r => r.json()).then(j => {
-    const list = j.reflections || [], i = list.findIndex(x => String(x.slug) === slug);
-    const href = x => x ? `../../r/${encodeURIComponent(x.slug)}/` : null;
-    if (i >= 0) BAR.setSteps(href(list[i - 1]), href(list[i + 1]));
-  }).catch(() => {});
 
-  /* ---------- Behaviour ---------- */
-  const stage = document.getElementById("stage");
-
-  let current = -1;
-  function show(i, opts = {}) {
-    i = (i + VIEWS.length) % VIEWS.length;
-    const v = VIEWS[i];
-    VIEWS.forEach((w, j) => {
-      const el = document.getElementById("view-" + w.id);
-      el.hidden = j !== i;
-      el.classList.remove("enter");
-    });
-    const el = document.getElementById("view-" + v.id);
-    if (current !== -1 && current !== i) { void el.offsetWidth; el.classList.add("enter"); stage.scrollTop = 0; }
-    current = i;
-    document.body.dataset.view = v.id;
-    BAR.setCurrent(v.id);
-    if (v.id === "subject") requestAnimationFrame(fit);
-    if (location.hash !== "#" + v.id) { try { history.replaceState(null, "", "#" + v.id); } catch (e) {} }
-    if (opts.god) {
-      const card = document.getElementById("card-" + opts.god);
-      if (card) {
-        card.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "start" });
-        card.classList.remove("ping"); void card.offsetWidth; card.classList.add("ping");
-      }
-    }
-  }
-  const indexOf = id => VIEWS.findIndex(v => v.id === id);
-
-  // Subject orbit: pointing at a god lights its pair's axis and names the pair.
-  const sorbit = document.getElementById("sorbit");
-  const cap = document.getElementById("sorbit-cap");
-  function hot(el) {
-    sorbit.querySelectorAll(".snode, .axis").forEach(x => x.classList.remove("on"));
-    if (!el) { delete sorbit.dataset.hot; cap.textContent = CAP0; return; }
-    if (el.id === "sorbit-framoid") {
-      sorbit.dataset.hot = "field";
-      sorbit.querySelectorAll(".snode, .axis").forEach(x => x.classList.add("on"));
-      cap.innerHTML = `<strong>Framoid</strong> · ${PANTHEON.framoid.epithet}<br>Holds all six Readings together`;
-      return;
-    }
-    const v = VIEWS[indexOf(el.dataset.view)];
-    sorbit.dataset.hot = v.id;
-    sorbit.querySelectorAll(`.snode[data-view="${v.id}"], .axis[data-view="${v.id}"]`).forEach(x => x.classList.add("on"));
-    cap.innerHTML = `<strong>${v.title}</strong><br>${v.gods.map(g => PANTHEON[g].name).join(" ⇄ ")}`;
-  }
-  sorbit.addEventListener("pointerover", e => hot(e.target.closest(".snode, .score")));
-  sorbit.addEventListener("pointerleave", () => hot(null));
-  sorbit.addEventListener("focusin", e => hot(e.target.closest(".snode, .score")));
-  sorbit.addEventListener("focusout", () => hot(null));
-
-  // Fit the dial to the space left beside or below the header, keeping it a true circle.
-  const swrap = sorbit.parentElement;
-  const stext = document.getElementById("subject-text");
-  const lede = document.getElementById("subject-lede");
-  const more = document.getElementById("subject-more");
-  function fit() {
-    const w = swrap.clientWidth, h = swrap.clientHeight;
-    if (!w || !h) return;
-    const LABELS = 44; // room for the name labels above the top orb and below the bottom one
-    let d = Math.min(w - 26, h - cap.offsetHeight - LABELS - 4, 460);
-    d = Math.max(Math.floor(d), 180);
-    sorbit.style.setProperty("--d", d + "px");
-    sorbit.classList.toggle("small", d < 300);
-    if (!stext.classList.contains("open")) more.hidden = !(date || bgHtml || lede.scrollHeight > lede.clientHeight + 1);
-  }
-  if (window.ResizeObserver) { const ro = new ResizeObserver(fit); ro.observe(swrap); ro.observe(stext); }
-  window.addEventListener("resize", fit);
-
-  document.addEventListener("click", e => {
+  reader.addEventListener("click", e => {
     const seg = e.target.closest(".seg button");
     if (seg) {
-      const card = seg.closest(".card");
-      card.querySelectorAll(".seg button").forEach(b => b.setAttribute("aria-pressed", String(b === seg)));
-      card.querySelectorAll(".ii p").forEach(p => p.setAttribute("aria-hidden", String(p.dataset.part !== seg.dataset.show)));
+      const c = seg.closest(".card");
+      c.querySelectorAll(".seg button").forEach(b => b.setAttribute("aria-pressed", String(b === seg)));
+      c.querySelectorAll(".ii p").forEach(p => p.setAttribute("aria-hidden", String(p.dataset.part !== seg.dataset.show)));
       return;
     }
-    if (e.target.closest("#subject-more")) {
-      const open = stext.classList.toggle("open");
-      more.textContent = open ? "Show less" : "Show more";
-      more.setAttribute("aria-expanded", String(open));
-      return;
-    }
-    // A directional Passage opens the partner's Reading: on phones it swipes the row to that card,
-    // on wider screens (both cards visible) it highlights it.
     const pass = e.target.closest(".pass");
     if (pass) {
-      const card = document.getElementById("card-" + pass.dataset.to);
-      if (card) {
-        const phone = window.matchMedia("(max-width: 900px)").matches;
-        card.scrollIntoView({ behavior: "smooth", block: phone ? "start" : "nearest", inline: "start" });
-        card.classList.remove("ping"); void card.offsetWidth; card.classList.add("ping");
-      }
+      const c = document.getElementById("card-" + pass.dataset.to);
+      if (c) { c.scrollIntoView({ behavior: "smooth", block: window.matchMedia("(max-width: 900px)").matches ? "start" : "nearest", inline: "start" }); c.classList.remove("ping"); void c.offsetWidth; c.classList.add("ping"); }
       return;
     }
-    const chip = e.target.closest("button.chip");
-    if (chip) { show(indexOf(chip.dataset.view)); return; }
-    const sn = e.target.closest(".snode");
-    if (sn) { show(indexOf(sn.dataset.view), { god: sn.dataset.god }); return; }
-    if (e.target.closest("#sorbit-framoid")) { show(indexOf("field")); return; }
+    const chip = e.target.closest("button.chip"); if (chip) open(chip.dataset.view);
   });
   document.addEventListener("keydown", e => {
-    if (e.altKey || e.metaKey || e.ctrlKey) return;
-    if (e.key === "ArrowRight") show(current + 1);
-    if (e.key === "ArrowLeft") show(current - 1);
+    if (e.altKey || e.metaKey || e.ctrlKey || e.target.closest("input, textarea, [role=slider]")) return;
+    if (view === "subject") {
+      if (e.key === "ArrowDown" || e.key === "PageDown" || e.key === "j") { e.preventDefault(); goTo(cur + 1, true); }
+      if (e.key === "ArrowUp" || e.key === "PageUp" || e.key === "k") { e.preventDefault(); goTo(cur - 1, true); }
+      return;
+    }
+    const k = READER.findIndex(v => v.id === view);
+    if (e.key === "ArrowRight") open(READER[(k + 1) % READER.length].id);
+    if (e.key === "ArrowLeft") open(READER[(k + READER.length - 1) % READER.length].id);
+    if (e.key === "Escape") back();
   });
-  window.addEventListener("hashchange", () => { const i = indexOf(location.hash.slice(1)); if (i >= 0 && i !== current) show(i); });
 
-  // The centre follows the balance of the gods as it changes (here, in another tab, or when /balance.json arrives).
-  const score = document.getElementById("sorbit-framoid");
-  window.addEventListener("framoid:balance", () => {
-    const t = FB.tide(STANCES); if (!t) return;
-    score.style.setProperty("--fc", t.color); score.setAttribute("aria-label", coreLabel(t));
+  /* ---------- start ---------- */
+  const start = Math.max(0, items.findIndex(x => x.slug === pathSlug));
+  document.body.dataset.view = "subject";
+  BAR.setMode("feed");
+  requestAnimationFrame(() => {
+    goTo(start);
+    const h = location.hash.slice(1);
+    if (READER.some(v => v.id === h)) open(h);
   });
-
-  const start = indexOf(location.hash.slice(1));
-  show(start >= 0 ? start : 0);
 })();
 </script>
 </body>
