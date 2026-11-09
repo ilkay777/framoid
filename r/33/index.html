@@ -120,26 +120,28 @@ button { font: inherit; color: inherit; }
 :focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
 
 .app {
-  position: relative; z-index: 1; height: 100%;
+  --dock: clamp(160px, 29vh, 250px); --barh: 58px;
+  position: relative; z-index: 1; height: 100%; height: 100dvh;
   max-width: 1240px; margin: 0 auto;
   display: flex; flex-direction: column;
-  padding-block: calc(14px + env(safe-area-inset-top, 0px)) calc(60px + env(safe-area-inset-bottom, 0px)); /* room for the bottom toolbar (tools/toolbar.js) */
+  /* room for the dial and the bottom toolbar (tools/toolbar.js), both fixed to the bottom of the screen */
+  padding-block: calc(14px + env(safe-area-inset-top, 0px)) calc(var(--barh) + var(--dock) + env(safe-area-inset-bottom, 0px));
   box-sizing: border-box;
 }
 body.reading .app { padding-bottom: calc(14px + env(safe-area-inset-bottom, 0px)); }
-body.studio:not(.reading) .app { padding-bottom: 14px; }
+body.studio { --barh: 6px; }
+body.studio .app { --barh: 6px; }
 
 /* Home: an endless feed of Reflections, newest first, one per swipe (snaps). The dial below follows the one in view. */
 .feed { flex: 1 1 auto; min-height: 0; overflow-y: auto; scroll-snap-type: y mandatory; overscroll-behavior-y: contain; scrollbar-width: none; }
 .feed::-webkit-scrollbar { display: none; }
-.item { height: 100%; box-sizing: border-box; scroll-snap-align: start; scroll-snap-stop: always; display: flex; align-items: flex-end; justify-content: center; padding: 2px 2px 8px; }
-.subject { width: 100%; max-width: 760px; max-height: 100%; box-sizing: border-box; padding: clamp(18px, 3vw, 30px); overflow: auto; scrollbar-width: thin; }
+/* Each Reflection fills its page with a card of a fixed size; Show more reveals the rest inside the card, which scrolls. */
+.item { height: 100%; box-sizing: border-box; scroll-snap-align: start; scroll-snap-stop: always; display: flex; justify-content: center; padding: 2px 2px 6px; }
+.subject { width: 100%; max-width: 760px; height: 100%; box-sizing: border-box; padding: clamp(18px, 3vw, 30px); overflow: auto; overscroll-behavior: contain; scrollbar-width: thin; }
 .subject-text { display: grid; grid-auto-rows: max-content; gap: 8px; min-width: 0; }
 .subject h1 { font-family: var(--display); font-weight: 600; text-wrap: balance; font-size: clamp(21px, 3vw, 32px); line-height: 1.12; letter-spacing: -0.025em; margin: 0; }
-.subject .lede { margin: 0; font-size: clamp(15px, 1.3vw, 16px); line-height: 1.5; max-width: 62ch;
-  display: -webkit-box; -webkit-line-clamp: 8; -webkit-box-orient: vertical; overflow: hidden; }
+.subject .lede { margin: 0; font-size: clamp(15px, 1.3vw, 16px); line-height: 1.5; max-width: 62ch; }
 .subject-date { display: none; margin: 0; font-size: 13px; font-weight: 600; color: var(--muted); }
-.subject-text.open .lede { display: block; }
 .subject-text.open .subject-date { display: block; }
 /* Background (schema 5): researched facts about the Subject, shown with the full statement. */
 .subject-bg { display: none; margin-top: 6px; padding-top: 10px; border-top: 1px solid var(--hairline); gap: 6px; max-width: 62ch; }
@@ -156,28 +158,28 @@ body.studio:not(.reading) .app { padding-bottom: 14px; }
 /* The dial (tools/balance.js, one dial in two modes): fixed under the feed, just above the toolbar; gods on one even ring.
    Framoid is the knob: hold it for the stance rail (left / right: your stance, down: the Pantheon's, up: tune the
    balance). In a pair or Framoid view it shrinks to the bottom right. */
-.dock { --dock: clamp(160px, 29vh, 250px); flex: none; position: relative; height: var(--dock); display: flex; justify-content: center; align-items: center; }
+.dock { position: fixed; z-index: 20; left: 0; right: 0; bottom: calc(var(--barh) + env(safe-area-inset-bottom, 0px)); height: var(--dock); display: flex; justify-content: center; align-items: center; pointer-events: none; }
+.dock > .dial { pointer-events: auto; }
 .dial { height: 100%; aspect-ratio: 392 / 332; max-width: 100%; }
 .dial.fb-tuning { aspect-ratio: 444 / 416; }
+.dial.fb-compact { aspect-ratio: 1; }
 .dial .fb-dial { width: 100%; height: 100%; max-width: none; margin: 0; }
 .dial .fb-dial .name { font-size: 19px; }
 .dial .fb-dial .core-lbl { font-size: 17px; }
 .dial .fb-dial .fb-cue { font-size: 16px; }
 .dial.fb-tuning .spoke { stroke: var(--muted); stroke-opacity: .35; }
 /* Compact (pair or Framoid view): the dial alone, at the bottom right; the god names hide; the pair in view stays bright. */
-body.reading .dock { position: fixed; z-index: 31; --dock: 118px; width: var(--dock); border-radius: 50%; box-sizing: border-box; padding: 4px;
-  right: max(10px, env(safe-area-inset-right, 0px)); bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+body.reading .dock { z-index: 31; --dock: 150px; height: var(--dock); width: var(--dock); border-radius: 50%; box-sizing: border-box; padding: 3px; left: auto;
+  right: max(10px, env(safe-area-inset-right, 0px)); bottom: calc(8px + env(safe-area-inset-bottom, 0px)); pointer-events: auto;
   background: var(--glass-strong); border: 1px solid var(--stroke); -webkit-backdrop-filter: blur(20px) saturate(175%); backdrop-filter: blur(20px) saturate(175%);
   box-shadow: inset 0 1px 0 var(--hl), 0 10px 28px -10px var(--shadow); }
-body.reading .dial .fb-dial .hoop, body.reading .dial .fb-dial .mid { display: none; }
 body.reading .dial .fb-dial .core-lbl { display: none; }
-body.reading .dial .fb-dial .name { display: none; }
 .dial[data-view="decision"] .orb:not([data-god="rodim"]):not([data-god="aromi"]),
 .dial[data-view="matter"] .orb:not([data-god="mir"]):not([data-god="ora"]),
 .dial[data-view="structure"] .orb:not([data-god="idrom"]):not([data-god="doria"]) { opacity: .3 !important; }
 
 /* A pair or Framoid's reflection, opened from the dial */
-.reader { flex: 1 1 auto; min-height: 0; overflow: auto; padding: 2px 2px calc(110px + env(safe-area-inset-bottom, 0px)); scrollbar-width: thin; }
+.reader { flex: 1 1 auto; min-height: 0; overflow: auto; padding: 2px 2px calc(140px + env(safe-area-inset-bottom, 0px)); scrollbar-width: thin; }
 
 /* Shared type */
 .eyebrow { font-size: 12px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); }
@@ -440,12 +442,12 @@ button.chip:hover { transform: translateY(-2px); box-shadow: inset 0 1px 0 var(-
   const colourOf = f => f < .5 ? `color-mix(in oklch, var(--fb-no), var(--fb-mid) ${Math.round(f * 200)}%)` : `color-mix(in oklch, var(--fb-mid), var(--fb-yes) ${Math.round((f - .5) * 200)}%)`;
   function dialSvg(w, stances, resettable, asking, tuning = true, x = {}) {
     const t = stances ? tide(stances, w) : null;
-    const sym = !!x.symmetric && !tuning, knob = !!x.knob;
+    const compact = !!x.compact && !tuning, sym = (!!x.symmetric || compact) && !tuning, knob = !!x.knob && !compact;
     const spokes = GODS.map(g => { const r = ANG[g] * Math.PI / 180;
       return `<line class="spoke" x1="${(RIN * Math.cos(r)).toFixed(1)}" y1="${(RIN * Math.sin(r)).toFixed(1)}" x2="${(ROUT * Math.cos(r)).toFixed(1)}" y2="${(ROUT * Math.sin(r)).toFixed(1)}"/>`; }).join("");
     const orbs = GODS.map(g => {
       const r = ANG[g] * Math.PI / 180, R = sym ? SYM : rad(w[g]), x = R * Math.cos(r), y = R * Math.sin(r), zero = w[g] < 0.15;
-      const size = zero ? 10 : 11 + 17 * Math.sqrt(w[g] / T), st = stances && stances[g], opp = st === "opposes";
+      const size = compact ? (zero ? 20 : 24 + 8 * Math.sqrt(w[g] / T)) : zero ? 10 : 11 + 17 * Math.sqrt(w[g] / T), st = stances && stances[g], opp = st === "opposes";
       const lr = size + 11, lx = x + lr * Math.cos(r), ly = y + lr * Math.sin(r);
       const anchor = Math.abs(Math.cos(r)) < 0.2 ? "middle" : Math.cos(r) > 0 ? "start" : "end";
       const label = `${NAME[g]}${st ? (opp ? ", opposes the Subject" : ", embraces the Subject") : ""}: ${zero ? "no weight" : w[g] > T / 6 * 1.4 ? "more weight than most" : w[g] < T / 6 * 0.6 ? "less weight than most" : "about an equal share"}`;
@@ -453,11 +455,11 @@ button.chip:hover { transform: translateY(-2px); box-shadow: inset 0 1px 0 var(-
       const role = tuning ? `role="slider" aria-label="${label}" aria-valuemin="0" aria-valuemax="30" aria-valuenow="${Math.round(w[g])}" aria-valuetext="${label}"`
         : `role="button" aria-label="${NAME[g]}${st ? (opp ? ", opposes" : ", embraces") : ""}: open its pair"`;
       return `<g class="orb" data-god="${g}" tabindex="0" ${role} style="opacity:${zero ? 0.35 : 1}">
-        <circle cx="${X}" cy="${Y}" r="${Math.max(size, 20)}" fill="transparent"/>
+        <circle cx="${X}" cy="${Y}" r="${compact ? 40 : Math.max(size, 20)}" fill="transparent"/>
         <circle class="disc" cx="${X}" cy="${Y}" r="${size.toFixed(1)}" style="fill:var(--${g});stroke:rgba(255,255,255,.55)" stroke-width="1"/>
         <circle cx="${X}" cy="${Y}" r="${size.toFixed(1)}" fill="url(#fb-shine)" pointer-events="none"/>
-        ${st && !zero ? `<circle cx="${(x + d).toFixed(1)}" cy="${(y - d).toFixed(1)}" r="5.5" style="fill:var(${opp ? "--fb-no" : "--fb-yes"});stroke:var(--bg, #fff)" stroke-width="2"/>` : ""}
-        <text class="name" x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" text-anchor="${anchor}" dominant-baseline="middle">${NAME[g]}</text></g>`;
+        ${st && !zero ? `<circle cx="${(x + d).toFixed(1)}" cy="${(y - d).toFixed(1)}" r="${compact ? 8 : 5.5}" style="fill:var(${opp ? "--fb-no" : "--fb-yes"});stroke:var(--bg, #fff)" stroke-width="2"/>` : ""}
+        ${compact ? "" : `<text class="name" x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" text-anchor="${anchor}" dominant-baseline="middle">${NAME[g]}</text>`}</g>`;
     }).join("");
     // Framoid's centre: an orb with an aura. On a Reflection its colour runs red → amber → green with the
     // weighted result; elsewhere it blends the gods' colours (six blurred sectors). When the balance can be
@@ -504,7 +506,7 @@ button.chip:hover { transform: translateY(-2px); box-shadow: inset 0 1px 0 var(-
       <circle class="core-disc" r="48" fill="url(#fb-shine)" style="stroke:rgba(255,255,255,.55)" stroke-width="1"/>
       <ellipse cx="-14" cy="-26" rx="15" ry="8" fill="#fff" opacity=".35" pointer-events="none"/>${inner}</g>`;
     const frame = sym ? "" : `<circle class="hoop" r="${ROUT}"/><circle class="mid" r="${rad(T / 6).toFixed(1)}"/>${spokes}`;
-    return `<svg class="fb-dial${tuning ? " tuning" : ""}${sym ? " sym" : ""}" viewBox="${sym ? "-196 -166 392 332" : "-222 -208 444 416"}" role="group" aria-label="The gods around Framoid${t ? ". The centre is " + t.say : ""}">
+    return `<svg class="fb-dial${tuning ? " tuning" : ""}${sym ? " sym" : ""}" viewBox="${compact ? "-148 -148 296 296" : sym ? "-196 -166 392 332" : "-222 -208 444 416"}" role="group" aria-label="The gods around Framoid${t ? ". The centre is " + t.say : ""}">
       ${defs}${frame}${rail}${ring}${core}${orbs}</svg>`;
   }
 
@@ -526,13 +528,13 @@ button.chip:hover { transform: translateY(-2px); box-shadow: inset 0 1px 0 var(-
     const masterMode = opts.mode === "master", knob = !!opts.knob;
     let w = norm(opts.weights || (masterMode ? master : current())), stances = opts.stances || null, tuning = !!opts.tune;
     const target = () => masterMode ? equal() : norm(master);
-    let asking = null, drag = null, held = false, gest = null, stale = false;
+    let asking = null, drag = null, held = false, gest = null, stale = false, compact = false;
     const own = () => (opts.stance && opts.stance.get) ? opts.stance.get() : null;
     const pantheon = () => { const t = stances ? tide(stances, w) : null; return t ? t.s : 0; };
     function draw(focusGod, focusCore) {
       if (held) { stale = true; return; }
-      holder.innerHTML = dialSvg(w, stances, tuning && !same(w, target()), !!asking, tuning, { symmetric: knob, knob, own: own() });
-      holder.classList.toggle("fb-tuning", tuning);
+      holder.innerHTML = dialSvg(w, stances, tuning && !same(w, target()), !!asking, tuning, { symmetric: knob, knob, own: own(), compact });
+      holder.classList.toggle("fb-tuning", tuning); holder.classList.toggle("fb-compact", compact && !tuning);
       if (focusGod) { const o = holder.querySelector(`.orb[data-god="${focusGod}"]`); if (o) o.focus(); }
       if (focusCore) { const c = holder.querySelector(".fb-core[tabindex]"); if (c) c.focus(); }
     }
@@ -571,11 +573,11 @@ button.chip:hover { transform: translateY(-2px); box-shadow: inset 0 1px 0 var(-
     holder.addEventListener("click", e => {
       if (tuning) { if (!knob && e.target.closest(".fb-core")) coreTap(); return; }
       const o = e.target.closest(".orb"); if (o) return opts.onGod && opts.onGod(o.dataset.god);
-      if (!knob && e.target.closest(".fb-core")) opts.onCore && opts.onCore();
+      if ((!knob || compact) && e.target.closest(".fb-core")) opts.onCore && opts.onCore();
     });
     holder.addEventListener("contextmenu", e => { if (knob && e.target.closest(".fb-core")) e.preventDefault(); });
     holder.addEventListener("pointerdown", e => {
-      const core = knob && e.target.closest(".fb-core");
+      const core = knob && !compact && e.target.closest(".fb-core");
       if (core) {
         try { holder.setPointerCapture(e.pointerId); } catch {} e.preventDefault();
         gest = { x: e.clientX, y: e.clientY, mode: "", moved: false };
@@ -654,6 +656,7 @@ button.chip:hover { transform: translateY(-2px); box-shadow: inset 0 1px 0 var(-
     return {
       setStances(st) { stances = st || null; draw(); },
       tune: on => tune(on),
+      compact(on) { on = !!on; if (on === compact) return; compact = on; if (on && tuning) { tuning = false; unask(); opts.onTune && opts.onTune(false); } draw(); },
       tuning: () => tuning,
       weights: () => w,
       redraw: () => draw()
@@ -780,7 +783,7 @@ button.chip:hover { transform: translateY(-2px); box-shadow: inset 0 1px 0 var(-
 .fisl > .ficon, .fisl > .fnavb { padding: 0; width: 32px; }
 #fb-save.on svg path { fill: currentColor; }
 .fbar[hidden] { display: none !important; }
-.fbar.bottom.reading .facts { margin-right: 128px; } /* room for the compact dial */
+.fbar.bottom.reading .facts { margin-right: 162px; } /* room for the compact dial */
 .fisl > button:hover, .fisl > a:hover { background: var(--seg, rgba(20,24,40,.06)); }
 .fisl > button:disabled { opacity: .35; cursor: default; background: transparent; }
 .fisl > button[aria-current="true"], .fisl > button[aria-pressed="true"], .fisl > a[aria-current="page"] { background: var(--fbar-on, rgba(255,255,255,.95)); box-shadow: 0 1px 4px var(--shadow, rgba(30,36,70,.15)); }
@@ -1516,6 +1519,7 @@ button.chip:hover { transform: translateY(-2px); box-shadow: inset 0 1px 0 var(-
     document.body.dataset.view = id;
     feed.hidden = reading; reader.hidden = !reading;
     dialEl.dataset.view = id;
+    dial.compact(reading);
     BAR.setMode(reading ? "reader" : "feed");
     if (reading) {
       READER.forEach(v => { const el = document.getElementById("view-" + v.id); if (el) { el.hidden = v.id !== id; el.classList.remove("enter"); } });
