@@ -146,12 +146,12 @@
   const colourOf = f => f < .5 ? `color-mix(in oklch, var(--fb-no), var(--fb-mid) ${Math.round(f * 200)}%)` : `color-mix(in oklch, var(--fb-mid), var(--fb-yes) ${Math.round((f - .5) * 200)}%)`;
   function dialSvg(w, stances, resettable, asking, tuning = true, x = {}) {
     const t = stances ? tide(stances, w) : null;
-    const sym = !!x.symmetric && !tuning, knob = !!x.knob;
+    const compact = !!x.compact && !tuning, sym = (!!x.symmetric || compact) && !tuning, knob = !!x.knob && !compact;
     const spokes = GODS.map(g => { const r = ANG[g] * Math.PI / 180;
       return `<line class="spoke" x1="${(RIN * Math.cos(r)).toFixed(1)}" y1="${(RIN * Math.sin(r)).toFixed(1)}" x2="${(ROUT * Math.cos(r)).toFixed(1)}" y2="${(ROUT * Math.sin(r)).toFixed(1)}"/>`; }).join("");
     const orbs = GODS.map(g => {
       const r = ANG[g] * Math.PI / 180, R = sym ? SYM : rad(w[g]), x = R * Math.cos(r), y = R * Math.sin(r), zero = w[g] < 0.15;
-      const size = zero ? 10 : 11 + 17 * Math.sqrt(w[g] / T), st = stances && stances[g], opp = st === "opposes";
+      const size = compact ? (zero ? 20 : 24 + 8 * Math.sqrt(w[g] / T)) : zero ? 10 : 11 + 17 * Math.sqrt(w[g] / T), st = stances && stances[g], opp = st === "opposes";
       const lr = size + 11, lx = x + lr * Math.cos(r), ly = y + lr * Math.sin(r);
       const anchor = Math.abs(Math.cos(r)) < 0.2 ? "middle" : Math.cos(r) > 0 ? "start" : "end";
       const label = `${NAME[g]}${st ? (opp ? ", opposes the Subject" : ", embraces the Subject") : ""}: ${zero ? "no weight" : w[g] > T / 6 * 1.4 ? "more weight than most" : w[g] < T / 6 * 0.6 ? "less weight than most" : "about an equal share"}`;
@@ -159,11 +159,11 @@
       const role = tuning ? `role="slider" aria-label="${label}" aria-valuemin="0" aria-valuemax="30" aria-valuenow="${Math.round(w[g])}" aria-valuetext="${label}"`
         : `role="button" aria-label="${NAME[g]}${st ? (opp ? ", opposes" : ", embraces") : ""}: open its pair"`;
       return `<g class="orb" data-god="${g}" tabindex="0" ${role} style="opacity:${zero ? 0.35 : 1}">
-        <circle cx="${X}" cy="${Y}" r="${Math.max(size, 20)}" fill="transparent"/>
+        <circle cx="${X}" cy="${Y}" r="${compact ? 40 : Math.max(size, 20)}" fill="transparent"/>
         <circle class="disc" cx="${X}" cy="${Y}" r="${size.toFixed(1)}" style="fill:var(--${g});stroke:rgba(255,255,255,.55)" stroke-width="1"/>
         <circle cx="${X}" cy="${Y}" r="${size.toFixed(1)}" fill="url(#fb-shine)" pointer-events="none"/>
-        ${st && !zero ? `<circle cx="${(x + d).toFixed(1)}" cy="${(y - d).toFixed(1)}" r="5.5" style="fill:var(${opp ? "--fb-no" : "--fb-yes"});stroke:var(--bg, #fff)" stroke-width="2"/>` : ""}
-        <text class="name" x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" text-anchor="${anchor}" dominant-baseline="middle">${NAME[g]}</text></g>`;
+        ${st && !zero ? `<circle cx="${(x + d).toFixed(1)}" cy="${(y - d).toFixed(1)}" r="${compact ? 8 : 5.5}" style="fill:var(${opp ? "--fb-no" : "--fb-yes"});stroke:var(--bg, #fff)" stroke-width="2"/>` : ""}
+        ${compact ? "" : `<text class="name" x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" text-anchor="${anchor}" dominant-baseline="middle">${NAME[g]}</text>`}</g>`;
     }).join("");
     // Framoid's centre: an orb with an aura. On a Reflection its colour runs red → amber → green with the
     // weighted result; elsewhere it blends the gods' colours (six blurred sectors). When the balance can be
@@ -210,7 +210,7 @@
       <circle class="core-disc" r="48" fill="url(#fb-shine)" style="stroke:rgba(255,255,255,.55)" stroke-width="1"/>
       <ellipse cx="-14" cy="-26" rx="15" ry="8" fill="#fff" opacity=".35" pointer-events="none"/>${inner}</g>`;
     const frame = sym ? "" : `<circle class="hoop" r="${ROUT}"/><circle class="mid" r="${rad(T / 6).toFixed(1)}"/>${spokes}`;
-    return `<svg class="fb-dial${tuning ? " tuning" : ""}${sym ? " sym" : ""}" viewBox="${sym ? "-196 -166 392 332" : "-222 -208 444 416"}" role="group" aria-label="The gods around Framoid${t ? ". The centre is " + t.say : ""}">
+    return `<svg class="fb-dial${tuning ? " tuning" : ""}${sym ? " sym" : ""}" viewBox="${compact ? "-148 -148 296 296" : sym ? "-196 -166 392 332" : "-222 -208 444 416"}" role="group" aria-label="The gods around Framoid${t ? ". The centre is " + t.say : ""}">
       ${defs}${frame}${rail}${ring}${core}${orbs}</svg>`;
   }
 
@@ -232,13 +232,13 @@
     const masterMode = opts.mode === "master", knob = !!opts.knob;
     let w = norm(opts.weights || (masterMode ? master : current())), stances = opts.stances || null, tuning = !!opts.tune;
     const target = () => masterMode ? equal() : norm(master);
-    let asking = null, drag = null, held = false, gest = null, stale = false;
+    let asking = null, drag = null, held = false, gest = null, stale = false, compact = false;
     const own = () => (opts.stance && opts.stance.get) ? opts.stance.get() : null;
     const pantheon = () => { const t = stances ? tide(stances, w) : null; return t ? t.s : 0; };
     function draw(focusGod, focusCore) {
       if (held) { stale = true; return; }
-      holder.innerHTML = dialSvg(w, stances, tuning && !same(w, target()), !!asking, tuning, { symmetric: knob, knob, own: own() });
-      holder.classList.toggle("fb-tuning", tuning);
+      holder.innerHTML = dialSvg(w, stances, tuning && !same(w, target()), !!asking, tuning, { symmetric: knob, knob, own: own(), compact });
+      holder.classList.toggle("fb-tuning", tuning); holder.classList.toggle("fb-compact", compact && !tuning);
       if (focusGod) { const o = holder.querySelector(`.orb[data-god="${focusGod}"]`); if (o) o.focus(); }
       if (focusCore) { const c = holder.querySelector(".fb-core[tabindex]"); if (c) c.focus(); }
     }
@@ -277,11 +277,11 @@
     holder.addEventListener("click", e => {
       if (tuning) { if (!knob && e.target.closest(".fb-core")) coreTap(); return; }
       const o = e.target.closest(".orb"); if (o) return opts.onGod && opts.onGod(o.dataset.god);
-      if (!knob && e.target.closest(".fb-core")) opts.onCore && opts.onCore();
+      if ((!knob || compact) && e.target.closest(".fb-core")) opts.onCore && opts.onCore();
     });
     holder.addEventListener("contextmenu", e => { if (knob && e.target.closest(".fb-core")) e.preventDefault(); });
     holder.addEventListener("pointerdown", e => {
-      const core = knob && e.target.closest(".fb-core");
+      const core = knob && !compact && e.target.closest(".fb-core");
       if (core) {
         try { holder.setPointerCapture(e.pointerId); } catch {} e.preventDefault();
         gest = { x: e.clientX, y: e.clientY, mode: "", moved: false };
@@ -360,6 +360,7 @@
     return {
       setStances(st) { stances = st || null; draw(); },
       tune: on => tune(on),
+      compact(on) { on = !!on; if (on === compact) return; compact = on; if (on && tuning) { tuning = false; unask(); opts.onTune && opts.onTune(false); } draw(); },
       tuning: () => tuning,
       weights: () => w,
       redraw: () => draw()

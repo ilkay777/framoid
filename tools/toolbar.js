@@ -41,7 +41,7 @@
 .fisl > .ficon, .fisl > .fnavb { padding: 0; width: 32px; }
 #fb-save.on svg path { fill: currentColor; }
 .fbar[hidden] { display: none !important; }
-.fbar.bottom.reading .facts { margin-right: 128px; } /* room for the compact dial */
+.fbar.bottom.reading .facts { margin-right: 162px; } /* room for the compact dial */
 .fisl > button:hover, .fisl > a:hover { background: var(--seg, rgba(20,24,40,.06)); }
 .fisl > button:disabled { opacity: .35; cursor: default; background: transparent; }
 .fisl > button[aria-current="true"], .fisl > button[aria-pressed="true"], .fisl > a[aria-current="page"] { background: var(--fbar-on, rgba(255,255,255,.95)); box-shadow: 0 1px 4px var(--shadow, rgba(30,36,70,.15)); }
