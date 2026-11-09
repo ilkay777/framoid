@@ -1,7 +1,7 @@
 /* Framoid toolbar: floating glass islands, separate, with transparent space between them, in two modes.
-   Both modes share one bottom row with the same ends: far left settings (list) or home (Reflection), far right
-   the balance of the gods; in the middle search (grows while in use) and filter, or the sections.
-   Reading mode also has previous / next and share at the top right.
+   Both start the bottom row with Home and Explore. Explore (list mode): search (grows while in use), filter and
+   settings. Home (feed mode): the reader's stance above the row and Save / Share at the top right; in a pair or
+   Framoid view a back button replaces Home and Explore (the page's compact dial takes the bottom right).
    Copied into the pages with balance.js by tools/sync_balance.py. */
 (function () {
   "use strict";
@@ -18,6 +18,8 @@
     search: svg('<circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/>'),
     bookmark: svg('<path d="M7 3.5h10a1 1 0 0 1 1 1V21l-6-4.2L6 21V4.5a1 1 0 0 1 1-1z"/>'),
     filter: svg('<path d="M4 6h16"/><path d="M7 12h10"/><path d="M10 18h4"/>'),
+    back: svg('<path d="M15 5l-7 7 7 7"/>'),
+    explore: svg('<rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/>'),
     reset: svg('<path d="M4 12a8 8 0 1 0 2.4-5.7"/><path d="M4 4.5v4h4"/>'),
     clear: svg('<circle cx="12" cy="12" r="9" fill="currentColor" stroke="none" opacity=".22"/><path d="M9 9l6 6M15 9l-6 6"/>')
   };
@@ -36,7 +38,7 @@
   box-shadow: inset 0 1px 0 var(--hl, rgba(255,255,255,.95)), 0 8px 24px -10px var(--shadow, rgba(30,36,70,.25)); }
 .fisl > button, .fisl > a { height: 32px; min-width: 32px; padding: 0 12px; border: 0; border-radius: 999px; background: transparent; color: inherit; cursor: pointer;
   display: inline-flex; align-items: center; justify-content: center; gap: 6px; font: 600 13px/1 var(--text, system-ui); text-decoration: none; white-space: nowrap; }
-.fisl > .ficon { padding: 0; width: 32px; }
+.fisl > .ficon, .fisl > .fnavb { padding: 0; width: 32px; }
 #fb-save.on svg path { fill: currentColor; }
 .fbar[hidden] { display: none !important; }
 .fbar.stance { bottom: calc(60px + env(safe-area-inset-bottom, 0px)); justify-content: center; }
@@ -59,7 +61,7 @@
 .fstance.unset .freset { visibility: hidden; }
 .fisl > button:hover, .fisl > a:hover { background: var(--seg, rgba(20,24,40,.06)); }
 .fisl > button:disabled { opacity: .35; cursor: default; background: transparent; }
-.fisl > button[aria-current="true"], .fisl > button[aria-pressed="true"] { background: var(--fbar-on, rgba(255,255,255,.95)); box-shadow: 0 1px 4px var(--shadow, rgba(30,36,70,.15)); }
+.fisl > button[aria-current="true"], .fisl > button[aria-pressed="true"], .fisl > a[aria-current="page"] { background: var(--fbar-on, rgba(255,255,255,.95)); box-shadow: 0 1px 4px var(--shadow, rgba(30,36,70,.15)); }
 .fisl .fdots { display: inline-flex; gap: 3px; } .fisl .fdots b { width: 7px; height: 7px; border-radius: 50%; }
 .fsearch { flex: 0 1 auto; width: 200px; padding: 0 14px; gap: 8px; color: var(--muted, #5c606e); cursor: text; transition: width .3s ease; }
 .fsearch.open { width: 380px; }
@@ -210,12 +212,6 @@
     if (navigator.share) { try { await navigator.share({ title, url }); return; } catch (e) { if (e && e.name === "AbortError") return; } }
     try { await navigator.clipboard.writeText(url); toast("Link copied"); } catch { toast(url); }
   }
-  // The balance of the gods in its own island.
-  const balanceIsland = () => island("", "fb-holder-isl");
-  function wireBalance(root, stances) {
-    const h = root.querySelector(".fb-holder-isl");
-    if (h && window.FramoidBalance) window.FramoidBalance.button({ container: h, stances: stances || null });
-  }
   function bar(html, cls = "") {
     addStyle();
     const el = document.createElement("div"); el.className = "fbar " + cls; el.innerHTML = html; document.body.appendChild(el); return el;
@@ -224,17 +220,17 @@
 
   /* ---------- list mode ---------- */
   // opts: { onSearch(text), onFilter("all"|"embraced"|"opposed"|"saved") }; "Saved" shows only when signed in.
-  // One bottom row: search, filter (segmented on wide screens, a menu on phones), settings, balance.
+  // One bottom row: Home and Explore, search, filter (segmented on wide screens, a menu on phones), settings.
   function list(opts = {}) {
     let filter = "all";
     const base = [["all", "All"], ["embraced", "Embraced"], ["opposed", "Opposed"]];
     const signed = () => !!(window.FramoidAccount && window.FramoidAccount.state().signedIn);
     let filters = signed() ? [...base, ["saved", "Saved"]] : base;
     const seg = () => filters.map(([v, l]) => `<button type="button" data-filter="${v}" aria-pressed="${filter === v}">${l}</button>`).join("");
-    const el = bar(`${island(iconBtn("fb-settings", "settings", "Settings", 'aria-haspopup="menu" data-fmenu-anchor'))}<div class="fgap"></div>
+    const el = bar(`${navIsland("explore")}<div class="fgap"></div>
       <label class="fisl fsearch">${ICON.search}<input type="search" id="fb-q" placeholder="Search" aria-label="Search Reflections" autocomplete="off" enterkeyhint="search"><button type="button" class="fclear" id="fb-clear" aria-label="Clear search" hidden>${ICON.clear}</button></label>
       ${island(seg(), "fseg")}${island(iconBtn("fb-filter", "filter", "Filter", 'aria-haspopup="menu" data-fmenu-anchor aria-pressed="false"'), "ffilter")}
-      <div class="fgap"></div>${balanceIsland()}`, "bottom");
+      <div class="fgap"></div>${island(iconBtn("fb-settings", "settings", "Settings", 'aria-haspopup="menu" data-fmenu-anchor'))}`, "bottom");
     const q = el.querySelector("#fb-q"), box = el.querySelector(".fsearch"), clear = el.querySelector("#fb-clear");
     const grow = on => { box.classList.toggle("open", on); el.classList.toggle("searching", on); };
     const changed = () => { clear.hidden = !q.value; opts.onSearch && opts.onSearch(q.value); };
@@ -254,7 +250,6 @@
     fb.onclick = () => menu(fb, filters.map(([v, l]) => `<button type="button" class="fitem" role="menuitemradio" data-filter="${v}" aria-checked="${filter === v}">${l}</button>`).join(""),
       e => { const b = e.target.closest("[data-filter]"); if (b) { setFilter(b.dataset.filter); closeMenu(); } });
     const g = el.querySelector("#fb-settings"); g.onclick = () => settings(g);
-    wireBalance(el);
     window.addEventListener("framoid:account", () => {
       filters = signed() ? [...base, ["saved", "Saved"]] : base;
       if (filter === "saved" && !signed()) setFilter("all"); else el.querySelector(".fseg").innerHTML = seg();
@@ -264,61 +259,59 @@
     return { bottom: el };
   }
 
-  /* ---------- reading mode ---------- */
-  // opts: { home (href or null), sections [{id, label, icon?, title, dots[]}], onSection(id), prev / next (href or
-  //         null; undefined hides them), stances, title, slug (shows Save), chrome (false: sections only, for the Studio preview) }
-  // Top right: previous / next and share. Bottom row: home, sections, balance.
-  function reading(opts = {}) {
+  /* ---------- reading mode (the Home feed and its views) ---------- */
+  // opts: { chrome (false in the Studio preview: no Home/Explore, Save, Share or stance), home, explore (hrefs), onBack() }
+  // Feed: Home and Explore at the bottom left, the reader's stance above the row, Save and Share at the top right.
+  // A pair or Framoid view ("reader"): Home and Explore give way to a back button; the page's compact dial sits at the bottom right.
+  // Returns { setReflection({slug, title, stances}), setMode("feed" | "reader") }.
+  function feed(opts = {}) {
     const chrome = opts.chrome !== false;
-    const secs = (opts.sections || []).map(s => `<button type="button" data-view="${s.id}" aria-current="false"${s.title ? ` aria-label="${s.title}" title="${s.title}"` : ""}>${s.icon
-      ? ICON[s.icon] : `${(s.dots || []).length ? `<span class="fdots">${s.dots.map(g => `<b style="background:var(--${g})"></b>`).join("")}</span>` : ""}${s.label}`}</button>`).join("");
-    const steps = chrome && (opts.prev !== undefined || opts.next !== undefined)
-      ? island(`${iconBtn("fb-prev", "prev", "Previous Reflection", opts.prev ? "" : "disabled")}${iconBtn("fb-next", "next", "Next Reflection", opts.next ? "" : "disabled")}`, "fsteps") : "";
-    const canSave = chrome && opts.slug && window.FramoidAccount;
-    const top = chrome ? bar(`${steps}${island(`${canSave ? iconBtn("fb-save", "bookmark", "Save", 'aria-pressed="false"') : ""}${iconBtn("fb-share", "share", "Share")}`)}`, "top right") : null;
-    if (top) top.querySelector("#fb-share").onclick = () => share(opts.title || document.title);
-    if (canSave) {
-      const sv = top.querySelector("#fb-save");
-      const mark = () => { const on = window.FramoidAccount.isSaved(opts.slug); sv.setAttribute("aria-pressed", String(on)); sv.classList.toggle("on", on);
-        sv.setAttribute("aria-label", on ? "Saved" : "Save"); sv.title = on ? "Saved. Tap to remove" : "Save"; };
-      sv.onclick = () => { const was = window.FramoidAccount.isSaved(opts.slug), signed = window.FramoidAccount.state().signedIn;
-        window.FramoidAccount.toggleSave(opts.slug).then(() => { if (signed) toast(was ? "Removed from saved" : "Saved"); }).catch(() => toast("Couldn't save. Try again.")); };
-      window.addEventListener("framoid:saved", mark); mark();
+    let cur = { slug: "", title: document.title, stances: null }, mode = "feed";
+    const top = chrome ? bar(island(`${window.FramoidAccount ? iconBtn("fb-save", "bookmark", "Save", 'aria-pressed="false"') : ""}${iconBtn("fb-share", "share", "Share")}`), "top right") : null;
+    const bottom = bar(`${chrome ? navIsland("home") : ""}${island(iconBtn("fb-back", "back", "Back to the Reflection"), "fbackisl")}<div class="fgap"></div>`, "bottom");
+    const back = bottom.querySelector(".fbackisl"), nav = bottom.querySelector(".fnav");
+    back.querySelector("button").onclick = () => opts.onBack && opts.onBack();
+    if (top) top.querySelector("#fb-share").onclick = () => share(cur.title || document.title);
+    const sv = top && top.querySelector("#fb-save");
+    const markSave = () => { if (!sv) return; const on = !!cur.slug && window.FramoidAccount.isSaved(cur.slug);
+      sv.setAttribute("aria-pressed", String(on)); sv.classList.toggle("on", on); sv.setAttribute("aria-label", on ? "Saved" : "Save"); sv.title = on ? "Saved. Tap to remove" : "Save"; };
+    if (sv) {
+      sv.onclick = () => { const slug = cur.slug; if (!slug) return; const was = window.FramoidAccount.isSaved(slug), signed = window.FramoidAccount.state().signedIn;
+        window.FramoidAccount.toggleSave(slug).then(() => { if (signed) toast(was ? "Removed from saved" : "Saved"); }).catch(() => toast("Couldn't save. Try again.")); };
+      window.addEventListener("framoid:saved", markSave);
     }
-    const bottom = bar(`${chrome && opts.home ? island(`<a href="${opts.home}" class="ficon" id="fb-home" aria-label="All Reflections" title="All Reflections">${ICON.home}</a>`) : ""}
-      <div class="fgap"></div>${secs ? island(secs, "fsecs") : ""}<div class="fgap"></div>${chrome ? balanceIsland() : ""}`, "bottom");
-    if (chrome) wireBalance(bottom, opts.stances);
-    const stance = chrome && opts.slug && window.FramoidAccount && window.FramoidAccount.setStance ? stanceBar(opts.slug, opts.stances) : null;
-    bottom.addEventListener("click", e => { const b = e.target.closest(".fsecs [data-view]"); if (b && opts.onSection) opts.onSection(b.dataset.view); });
-    const api = {
-      top, bottom,
-      setCurrent(id) {
-        bottom.querySelectorAll(".fsecs [data-view]").forEach(b => b.setAttribute("aria-current", String(b.dataset.view === id)));
-        if (stance) { const on = id === (opts.stanceView || "subject"); stance.hidden = !on; document.body.classList.toggle("fb-stance", on); }
-      },
-      setSteps(prev, next) {
-        if (!top) return;
-        [["fb-prev", prev], ["fb-next", next]].forEach(([id, href]) => { const b = top.querySelector("#" + id); if (!b) return; b.disabled = !href; b.onclick = href ? () => { location.href = href; } : null; });
-      }
+    const stance = chrome && window.FramoidAccount && window.FramoidAccount.setStance ? stanceBar(() => cur) : null;
+    const place = () => {
+      back.hidden = mode !== "reader"; if (nav) nav.hidden = mode === "reader";
+      if (stance) { stance.el.hidden = mode !== "feed" || !cur.slug; document.body.classList.toggle("fb-stance", !stance.el.hidden); }
     };
-    return api;
+    place();
+    return {
+      setReflection(r) { cur = Object.assign({ slug: "", title: document.title, stances: null }, r); markSave(); if (stance) stance.show(); place(); },
+      setMode(m) { mode = m; place(); }
+    };
+  }
+  // Home and Explore, side by side; the current one is marked.
+  function navIsland(current) {
+    const a = (id, href, icon, label) => `<a href="${href}" class="fnavb" aria-label="${label}" title="${label}"${current === id ? ' aria-current="page"' : ""}>${ICON[icon]}</a>`;
+    return island(`${a("home", "/", "home", "Home")}${a("explore", "/explore/", "explore", "Explore")}`, "fnav");
   }
 
-  // The reader's own stance on this Reflection, just above the bottom row: one slider from opposed (red) to embraced (green).
-  // Private to their account; signed-out readers are offered sign-in. Until set, it rests at the Pantheon's weighted stance
-  // (also marked on the track); the reset button (space always kept) returns it there.
-  function stanceBar(slug, stances) {
+  // The reader's own stance on the Reflection in view, just above the bottom row: one slider from opposed (red) to
+  // embraced (green). Private to their account; signed-out readers are offered sign-in. Until set, it rests at the
+  // Pantheon's weighted stance (also marked on the track); the reset button (space always kept) returns it there.
+  function stanceBar(get) {
     const A = window.FramoidAccount;
     const el = bar(`<div class="fisl fstance"><span class="frange"><i class="ftrack" aria-hidden="true"></i><i class="fpan" aria-hidden="true"></i>
       <input type="range" min="-100" max="100" step="1" value="0" aria-label="Your stance, from opposed to embraced"></span>
       <button type="button" class="ficon freset" aria-label="Back to the Pantheon's stance" title="Back to the Pantheon's stance">${ICON.reset}</button></div>`, "bottom stance");
     el.hidden = true;
     const box = el.querySelector(".fstance"), input = el.querySelector("input"), clr = el.querySelector(".freset"), pan = el.querySelector(".fpan");
-    // The Pantheon's weighted stance (-1..1) under the current balance: marked on the track; an unset stance rests there.
-    const pantheon = () => { const t = stances && window.FramoidBalance ? window.FramoidBalance.tide(stances) : null; return t ? t.s : 0; };
+    const pantheon = () => { const st = get().stances, t = st && window.FramoidBalance ? window.FramoidBalance.tide(st) : null; return t ? t.s : 0; };
     const colour = f => f < .5 ? `color-mix(in oklch, var(--fb-no), var(--fb-mid) ${Math.round(f * 200)}%)` : `color-mix(in oklch, var(--fb-mid), var(--fb-yes) ${Math.round((f - .5) * 200)}%)`;
     const paint = v => { input.style.setProperty("--fsv", colour((v + 1) / 2)); };
     const show = () => {
+      const slug = get().slug; if (!slug) return;
       const own = A.stanceOf(slug), set = own !== null, p = pantheon(), v = set ? own : p;
       pan.style.setProperty("--fp", (p + 1) / 2);
       box.classList.toggle("unset", !set);
@@ -326,17 +319,14 @@
       input.setAttribute("aria-valuetext", (v > .05 ? "Embraced" : v < -.05 ? "Opposed" : "Balanced") + (set ? "" : ", the Pantheon's stance"));
       paint(v);
     };
-    const gate = e => { if (!A.state().signedIn) { e.preventDefault(); A.setStance(slug, 0); return true; } return false; };
+    const gate = e => { if (!A.state().signedIn) { e.preventDefault(); A.setStance(get().slug, 0); return true; } return false; };
     input.addEventListener("pointerdown", gate);
     input.addEventListener("keydown", e => { if (/^(Arrow|Home|End|Page)/.test(e.key)) gate(e); });
-    input.addEventListener("input", () => { const v = input.value / 100; paint(v); box.classList.remove("unset"); A.setStance(slug, v); });
-    clr.addEventListener("click", () => { A.setStance(slug, null); show(); });
-    window.addEventListener("framoid:balance", show);
-    window.addEventListener("framoid:stances", show);
-    window.addEventListener("framoid:account", show);
-    show();
-    return el;
+    input.addEventListener("input", () => { const v = input.value / 100; paint(v); box.classList.remove("unset"); A.setStance(get().slug, v); });
+    clr.addEventListener("click", () => { A.setStance(get().slug, null); show(); });
+    ["framoid:stances", "framoid:account", "framoid:balance"].forEach(n => window.addEventListener(n, show));
+    return { el, show };
   }
 
-  window.FramoidBar = { list, reading, share, toast, setTheme, getTheme, about, disclaimerLine, ICON };
+  window.FramoidBar = { list, feed, share, toast, setTheme, getTheme, about, disclaimerLine, ICON };
 })();

@@ -9,8 +9,8 @@ Usage:
 
 Each Reflection lives in r/<slug>/ as index.html (the template, with its own <title>)
 plus reflection.json (the content, unchanged). The slug is the Reflection's "number",
-lower-cased ("7", "sample"). The home page reads reflections.json, which this script
-rebuilds from the folders in r/.
+lower-cased ("7", "sample"). The home page (index.html, also rendered from the template) and Explore
+(explore/index.html) read reflections.json, which this script rebuilds from the folders in r/.
 """
 import json, re, shutil, sys
 from pathlib import Path
@@ -71,6 +71,12 @@ def stances(data):
             if isinstance(pair, dict) and isinstance(pair.get(g), dict) and pair[g].get("stance"):
                 out[g] = pair[g]["stance"]
     return out
+
+
+def render_home():
+    """The home page is the same app as every Reflection page: it starts at the newest Reflection."""
+    tpl = TEMPLATE.read_text(encoding="utf-8")
+    (ROOT / "index.html").write_text(tpl.replace("<title>Framoid Reflection</title>", "<title>Framoid</title>", 1), encoding="utf-8")
 
 
 def manifest():
@@ -134,7 +140,8 @@ def main():
             print(f"rendered r/{folder.name}/")
     else:
         sys.exit(__doc__)
-    print(f"{len(manifest())} Reflection(s) in reflections.json")
+    render_home()
+    print(f"{len(manifest())} Reflection(s) in reflections.json; home page rendered")
 
 
 if __name__ == "__main__":

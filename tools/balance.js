@@ -92,7 +92,8 @@
 .fb-dial .hoop { fill: none; stroke: var(--hairline, rgba(20,24,40,.1)); stroke-width: 1; }
 .fb-dial .mid { fill: none; stroke: var(--hairline, rgba(20,24,40,.1)); stroke-width: 1; stroke-dasharray: 2 5; }
 .fb-dial .spoke { stroke: var(--hairline, rgba(20,24,40,.1)); stroke-width: 1; }
-.fb-dial .orb { cursor: grab; }
+.fb-dial .orb { cursor: pointer; }
+.fb-dial.tuning .orb { cursor: grab; }
 .fb-dial .orb:focus { outline: none; }
 .fb-dial .orb:focus-visible .disc { stroke: var(--focus, #0a6cff); stroke-width: 3; }
 .fb-dial .name { font: 600 13px/1 var(--rounded, var(--text, system-ui)); fill: var(--ink, #14151a); pointer-events: none; }
@@ -129,7 +130,8 @@
     GODS.forEach(g => { out[g] = g === id ? v : so > 1e-6 ? w[g] * rest / so : rest / 5; });
     return out;
   }
-  function dialSvg(w, stances, resettable, asking) {
+  // tuning: the gods can be dragged (sliders); otherwise each god and Framoid is a button that opens its view.
+  function dialSvg(w, stances, resettable, asking, tuning = true) {
     const t = stances ? tide(stances, w) : null;
     const spokes = GODS.map(g => { const r = ANG[g] * Math.PI / 180;
       return `<line class="spoke" x1="${(RIN * Math.cos(r)).toFixed(1)}" y1="${(RIN * Math.sin(r)).toFixed(1)}" x2="${(ROUT * Math.cos(r)).toFixed(1)}" y2="${(ROUT * Math.sin(r)).toFixed(1)}"/>`; }).join("");
@@ -140,7 +142,9 @@
       const anchor = Math.abs(Math.cos(r)) < 0.2 ? "middle" : Math.cos(r) > 0 ? "start" : "end";
       const label = `${NAME[g]}${st ? (opp ? ", opposes the Subject" : ", embraces the Subject") : ""}: ${zero ? "no weight" : w[g] > T / 6 * 1.4 ? "more weight than most" : w[g] < T / 6 * 0.6 ? "less weight than most" : "about an equal share"}`;
       const X = x.toFixed(1), Y = y.toFixed(1), d = size * 0.72;
-      return `<g class="orb" data-god="${g}" tabindex="0" role="slider" aria-label="${label}" aria-valuemin="0" aria-valuemax="30" aria-valuenow="${Math.round(w[g])}" aria-valuetext="${label}" style="opacity:${zero ? 0.35 : 1}">
+      const role = tuning ? `role="slider" aria-label="${label}" aria-valuemin="0" aria-valuemax="30" aria-valuenow="${Math.round(w[g])}" aria-valuetext="${label}"`
+        : `role="button" aria-label="${NAME[g]}${st ? (opp ? ", opposes" : ", embraces") : ""}: open its pair"`;
+      return `<g class="orb" data-god="${g}" tabindex="0" ${role} style="opacity:${zero ? 0.35 : 1}">
         <circle cx="${X}" cy="${Y}" r="${Math.max(size, 20)}" fill="transparent"/>
         <circle class="disc" cx="${X}" cy="${Y}" r="${size.toFixed(1)}" style="fill:var(--${g});stroke:rgba(255,255,255,.55)" stroke-width="1"/>
         <circle cx="${X}" cy="${Y}" r="${size.toFixed(1)}" fill="url(#fb-shine)" pointer-events="none"/>
@@ -170,21 +174,99 @@
       <filter id="fb-soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="9"/></filter>
       <filter id="fb-grain"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="4"/><feColorMatrix values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .45 0"/></filter>
       <clipPath id="fb-cc"><circle r="48"/></clipPath></defs>`;
-    const core = `<g class="fb-core"${resettable || asking ? ` tabindex="0" role="button" aria-label="${asking ? "Confirm: reset the balance" : "Reset the balance"}"` : ""}>
+    const coreAttr = tuning ? (resettable || asking ? ` tabindex="0" role="button" aria-label="${asking ? "Confirm: reset the balance" : "Reset the balance"}"` : "")
+      : ` tabindex="0" role="button" aria-label="Framoid${t ? ", " + t.say : ""}: open its reflection"`;
+    const core = `<g class="fb-core"${coreAttr}>
       ${aura}<g clip-path="url(#fb-cc)">${body}<rect x="-48" y="-48" width="96" height="96" filter="url(#fb-grain)" style="mix-blend-mode:soft-light"/></g>
       <circle class="core-disc" r="48" fill="url(#fb-shine)" style="stroke:rgba(255,255,255,.55)" stroke-width="1"/>
       <ellipse cx="-14" cy="-26" rx="15" ry="8" fill="#fff" opacity=".35" pointer-events="none"/>${inner}</g>`;
-    return `<svg class="fb-dial" viewBox="-222 -208 444 416" role="group" aria-label="The gods around Framoid${t ? ". The centre is " + t.say : ""}">
+    return `<svg class="fb-dial${tuning ? " tuning" : ""}" viewBox="-222 -208 444 416" role="group" aria-label="The gods around Framoid${t ? ". The centre is " + t.say : ""}">
       ${defs}<circle class="hoop" r="${ROUT}"/><circle class="mid" r="${rad(T / 6).toFixed(1)}"/>${spokes}${core}${orbs}</svg>`;
   }
 
-  /* ---------- the sheet ---------- */
+  /* ---------- one dial, two modes ---------- */
+  // mount(holder, opts) draws the dial into holder and keeps it live.
+  //   view mode: a god opens its pair (opts.onGod(god)), Framoid opens its reflection (opts.onCore()).
+  //   tune mode: drag a god in or out (or arrows / + −); Framoid resets: tap once ("Reset? / Tap again"), again to reset.
+  // opts: { stances, tune, mode: "reader" | "master", weights (master), onTune(on) }.
+  // Returns { setStances(st), tune(on), tuning(), weights(), redraw() }.
+  // A reader's changes apply at once and are kept in this browser; in master mode (Studio) they stay in the dial.
+  function mount(holder, opts = {}) {
+    addStyle();
+    const masterMode = opts.mode === "master";
+    let w = norm(opts.weights || (masterMode ? master : current())), stances = opts.stances || null, tuning = !!opts.tune;
+    const target = () => masterMode ? equal() : norm(master);
+    let asking = null, drag = null;
+    function draw(focusGod, focusCore) {
+      holder.innerHTML = dialSvg(w, stances, tuning && !same(w, target()), !!asking, tuning);
+      holder.classList.toggle("fb-tuning", tuning);
+      if (focusGod) { const o = holder.querySelector(`.orb[data-god="${focusGod}"]`); if (o) o.focus(); }
+      if (focusCore) { const c = holder.querySelector(".fb-core[tabindex]"); if (c) c.focus(); }
+    }
+    const unask = () => { clearTimeout(asking); asking = null; };
+    let own = false; // our own change echoing back as framoid:balance
+    function change(nw, focusGod, focusCore) {
+      if (asking) unask();
+      w = nw; draw(focusGod, focusCore);
+      if (!masterMode) { own = true; if (same(w, master)) store.clear(); else store.set(w); emit(); own = false; }
+    }
+    function coreTap() {
+      if (asking) { unask(); return change(target(), null, true); }
+      if (same(w, target())) return;
+      asking = setTimeout(() => { asking = null; draw(); }, 3000);
+      draw(null, true);
+    }
+    holder.addEventListener("click", e => {
+      if (tuning) { if (e.target.closest(".fb-core")) coreTap(); return; }
+      const o = e.target.closest(".orb"); if (o) return opts.onGod && opts.onGod(o.dataset.god);
+      if (e.target.closest(".fb-core")) opts.onCore && opts.onCore();
+    });
+    // Dragging (tune mode): the god's weight follows its distance from the centre along its own spoke.
+    holder.addEventListener("pointerdown", e => {
+      if (!tuning) return;
+      const o = e.target.closest(".orb"); if (!o) return;
+      drag = o.dataset.god; try { holder.setPointerCapture(e.pointerId); } catch {} e.preventDefault();
+    });
+    holder.addEventListener("pointermove", e => {
+      if (!drag) return;
+      const svg = holder.querySelector("svg"), m = svg.getScreenCTM(); if (!m) return;
+      const p = new DOMPoint(e.clientX, e.clientY).matrixTransform(m.inverse()), a = ANG[drag] * Math.PI / 180;
+      change(setOne(w, drag, wOf(p.x * Math.cos(a) + p.y * Math.sin(a))));
+    });
+    const end = () => { drag = null; };
+    holder.addEventListener("pointerup", end); holder.addEventListener("pointercancel", end);
+    holder.addEventListener("keydown", e => {
+      const enter = e.key === "Enter" || e.key === " ";
+      if (!tuning) {
+        if (!enter) return;
+        const o = e.target.closest(".orb"); if (o) { e.preventDefault(); return opts.onGod && opts.onGod(o.dataset.god); }
+        if (e.target.closest(".fb-core")) { e.preventDefault(); return opts.onCore && opts.onCore(); }
+        return;
+      }
+      if (e.target.closest(".fb-core") && enter) { e.preventDefault(); return coreTap(); }
+      const o = e.target.closest(".orb"); if (!o) return;
+      const g = o.dataset.god, step = { ArrowUp: 1, ArrowRight: 1, "+": 1, "=": 1, ArrowDown: -1, ArrowLeft: -1, "-": -1 }[e.key];
+      if (!step) return; e.preventDefault(); e.stopPropagation(); // keep the page's arrow-key navigation out of the dial
+      change(setOne(w, g, w[g] + step * 1.5), g);
+    });
+    // Follow changes made elsewhere (another tab, the reader's account, /balance.json arriving).
+    if (!masterMode) window.addEventListener("framoid:balance", () => { if (own || drag) return; w = current(); draw(); });
+    draw();
+    return {
+      setStances(st) { stances = st || null; draw(); },
+      tune(on) { tuning = !!on; unask(); draw(); opts.onTune && opts.onTune(tuning); },
+      tuning: () => tuning,
+      weights: () => w,
+      redraw: () => draw()
+    };
+  }
+
+  /* ---------- the sheet (the Studio's master balance) ---------- */
   // mode "reader": changes apply at once and are kept in this browser. mode "master" (Studio): changes
   // stay in the sheet until onSave(weights) resolves.
   function open(opts = {}) {
     addStyle();
     const masterMode = opts.mode === "master";
-    let w = norm(opts.weights || (masterMode ? master : current()));
     const prevFocus = document.activeElement;
     const scrim = document.createElement("div");
     scrim.className = "fb-scrim";
@@ -197,52 +279,9 @@
         : `<button type="button" class="fb-primary" data-fb="done">Done</button>`}</div>
       <p class="fb-status" aria-live="polite"></p></div>`;
     document.body.appendChild(scrim);
-    const holder = scrim.querySelector(".fb-holder"), status = scrim.querySelector(".fb-status");
-    // Reset target: Framoid's balance for a reader, equal weights in the Studio.
-    const target = () => masterMode ? equal() : norm(master);
-    let asking = null; // timer while the centre asks "Reset?"
-    function draw(focusGod, focusCore) {
-      holder.innerHTML = dialSvg(w, opts.stances, !same(w, target()), !!asking);
-      if (focusGod) { const o = holder.querySelector(`.orb[data-god="${focusGod}"]`); if (o) o.focus(); }
-      if (focusCore) { const c = holder.querySelector(".fb-core[tabindex]"); if (c) c.focus(); }
-    }
-    const unask = () => { clearTimeout(asking); asking = null; };
-    function coreTap() {
-      if (asking) { unask(); return change(target(), null, true); }
-      if (same(w, target())) return;
-      asking = setTimeout(() => { asking = null; draw(); }, 3000);
-      draw(null, true);
-    }
-    holder.addEventListener("click", e => { if (e.target.closest(".fb-core")) coreTap(); });
-    function change(nw, focusGod, focusCore) {
-      if (asking) unask();
-      w = nw; draw(focusGod, focusCore);
-      if (!masterMode) { if (same(w, master)) store.clear(); else store.set(w); emit(); }
-    }
-    draw();
-    // Dragging: the god's weight follows its distance from the centre along its own spoke.
-    let drag = null;
-    holder.addEventListener("pointerdown", e => {
-      const o = e.target.closest(".orb"); if (!o) return;
-      drag = o.dataset.god; try { holder.setPointerCapture(e.pointerId); } catch {} e.preventDefault();
-    });
-    holder.addEventListener("pointermove", e => {
-      if (!drag) return;
-      const svg = holder.querySelector("svg"), m = svg.getScreenCTM(); if (!m) return;
-      const p = new DOMPoint(e.clientX, e.clientY).matrixTransform(m.inverse()), a = ANG[drag] * Math.PI / 180;
-      change(setOne(w, drag, wOf(p.x * Math.cos(a) + p.y * Math.sin(a))));
-    });
-    const end = () => { drag = null; };
-    holder.addEventListener("pointerup", end); holder.addEventListener("pointercancel", end);
-    // Keyboard: arrows or +/- move the focused god in or out.
-    holder.addEventListener("keydown", e => {
-      if (e.target.closest(".fb-core") && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); return coreTap(); }
-      const o = e.target.closest(".orb"); if (!o) return;
-      const g = o.dataset.god, step = { ArrowUp: 1, ArrowRight: 1, "+": 1, "=": 1, ArrowDown: -1, ArrowLeft: -1, "-": -1 }[e.key];
-      if (!step) return; e.preventDefault(); e.stopPropagation(); // keep the page's arrow-key navigation out of the dial
-      change(setOne(w, g, w[g] + step * 1.5), g);
-    });
-    const close = () => { unask(); scrim.remove(); document.removeEventListener("keydown", onKey); if (prevFocus && prevFocus.focus) prevFocus.focus(); opts.onClose && opts.onClose(); };
+    const status = scrim.querySelector(".fb-status");
+    const dial = mount(scrim.querySelector(".fb-holder"), { stances: opts.stances, tune: true, mode: opts.mode, weights: opts.weights });
+    const close = () => { scrim.remove(); document.removeEventListener("keydown", onKey); if (prevFocus && prevFocus.focus) prevFocus.focus(); opts.onClose && opts.onClose(); };
     const onKey = e => { if (e.key === "Escape") close(); };
     document.addEventListener("keydown", onKey);
     scrim.addEventListener("click", async e => {
@@ -252,7 +291,7 @@
       if (a === "done" || a === "cancel") return close();
       if (a === "save") {
         act.disabled = true; status.textContent = "Saving…";
-        try { await opts.onSave(w); setMaster(w); status.textContent = "Saved."; setTimeout(close, 700); }
+        try { const w = dial.weights(); await opts.onSave(w); setMaster(w); status.textContent = "Saved."; setTimeout(close, 700); }
         catch (err) { act.disabled = false; status.textContent = (err && err.message) || "Couldn't save. Try again."; }
       }
     });
@@ -296,5 +335,5 @@
     if (!has || same(norm(w), master)) store.clear(); else store.set(norm(w));
     emit();
   }
-  window.FramoidBalance = { GODS, NAME, total: T, equal, norm, weights: current, master: () => master, setMaster, loadMaster, tide, orb, setOrb, dot, open, button, addStyle, readerOwn, setReader };
+  window.FramoidBalance = { GODS, NAME, total: T, equal, norm, weights: current, master: () => master, setMaster, loadMaster, tide, orb, setOrb, dot, open, mount, button, addStyle, readerOwn, setReader, ICON };
 })();

@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Explore · Framoid</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.png" type="image/png" sizes="64x64">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="description" content="Framoid: a Subject considered by six paired gods, held together by Framoid, the Undivided Source.">
+<style>
+:root {
+  --bg: #eceef4; --ink: #14151a; --muted: #5c606e;
+  --glass: rgba(255,255,255,.5); --glass-strong: rgba(255,255,255,.78);
+  --stroke: rgba(255,255,255,.7); --hairline: rgba(20,24,40,.08);
+  --hl: rgba(255,255,255,.95); --shadow: rgba(30,36,70,.14); --blob: .5; --focus: #0a6cff;
+  --rodim: #c4461a; --aromi: #13789a; --mir: #95661d; --ora: #5e47b8; --idrom: #4b5b6d; --doria: #2f8443;
+  --text: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --display: var(--text);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #08090d; --ink: #f3f3f6; --muted: #9ea2b0;
+    --glass: rgba(30,32,42,.46); --glass-strong: rgba(58,61,74,.7);
+    --stroke: rgba(255,255,255,.13); --hairline: rgba(255,255,255,.08);
+    --hl: rgba(255,255,255,.2); --shadow: rgba(0,0,0,.5); --blob: .42; --focus: #5aa2ff;
+    --rodim: #ff7a45; --aromi: #4cc3e6; --mir: #e0ae5c; --ora: #a996ff; --idrom: #a6b6c8; --doria: #6fd284;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #08090d; --ink: #f3f3f6; --muted: #9ea2b0;
+  --glass: rgba(30,32,42,.46); --glass-strong: rgba(58,61,74,.7);
+  --stroke: rgba(255,255,255,.13); --hairline: rgba(255,255,255,.08);
+  --hl: rgba(255,255,255,.2); --shadow: rgba(0,0,0,.5); --blob: .42; --focus: #5aa2ff;
+  --rodim: #ff7a45; --aromi: #4cc3e6; --mir: #e0ae5c; --ora: #a996ff; --idrom: #a6b6c8; --doria: #6fd284;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+html { background: var(--bg); }
+body {
+  margin: 0; min-height: 100vh; color: var(--ink);
+  font: 15px/1.5 var(--text); -webkit-font-smoothing: antialiased;
+  padding: max(20px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) calc(84px + env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+}
+.fields { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+.fields i { position: absolute; width: 60vmax; height: 60vmax; border-radius: 50%; filter: blur(80px); opacity: var(--blob); }
+.fields i:nth-child(1) { background: var(--aromi); left: -20vmax; top: -22vmax; }
+.fields i:nth-child(2) { background: var(--doria); right: -24vmax; top: 10vh; opacity: calc(var(--blob) * .8); }
+.fields i:nth-child(3) { background: var(--rodim); left: 10vw; bottom: -34vmax; opacity: calc(var(--blob) * .7); }
+.fields i:nth-child(4) { background: var(--ora); right: 5vw; bottom: -30vmax; opacity: calc(var(--blob) * .6); }
+.glass {
+  background: var(--glass); border: 1px solid var(--stroke); border-radius: 26px;
+  -webkit-backdrop-filter: blur(28px) saturate(175%); backdrop-filter: blur(28px) saturate(175%);
+  box-shadow: inset 0 1px 0 var(--hl), 0 18px 50px -20px var(--shadow), 0 2px 6px -2px var(--shadow);
+}
+main { max-width: 880px; margin: 0 auto; }
+header { padding: 24px 24px 22px; margin-bottom: 18px; }
+h1 { font: 700 34px/1.1 var(--display); letter-spacing: -.02em; margin: 0 0 8px; }
+.lede { margin: 0; color: var(--muted); max-width: 60ch; }
+.gods { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 14px; font-size: 13px; color: var(--muted); }
+.gods span::before { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; background: var(--c); vertical-align: 1px; }
+.list { display: grid; gap: 14px; }
+a.card { display: block; padding: 20px 22px; color: inherit; text-decoration: none; transition: transform .25s ease, box-shadow .25s ease; }
+a.card:hover { transform: translateY(-2px); box-shadow: inset 0 1px 0 var(--hl), 0 18px 50px -20px var(--shadow), 0 2px 6px -2px var(--shadow), 0 10px 24px -14px var(--shadow); }
+a.card:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+.card h2 { font: 600 20px/1.25 var(--display); letter-spacing: -.01em; margin: 0 0 6px; }
+.card p { margin: 0; color: var(--muted); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.stance { display: flex; align-items: center; gap: 10px; margin-top: 12px; font-size: 13px; }
+.dots { display: flex; gap: 5px; }
+.dots { gap: 8px; }
+.dots b { position: relative; width: 12px; height: 12px; border-radius: 50%; background: var(--c); }
+.dots b .fb-sd { width: 5px; height: 5px; right: -3px; bottom: -3px; }
+.stance .fb-orb { margin-left: 4px; }
+.foot { display: flex; align-items: center; gap: 12px; margin-top: 12px; font-size: 13px; color: var(--muted); }
+.foot .stance { margin-top: 0; color: var(--ink); }
+.foot .date { margin-left: auto; }
+.empty { padding: 24px; color: var(--muted); text-align: center; }
+footer { text-align: center; color: var(--muted); font-size: 12px; margin-top: 28px; }
+@media (max-width: 560px) { header { padding: 22px 20px 18px; } h1 { font-size: 28px; } a.card { padding: 18px; } }
+@media (prefers-reduced-motion: reduce) { a.card { transition: none; } a.card:hover { transform: none; } }
+</style>
+</head>
+<body>
+<div class="fields" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+<main>
+  <header class="glass">
+    <h1>Framoid</h1>
+    <p class="lede">Reflections on one Subject at a time. Six gods, in three reciprocal pairs, each give a Reading; Framoid, the Undivided Source, holds them together without ranking or resolving them.</p>
+    <div class="gods" aria-label="The gods">
+      <span style="--c:var(--rodim)">Rodim</span><span style="--c:var(--aromi)">Aromi</span>
+      <span style="--c:var(--mir)">Mir</span><span style="--c:var(--ora)">Ora</span>
+      <span style="--c:var(--idrom)">Idrom</span><span style="--c:var(--doria)">Doria</span>
+    </div>
+  </header>
+  <section class="list" id="list" aria-label="Reflections"><div class="glass empty">Loading Reflections…</div></section>
+  <footer id="foot">Mostly AI-generated · Not advice · <a href="mailto:hello@framoid.com">hello@framoid.com</a></footer>
+</main>
+<!-- balance:start --><script id="fb-balance">
+/* Framoid balance: how much each god's Reading counts. Shared by framoid.com (home and every Reflection
+   page) and the Studio; tools/sync_balance.py copies this file into each page between the balance markers.
+   30 points are shared by the six gods, but no number is ever shown. On the dial, a god nearer Framoid
+   counts more; pulling one in pushes the others out in proportion (one shared pool), and a god on the rim
+   counts for nothing. Framoid's balance (the master profile) is set in the Studio and published as
+   /balance.json; a reader may change it for themselves (kept in their browser, for every page).
+   The result is Framoid's own colour: on a Reflection its orb shades from red (opposed) through amber
+   (balanced) to green (embraced) with the weighted share of the gods that embrace the Subject; elsewhere it
+   blends the gods' colours. The gods keep their colours, with a small red or green dot for their stance. */
+(function () {
+  "use strict";
+  if (window.FramoidBalance) return;
+  const GODS = ["rodim", "mir", "idrom", "aromi", "ora", "doria"];
+  const NAME = { rodim: "Rodim", aromi: "Aromi", mir: "Mir", ora: "Ora", idrom: "Idrom", doria: "Doria" };
+  const ANG = { rodim: -150, mir: -90, idrom: -30, aromi: 30, ora: 90, doria: 150 }; // as on the Subject dial
+  const T = 30, RIN = 82, ROUT = 182, E = 0.39, KEY = "framoid.balance";
+  const equal = () => Object.fromEntries(GODS.map(g => [g, T / 6]));
+  // Any set of non-negative weights, scaled so they add up to 30. All zero (or nothing) means equal.
+  function norm(w) {
+    const v = Object.fromEntries(GODS.map(g => [g, Math.max(0, Number(w && w[g]) || 0)]));
+    const s = GODS.reduce((a, g) => a + v[g], 0);
+    return s > 1e-9 ? Object.fromEntries(GODS.map(g => [g, v[g] * T / s])) : equal();
+  }
+  const same = (a, b) => GODS.every(g => Math.abs(a[g] - b[g]) < 0.05);
+  let master = equal();
+  const store = {
+    get() { try { const x = JSON.parse(localStorage.getItem(KEY) || "null"); return x && x.weights ? norm(x.weights) : null; } catch { return null; } },
+    set(w) { try { localStorage.setItem(KEY, JSON.stringify({ weights: w })); } catch {} },
+    clear() { try { localStorage.removeItem(KEY); } catch {} }
+  };
+  const emit = () => window.dispatchEvent(new CustomEvent("framoid:balance"));
+
+  /* ---------- the result: Framoid's colour, red to green ---------- */
+  // f = share of weight that embraces the Subject (0..1); 0 = red, 0.5 = amber, 1 = green (mixed in oklch).
+  function tide(stances, w) {
+    const st = stances || {};
+    if (!GODS.every(g => st[g] === "embraces" || st[g] === "opposes")) return null;
+    w = w || current();
+    const f = GODS.reduce((a, g) => a + (st[g] === "embraces" ? w[g] : 0), 0) / T, s = 2 * f - 1, k = Math.abs(s);
+    // Words only for screen readers.
+    const say = k < 0.1 ? "evenly balanced" : (k < 0.45 ? "leaning toward " : "weighted toward ") + (s > 0 ? "embracing" : "opposing");
+    const color = f < 0.5 ? `color-mix(in oklch, var(--fb-no), var(--fb-mid) ${(f * 200).toFixed(1)}%)`
+                          : `color-mix(in oklch, var(--fb-mid), var(--fb-yes) ${((f - 0.5) * 200).toFixed(1)}%)`;
+    return { f, s, say, color };
+  }
+  // A Framoid orb as HTML (home cards): <span class="fb-orb"> coloured by --fc.
+  const orb = (t, cls = "") => t ? `<span class="fb-orb ${cls}" style="--fc:${t.color}" role="img" aria-label="Framoid: ${t.say}"></span>` : "";
+  const setOrb = (el, t) => { if (el && t) { el.style.setProperty("--fc", t.color); el.setAttribute("aria-label", "Framoid: " + t.say); } };
+  // A stance dot for a god (HTML): green embraces, red opposes.
+  const dot = st => st === "embraces" || st === "opposes" ? `<span class="fb-sd ${st === "embraces" ? "yes" : "no"}" aria-hidden="true"></span>` : "";
+  const current = () => store.get() || master;
+
+  /* ---------- styles (use each page's own glass and god colours) ---------- */
+  const css = `
+:root { --fb-yes: #1fa363; --fb-no: #dc3b34; --fb-mid: #e9a516;
+  --fb-noise: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='120' height='120' filter='url(%23n)'/></svg>"); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --fb-yes: #35d184; --fb-no: #ff5a52; --fb-mid: #f5b731; } }
+:root[data-theme="dark"] { --fb-yes: #35d184; --fb-no: #ff5a52; --fb-mid: #f5b731; }
+.fb-orb { --fc: #888; position: relative; display: inline-block; flex: none; width: 18px; height: 18px; border-radius: 50%; isolation: isolate;
+  background: radial-gradient(circle at 34% 28%, color-mix(in srgb, var(--fc) 30%, white) 0%, var(--fc) 52%, color-mix(in srgb, var(--fc) 62%, black) 100%);
+  box-shadow: inset 0 1px 1px rgba(255,255,255,.75), inset 0 -3px 6px rgba(0,0,0,.2), 0 0 8px 1px color-mix(in srgb, var(--fc) 60%, transparent), 0 0 18px 4px color-mix(in srgb, var(--fc) 28%, transparent);
+  transition: background .4s, box-shadow .4s; }
+.fb-orb::before { content: ""; position: absolute; inset: 0; border-radius: 50%; opacity: .35; mix-blend-mode: soft-light; background-image: var(--fb-noise); background-size: 60px; }
+.fb-orb::after { content: ""; position: absolute; left: 20%; top: 12%; width: 38%; height: 26%; border-radius: 50%; background: radial-gradient(ellipse at center, rgba(255,255,255,.85), rgba(255,255,255,0) 70%); }
+.fb-sd { position: absolute; width: 6px; height: 6px; border-radius: 50%; right: -2px; bottom: -2px; box-sizing: content-box; border: 1.5px solid var(--bg, #fff); }
+.fb-sd.yes { background: var(--fb-yes); } .fb-sd.no { background: var(--fb-no); }
+@keyframes fb-breathe { 50% { transform: scale(1.06); opacity: .75; } }
+.fb-btn { position: fixed; z-index: 40; top: max(12px, env(safe-area-inset-top, 0px)); right: max(12px, env(safe-area-inset-right, 0px));
+  width: 40px; height: 40px; border-radius: 50%; padding: 0; display: grid; place-items: center; cursor: pointer; color: var(--ink, #14151a);
+  border: 1px solid var(--stroke, rgba(255,255,255,.7)); background: var(--glass-strong, rgba(255,255,255,.8));
+  -webkit-backdrop-filter: blur(20px) saturate(175%); backdrop-filter: blur(20px) saturate(175%);
+  box-shadow: inset 0 1px 0 var(--hl, rgba(255,255,255,.95)), 0 6px 18px -8px var(--shadow, rgba(30,36,70,.2)); }
+.fb-btn:hover { transform: scale(1.05); }
+.fb-btn.inbar { position: relative; top: auto; right: auto; z-index: auto; width: 32px; height: 32px; border: 0; background: transparent; box-shadow: none;
+  -webkit-backdrop-filter: none; backdrop-filter: none; }
+.fb-btn.inbar:hover { transform: none; background: var(--seg, rgba(20,24,40,.06)); }
+.fb-btn.inbar svg { width: 22px; height: 22px; }
+.fb-btn.inbar.custom::after { top: 1px; right: 1px; }
+.fb-btn svg { width: 24px; height: 24px; }
+.fb-btn.custom::after { content: ""; position: absolute; top: 3px; right: 3px; width: 9px; height: 9px; border-radius: 50%;
+  background: var(--focus, #0a6cff); border: 2px solid var(--bg, #eceef4); }
+.fb-scrim { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; padding: 16px; background: rgba(10, 12, 20, .28);
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+.fb-sheet { width: min(440px, 100%); max-height: calc(100vh - 32px); overflow: auto; box-sizing: border-box; padding: 20px 20px 18px; border-radius: 26px;
+  color: var(--ink, #14151a); font-family: var(--text, system-ui, sans-serif); text-align: center;
+  background: var(--glass-strong, rgba(255,255,255,.85)); border: 1px solid var(--stroke, rgba(255,255,255,.7));
+  -webkit-backdrop-filter: blur(30px) saturate(175%); backdrop-filter: blur(30px) saturate(175%);
+  box-shadow: inset 0 1px 0 var(--hl, rgba(255,255,255,.95)), 0 24px 60px -20px var(--shadow, rgba(30,36,70,.3)); }
+.fb-sheet h2 { margin: 0 0 4px; font: 600 19px/1.25 var(--display, var(--text, system-ui)); letter-spacing: -.01em; }
+.fb-sheet p { margin: 0; font-size: 13px; line-height: 1.45; color: var(--muted, #5c606e); }
+.fb-dial { display: block; width: 100%; max-width: 400px; margin: 4px auto 6px; touch-action: none; user-select: none; -webkit-user-select: none; overflow: visible; }
+.fb-dial .hoop { fill: none; stroke: var(--hairline, rgba(20,24,40,.1)); stroke-width: 1; }
+.fb-dial .mid { fill: none; stroke: var(--hairline, rgba(20,24,40,.1)); stroke-width: 1; stroke-dasharray: 2 5; }
+.fb-dial .spoke { stroke: var(--hairline, rgba(20,24,40,.1)); stroke-width: 1; }
+.fb-dial .orb { cursor: pointer; }
+.fb-dial.tuning .orb { cursor: grab; }
+.fb-dial .orb:focus { outline: none; }
+.fb-dial .orb:focus-visible .disc { stroke: var(--focus, #0a6cff); stroke-width: 3; }
+.fb-dial .name { font: 600 13px/1 var(--rounded, var(--text, system-ui)); fill: var(--ink, #14151a); pointer-events: none; }
+.fb-dial .mark { font: 800 16px/1 var(--rounded, var(--text, system-ui)); pointer-events: none; }
+.fb-dial .fb-core-lbl { font: 700 12px/1 var(--rounded, var(--text, system-ui)); fill: var(--ink, #14151a); pointer-events: none; }
+.fb-row { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+.fb-row button { font: 600 14px/1 var(--text, system-ui); color: var(--ink, #14151a); cursor: pointer; padding: 10px 16px; border-radius: 999px;
+  border: 1px solid var(--stroke, rgba(255,255,255,.7)); background: var(--glass, rgba(255,255,255,.6)); box-shadow: inset 0 1px 0 var(--hl, rgba(255,255,255,.95)); }
+.fb-row button.fb-primary { background: var(--ink, #14151a); color: var(--bg, #fff); border-color: transparent; }
+.fb-row button:disabled { opacity: .5; cursor: default; }
+.fb-status { min-height: 1.4em; margin-top: 6px !important; }
+.fb-dial .fb-core { cursor: pointer; }
+.fb-dial .fb-core:focus { outline: none; }
+.fb-dial .fb-core:focus-visible .core-disc { stroke: var(--focus, #0a6cff); stroke-width: 3; }
+.fb-dial .hint { font: 600 11px/1 var(--text, system-ui); pointer-events: none; }
+.fb-dial .ask { font: 700 15px/1 var(--rounded, var(--text, system-ui)); fill: var(--ink, #14151a); pointer-events: none; }
+.fb-dial .aura { transform-box: fill-box; transform-origin: center; animation: fb-breathe 5s ease-in-out infinite; }
+.fb-dial .on-orb { fill: #fff; paint-order: stroke; stroke: rgba(0,0,0,.28); stroke-width: 2.5px; }
+@media (prefers-reduced-motion: reduce) { .fb-btn:hover { transform: none; } .fb-dial .aura { animation: none; } }`;
+  function addStyle() {
+    if (document.getElementById("fb-style")) return;
+    const el = document.createElement("style"); el.id = "fb-style"; el.textContent = css; document.head.appendChild(el);
+  }
+  const ICON = `<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="8.5" opacity=".55"/><circle cx="12" cy="12" r="2.6" fill="currentColor" stroke="none"/><circle cx="4.6" cy="7.8" r="1.9" fill="currentColor" stroke="none"/><circle cx="19.4" cy="7.8" r="1.9" fill="currentColor" stroke="none"/><circle cx="12" cy="20.5" r="1.9" fill="currentColor" stroke="none"/></svg>`;
+
+  /* ---------- the dial ---------- */
+  const rad = v => ROUT - (ROUT - RIN) * Math.pow(Math.max(0, v) / T, E);
+  const wOf = r => T * Math.pow(Math.max(0, Math.min(1, (ROUT - r) / (ROUT - RIN))), 1 / E);
+  // Give god id the weight v; the others share what is left in proportion to their current weights
+  // (equally if they all had none).
+  function setOne(w, id, v) {
+    v = Math.max(0, Math.min(T, v));
+    const rest = T - v, so = GODS.reduce((a, g) => a + (g === id ? 0 : w[g]), 0), out = {};
+    GODS.forEach(g => { out[g] = g === id ? v : so > 1e-6 ? w[g] * rest / so : rest / 5; });
+    return out;
+  }
+  // tuning: the gods can be dragged (sliders); otherwise each god and Framoid is a button that opens its view.
+  function dialSvg(w, stances, resettable, asking, tuning = true) {
+    const t = stances ? tide(stances, w) : null;
+    const spokes = GODS.map(g => { const r = ANG[g] * Math.PI / 180;
+      return `<line class="spoke" x1="${(RIN * Math.cos(r)).toFixed(1)}" y1="${(RIN * Math.sin(r)).toFixed(1)}" x2="${(ROUT * Math.cos(r)).toFixed(1)}" y2="${(ROUT * Math.sin(r)).toFixed(1)}"/>`; }).join("");
+    const orbs = GODS.map(g => {
+      const r = ANG[g] * Math.PI / 180, R = rad(w[g]), x = R * Math.cos(r), y = R * Math.sin(r), zero = w[g] < 0.15;
+      const size = zero ? 10 : 11 + 17 * Math.sqrt(w[g] / T), st = stances && stances[g], opp = st === "opposes";
+      const lr = size + 11, lx = x + lr * Math.cos(r), ly = y + lr * Math.sin(r);
+      const anchor = Math.abs(Math.cos(r)) < 0.2 ? "middle" : Math.cos(r) > 0 ? "start" : "end";
+      const label = `${NAME[g]}${st ? (opp ? ", opposes the Subject" : ", embraces the Subject") : ""}: ${zero ? "no weight" : w[g] > T / 6 * 1.4 ? "more weight than most" : w[g] < T / 6 * 0.6 ? "less weight than most" : "about an equal share"}`;
+      const X = x.toFixed(1), Y = y.toFixed(1), d = size * 0.72;
+      const role = tuning ? `role="slider" aria-label="${label}" aria-valuemin="0" aria-valuemax="30" aria-valuenow="${Math.round(w[g])}" aria-valuetext="${label}"`
+        : `role="button" aria-label="${NAME[g]}${st ? (opp ? ", opposes" : ", embraces") : ""}: open its pair"`;
+      return `<g class="orb" data-god="${g}" tabindex="0" ${role} style="opacity:${zero ? 0.35 : 1}">
+        <circle cx="${X}" cy="${Y}" r="${Math.max(size, 20)}" fill="transparent"/>
+        <circle class="disc" cx="${X}" cy="${Y}" r="${size.toFixed(1)}" style="fill:var(--${g});stroke:rgba(255,255,255,.55)" stroke-width="1"/>
+        <circle cx="${X}" cy="${Y}" r="${size.toFixed(1)}" fill="url(#fb-shine)" pointer-events="none"/>
+        ${st && !zero ? `<circle cx="${(x + d).toFixed(1)}" cy="${(y - d).toFixed(1)}" r="5.5" style="fill:var(${opp ? "--fb-no" : "--fb-yes"});stroke:var(--bg, #fff)" stroke-width="2"/>` : ""}
+        <text class="name" x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" text-anchor="${anchor}" dominant-baseline="middle">${NAME[g]}</text></g>`;
+    }).join("");
+    // Framoid's centre: an orb with an aura. On a Reflection its colour runs red → amber → green with the
+    // weighted result; elsewhere it blends the gods' colours (six blurred sectors). When the balance can be
+    // reset it carries a small "Reset" hint; the first click asks "Reset?" in place, the second resets.
+    // The blend gives each god a slice as wide as its weight, in dial order, the first one centred on Rodim.
+    let at = ANG[GODS[0]] - w[GODS[0]] / T * 180;
+    const sectors = GODS.map(g => {
+      const span = w[g] / T * 360, a0 = at * Math.PI / 180, a1 = (at + span) * Math.PI / 180, R = 80; at += span;
+      if (span < 0.5) return "";
+      if (span > 359.5) return `<circle r="${R}" style="fill:var(--${g})"/>`;
+      return `<path d="M0 0L${(R * Math.cos(a0)).toFixed(1)} ${(R * Math.sin(a0)).toFixed(1)}A${R} ${R} 0 ${span > 180 ? 1 : 0} 1 ${(R * Math.cos(a1)).toFixed(1)} ${(R * Math.sin(a1)).toFixed(1)}Z" style="fill:var(--${g})"/>`; }).join("");
+    const body = t ? `<circle r="48" style="fill:${t.color}"/>` : `<g filter="url(#fb-soft)">${sectors}</g>`;
+    const aura = t ? `<circle class="aura" r="62" style="fill:${t.color}" filter="url(#fb-glow)" opacity=".6"/>`
+                   : `<g class="aura" filter="url(#fb-glow)" opacity=".45"><g transform="scale(.72)">${sectors}</g></g>`;
+    const inner = asking
+      ? `<text class="ask on-orb" y="-3" text-anchor="middle" dominant-baseline="middle">Reset?</text><text class="hint on-orb" y="15" text-anchor="middle" dominant-baseline="middle">Tap again</text>`
+      : `<text class="core-lbl on-orb" y="${resettable ? -5 : 0}" text-anchor="middle" dominant-baseline="middle">Framoid</text>`
+        + (resettable ? `<text class="hint on-orb" y="13" text-anchor="middle" dominant-baseline="middle">Reset</text>` : "");
+    const defs = `<defs>
+      <radialGradient id="fb-shine" cx=".34" cy=".28" r=".75"><stop offset="0" stop-color="#fff" stop-opacity=".55"/><stop offset=".45" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".28"/></radialGradient>
+      <filter id="fb-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="12"/></filter>
+      <filter id="fb-soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="9"/></filter>
+      <filter id="fb-grain"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="4"/><feColorMatrix values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .45 0"/></filter>
+      <clipPath id="fb-cc"><circle r="48"/></clipPath></defs>`;
+    const coreAttr = tuning ? (resettable || asking ? ` tabindex="0" role="button" aria-label="${asking ? "Confirm: reset the balance" : "Reset the balance"}"` : "")
+      : ` tabindex="0" role="button" aria-label="Framoid${t ? ", " + t.say : ""}: open its reflection"`;
+    const core = `<g class="fb-core"${coreAttr}>
+      ${aura}<g clip-path="url(#fb-cc)">${body}<rect x="-48" y="-48" width="96" height="96" filter="url(#fb-grain)" style="mix-blend-mode:soft-light"/></g>
+      <circle class="core-disc" r="48" fill="url(#fb-shine)" style="stroke:rgba(255,255,255,.55)" stroke-width="1"/>
+      <ellipse cx="-14" cy="-26" rx="15" ry="8" fill="#fff" opacity=".35" pointer-events="none"/>${inner}</g>`;
+    return `<svg class="fb-dial${tuning ? " tuning" : ""}" viewBox="-222 -208 444 416" role="group" aria-label="The gods around Framoid${t ? ". The centre is " + t.say : ""}">
+      ${defs}<circle class="hoop" r="${ROUT}"/><circle class="mid" r="${rad(T / 6).toFixed(1)}"/>${spokes}${core}${orbs}</svg>`;
+  }
+
+  /* ---------- one dial, two modes ---------- */
+  // mount(holder, opts) draws the dial into holder and keeps it live.
+  //   view mode: a god opens its pair (opts.onGod(god)), Framoid opens its reflection (opts.onCore()).
+  //   tune mode: drag a god in or out (or arrows / + −); Framoid resets: tap once ("Reset? / Tap again"), again to reset.
+  // opts: { stances, tune, mode: "reader" | "master", weights (master), onTune(on) }.
+  // Returns { setStances(st), tune(on), tuning(), weights(), redraw() }.
+  // A reader's changes apply at once and are kept in this browser; in master mode (Studio) they stay in the dial.
+  function mount(holder, opts = {}) {
+    addStyle();
+    const masterMode = opts.mode === "master";
+    let w = norm(opts.weights || (masterMode ? master : current())), stances = opts.stances || null, tuning = !!opts.tune;
+    const target = () => masterMode ? equal() : norm(master);
+    let asking = null, drag = null;
+    function draw(focusGod, focusCore) {
+      holder.innerHTML = dialSvg(w, stances, tuning && !same(w, target()), !!asking, tuning);
+      holder.classList.toggle("fb-tuning", tuning);
+      if (focusGod) { const o = holder.querySelector(`.orb[data-god="${focusGod}"]`); if (o) o.focus(); }
+      if (focusCore) { const c = holder.querySelector(".fb-core[tabindex]"); if (c) c.focus(); }
+    }
+    const unask = () => { clearTimeout(asking); asking = null; };
+    let own = false; // our own change echoing back as framoid:balance
+    function change(nw, focusGod, focusCore) {
+      if (asking) unask();
+      w = nw; draw(focusGod, focusCore);
+      if (!masterMode) { own = true; if (same(w, master)) store.clear(); else store.set(w); emit(); own = false; }
+    }
+    function coreTap() {
+      if (asking) { unask(); return change(target(), null, true); }
+      if (same(w, target())) return;
+      asking = setTimeout(() => { asking = null; draw(); }, 3000);
+      draw(null, true);
+    }
+    holder.addEventListener("click", e => {
+      if (tuning) { if (e.target.closest(".fb-core")) coreTap(); return; }
+      const o = e.target.closest(".orb"); if (o) return opts.onGod && opts.onGod(o.dataset.god);
+      if (e.target.closest(".fb-core")) opts.onCore && opts.onCore();
+    });
+    // Dragging (tune mode): the god's weight follows its distance from the centre along its own spoke.
+    holder.addEventListener("pointerdown", e => {
+      if (!tuning) return;
+      const o = e.target.closest(".orb"); if (!o) return;
+      drag = o.dataset.god; try { holder.setPointerCapture(e.pointerId); } catch {} e.preventDefault();
+    });
+    holder.addEventListener("pointermove", e => {
+      if (!drag) return;
+      const svg = holder.querySelector("svg"), m = svg.getScreenCTM(); if (!m) return;
+      const p = new DOMPoint(e.clientX, e.clientY).matrixTransform(m.inverse()), a = ANG[drag] * Math.PI / 180;
+      change(setOne(w, drag, wOf(p.x * Math.cos(a) + p.y * Math.sin(a))));
+    });
+    const end = () => { drag = null; };
+    holder.addEventListener("pointerup", end); holder.addEventListener("pointercancel", end);
+    holder.addEventListener("keydown", e => {
+      const enter = e.key === "Enter" || e.key === " ";
+      if (!tuning) {
+        if (!enter) return;
+        const o = e.target.closest(".orb"); if (o) { e.preventDefault(); return opts.onGod && opts.onGod(o.dataset.god); }
+        if (e.target.closest(".fb-core")) { e.preventDefault(); return opts.onCore && opts.onCore(); }
+        return;
+      }
+      if (e.target.closest(".fb-core") && enter) { e.preventDefault(); return coreTap(); }
+      const o = e.target.closest(".orb"); if (!o) return;
+      const g = o.dataset.god, step = { ArrowUp: 1, ArrowRight: 1, "+": 1, "=": 1, ArrowDown: -1, ArrowLeft: -1, "-": -1 }[e.key];
+      if (!step) return; e.preventDefault(); e.stopPropagation(); // keep the page's arrow-key navigation out of the dial
+      change(setOne(w, g, w[g] + step * 1.5), g);
+    });
+    // Follow changes made elsewhere (another tab, the reader's account, /balance.json arriving).
+    if (!masterMode) window.addEventListener("framoid:balance", () => { if (own || drag) return; w = current(); draw(); });
+    draw();
+    return {
+      setStances(st) { stances = st || null; draw(); },
+      tune(on) { tuning = !!on; unask(); draw(); opts.onTune && opts.onTune(tuning); },
+      tuning: () => tuning,
+      weights: () => w,
+      redraw: () => draw()
+    };
+  }
+
+  /* ---------- the sheet (the Studio's master balance) ---------- */
+  // mode "reader": changes apply at once and are kept in this browser. mode "master" (Studio): changes
+  // stay in the sheet until onSave(weights) resolves.
+  function open(opts = {}) {
+    addStyle();
+    const masterMode = opts.mode === "master";
+    const prevFocus = document.activeElement;
+    const scrim = document.createElement("div");
+    scrim.className = "fb-scrim";
+    scrim.innerHTML = `<div class="fb-sheet" role="dialog" aria-modal="true" aria-labelledby="fb-title">
+      <h2 id="fb-title">${masterMode ? "Framoid's balance" : "Balance of the gods"}</h2>
+      <p>${masterMode ? "How much each god's Reading counts on framoid.com, unless a reader changes it." : "How much each god's Reading counts for you, on every page."} Pull a god toward the centre to give it more weight; the others make room.${masterMode ? " Framoid resets to equal weights." : " Framoid resets to Framoid's balance."}</p>
+      <div class="fb-holder"></div>
+      <div class="fb-row">${masterMode
+        ? `<button type="button" data-fb="cancel">Cancel</button><button type="button" class="fb-primary" data-fb="save">Save and publish</button>`
+        : `<button type="button" class="fb-primary" data-fb="done">Done</button>`}</div>
+      <p class="fb-status" aria-live="polite"></p></div>`;
+    document.body.appendChild(scrim);
+    const status = scrim.querySelector(".fb-status");
+    const dial = mount(scrim.querySelector(".fb-holder"), { stances: opts.stances, tune: true, mode: opts.mode, weights: opts.weights });
+    const close = () => { scrim.remove(); document.removeEventListener("keydown", onKey); if (prevFocus && prevFocus.focus) prevFocus.focus(); opts.onClose && opts.onClose(); };
+    const onKey = e => { if (e.key === "Escape") close(); };
+    document.addEventListener("keydown", onKey);
+    scrim.addEventListener("click", async e => {
+      if (e.target === scrim) return close();
+      const act = e.target.closest("[data-fb]"); if (!act) return;
+      const a = act.dataset.fb;
+      if (a === "done" || a === "cancel") return close();
+      if (a === "save") {
+        act.disabled = true; status.textContent = "Saving…";
+        try { const w = dial.weights(); await opts.onSave(w); setMaster(w); status.textContent = "Saved."; setTimeout(close, 700); }
+        catch (err) { act.disabled = false; status.textContent = (err && err.message) || "Couldn't save. Try again."; }
+      }
+    });
+    (scrim.querySelector(".orb") || scrim.querySelector("button")).focus();
+  }
+
+  /* ---------- the always-visible button ---------- */
+  let btn = null, btnOpts = {};
+  // The reader's balance button: inside opts.container (a toolbar island) or, without one, floating top-right.
+  function button(opts = {}) {
+    addStyle(); btnOpts = opts;
+    if (!btn) {
+      btn = document.createElement("button");
+      btn.type = "button"; btn.className = "fb-btn" + (opts.container ? " inbar" : ""); btn.innerHTML = ICON;
+      btn.addEventListener("click", () => open({ mode: "reader", stances: btnOpts.stances }));
+      (opts.container || document.body).appendChild(btn);
+    }
+    mark();
+    return btn;
+  }
+  function mark() {
+    if (!btn) return;
+    const custom = !!store.get() && !same(store.get(), master);
+    btn.classList.toggle("custom", custom);
+    btn.setAttribute("aria-label", "Balance of the gods" + (custom ? " (your own)" : ""));
+    btn.title = custom ? "Balance of the gods: your own" : "Balance of the gods";
+  }
+  window.addEventListener("framoid:balance", mark);
+  window.addEventListener("storage", e => { if (e.key === KEY) emit(); }); // another tab changed it
+
+  function setMaster(w) { master = norm(w); if (store.get() && same(store.get(), master)) store.clear(); emit(); }
+  async function loadMaster(url) {
+    try { const r = await fetch(url, { cache: "no-cache" }); if (r.ok) { const j = await r.json(); setMaster(j.weights || j); return master; } } catch {}
+    return master;
+  }
+
+  // Accounts: the reader's own balance (null when they use Framoid's), and setting it from their account.
+  const readerOwn = () => store.get();
+  function setReader(w) {
+    const has = w && GODS.some(g => Number(w[g]) > 0);
+    if (!has || same(norm(w), master)) store.clear(); else store.set(norm(w));
+    emit();
+  }
+  window.FramoidBalance = { GODS, NAME, total: T, equal, norm, weights: current, master: () => master, setMaster, loadMaster, tide, orb, setOrb, dot, open, mount, button, addStyle, readerOwn, setReader, ICON };
+})();
+
+/* Framoid toolbar: floating glass islands, separate, with transparent space between them, in two modes.
+   Both start the bottom row with Home and Explore. Explore (list mode): search (grows while in use), filter and
+   settings. Home (feed mode): the reader's stance above the row and Save / Share at the top right; in a pair or
+   Framoid view a back button replaces Home and Explore (the page's compact dial takes the bottom right).
+   Copied into the pages with balance.js by tools/sync_balance.py. */
+(function () {
+  "use strict";
+  if (window.FramoidBar) return;
+  const THEME = "framoid.theme";
+  const svg = (d, extra = "") => `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ${extra}>${d}</svg>`;
+  const ICON = {
+    home: svg('<path d="M4 11l8-7 8 7"/><path d="M6 10v9a1 1 0 0 0 1 1h3.5v-5h3v5H17a1 1 0 0 0 1-1v-9"/>'),
+    prev: svg('<path d="M15 5l-7 7 7 7"/>'),
+    next: svg('<path d="M9 5l7 7-7 7"/>'),
+    reflection: svg('<circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="3"/><circle cx="12" cy="3.5" r="1.3" fill="currentColor" stroke="none"/><circle cx="12" cy="20.5" r="1.3" fill="currentColor" stroke="none"/>'),
+    share: svg('<path d="M12 3v12"/><path d="M7.5 7.5L12 3l4.5 4.5"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/>'),
+    settings: svg('<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>'),
+    search: svg('<circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/>'),
+    bookmark: svg('<path d="M7 3.5h10a1 1 0 0 1 1 1V21l-6-4.2L6 21V4.5a1 1 0 0 1 1-1z"/>'),
+    filter: svg('<path d="M4 6h16"/><path d="M7 12h10"/><path d="M10 18h4"/>'),
+    back: svg('<path d="M15 5l-7 7 7 7"/>'),
+    explore: svg('<rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/>'),
+    reset: svg('<path d="M4 12a8 8 0 1 0 2.4-5.7"/><path d="M4 4.5v4h4"/>'),
+    clear: svg('<circle cx="12" cy="12" r="9" fill="currentColor" stroke="none" opacity=".22"/><path d="M9 9l6 6M15 9l-6 6"/>')
+  };
+  const css = `
+.fbar { position: fixed; z-index: 30; left: 0; right: 0; top: max(12px, env(safe-area-inset-top, 0px)); box-sizing: border-box; max-width: 1272px; margin: 0 auto;
+  padding: 0 max(16px, env(safe-area-inset-right, 0px)) 0 max(16px, env(safe-area-inset-left, 0px)); display: flex; align-items: center; gap: 10px; pointer-events: none; }
+.fbar.bottom { top: auto; bottom: calc(12px + env(safe-area-inset-bottom, 0px)); }
+.fbar.right { justify-content: flex-end; }
+.fbar > * { pointer-events: auto; }
+.fbar [hidden] { display: none !important; }
+.fisl > .fb-btn.inbar { padding: 0; width: 32px; }
+.fbar .fgap { flex: 1; pointer-events: none; }
+.fisl { display: flex; align-items: center; gap: 2px; height: 40px; box-sizing: border-box; padding: 0 4px; border-radius: 999px; min-width: 0;
+  color: var(--ink, #14151a); background: var(--glass-strong, rgba(255,255,255,.8)); border: 1px solid var(--stroke, rgba(255,255,255,.7));
+  -webkit-backdrop-filter: blur(20px) saturate(175%); backdrop-filter: blur(20px) saturate(175%);
+  box-shadow: inset 0 1px 0 var(--hl, rgba(255,255,255,.95)), 0 8px 24px -10px var(--shadow, rgba(30,36,70,.25)); }
+.fisl > button, .fisl > a { height: 32px; min-width: 32px; padding: 0 12px; border: 0; border-radius: 999px; background: transparent; color: inherit; cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px; font: 600 13px/1 var(--text, system-ui); text-decoration: none; white-space: nowrap; }
+.fisl > .ficon, .fisl > .fnavb { padding: 0; width: 32px; }
+#fb-save.on svg path { fill: currentColor; }
+.fbar[hidden] { display: none !important; }
+.fbar.stance { bottom: calc(60px + env(safe-area-inset-bottom, 0px)); justify-content: center; }
+.fstance { flex: 0 1 320px; width: 320px; max-width: 100%; height: 36px; padding: 0 4px 0 14px; gap: 6px; }
+.fstance .frange { position: relative; flex: 1; min-width: 0; display: flex; isolation: isolate; }
+.fstance .ftrack { position: absolute; z-index: 0; left: 0; right: 0; top: 50%; height: 6px; margin-top: -3px; border-radius: 3px; pointer-events: none;
+  background: linear-gradient(90deg, var(--fb-no), var(--fb-mid), var(--fb-yes)); }
+.fstance .fpan { position: absolute; z-index: 1; top: 50%; width: 3px; height: 14px; margin: -7px 0 0 -1.5px; border-radius: 2px; pointer-events: none;
+  background: #fff; box-shadow: 0 0 0 1px rgba(20,24,40,.45); left: calc(11px + var(--fp, .5) * (100% - 22px)); }
+.fstance input { position: relative; z-index: 2; flex: 1; width: 100%; min-width: 0; height: 24px; margin: 0; background: transparent; -webkit-appearance: none; appearance: none; cursor: pointer; --fsv: var(--fb-mid); }
+.fstance input:focus { outline: none; }
+.fstance input::-webkit-slider-runnable-track { height: 6px; border-radius: 3px; background: transparent; }
+.fstance input::-moz-range-track { height: 6px; border-radius: 3px; background: transparent; }
+.fstance input::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; margin-top: -8px; border-radius: 50%; border: 2px solid #fff;
+  background: radial-gradient(circle at 34% 28%, rgba(255,255,255,.75), rgba(255,255,255,0) 46%), var(--fsv); box-shadow: 0 2px 8px -1px rgba(20,24,40,.35); }
+.fstance input::-moz-range-thumb { width: 18px; height: 18px; border-radius: 50%; border: 2px solid #fff;
+  background: radial-gradient(circle at 34% 28%, rgba(255,255,255,.75), rgba(255,255,255,0) 46%), var(--fsv); box-shadow: 0 2px 8px -1px rgba(20,24,40,.35); }
+.fstance input:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 3px var(--ink, #14151a); }
+.fstance .freset { flex: none; color: var(--muted, #5c606e); }
+.fstance.unset .freset { visibility: hidden; }
+.fisl > button:hover, .fisl > a:hover { background: var(--seg, rgba(20,24,40,.06)); }
+.fisl > button:disabled { opacity: .35; cursor: default; background: transparent; }
+.fisl > button[aria-current="true"], .fisl > button[aria-pressed="true"], .fisl > a[aria-current="page"] { background: var(--fbar-on, rgba(255,255,255,.95)); box-shadow: 0 1px 4px var(--shadow, rgba(30,36,70,.15)); }
+.fisl .fdots { display: inline-flex; gap: 3px; } .fisl .fdots b { width: 7px; height: 7px; border-radius: 50%; }
+.fsearch { flex: 0 1 auto; width: 200px; padding: 0 14px; gap: 8px; color: var(--muted, #5c606e); cursor: text; transition: width .3s ease; }
+.fsearch.open { width: 380px; }
+.fsecs > button { padding: 0 11px; }
+@media (max-width: 900px) {
+  .fsearch { width: 132px; padding: 0 12px; }
+  .fbar.searching .fsearch { flex: 1 1 auto; width: auto; }
+  .fbar.searching > .fisl:not(.fsearch), .fbar.searching > .fgap { display: none; }
+  .fsecs > button { padding: 0 8px; }
+  .fsecs .fdots { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { .fsearch { transition: none; } }
+.fsearch input { flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; color: var(--ink, #14151a); font: 400 16px/1 var(--text, system-ui); -webkit-appearance: none; appearance: none; padding: 0; }
+.fsearch input::-webkit-search-cancel-button, .fsearch input::-webkit-search-decoration { -webkit-appearance: none; display: none; }
+.fsearch .fclear { flex: none; width: 30px; height: 30px; margin-right: -8px; padding: 0; border: 0; border-radius: 50%; background: transparent; color: var(--muted, #5c606e); cursor: pointer; display: grid; place-items: center; }
+.fsearch .fclear svg { width: 20px; height: 20px; }
+.fsearch input::placeholder { color: var(--muted, #5c606e); }
+.fsearch:focus-within { box-shadow: inset 0 1px 0 var(--hl, #fff), 0 0 0 2px color-mix(in srgb, var(--focus, #0a6cff) 55%, transparent); }
+.fbar :focus-visible { outline: 2px solid var(--focus, #0a6cff); outline-offset: 2px; }
+.fbar input:focus, .fbar input:focus-visible { outline: none; }
+.fmenu { position: fixed; z-index: 45; min-width: 220px; padding: 8px; border-radius: 18px; box-sizing: border-box; color: var(--ink, #14151a); font-family: var(--text, system-ui);
+  background: var(--glass-strong, rgba(255,255,255,.88)); border: 1px solid var(--stroke, rgba(255,255,255,.7));
+  -webkit-backdrop-filter: blur(30px) saturate(175%); backdrop-filter: blur(30px) saturate(175%);
+  box-shadow: inset 0 1px 0 var(--hl, #fff), 0 18px 44px -16px var(--shadow, rgba(30,36,70,.35)); }
+.fmenu h3 { margin: 4px 8px 8px; font-size: 11px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--muted, #5c606e); }
+.fmenu .fopts { display: flex; gap: 2px; padding: 3px; border-radius: 999px; background: var(--seg, rgba(20,24,40,.06)); }
+.fmenu .fopts button { flex: 1; border: 0; background: transparent; color: inherit; border-radius: 999px; padding: 7px 10px; font: 600 13px/1 var(--text, system-ui); cursor: pointer; }
+.fmenu .fopts button[aria-pressed="true"] { background: var(--fbar-on, rgba(255,255,255,.95)); box-shadow: 0 1px 4px var(--shadow, rgba(30,36,70,.15)); }
+.fmenu .fitem { display: block; width: 100%; text-align: left; border: 0; background: transparent; color: inherit; border-radius: 10px; padding: 9px 10px; font: 600 14px/1.2 var(--text, system-ui); cursor: pointer; }
+.fmenu .fitem:hover { background: var(--seg, rgba(20,24,40,.06)); }
+.fmenu .fitem[aria-checked="true"]::after { content: "✓"; float: right; }
+.fmenu .fsub { display: block; margin-top: 3px; font-size: 12px; font-weight: 400; color: var(--muted, #5c606e); overflow: hidden; text-overflow: ellipsis; }
+.fmenu .fsep { height: 1px; margin: 8px 4px; background: var(--hairline, rgba(20,24,40,.1)); }
+.fb-sheet.fabout { text-align: left; max-width: 480px; }
+.fb-sheet.fabout h2 { text-align: center; margin-bottom: 10px; }
+.fb-sheet.fabout h3 { margin: 14px 0 4px; font: 700 11px/1.2 var(--text, system-ui); letter-spacing: .07em; text-transform: uppercase; color: var(--muted, #5c606e); }
+.fb-sheet.fabout p { font-size: 14px; line-height: 1.5; color: var(--ink, #14151a); }
+.fb-sheet.fabout a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+.fb-sheet.fabout .fb-row { margin-top: 16px; }
+.fdisc { font-size: 12px; color: var(--muted, #5c606e); }
+.flink { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; text-decoration-color: color-mix(in srgb, currentColor 40%, transparent); text-underline-offset: 2px; }
+.flink:hover { color: var(--ink, #14151a); }
+.ftoast { position: fixed; z-index: 60; left: 50%; bottom: calc(80px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); padding: 10px 16px; border-radius: 999px;
+  font: 600 13px/1 var(--text, system-ui); color: var(--bg, #fff); background: var(--ink, #14151a); box-shadow: 0 8px 24px -8px rgba(0,0,0,.4); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --fbar-on: rgba(255,255,255,.16); } }
+:root[data-theme="dark"] { --fbar-on: rgba(255,255,255,.16); }`;
+  function addStyle() {
+    if (document.getElementById("fbar-style")) return;
+    const el = document.createElement("style"); el.id = "fbar-style"; el.textContent = css; document.head.appendChild(el);
+  }
+
+  /* ---------- theme (kept in the reader's browser) ---------- */
+  const getTheme = () => { try { return localStorage.getItem(THEME) || "auto"; } catch { return "auto"; } };
+  function setTheme(t) {
+    try { t === "auto" ? localStorage.removeItem(THEME) : localStorage.setItem(THEME, t); } catch {}
+    applyTheme();
+    window.dispatchEvent(new CustomEvent("framoid:theme"));
+  }
+  function applyTheme() {
+    const t = getTheme(), el = document.documentElement;
+    if (t === "light" || t === "dark") el.dataset.theme = t; else delete el.dataset.theme;
+  }
+  applyTheme();
+
+  /* ---------- small parts ---------- */
+  const island = (html, cls = "") => `<div class="fisl ${cls}">${html}</div>`;
+  const iconBtn = (id, icon, label, extra = "") => `<button type="button" class="ficon" id="${id}" aria-label="${label}" title="${label}" ${extra}>${ICON[icon]}</button>`;
+  let menuEl = null;
+  function closeMenu() { if (menuEl) { menuEl.remove(); menuEl = null; document.removeEventListener("pointerdown", outside, true); } }
+  function outside(e) { if (menuEl && !menuEl.contains(e.target) && !e.target.closest("[data-fmenu-anchor]")) closeMenu(); }
+  // A small glass menu under (or above, for a bottom bar) its anchor button.
+  function menu(anchor, html, onClick) {
+    if (menuEl) { const same = menuEl.dataset.for === anchor.id; closeMenu(); if (same) return; }
+    addStyle();
+    menuEl = document.createElement("div"); menuEl.className = "fmenu"; menuEl.dataset.for = anchor.id; menuEl.setAttribute("role", "menu");
+    menuEl.innerHTML = html; document.body.appendChild(menuEl);
+    const r = anchor.getBoundingClientRect(), m = menuEl.getBoundingClientRect();
+    const left = Math.max(8, Math.min(window.innerWidth - m.width - 8, r.right - m.width));
+    const below = r.top < window.innerHeight / 2;
+    menuEl.style.left = left + "px";
+    menuEl.style.top = (below ? r.bottom + 8 : r.top - m.height - 8) + "px";
+    menuEl.addEventListener("click", e => onClick(e, menuEl));
+    setTimeout(() => document.addEventListener("pointerdown", outside, true));
+    const f = menuEl.querySelector("button"); if (f) f.focus();
+  }
+  document.addEventListener("keydown", e => { if (e.key === "Escape") closeMenu(); });
+  function settings(anchor) {
+    if (window.FramoidAccount && window.FramoidAccount.preload && !window.FramoidAccount.state().signedIn) window.FramoidAccount.preload();
+    const draw = () => `<h3>Appearance</h3><div class="fopts" role="group" aria-label="Appearance">${[["auto", "Auto"], ["light", "Light"], ["dark", "Dark"]]
+      .map(([v, l]) => `<button type="button" data-theme-set="${v}" aria-pressed="${getTheme() === v}">${l}</button>`).join("")}</div>
+      <div class="fsep"></div>${accountItem()}<button type="button" class="fitem" data-about>About Framoid</button>`;
+    menu(anchor, draw(), (e, el) => {
+      if (e.target.closest("[data-about]")) { closeMenu(); return about(); }
+      if (e.target.closest("[data-account]")) { closeMenu(); return window.FramoidAccount && window.FramoidAccount.open(); }
+      const b = e.target.closest("[data-theme-set]"); if (!b) return;
+      setTheme(b.dataset.themeSet); el.innerHTML = draw();
+    });
+  }
+
+  // Account entry in Settings: "Sign in", or the signed-in email.
+  function accountItem() {
+    if (!window.FramoidAccount) return "";
+    const s = window.FramoidAccount.state();
+    return `<button type="button" class="fitem" data-account>${s.signedIn ? `Account<span class="fsub">${String(s.email || "").replace(/[&<>"]/g, "")}</span>` : "Sign in"}</button>`;
+  }
+
+  /* ---------- About and disclaimer ---------- */
+  const CONTACT = "hello@framoid.com";
+  const disclaimerLine = () => `<span class="fdisc">Mostly AI-generated · Not advice · <button type="button" class="flink" data-about>About</button> · <a class="flink" href="mailto:${CONTACT}">${CONTACT}</a></span>`;
+  function about() {
+    if (window.FramoidBalance) window.FramoidBalance.addStyle();
+    addStyle();
+    const prev = document.activeElement;
+    const scrim = document.createElement("div");
+    scrim.className = "fb-scrim";
+    scrim.innerHTML = `<div class="fb-sheet fabout" role="dialog" aria-modal="true" aria-labelledby="fa-title">
+      <h2 id="fa-title">About Framoid</h2>
+      <p>Framoid considers one Subject at a time through six paired gods. Each god gives a Reading as one pure, one-sided force; Framoid holds the six together without ranking or resolving them.</p>
+      <h3>Mostly AI-generated</h3>
+      <p>The Readings and Framoid's reflections are written with an AI model (Claude, by Anthropic), then chosen and published by a person. They can contain mistakes or one-sided claims.</p>
+      <h3>Not advice</h3>
+      <p>Nothing here is professional, legal, medical, financial or political advice, or an endorsement of any person, group, view or action. The gods' stances come from their natures, not from the author's opinions.</p>
+      <h3>Sources</h3>
+      <p>Backgrounds summarise public sources, linked on each Reflection. Check the sources before relying on any fact.</p>
+      <h3>Privacy</h3>
+      <p>No cookies or tracking are added by this site. Your balance of the gods and your appearance setting are kept in your own browser. The host (GitHub Pages) may keep standard server logs.</p>
+      <h3>Accounts</h3>
+      <p>Signing in is optional (Google or an email link). If you sign in, Framoid stores your email address and your settings (balance of the gods, appearance; later also saved Reflections and your own stances) with Google Firebase, on servers in the United States. Only you can see them. Readers who don't sign in never load Firebase. You can delete your account and everything stored with it anytime: Settings, Account, Delete my account and data.</p>
+      <h3>Contact</h3>
+      <p><a href="mailto:${CONTACT}">${CONTACT}</a></p>
+      <div class="fb-row"><button type="button" class="fb-primary" data-close>Done</button></div></div>`;
+    document.body.appendChild(scrim);
+    const close = () => { scrim.remove(); document.removeEventListener("keydown", onKey); if (prev && prev.focus) prev.focus(); };
+    const onKey = e => { if (e.key === "Escape") close(); };
+    document.addEventListener("keydown", onKey);
+    scrim.addEventListener("click", e => { if (e.target === scrim || e.target.closest("[data-close]")) close(); });
+    scrim.querySelector("[data-close]").focus();
+  }
+  // Any element with data-about (footer lines, menus) opens the About sheet.
+  document.addEventListener("click", e => { const a = e.target.closest("[data-about]"); if (a && !a.closest(".fmenu")) { e.preventDefault(); about(); } });
+  function toast(text) {
+    addStyle();
+    const t = document.createElement("div"); t.className = "ftoast"; t.setAttribute("role", "status"); t.textContent = text;
+    document.body.appendChild(t); setTimeout(() => t.remove(), 1800);
+  }
+  async function share(title) {
+    const url = location.href.split("#")[0];
+    if (navigator.share) { try { await navigator.share({ title, url }); return; } catch (e) { if (e && e.name === "AbortError") return; } }
+    try { await navigator.clipboard.writeText(url); toast("Link copied"); } catch { toast(url); }
+  }
+  function bar(html, cls = "") {
+    addStyle();
+    const el = document.createElement("div"); el.className = "fbar " + cls; el.innerHTML = html; document.body.appendChild(el); return el;
+  }
+  const phone = () => window.matchMedia("(max-width: 900px)").matches;
+
+  /* ---------- list mode ---------- */
+  // opts: { onSearch(text), onFilter("all"|"embraced"|"opposed"|"saved") }; "Saved" shows only when signed in.
+  // One bottom row: Home and Explore, search, filter (segmented on wide screens, a menu on phones), settings.
+  function list(opts = {}) {
+    let filter = "all";
+    const base = [["all", "All"], ["embraced", "Embraced"], ["opposed", "Opposed"]];
+    const signed = () => !!(window.FramoidAccount && window.FramoidAccount.state().signedIn);
+    let filters = signed() ? [...base, ["saved", "Saved"]] : base;
+    const seg = () => filters.map(([v, l]) => `<button type="button" data-filter="${v}" aria-pressed="${filter === v}">${l}</button>`).join("");
+    const el = bar(`${navIsland("explore")}<div class="fgap"></div>
+      <label class="fisl fsearch">${ICON.search}<input type="search" id="fb-q" placeholder="Search" aria-label="Search Reflections" autocomplete="off" enterkeyhint="search"><button type="button" class="fclear" id="fb-clear" aria-label="Clear search" hidden>${ICON.clear}</button></label>
+      ${island(seg(), "fseg")}${island(iconBtn("fb-filter", "filter", "Filter", 'aria-haspopup="menu" data-fmenu-anchor aria-pressed="false"'), "ffilter")}
+      <div class="fgap"></div>${island(iconBtn("fb-settings", "settings", "Settings", 'aria-haspopup="menu" data-fmenu-anchor'))}`, "bottom");
+    const q = el.querySelector("#fb-q"), box = el.querySelector(".fsearch"), clear = el.querySelector("#fb-clear");
+    const grow = on => { box.classList.toggle("open", on); el.classList.toggle("searching", on); };
+    const changed = () => { clear.hidden = !q.value; opts.onSearch && opts.onSearch(q.value); };
+    q.addEventListener("focus", () => grow(true));
+    q.addEventListener("blur", () => grow(false));
+    q.addEventListener("input", changed);
+    q.addEventListener("keydown", e => { if (e.key === "Enter") q.blur(); });
+    // The clear button works without opening the field: pointerdown keeps the focus where it is.
+    clear.addEventListener("pointerdown", e => e.preventDefault());
+    clear.addEventListener("click", e => { e.preventDefault(); q.value = ""; changed(); });
+    const setFilter = v => {
+      filter = v; el.querySelector(".fseg").innerHTML = seg(); opts.onFilter && opts.onFilter(v);
+      el.querySelector("#fb-filter").setAttribute("aria-pressed", String(v !== "all"));
+    };
+    el.querySelector(".fseg").addEventListener("click", e => { const b = e.target.closest("[data-filter]"); if (b) setFilter(b.dataset.filter); });
+    const fb = el.querySelector("#fb-filter");
+    fb.onclick = () => menu(fb, filters.map(([v, l]) => `<button type="button" class="fitem" role="menuitemradio" data-filter="${v}" aria-checked="${filter === v}">${l}</button>`).join(""),
+      e => { const b = e.target.closest("[data-filter]"); if (b) { setFilter(b.dataset.filter); closeMenu(); } });
+    const g = el.querySelector("#fb-settings"); g.onclick = () => settings(g);
+    window.addEventListener("framoid:account", () => {
+      filters = signed() ? [...base, ["saved", "Saved"]] : base;
+      if (filter === "saved" && !signed()) setFilter("all"); else el.querySelector(".fseg").innerHTML = seg();
+    });
+    const place = () => { el.querySelector(".fseg").hidden = phone(); el.querySelector(".ffilter").hidden = !phone(); };
+    place(); window.addEventListener("resize", place);
+    return { bottom: el };
+  }
+
+  /* ---------- reading mode (the Home feed and its views) ---------- */
+  // opts: { chrome (false in the Studio preview: no Home/Explore, Save, Share or stance), home, explore (hrefs), onBack() }
+  // Feed: Home and Explore at the bottom left, the reader's stance above the row, Save and Share at the top right.
+  // A pair or Framoid view ("reader"): Home and Explore give way to a back button; the page's compact dial sits at the bottom right.
+  // Returns { setReflection({slug, title, stances}), setMode("feed" | "reader") }.
+  function feed(opts = {}) {
+    const chrome = opts.chrome !== false;
+    let cur = { slug: "", title: document.title, stances: null }, mode = "feed";
+    const top = chrome ? bar(island(`${window.FramoidAccount ? iconBtn("fb-save", "bookmark", "Save", 'aria-pressed="false"') : ""}${iconBtn("fb-share", "share", "Share")}`), "top right") : null;
+    const bottom = bar(`${chrome ? navIsland("home") : ""}${island(iconBtn("fb-back", "back", "Back to the Reflection"), "fbackisl")}<div class="fgap"></div>`, "bottom");
+    const back = bottom.querySelector(".fbackisl"), nav = bottom.querySelector(".fnav");
+    back.querySelector("button").onclick = () => opts.onBack && opts.onBack();
+    if (top) top.querySelector("#fb-share").onclick = () => share(cur.title || document.title);
+    const sv = top && top.querySelector("#fb-save");
+    const markSave = () => { if (!sv) return; const on = !!cur.slug && window.FramoidAccount.isSaved(cur.slug);
+      sv.setAttribute("aria-pressed", String(on)); sv.classList.toggle("on", on); sv.setAttribute("aria-label", on ? "Saved" : "Save"); sv.title = on ? "Saved. Tap to remove" : "Save"; };
+    if (sv) {
+      sv.onclick = () => { const slug = cur.slug; if (!slug) return; const was = window.FramoidAccount.isSaved(slug), signed = window.FramoidAccount.state().signedIn;
+        window.FramoidAccount.toggleSave(slug).then(() => { if (signed) toast(was ? "Removed from saved" : "Saved"); }).catch(() => toast("Couldn't save. Try again.")); };
+      window.addEventListener("framoid:saved", markSave);
+    }
+    const stance = chrome && window.FramoidAccount && window.FramoidAccount.setStance ? stanceBar(() => cur) : null;
+    const place = () => {
+      back.hidden = mode !== "reader"; if (nav) nav.hidden = mode === "reader";
+      if (stance) { stance.el.hidden = mode !== "feed" || !cur.slug; document.body.classList.toggle("fb-stance", !stance.el.hidden); }
+    };
+    place();
+    return {
+      setReflection(r) { cur = Object.assign({ slug: "", title: document.title, stances: null }, r); markSave(); if (stance) stance.show(); place(); },
+      setMode(m) { mode = m; place(); }
+    };
+  }
+  // Home and Explore, side by side; the current one is marked.
+  function navIsland(current) {
+    const a = (id, href, icon, label) => `<a href="${href}" class="fnavb" aria-label="${label}" title="${label}"${current === id ? ' aria-current="page"' : ""}>${ICON[icon]}</a>`;
+    return island(`${a("home", "/", "home", "Home")}${a("explore", "/explore/", "explore", "Explore")}`, "fnav");
+  }
+
+  // The reader's own stance on the Reflection in view, just above the bottom row: one slider from opposed (red) to
+  // embraced (green). Private to their account; signed-out readers are offered sign-in. Until set, it rests at the
+  // Pantheon's weighted stance (also marked on the track); the reset button (space always kept) returns it there.
+  function stanceBar(get) {
+    const A = window.FramoidAccount;
+    const el = bar(`<div class="fisl fstance"><span class="frange"><i class="ftrack" aria-hidden="true"></i><i class="fpan" aria-hidden="true"></i>
+      <input type="range" min="-100" max="100" step="1" value="0" aria-label="Your stance, from opposed to embraced"></span>
+      <button type="button" class="ficon freset" aria-label="Back to the Pantheon's stance" title="Back to the Pantheon's stance">${ICON.reset}</button></div>`, "bottom stance");
+    el.hidden = true;
+    const box = el.querySelector(".fstance"), input = el.querySelector("input"), clr = el.querySelector(".freset"), pan = el.querySelector(".fpan");
+    const pantheon = () => { const st = get().stances, t = st && window.FramoidBalance ? window.FramoidBalance.tide(st) : null; return t ? t.s : 0; };
+    const colour = f => f < .5 ? `color-mix(in oklch, var(--fb-no), var(--fb-mid) ${Math.round(f * 200)}%)` : `color-mix(in oklch, var(--fb-mid), var(--fb-yes) ${Math.round((f - .5) * 200)}%)`;
+    const paint = v => { input.style.setProperty("--fsv", colour((v + 1) / 2)); };
+    const show = () => {
+      const slug = get().slug; if (!slug) return;
+      const own = A.stanceOf(slug), set = own !== null, p = pantheon(), v = set ? own : p;
+      pan.style.setProperty("--fp", (p + 1) / 2);
+      box.classList.toggle("unset", !set);
+      if (document.activeElement !== input || !set) input.value = Math.round(v * 100);
+      input.setAttribute("aria-valuetext", (v > .05 ? "Embraced" : v < -.05 ? "Opposed" : "Balanced") + (set ? "" : ", the Pantheon's stance"));
+      paint(v);
+    };
+    const gate = e => { if (!A.state().signedIn) { e.preventDefault(); A.setStance(get().slug, 0); return true; } return false; };
+    input.addEventListener("pointerdown", gate);
+    input.addEventListener("keydown", e => { if (/^(Arrow|Home|End|Page)/.test(e.key)) gate(e); });
+    input.addEventListener("input", () => { const v = input.value / 100; paint(v); box.classList.remove("unset"); A.setStance(get().slug, v); });
+    clr.addEventListener("click", () => { A.setStance(get().slug, null); show(); });
+    ["framoid:stances", "framoid:account", "framoid:balance"].forEach(n => window.addEventListener(n, show));
+    return { el, show };
+  }
+
+  window.FramoidBar = { list, feed, share, toast, setTheme, getTheme, about, disclaimerLine, ICON };
+})();
+
+/* Framoid accounts (optional sign-in) with Firebase: Google or an email link, no passwords.
+   Signed-in readers keep their balance of the gods and appearance in sync across devices; later phases add
+   saved Reflections, their own stances and Subject suggestions (see firebase/firestore.rules).
+   The Firebase SDK is loaded only for readers who sign in (or come back from an email link), so readers who
+   never sign in make no requests to Firebase. Copied into the pages by tools/sync_balance.py. */
+(function () {
+  "use strict";
+  if (window.FramoidAccount) return;
+  const CONFIG = {
+    apiKey: "AIzaSyCyUuXc9F-eAfmmTHu41NAoxnLwXx3AMUI",
+    authDomain: "framoid-567c0.firebaseapp.com",
+    projectId: "framoid-567c0",
+    storageBucket: "framoid-567c0.firebasestorage.app",
+    messagingSenderId: "314057320041",
+    appId: "1:314057320041:web:8b76293b042e0fa99aa4f8"
+  };
+  const SDK = "https://www.gstatic.com/firebasejs/13.2.0/";
+  const FLAG = "framoid.account", MAILKEY = "framoid.emailForSignIn";
+  const ls = { get: k => { try { return localStorage.getItem(k); } catch { return null; } },
+               set: (k, v) => { try { localStorage.setItem(k, v); } catch {} },
+               del: k => { try { localStorage.removeItem(k); } catch {} } };
+  let fb = null;        // { auth, db, A (auth module), F (firestore module) } once loaded
+  let user = null;      // signed-in Firebase user
+  let applying = false; // true while applying remote settings (so they aren't written back)
+
+  async function load() {
+    if (fb) return fb;
+    const [{ initializeApp }, A, F] = await Promise.all([
+      import(SDK + "firebase-app.js"), import(SDK + "firebase-auth.js"), import(SDK + "firebase-firestore.js")]);
+    const app = initializeApp(CONFIG);
+    fb = { auth: A.getAuth(app), db: F.getFirestore(app), A, F };
+    fb.A.onAuthStateChanged(fb.auth, u => {
+      const fresh = u && !ls.get(FLAG); // just signed in on this device (not a returning visit)
+      user = u; ready = false; if (unsub) { unsub(); unsub = null; }
+      if (unsubSaved) { unsubSaved(); unsubSaved = null; }
+      if (unsubStances) { unsubStances(); unsubStances = null; }
+      if (!u || cacheUid !== u.uid) { saved = new Set(); stances = {}; cacheUid = u ? u.uid : null; cache(); emitSaved(); emitStances(); }
+      if (u) { ls.set(FLAG, "1"); listen(fresh); listenSaved(); listenStances(); } else ls.del(FLAG);
+      emit();
+    });
+    return fb;
+  }
+  const emit = () => window.dispatchEvent(new CustomEvent("framoid:account", { detail: state() }));
+  const state = () => ({ signedIn: !!user, email: user ? user.email : null });
+  const userDoc = () => fb.F.doc(fb.db, "users", user.uid);
+
+  /* ---------- settings sync: balance of the gods and appearance ---------- */
+  // Live: every device follows the account's settings as they change.
+  let unsub = null, ready = false;
+  const hasOwn = b => b && Object.values(b).some(v => Number(v) > 0);
+  function listen(fresh) {
+    let first = true;
+    unsub = fb.F.onSnapshot(userDoc(), snap => {
+      if (snap.metadata.hasPendingWrites) return; // our own write echoing back
+      const d = snap.exists() ? snap.data() : null;
+      if (first) {
+        first = false; ready = true;
+        // New account, or signing in here with a balance of your own while the account has none: keep this device's.
+        const local = window.FramoidBalance && window.FramoidBalance.readerOwn();
+        if (!d) return push(true);
+        if (fresh && !hasOwn(d.balance) && local) { apply({ theme: d.theme }); return push(); }
+      }
+      apply(d);
+    }, e => { ready = true; console.warn("Framoid: couldn't read your settings", e); });
+  }
+  function apply(d) {
+    if (!d) return;
+    applying = true;
+    try {
+      if ("balance" in d && window.FramoidBalance) {
+        const cur = window.FramoidBalance.readerOwn(), next = hasOwn(d.balance) ? d.balance : null;
+        if (JSON.stringify(cur) !== JSON.stringify(next && window.FramoidBalance.norm(next))) window.FramoidBalance.setReader(d.balance);
+      }
+      if (d.theme && window.FramoidBar && window.FramoidBar.getTheme() !== d.theme) window.FramoidBar.setTheme(d.theme);
+    } finally { applying = false; }
+  }
+  let timer = null;
+  function push(first) {
+    if (!user || applying || !ready) return;
+    clearTimeout(timer);
+    timer = setTimeout(async () => {
+      const data = { theme: window.FramoidBar ? window.FramoidBar.getTheme() : "auto", updatedAt: fb.F.serverTimestamp() };
+      const own = window.FramoidBalance && window.FramoidBalance.readerOwn();
+      data.balance = own || {}; // {} = Framoid's balance
+      if (first) data.createdAt = fb.F.serverTimestamp();
+      try { await fb.F.setDoc(userDoc(), data, { merge: true }); } catch (e) { console.warn("Framoid: couldn't save your settings", e); }
+    }, 800);
+  }
+  window.addEventListener("framoid:balance", () => push());
+  window.addEventListener("framoid:theme", () => push());
+
+  /* ---------- saved Reflections ---------- */
+  // Kept in this browser too, so a saved Reflection shows as saved the moment the page opens.
+  const SAVEDKEY = "framoid.saved";
+  let saved = new Set(), stances = {}, cacheUid = null, unsubSaved = null, unsubStances = null, pending = null;
+  if (ls.get(FLAG)) { try { const c = JSON.parse(ls.get(SAVEDKEY) || "null"); if (c && c.uid) { cacheUid = c.uid; saved = new Set(c.slugs || []); stances = c.stances || {}; } } catch {} }
+  function cache() { if (cacheUid) ls.set(SAVEDKEY, JSON.stringify({ uid: cacheUid, slugs: [...saved], stances })); else ls.del(SAVEDKEY); }
+  const emitSaved = () => window.dispatchEvent(new CustomEvent("framoid:saved"));
+  function listenSaved() {
+    unsubSaved = fb.F.onSnapshot(fb.F.collection(fb.db, "users", user.uid, "saved"), snap => {
+      saved = new Set(snap.docs.map(d => d.id)); cache(); emitSaved();
+      if (pending) { const p = pending; pending = null; if (!saved.has(p)) setSaved(p, true); }
+    }, e => console.warn("Framoid: couldn't read your saved Reflections", e));
+  }
+  const isSaved = slug => saved.has(String(slug));
+  function setSaved(slug, on) {
+    slug = String(slug);
+    if (on) saved.add(slug); else saved.delete(slug);
+    cache(); emitSaved();
+    const ref = fb.F.doc(fb.db, "users", user.uid, "saved", slug);
+    return (on ? fb.F.setDoc(ref, { savedAt: fb.F.serverTimestamp() }) : fb.F.deleteDoc(ref))
+      .catch(e => { console.warn("Framoid: couldn't update saved", e); if (on) saved.delete(slug); else saved.add(slug); cache(); emitSaved(); throw e; });
+  }
+  // Signed out: offer sign-in, and save it once signed in.
+  function toggleSave(slug) {
+    if (!slug) return Promise.resolve();
+    if (!user) { pending = String(slug); sheet("", "Sign in to save Reflections and find them on any device."); return Promise.resolve(); }
+    return setSaved(slug, !isSaved(slug));
+  }
+
+  /* ---------- the reader's own stance per Reflection: -1 (opposed) to 1 (embraced), private ---------- */
+  const emitStances = () => window.dispatchEvent(new CustomEvent("framoid:stances"));
+  function listenStances() {
+    unsubStances = fb.F.onSnapshot(fb.F.collection(fb.db, "users", user.uid, "stances"), snap => {
+      if (snap.metadata.hasPendingWrites) return;
+      const next = {}; snap.docs.forEach(d => { const v = d.data().value; if (typeof v === "number") next[d.id] = v; });
+      stances = next; cache(); emitStances();
+    }, e => console.warn("Framoid: couldn't read your stances", e));
+  }
+  const stanceOf = slug => (String(slug) in stances ? stances[String(slug)] : null);
+  const stanceTimers = {};
+  // v = number in -1..1, or null to clear. Saves after the reader stops moving.
+  function setStance(slug, v) {
+    slug = String(slug);
+    if (!user) { sheet("", "Sign in to keep your own stance on each Reflection, private to you."); return false; }
+    if (v === null) delete stances[slug]; else stances[slug] = Math.max(-1, Math.min(1, Math.round(v * 100) / 100));
+    cache(); emitStances();
+    clearTimeout(stanceTimers[slug]);
+    stanceTimers[slug] = setTimeout(() => {
+      const ref = fb.F.doc(fb.db, "users", user.uid, "stances", slug);
+      (slug in stances ? fb.F.setDoc(ref, { value: stances[slug], updatedAt: fb.F.serverTimestamp() }) : fb.F.deleteDoc(ref))
+        .catch(e => console.warn("Framoid: couldn't save your stance", e));
+    }, 500);
+    return true;
+  }
+
+  /* ---------- sign in / out / delete ---------- */
+  // The popup must open in the same tap, with nothing awaited before it, or browsers block it.
+  // The sheet preloads Firebase so it's ready by the time the reader taps.
+  function google() {
+    if (fb) return fb.A.signInWithPopup(fb.auth, new fb.A.GoogleAuthProvider());
+    return load().then(() => { throw { code: "fac/not-ready" }; });
+  }
+  const preload = () => { load().catch(() => {}); };
+  async function sendLink(email) {
+    const { auth, A } = await load();
+    await A.sendSignInLinkToEmail(auth, email, { url: location.origin + location.pathname, handleCodeInApp: true });
+    ls.set(MAILKEY, email);
+  }
+  const isLinkUrl = () => /[?&]oobCode=/.test(location.search) && /[?&]mode=signIn/.test(location.search);
+  async function finishLink(email) {
+    const { auth, A } = await load();
+    await A.signInWithEmailLink(auth, email, location.href);
+    ls.del(MAILKEY);
+    history.replaceState(null, "", location.pathname + location.hash);
+  }
+  async function signOut() { if (fb) await fb.A.signOut(fb.auth); ls.del(FLAG); }
+  // Delete everything this reader stored, then the account itself.
+  async function deleteAll() {
+    const { db, F, A, auth } = await load();
+    if (!user) return;
+    const uid = user.uid, batch = F.writeBatch(db);
+    for (const sub of ["saved", "stances"]) (await F.getDocs(F.collection(db, "users", uid, sub))).forEach(d => batch.delete(d.ref));
+    (await F.getDocs(F.query(F.collection(db, "suggestions"), F.where("uid", "==", uid)))).forEach(d => batch.delete(d.ref));
+    batch.delete(F.doc(db, "users", uid));
+    await batch.commit();
+    try { await A.deleteUser(user); }
+    catch (e) {
+      if (e && e.code === "auth/requires-recent-login" && user.providerData.some(p => p.providerId === "google.com")) {
+        await A.reauthenticateWithPopup(user, new A.GoogleAuthProvider()); await A.deleteUser(auth.currentUser);
+      } else throw e;
+    }
+    ls.del(FLAG);
+  }
+
+  /* ---------- the sheet ---------- */
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const GLOGO = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.5a5.6 5.6 0 0 1-2.4 3.6v3h3.9c2.3-2.1 3.5-5.2 3.5-8.8z"/><path fill="#34A853" d="M12 24c3.2 0 6-1.1 8-2.9l-3.9-3c-1.1.7-2.5 1.2-4.1 1.2-3.1 0-5.8-2.1-6.7-5H1.3v3.1A12 12 0 0 0 12 24z"/><path fill="#FBBC05" d="M5.3 14.3a7.2 7.2 0 0 1 0-4.6V6.6H1.3a12 12 0 0 0 0 10.8z"/><path fill="#EA4335" d="M12 4.8c1.8 0 3.3.6 4.6 1.8l3.4-3.4A12 12 0 0 0 1.3 6.6l4 3.1c.9-2.9 3.6-4.9 6.7-4.9z"/></svg>';
+  function sheet(mode, note) {
+    if (window.FramoidBalance) window.FramoidBalance.addStyle();
+    addStyle();
+    const prev = document.activeElement;
+    const scrim = document.createElement("div");
+    scrim.className = "fb-scrim";
+    const draw = () => {
+      if (user) return `<h2 id="fac-title">Your account</h2><p>Signed in as <strong>${esc(user.email || "")}</strong>. Your balance of the gods, appearance and saved Reflections follow you to every device where you sign in.</p>
+        <div class="fb-row fac-col"><button type="button" data-fac="signout">Sign out</button><button type="button" class="fac-danger" data-fac="delete">Delete my account and data</button><button type="button" class="fb-primary" data-fac="close">Done</button></div>`;
+      if (mode === "confirm-email") return `<h2 id="fac-title">Finish signing in</h2><p>Enter the email address the sign-in link was sent to.</p>
+        <form class="fac-form" data-fac-form="finish"><input type="email" name="email" required autocomplete="email" placeholder="you@example.com" aria-label="Email address"><button type="submit" class="fb-primary">Sign in</button></form>`;
+      if (mode === "sent") return `<h2 id="fac-title">Check your email</h2><p>We sent a sign-in link to <strong>${esc(ls.get(MAILKEY) || "")}</strong>. Open it on this device to finish signing in.</p>
+        <div class="fb-row"><button type="button" class="fb-primary" data-fac="close">Done</button></div>`;
+      return `<h2 id="fac-title">Sign in</h2>${note ? `<p class="fac-note">${esc(note)}</p>` : ""}
+        <button type="button" class="fac-google" data-fac="google">${GLOGO}<span>Continue with Google</span></button>
+        <form class="fac-form" data-fac-form="link"><input type="email" name="email" required autocomplete="email" placeholder="Or email me a link" aria-label="Email address for a sign-in link"><button type="submit">Send</button></form>
+        <p class="fac-small">Syncs your balance, appearance and saved Reflections. <button type="button" class="flink" data-about>Privacy</button></p>`;
+    };
+    const render = () => { scrim.innerHTML = `<div class="fb-sheet fac" role="dialog" aria-modal="true" aria-labelledby="fac-title"><button type="button" class="fac-x" data-fac="close" aria-label="Close">&times;</button>${draw()}<p class="fb-status fac-status" aria-live="polite"></p></div>`; };
+    if (!user) preload();
+    render();
+    document.body.appendChild(scrim);
+    const status = t => { const s = scrim.querySelector(".fac-status"); if (s) s.textContent = t || ""; };
+    let confirmDelete = false;
+    const close = () => { if (!user) pending = null; scrim.remove(); document.removeEventListener("keydown", onKey); window.removeEventListener("framoid:account", onAcc); if (prev && prev.focus) prev.focus(); };
+    const onKey = e => { if (e.key === "Escape") close(); };
+    const onAcc = () => { if (note && user) return close(); mode = ""; render(); };
+    document.addEventListener("keydown", onKey);
+    window.addEventListener("framoid:account", onAcc);
+    const fail = e => status((e && (e.code === "auth/popup-closed-by-user" || e.code === "auth/cancelled-popup-request")) ? "" : (e && e.code === "fac/not-ready") ? "Ready. Tap again." : (e && e.code === "auth/popup-blocked") ? "Your browser blocked the sign-in window. Allow pop-ups for framoid.com and try again." : "Couldn't complete that. Try again.");
+    scrim.addEventListener("click", async e => {
+      if (e.target === scrim) return close();
+      const a = e.target.closest("[data-fac]"); if (!a) return;
+      const act = a.dataset.fac;
+      if (act === "close") return close();
+      if (act === "google") { status(""); try { await google(); } catch (err) { console.warn("Framoid sign-in", err); fail(err); } return; }
+      if (act === "signout") { await signOut(); return close(); }
+      if (act === "delete") {
+        if (!confirmDelete) { confirmDelete = true; a.textContent = "Tap again to delete everything"; status("This removes your account, settings and anything you saved. It can't be undone."); setTimeout(() => { confirmDelete = false; if (a.isConnected) { a.textContent = "Delete my account and data"; status(""); } }, 5000); return; }
+        status("Deleting…");
+        try { await deleteAll(); status("Your account and data are deleted."); setTimeout(close, 1200); } catch (err) { status("Couldn't delete everything. Sign in again and retry, or write to hello@framoid.com."); }
+      }
+    });
+    scrim.addEventListener("submit", async e => {
+      e.preventDefault();
+      const f = e.target, email = f.email.value.trim(); if (!email) return;
+      const btn = f.querySelector("button"); btn.disabled = true;
+      try {
+        if (f.dataset.facForm === "link") { status("Sending…"); await sendLink(email); mode = "sent"; render(); }
+        else { status("Signing in…"); await finishLink(email); }
+      } catch (err) { btn.disabled = false; status(f.dataset.facForm === "link" ? "Couldn't send the link. Check the address and try again." : "That link didn't work. It may have expired; request a new one."); }
+    });
+    const box = scrim.querySelector(".fac"); box.tabIndex = -1; box.style.outline = "none"; box.focus({ preventScroll: true });
+  }
+
+  /* ---------- styles ---------- */
+  const css = `
+.fb-sheet.fac { max-width: 360px; position: relative; }
+.fb-sheet.fac h2 { margin-bottom: 14px; }
+.fb-sheet.fac .fac-note { margin: -8px 0 14px; padding-right: 28px; }
+.fac-x { position: absolute; top: 12px; right: 12px; width: 30px; height: 30px; border-radius: 50%; border: 0; padding: 0; cursor: pointer;
+  background: var(--hairline, rgba(20,24,40,.08)); color: var(--muted, #5c606e); font: 400 20px/30px var(--text, system-ui); }
+.fac-google { width: 100%; height: 44px; margin-bottom: 10px; display: inline-flex; align-items: center; justify-content: center; gap: 10px; cursor: pointer;
+  border-radius: 999px; background: #fff; color: #1f1f1f; border: 1px solid #dadce0; font: 600 15px/1 var(--text, system-ui); }
+.fb-sheet.fac p { font-size: 14px; line-height: 1.5; }
+.fac-col { flex-direction: column; align-items: stretch; }
+.fac-form { display: flex; gap: 8px; }
+.fac-form input { flex: 1; min-width: 0; height: 44px; box-sizing: border-box; padding: 0 14px; border-radius: 999px; border: 1px solid var(--hairline, rgba(20,24,40,.15));
+  background: var(--glass, rgba(255,255,255,.6)); color: var(--ink, #14151a); font: 400 16px/1 var(--text, system-ui); }
+.fac-form button { flex: none; font: 600 14px/1 var(--text, system-ui); padding: 0 16px; border-radius: 999px; border: 1px solid var(--stroke, rgba(255,255,255,.7));
+  background: var(--ink, #14151a); color: var(--bg, #fff); cursor: pointer; }
+.fac-small { margin-top: 12px !important; text-align: center; font-size: 12px !important; color: var(--muted, #5c606e) !important; }
+.fac-danger { color: var(--fb-no, #dc3b34) !important; }`;
+  function addStyle() {
+    if (document.getElementById("fac-style")) return;
+    const el = document.createElement("style"); el.id = "fac-style"; el.textContent = css; document.head.appendChild(el);
+  }
+
+  /* ---------- start ---------- */
+  // Only readers who signed in before (or arrive from an email link) load Firebase.
+  if (ls.get(FLAG) || isLinkUrl()) {
+    load().then(async ({ auth, A }) => {
+      if (isLinkUrl() && A.isSignInWithEmailLink(auth, location.href)) {
+        const email = ls.get(MAILKEY);
+        if (email) { try { await finishLink(email); } catch { sheet("confirm-email"); } }
+        else sheet("confirm-email");
+      }
+    }).catch(e => console.warn("Framoid: sign-in unavailable", e));
+  }
+
+  window.FramoidAccount = { state, open: () => sheet(""), signOut, preload, isSaved, toggleSave, stanceOf, setStance };
+})();
+</script><!-- balance:end -->
+<script>
+(async () => {
+  const GODS = ["rodim", "aromi", "mir", "ora", "idrom", "doria"];
+  const FB = window.FramoidBalance;
+  FB.loadMaster("/balance.json");
+  // Toolbar (list mode): search by title and statement, filter by the weighted result.
+  let q = "", filter = "all";
+  document.getElementById("foot").innerHTML = window.FramoidBar.disclaimerLine();
+  window.FramoidBar.list({ onSearch: v => { q = v.trim().toLowerCase(); render(); }, onFilter: v => { filter = v; render(); } });
+  const NAME = { rodim: "Rodim", aromi: "Aromi", mir: "Mir", ora: "Ora", idrom: "Idrom", doria: "Doria" };
+  const list = document.getElementById("list");
+  const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const fmt = d => { const t = Date.parse(d + "T12:00:00"); return isNaN(t) ? esc(d) : new Date(t).toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" }); };
+  let items = [];
+  try { items = (await (await fetch("/reflections.json", { cache: "no-cache" })).json()).reflections || []; }
+  catch (e) { list.innerHTML = '<div class="glass empty">The Reflections could not be loaded.</div>'; return; }
+  if (!items.length) { list.innerHTML = '<div class="glass empty">No Reflections published yet.</div>'; return; }
+  // Each card: the gods' stances as dots, then Framoid's centre filled by the current balance of the gods.
+  const shown = r => {
+    if (q && !(String(r.title) + " " + String(r.statement)).toLowerCase().includes(q)) return false;
+    if (filter === "all") return true;
+    if (filter === "saved") return !!(window.FramoidAccount && window.FramoidAccount.isSaved(r.slug));
+    const t = FB.tide(r.stances || {}); if (!t) return false;
+    return filter === "embraced" ? t.s > 1e-6 : t.s < -1e-6;
+  };
+  const render = () => { const sel = items.filter(shown); list.innerHTML = sel.length ? sel.map(r => {
+    const st = r.stances || {};
+    const t = FB.tide(st);
+    const dots = t ? `<div class="stance"><span class="dots">${GODS.map(g =>
+      `<b style="--c:var(--${g})" title="${NAME[g]} ${st[g]}">${FB.dot(st[g])}</b>`).join("")}</span>
+      ${FB.orb(t)}</div>` : "";
+    const date = r.date ? `<span class="date">${fmt(r.date)}</span>` : "";
+    return `<a class="card glass" href="/r/${encodeURIComponent(r.slug)}/">
+      <h2>${esc(r.title)}</h2><p>${esc(r.statement)}</p>${dots || date ? `<div class="foot">${dots}${date}</div>` : ""}</a>`;
+  }).join("") : '<div class="glass empty">${filter === "saved" && !q ? "Nothing saved yet. Open a Reflection and tap the bookmark to save it." : "No Reflections match."}</div>'; };
+  render();
+  window.addEventListener("framoid:balance", render);
+  window.addEventListener("framoid:saved", () => { if (filter === "saved") render(); });
+})();
+</script>
+</body>
+</html>

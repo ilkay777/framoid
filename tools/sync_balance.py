@@ -5,7 +5,7 @@ import pathlib, re
 root = pathlib.Path(__file__).resolve().parent.parent
 js = "\n".join((root / "tools" / f).read_text() for f in ["balance.js", "toolbar.js", "account.js"])
 block = '<!-- balance:start --><script id="fb-balance">\n' + js + '</script><!-- balance:end -->'
-for rel in ["template/index.html", "index.html", "studio/app.html"]:
+for rel in ["template/index.html", "explore/index.html", "studio/app.html"]:
     p = root / rel
     s = p.read_text()
     new, n = re.subn(r"<!-- balance:start -->.*?<!-- balance:end -->", lambda m: block, s, flags=re.S)
