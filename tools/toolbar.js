@@ -41,7 +41,7 @@
 .fisl > .ficon, .fisl > .fnavb { padding: 0; width: 32px; }
 #fb-save.on svg path { fill: currentColor; }
 .fbar[hidden] { display: none !important; }
-.fbar.bottom.reading .facts { margin-right: 162px; } /* room for the compact dial */
+.fbar.bottom .facts { margin-right: 162px; } /* room for the dial (a disc at the bottom right on Home and in views) */
 .fisl > button:hover, .fisl > a:hover { background: var(--seg, rgba(20,24,40,.06)); }
 .fisl > button:disabled { opacity: .35; cursor: default; background: transparent; }
 .fisl > button[aria-current="true"], .fisl > button[aria-pressed="true"], .fisl > a[aria-current="page"] { background: var(--fbar-on, rgba(255,255,255,.95)); box-shadow: 0 1px 4px var(--shadow, rgba(30,36,70,.15)); }
@@ -247,7 +247,7 @@
   // One bottom row: Home and Explore at the left; Save and Share at the right (they act on the Reflection in view).
   // In a pair or Framoid view ("reader") a back button replaces Home and Explore, and Save / Share make room for the
   // page's compact dial at the bottom right. The reader's own stance is set on the dial (Framoid is the knob).
-  // Returns { setReflection({slug, title}), setMode("feed" | "reader") }.
+  // Returns { setReflection({slug, title}), setMode("feed" | "reader" | "tune") }.
   function feed(opts = {}) {
     const chrome = opts.chrome !== false;
     let cur = { slug: "", title: document.title }, mode = "feed";
@@ -264,7 +264,12 @@
         window.FramoidAccount.toggleSave(slug).then(() => { if (signed) toast(was ? "Removed from saved" : "Saved"); }).catch(() => toast("Couldn't save. Try again.")); };
       window.addEventListener("framoid:saved", markSave);
     }
-    const place = () => { back.hidden = mode !== "reader"; if (nav) nav.hidden = mode === "reader"; bottom.classList.toggle("reading", mode === "reader"); };
+    // "tune" (the dial in the middle, tuning the balance): only Home stays.
+    const place = () => {
+      back.hidden = mode !== "reader"; if (nav) nav.hidden = mode === "reader";
+      const ex = nav && nav.querySelector('[href="/explore/"]'); if (ex) ex.hidden = mode === "tune";
+      const facts = bottom.querySelector(".facts"); if (facts) facts.hidden = mode === "tune";
+    };
     place();
     return {
       setReflection(r) { cur = Object.assign({ slug: "", title: document.title }, r); markSave(); },

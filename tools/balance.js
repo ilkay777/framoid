@@ -146,12 +146,12 @@
   const colourOf = f => f < .5 ? `color-mix(in oklch, var(--fb-no), var(--fb-mid) ${Math.round(f * 200)}%)` : `color-mix(in oklch, var(--fb-mid), var(--fb-yes) ${Math.round((f - .5) * 200)}%)`;
   function dialSvg(w, stances, resettable, asking, tuning = true, x = {}) {
     const t = stances ? tide(stances, w) : null;
-    const compact = !!x.compact && !tuning, sym = (!!x.symmetric || compact) && !tuning, knob = !!x.knob && !compact;
+    const compact = !!x.compact && !tuning, sym = (!!x.symmetric || compact) && !tuning, knob = !!x.knob;
     const spokes = GODS.map(g => { const r = ANG[g] * Math.PI / 180;
       return `<line class="spoke" x1="${(RIN * Math.cos(r)).toFixed(1)}" y1="${(RIN * Math.sin(r)).toFixed(1)}" x2="${(ROUT * Math.cos(r)).toFixed(1)}" y2="${(ROUT * Math.sin(r)).toFixed(1)}"/>`; }).join("");
     const orbs = GODS.map(g => {
       const r = ANG[g] * Math.PI / 180, R = sym ? SYM : rad(w[g]), x = R * Math.cos(r), y = R * Math.sin(r), zero = w[g] < 0.15;
-      const size = compact ? (zero ? 20 : 24 + 8 * Math.sqrt(w[g] / T)) : zero ? 10 : 11 + 17 * Math.sqrt(w[g] / T), st = stances && stances[g], opp = st === "opposes";
+      const size = compact ? 28 : zero ? 10 : 11 + 17 * Math.sqrt(w[g] / T), st = stances && stances[g], opp = st === "opposes";
       const lr = size + 11, lx = x + lr * Math.cos(r), ly = y + lr * Math.sin(r);
       const anchor = Math.abs(Math.cos(r)) < 0.2 ? "middle" : Math.cos(r) > 0 ? "start" : "end";
       const label = `${NAME[g]}${st ? (opp ? ", opposes the Subject" : ", embraces the Subject") : ""}: ${zero ? "no weight" : w[g] > T / 6 * 1.4 ? "more weight than most" : w[g] < T / 6 * 0.6 ? "less weight than most" : "about an equal share"}`;
@@ -277,11 +277,11 @@
     holder.addEventListener("click", e => {
       if (tuning) { if (!knob && e.target.closest(".fb-core")) coreTap(); return; }
       const o = e.target.closest(".orb"); if (o) return opts.onGod && opts.onGod(o.dataset.god);
-      if ((!knob || compact) && e.target.closest(".fb-core")) opts.onCore && opts.onCore();
+      if (!knob && e.target.closest(".fb-core")) opts.onCore && opts.onCore();
     });
     holder.addEventListener("contextmenu", e => { if (knob && e.target.closest(".fb-core")) e.preventDefault(); });
     holder.addEventListener("pointerdown", e => {
-      const core = knob && !compact && e.target.closest(".fb-core");
+      const core = knob && e.target.closest(".fb-core");
       if (core) {
         try { holder.setPointerCapture(e.pointerId); } catch {} e.preventDefault();
         gest = { x: e.clientX, y: e.clientY, mode: "", moved: false };
@@ -360,7 +360,7 @@
     return {
       setStances(st) { stances = st || null; draw(); },
       tune: on => tune(on),
-      compact(on) { on = !!on; if (on === compact) return; compact = on; if (on && tuning) { tuning = false; unask(); opts.onTune && opts.onTune(false); } draw(); },
+      compact(on) { on = !!on; if (on === compact) return; compact = on; draw(); },
       tuning: () => tuning,
       weights: () => w,
       redraw: () => draw()

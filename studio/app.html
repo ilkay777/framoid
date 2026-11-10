@@ -346,12 +346,12 @@ textarea { flex: 1; resize: none; font: 15px/1.45 var(--text); color: var(--ink)
   const colourOf = f => f < .5 ? `color-mix(in oklch, var(--fb-no), var(--fb-mid) ${Math.round(f * 200)}%)` : `color-mix(in oklch, var(--fb-mid), var(--fb-yes) ${Math.round((f - .5) * 200)}%)`;
   function dialSvg(w, stances, resettable, asking, tuning = true, x = {}) {
     const t = stances ? tide(stances, w) : null;
-    const compact = !!x.compact && !tuning, sym = (!!x.symmetric || compact) && !tuning, knob = !!x.knob && !compact;
+    const compact = !!x.compact && !tuning, sym = (!!x.symmetric || compact) && !tuning, knob = !!x.knob;
     const spokes = GODS.map(g => { const r = ANG[g] * Math.PI / 180;
       return `<line class="spoke" x1="${(RIN * Math.cos(r)).toFixed(1)}" y1="${(RIN * Math.sin(r)).toFixed(1)}" x2="${(ROUT * Math.cos(r)).toFixed(1)}" y2="${(ROUT * Math.sin(r)).toFixed(1)}"/>`; }).join("");
     const orbs = GODS.map(g => {
       const r = ANG[g] * Math.PI / 180, R = sym ? SYM : rad(w[g]), x = R * Math.cos(r), y = R * Math.sin(r), zero = w[g] < 0.15;
-      const size = compact ? (zero ? 20 : 24 + 8 * Math.sqrt(w[g] / T)) : zero ? 10 : 11 + 17 * Math.sqrt(w[g] / T), st = stances && stances[g], opp = st === "opposes";
+      const size = compact ? 28 : zero ? 10 : 11 + 17 * Math.sqrt(w[g] / T), st = stances && stances[g], opp = st === "opposes";
       const lr = size + 11, lx = x + lr * Math.cos(r), ly = y + lr * Math.sin(r);
       const anchor = Math.abs(Math.cos(r)) < 0.2 ? "middle" : Math.cos(r) > 0 ? "start" : "end";
       const label = `${NAME[g]}${st ? (opp ? ", opposes the Subject" : ", embraces the Subject") : ""}: ${zero ? "no weight" : w[g] > T / 6 * 1.4 ? "more weight than most" : w[g] < T / 6 * 0.6 ? "less weight than most" : "about an equal share"}`;
@@ -477,11 +477,11 @@ textarea { flex: 1; resize: none; font: 15px/1.45 var(--text); color: var(--ink)
     holder.addEventListener("click", e => {
       if (tuning) { if (!knob && e.target.closest(".fb-core")) coreTap(); return; }
       const o = e.target.closest(".orb"); if (o) return opts.onGod && opts.onGod(o.dataset.god);
-      if ((!knob || compact) && e.target.closest(".fb-core")) opts.onCore && opts.onCore();
+      if (!knob && e.target.closest(".fb-core")) opts.onCore && opts.onCore();
     });
     holder.addEventListener("contextmenu", e => { if (knob && e.target.closest(".fb-core")) e.preventDefault(); });
     holder.addEventListener("pointerdown", e => {
-      const core = knob && !compact && e.target.closest(".fb-core");
+      const core = knob && e.target.closest(".fb-core");
       if (core) {
         try { holder.setPointerCapture(e.pointerId); } catch {} e.preventDefault();
         gest = { x: e.clientX, y: e.clientY, mode: "", moved: false };
@@ -560,7 +560,7 @@ textarea { flex: 1; resize: none; font: 15px/1.45 var(--text); color: var(--ink)
     return {
       setStances(st) { stances = st || null; draw(); },
       tune: on => tune(on),
-      compact(on) { on = !!on; if (on === compact) return; compact = on; if (on && tuning) { tuning = false; unask(); opts.onTune && opts.onTune(false); } draw(); },
+      compact(on) { on = !!on; if (on === compact) return; compact = on; draw(); },
       tuning: () => tuning,
       weights: () => w,
       redraw: () => draw()
@@ -687,7 +687,7 @@ textarea { flex: 1; resize: none; font: 15px/1.45 var(--text); color: var(--ink)
 .fisl > .ficon, .fisl > .fnavb { padding: 0; width: 32px; }
 #fb-save.on svg path { fill: currentColor; }
 .fbar[hidden] { display: none !important; }
-.fbar.bottom.reading .facts { margin-right: 162px; } /* room for the compact dial */
+.fbar.bottom .facts { margin-right: 162px; } /* room for the dial (a disc at the bottom right on Home and in views) */
 .fisl > button:hover, .fisl > a:hover { background: var(--seg, rgba(20,24,40,.06)); }
 .fisl > button:disabled { opacity: .35; cursor: default; background: transparent; }
 .fisl > button[aria-current="true"], .fisl > button[aria-pressed="true"], .fisl > a[aria-current="page"] { background: var(--fbar-on, rgba(255,255,255,.95)); box-shadow: 0 1px 4px var(--shadow, rgba(30,36,70,.15)); }
@@ -893,7 +893,7 @@ textarea { flex: 1; resize: none; font: 15px/1.45 var(--text); color: var(--ink)
   // One bottom row: Home and Explore at the left; Save and Share at the right (they act on the Reflection in view).
   // In a pair or Framoid view ("reader") a back button replaces Home and Explore, and Save / Share make room for the
   // page's compact dial at the bottom right. The reader's own stance is set on the dial (Framoid is the knob).
-  // Returns { setReflection({slug, title}), setMode("feed" | "reader") }.
+  // Returns { setReflection({slug, title}), setMode("feed" | "reader" | "tune") }.
   function feed(opts = {}) {
     const chrome = opts.chrome !== false;
     let cur = { slug: "", title: document.title }, mode = "feed";
@@ -910,7 +910,12 @@ textarea { flex: 1; resize: none; font: 15px/1.45 var(--text); color: var(--ink)
         window.FramoidAccount.toggleSave(slug).then(() => { if (signed) toast(was ? "Removed from saved" : "Saved"); }).catch(() => toast("Couldn't save. Try again.")); };
       window.addEventListener("framoid:saved", markSave);
     }
-    const place = () => { back.hidden = mode !== "reader"; if (nav) nav.hidden = mode === "reader"; bottom.classList.toggle("reading", mode === "reader"); };
+    // "tune" (the dial in the middle, tuning the balance): only Home stays.
+    const place = () => {
+      back.hidden = mode !== "reader"; if (nav) nav.hidden = mode === "reader";
+      const ex = nav && nav.querySelector('[href="/explore/"]'); if (ex) ex.hidden = mode === "tune";
+      const facts = bottom.querySelector(".facts"); if (facts) facts.hidden = mode === "tune";
+    };
     place();
     return {
       setReflection(r) { cur = Object.assign({ slug: "", title: document.title }, r); markSave(); },
