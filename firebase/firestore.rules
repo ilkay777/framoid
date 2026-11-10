@@ -13,9 +13,14 @@ service cloud.firestore {
     match /users/{uid} {
       allow read, delete: if isOwner(uid);
       allow create, update: if isOwner(uid)
-        && request.resource.data.keys().hasOnly(['balance', 'theme', 'createdAt', 'updatedAt'])
+        && request.resource.data.keys().hasOnly(['balance', 'theme', 'mode', 'drift', 'fit', 'createdAt', 'updatedAt'])
         && (!('balance' in request.resource.data) || request.resource.data.balance is map)
-        && (!('theme' in request.resource.data) || request.resource.data.theme in ['auto', 'light', 'dark']);
+        && (!('theme' in request.resource.data) || request.resource.data.theme in ['auto', 'light', 'dark'])
+        // Coherence with the Pantheon (tools/coherence.js): tuning mode, drift (0..2) and best-fit weights.
+        && (!('mode' in request.resource.data) || request.resource.data.mode in ['auto', 'manual'])
+        && (!('drift' in request.resource.data) || request.resource.data.drift == null
+            || (request.resource.data.drift is number && request.resource.data.drift >= 0 && request.resource.data.drift <= 2))
+        && (!('fit' in request.resource.data) || request.resource.data.fit == null || request.resource.data.fit is map);
 
       match /saved/{slug} {
         allow read, delete: if isOwner(uid);

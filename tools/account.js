@@ -72,6 +72,7 @@
         if (JSON.stringify(cur) !== JSON.stringify(next && window.FramoidBalance.norm(next))) window.FramoidBalance.setReader(d.balance);
       }
       if (d.theme && window.FramoidBar && window.FramoidBar.getTheme() !== d.theme) window.FramoidBar.setTheme(d.theme);
+      if (d.mode && window.FramoidCoherence) window.FramoidCoherence.setMode(d.mode, true);
     } finally { applying = false; }
   }
   let timer = null;
@@ -82,12 +83,16 @@
       const data = { theme: window.FramoidBar ? window.FramoidBar.getTheme() : "auto", updatedAt: fb.F.serverTimestamp() };
       const own = window.FramoidBalance && window.FramoidBalance.readerOwn();
       data.balance = own || {}; // {} = Framoid's balance
+      // Coherence with the Pantheon (tools/coherence.js): the tuning mode, the drift under this balance, the best fit.
+      const C = window.FramoidCoherence && window.FramoidCoherence.state();
+      if (C) { data.mode = C.mode; data.drift = C.drift === null ? null : Math.round(C.drift * 1000) / 1000; data.fit = C.fit || null; }
       if (first) data.createdAt = fb.F.serverTimestamp();
       try { await fb.F.setDoc(userDoc(), data, { merge: true }); } catch (e) { console.warn("Framoid: couldn't save your settings", e); }
     }, 800);
   }
   window.addEventListener("framoid:balance", () => push());
   window.addEventListener("framoid:theme", () => push());
+  window.addEventListener("framoid:coherence", () => push());
 
   /* ---------- saved Reflections ---------- */
   // Kept in this browser too, so a saved Reflection shows as saved the moment the page opens.
@@ -276,5 +281,5 @@
     }).catch(e => console.warn("Framoid: sign-in unavailable", e));
   }
 
-  window.FramoidAccount = { state, open: () => sheet(""), signOut, preload, isSaved, toggleSave, stanceOf, setStance };
+  window.FramoidAccount = { state, open: () => sheet(""), signOut, preload, isSaved, toggleSave, stanceOf, setStance, allStances: () => Object.assign({}, stances) };
 })();

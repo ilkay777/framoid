@@ -386,6 +386,8 @@ textarea { flex: 1; resize: none; font: 15px/1.45 var(--text); color: var(--ink)
     // The reader's own stance: a ring around Framoid in its colour. The rail: shown while Framoid is held.
     const ownC = x.own === null || x.own === undefined ? "" : colourOf((x.own + 1) / 2);
     const ring = ownC && !tuning ? `<circle class="fb-own" r="57" style="stroke:${ownC}" fill="none" stroke-width="5"/>` : "";
+    // Unstable (tools/coherence.js): a quiet mark on Framoid's orb, a small hollow ring at its upper left.
+    const mark = x.unstable ? `<circle class="fb-unstable" cx="-39" cy="-39" r="8" style="stroke:var(--muted, #5c606e);fill:var(--bg, #fff)" stroke-width="2.5"><title>Unstable</title></circle>` : "";
     const pan = t ? t.s : 0;
     const rail = knob && !tuning ? `<g class="fb-rail" mask="url(#fb-railmask)"><g class="fb-rail-move" transform="translate(${(-(((x.own ?? pan) + 1) / 2) * RAILW).toFixed(1)} 0)">
         <rect x="0" y="-6" width="${RAILW}" height="12" rx="6" fill="url(#fb-railg)"/>
@@ -411,7 +413,7 @@ textarea { flex: 1; resize: none; font: 15px/1.45 var(--text); color: var(--ink)
       <ellipse cx="-14" cy="-26" rx="15" ry="8" fill="#fff" opacity=".35" pointer-events="none"/>${inner}</g>`;
     const frame = sym ? "" : `<circle class="hoop" r="${ROUT}"/><circle class="mid" r="${rad(T / 6).toFixed(1)}"/>${spokes}`;
     return `<svg class="fb-dial${tuning ? " tuning" : ""}${sym ? " sym" : ""}" viewBox="${compact ? "-148 -148 296 296" : sym ? "-196 -166 392 332" : "-222 -208 444 416"}" role="group" aria-label="The gods around Framoid${t ? ". The centre is " + t.say : ""}">
-      ${defs}${frame}${rail}${ring}${core}${orbs}</svg>`;
+      ${defs}${frame}${rail}${ring}${core}${mark}${orbs}</svg>`;
   }
 
   /* ---------- one dial, two modes ---------- */
@@ -424,7 +426,8 @@ textarea { flex: 1; resize: none; font: 15px/1.45 var(--text); color: var(--ink)
   //   to tune. While tuning, a tap on Framoid ("Done") ends tuning and keeps the balance; dragging it down twice resets.
   //   opts.stance = { get(): -1..1 | null, set(v | null), allowed(): false to refuse (e.g. offers sign-in) }.
   // Plain dials (the Studio's sheet): tap Framoid once ("Reset? / Tap again"), again to reset.
-  // opts: { stances, tune, knob, mode: "reader" | "master", weights (master), onTune(on), onGod, onCore, stance }.
+  // opts: { stances, tune, knob, mode: "reader" | "master", weights (master), onTune(on), onGod, onCore, stance,
+  //   onAdjust() (the reader moved the balance by hand), unstable() (draw the quiet Unstable mark) }.
   // Returns { setStances(st), tune(on), tuning(), weights(), redraw() }.
   // A reader's changes apply at once and are kept in this browser; in master mode (Studio) they stay in the dial.
   function mount(holder, opts = {}) {
@@ -437,12 +440,13 @@ textarea { flex: 1; resize: none; font: 15px/1.45 var(--text); color: var(--ink)
     const pantheon = () => { const t = stances ? tide(stances, w) : null; return t ? t.s : 0; };
     function draw(focusGod, focusCore) {
       if (held) { stale = true; return; }
-      holder.innerHTML = dialSvg(w, stances, tuning && !same(w, target()), !!asking, tuning, { symmetric: knob, knob, own: own(), compact });
+      holder.innerHTML = dialSvg(w, stances, tuning && !same(w, target()), !!asking, tuning, { symmetric: knob, knob, own: own(), compact, unstable: !!(opts.unstable && opts.unstable()) });
       holder.classList.toggle("fb-tuning", tuning); holder.classList.toggle("fb-compact", compact && !tuning);
       if (focusGod) { const o = holder.querySelector(`.orb[data-god="${focusGod}"]`); if (o) o.focus(); }
       if (focusCore) { const c = holder.querySelector(".fb-core[tabindex]"); if (c) c.focus(); }
     }
     const unask = () => { clearTimeout(asking); asking = null; };
+    const adjusted = () => { opts.onAdjust && opts.onAdjust(); }; // the reader moved the balance by hand
     let mine = false; // our own change echoing back as framoid:balance
     function change(nw, focusGod, focusCore) {
       if (asking) unask();
@@ -456,7 +460,7 @@ textarea { flex: 1; resize: none; font: 15px/1.45 var(--text); color: var(--ink)
       draw(null, true);
     }
     function askReset() { // knob dials, tuning: drag Framoid down twice
-      if (asking) { unask(); return change(target(), null, true); }
+      if (asking) { unask(); change(target(), null, true); return adjusted(); }
       if (same(w, target())) return;
       asking = setTimeout(() => { asking = null; draw(); }, 3000);
       draw(null, true);
@@ -514,7 +518,7 @@ textarea { flex: 1; resize: none; font: 15px/1.45 var(--text); color: var(--ink)
       if (!drag) return;
       const svg = holder.querySelector("svg"), m = svg.getScreenCTM(); if (!m) return;
       const p = new DOMPoint(e.clientX, e.clientY).matrixTransform(m.inverse()), a = ANG[drag] * Math.PI / 180;
-      change(setOne(w, drag, wOf(p.x * Math.cos(a) + p.y * Math.sin(a))));
+      change(setOne(w, drag, wOf(p.x * Math.cos(a) + p.y * Math.sin(a)))); adjusted();
     });
     const end = () => {
       drag = null;
@@ -551,7 +555,7 @@ textarea { flex: 1; resize: none; font: 15px/1.45 var(--text); color: var(--ink)
       const o = e.target.closest(".orb"); if (!o) return;
       const g = o.dataset.god, step = { ArrowUp: 1, ArrowRight: 1, "+": 1, "=": 1, ArrowDown: -1, ArrowLeft: -1, "-": -1 }[e.key];
       if (!step) return; e.preventDefault(); e.stopPropagation(); // keep the page's arrow-key navigation out of the dial
-      change(setOne(w, g, w[g] + step * 1.5), g);
+      change(setOne(w, g, w[g] + step * 1.5), g); adjusted();
     });
     // Follow changes made elsewhere (another tab, the reader's account, /balance.json arriving).
     if (!masterMode) window.addEventListener("framoid:balance", () => { if (mine || drag) return; w = current(); draw(); });
@@ -1005,6 +1009,7 @@ textarea { flex: 1; resize: none; font: 15px/1.45 var(--text); color: var(--ink)
         if (JSON.stringify(cur) !== JSON.stringify(next && window.FramoidBalance.norm(next))) window.FramoidBalance.setReader(d.balance);
       }
       if (d.theme && window.FramoidBar && window.FramoidBar.getTheme() !== d.theme) window.FramoidBar.setTheme(d.theme);
+      if (d.mode && window.FramoidCoherence) window.FramoidCoherence.setMode(d.mode, true);
     } finally { applying = false; }
   }
   let timer = null;
@@ -1015,12 +1020,16 @@ textarea { flex: 1; resize: none; font: 15px/1.45 var(--text); color: var(--ink)
       const data = { theme: window.FramoidBar ? window.FramoidBar.getTheme() : "auto", updatedAt: fb.F.serverTimestamp() };
       const own = window.FramoidBalance && window.FramoidBalance.readerOwn();
       data.balance = own || {}; // {} = Framoid's balance
+      // Coherence with the Pantheon (tools/coherence.js): the tuning mode, the drift under this balance, the best fit.
+      const C = window.FramoidCoherence && window.FramoidCoherence.state();
+      if (C) { data.mode = C.mode; data.drift = C.drift === null ? null : Math.round(C.drift * 1000) / 1000; data.fit = C.fit || null; }
       if (first) data.createdAt = fb.F.serverTimestamp();
       try { await fb.F.setDoc(userDoc(), data, { merge: true }); } catch (e) { console.warn("Framoid: couldn't save your settings", e); }
     }, 800);
   }
   window.addEventListener("framoid:balance", () => push());
   window.addEventListener("framoid:theme", () => push());
+  window.addEventListener("framoid:coherence", () => push());
 
   /* ---------- saved Reflections ---------- */
   // Kept in this browser too, so a saved Reflection shows as saved the moment the page opens.
@@ -1209,7 +1218,116 @@ textarea { flex: 1; resize: none; font: 15px/1.45 var(--text); color: var(--ink)
     }).catch(e => console.warn("Framoid: sign-in unavailable", e));
   }
 
-  window.FramoidAccount = { state, open: () => sheet(""), signOut, preload, isSaved, toggleSave, stanceOf, setStance };
+  window.FramoidAccount = { state, open: () => sheet(""), signOut, preload, isSaved, toggleSave, stanceOf, setStance, allStances: () => Object.assign({}, stances) };
+})();
+
+/* Framoid coherence: how a reader's own stances sit with the Pantheon under the balance they chose.
+   Runs in the reader's browser only (no server work).
+   - Result of a Reflection under a balance w: the weighted share of the gods that embrace it, on the rail −1..+1
+     (Σ w·e / Σ w, where e = +1 for embraces, −1 for opposes).
+   - Drift: the average gap on the rail between the reader's stances and those results under their chosen balance.
+     At or below CAP the reader is Stable, above it Unstable (a quiet mark on Framoid's orb).
+   - Best fit: the positive weights (scaled to 30, like balance.js) that keep the average squared gap smallest.
+     Computed and stored, not shown.
+   - Mode: "auto" (default; after every stance the balance re-fits) or "manual" (the balance stays; "Fit now" jumps
+     to the best fit once). Dragging a god while in Auto switches to Manual.
+   Signed-out readers have no stances, so nothing here applies to them. Only the latest stance per Reflection counts.
+   Events: framoid:coherence (drift, fit or mode changed). */
+(function () {
+  if (window.FramoidCoherence) return;
+  const CAP = 0.5;          // Stable at or below this average gap
+  const MIN_STANCES = 0;    // stances needed before Stable / Unstable shows (raise later, e.g. ~10)
+  const KEY = "framoid.tune";
+  const GODS = ["rodim", "mir", "idrom", "aromi", "ora", "doria"], T = 30;
+  const ls = { get: k => { try { return localStorage.getItem(k); } catch { return null; } }, set: (k, v) => { try { localStorage.setItem(k, v); } catch {} } };
+  const A = () => window.FramoidAccount, B = () => window.FramoidBalance;
+
+  // The Pantheon's stances per Reflection (slug → {god: "embraces" | "opposes"}), from /reflections.json.
+  let refl = null, titles = {}, loading = null;
+  const tallied = st => st && GODS.every(g => st[g] === "embraces" || st[g] === "opposes");
+  function setReflections(list) {
+    refl = {}; titles = {};
+    (list || []).forEach(r => { const s = String(r.slug); titles[s] = r.title || ""; if (tallied(r.stances)) refl[s] = GODS.map(g => r.stances[g] === "embraces" ? 1 : -1); });
+    recompute();
+  }
+  function ensure() {
+    if (refl || loading) return loading;
+    return loading = fetch("/reflections.json", { cache: "no-cache" }).then(r => r.json()).then(j => setReflections(j.reflections)).catch(() => { refl = {}; });
+  }
+
+  const signedIn = () => !!(A() && A().state().signedIn);
+  // The reader's rated Reflections that the Pantheon has stances on: [{slug, v, e}]
+  function rated() {
+    if (!signedIn() || !refl || !A().allStances) return [];
+    const own = A().allStances();
+    return Object.keys(own).filter(s => refl[s] && typeof own[s] === "number").map(s => ({ slug: s, v: own[s], e: refl[s] }));
+  }
+  const result = (e, w) => { let n = 0, d = 0; GODS.forEach((g, i) => { n += w[g] * e[i]; d += w[g]; }); return d ? n / d : 0; };
+  function driftOf(w, P) { if (!P.length) return null; return P.reduce((s, p) => s + Math.abs(p.v - result(p.e, w)), 0) / P.length; }
+
+  // Best fit: weights as a softmax of six free numbers (always positive), gradient descent on the mean squared gap.
+  function fitOf(P) {
+    if (!P.length) return null;
+    const z = [0, 0, 0, 0, 0, 0], n = P.length;
+    for (let it = 0; it < 600; it++) {
+      const m = Math.max(...z), ex = z.map(v => Math.exp(v - m)), S = ex.reduce((a, b) => a + b, 0), w = ex.map(v => v / S);
+      const g = [0, 0, 0, 0, 0, 0];
+      P.forEach(p => { let t = 0; for (let i = 0; i < 6; i++) t += w[i] * p.e[i]; const r = 2 * (t - p.v) / n; for (let i = 0; i < 6; i++) g[i] += r * p.e[i]; });
+      const gw = w.reduce((s, wi, i) => s + wi * g[i], 0);
+      for (let j = 0; j < 6; j++) z[j] = Math.max(-6, Math.min(6, z[j] - 3 * w[j] * (g[j] - gw)));
+    }
+    const m = Math.max(...z), ex = z.map(v => Math.exp(v - m)), S = ex.reduce((a, b) => a + b, 0), out = {};
+    GODS.forEach((g, i) => out[g] = Math.round(ex[i] / S * T * 100) / 100);
+    return out;
+  }
+
+  let state = { drift: null, fit: null, count: 0 };
+  function recompute() {
+    const P = rated(), w = B() ? B().weights() : null;
+    const next = { drift: w ? driftOf(w, P) : null, fit: fitOf(P), count: P.length };
+    const changed = JSON.stringify(next) !== JSON.stringify(state);
+    state = next;
+    if (changed) window.dispatchEvent(new CustomEvent("framoid:coherence"));
+  }
+
+  const mode = () => ls.get(KEY) === "manual" ? "manual" : "auto";
+  function setMode(m, quiet) {
+    m = m === "manual" ? "manual" : "auto";
+    if (m === mode()) return;
+    ls.set(KEY, m);
+    if (!quiet) window.dispatchEvent(new CustomEvent("framoid:coherence"));
+    if (m === "auto") refit();
+  }
+  // Jump to the best fit (Auto after each stance; Fit now in Manual).
+  function refit() {
+    const P = rated(); if (!P.length || !B()) return;
+    B().setReader(fitOf(P));
+  }
+
+  let autoTimer = null;
+  window.addEventListener("framoid:stances", () => {
+    recompute();
+    if (mode() !== "auto") return;
+    clearTimeout(autoTimer); autoTimer = setTimeout(refit, 600);
+  });
+  ["framoid:balance", "framoid:account"].forEach(n => window.addEventListener(n, () => { if (signedIn()) ensure(); recompute(); }));
+  if (signedIn()) ensure();
+
+  // The Reflections causing the drift, largest gap first: [{slug, title, v, result, gap}]
+  function rows() {
+    const w = B() ? B().weights() : null; if (!w) return [];
+    return rated().map(p => { const r = result(p.e, w); return { slug: p.slug, title: titles[p.slug] || p.slug, v: p.v, result: r, gap: Math.abs(p.v - r) }; })
+      .sort((a, b) => b.gap - a.gap);
+  }
+  const shows = () => signedIn() && state.count > 0 && state.count >= MIN_STANCES;
+
+  window.FramoidCoherence = {
+    CAP, MIN_STANCES,
+    state: () => Object.assign({ mode: mode() }, state),
+    stable: () => shows() ? state.drift <= CAP : null,     // null: not enough to say
+    unstable: () => shows() && state.drift > CAP,
+    mode, setMode, fitNow: refit, rows, setReflections, ensure, recompute
+  };
 })();
 </script><!-- balance:end -->
 <script>

@@ -186,6 +186,8 @@
     // The reader's own stance: a ring around Framoid in its colour. The rail: shown while Framoid is held.
     const ownC = x.own === null || x.own === undefined ? "" : colourOf((x.own + 1) / 2);
     const ring = ownC && !tuning ? `<circle class="fb-own" r="57" style="stroke:${ownC}" fill="none" stroke-width="5"/>` : "";
+    // Unstable (tools/coherence.js): a quiet mark on Framoid's orb, a small hollow ring at its upper left.
+    const mark = x.unstable ? `<circle class="fb-unstable" cx="-39" cy="-39" r="8" style="stroke:var(--muted, #5c606e);fill:var(--bg, #fff)" stroke-width="2.5"><title>Unstable</title></circle>` : "";
     const pan = t ? t.s : 0;
     const rail = knob && !tuning ? `<g class="fb-rail" mask="url(#fb-railmask)"><g class="fb-rail-move" transform="translate(${(-(((x.own ?? pan) + 1) / 2) * RAILW).toFixed(1)} 0)">
         <rect x="0" y="-6" width="${RAILW}" height="12" rx="6" fill="url(#fb-railg)"/>
@@ -211,7 +213,7 @@
       <ellipse cx="-14" cy="-26" rx="15" ry="8" fill="#fff" opacity=".35" pointer-events="none"/>${inner}</g>`;
     const frame = sym ? "" : `<circle class="hoop" r="${ROUT}"/><circle class="mid" r="${rad(T / 6).toFixed(1)}"/>${spokes}`;
     return `<svg class="fb-dial${tuning ? " tuning" : ""}${sym ? " sym" : ""}" viewBox="${compact ? "-148 -148 296 296" : sym ? "-196 -166 392 332" : "-222 -208 444 416"}" role="group" aria-label="The gods around Framoid${t ? ". The centre is " + t.say : ""}">
-      ${defs}${frame}${rail}${ring}${core}${orbs}</svg>`;
+      ${defs}${frame}${rail}${ring}${core}${mark}${orbs}</svg>`;
   }
 
   /* ---------- one dial, two modes ---------- */
@@ -224,7 +226,8 @@
   //   to tune. While tuning, a tap on Framoid ("Done") ends tuning and keeps the balance; dragging it down twice resets.
   //   opts.stance = { get(): -1..1 | null, set(v | null), allowed(): false to refuse (e.g. offers sign-in) }.
   // Plain dials (the Studio's sheet): tap Framoid once ("Reset? / Tap again"), again to reset.
-  // opts: { stances, tune, knob, mode: "reader" | "master", weights (master), onTune(on), onGod, onCore, stance }.
+  // opts: { stances, tune, knob, mode: "reader" | "master", weights (master), onTune(on), onGod, onCore, stance,
+  //   onAdjust() (the reader moved the balance by hand), unstable() (draw the quiet Unstable mark) }.
   // Returns { setStances(st), tune(on), tuning(), weights(), redraw() }.
   // A reader's changes apply at once and are kept in this browser; in master mode (Studio) they stay in the dial.
   function mount(holder, opts = {}) {
@@ -237,12 +240,13 @@
     const pantheon = () => { const t = stances ? tide(stances, w) : null; return t ? t.s : 0; };
     function draw(focusGod, focusCore) {
       if (held) { stale = true; return; }
-      holder.innerHTML = dialSvg(w, stances, tuning && !same(w, target()), !!asking, tuning, { symmetric: knob, knob, own: own(), compact });
+      holder.innerHTML = dialSvg(w, stances, tuning && !same(w, target()), !!asking, tuning, { symmetric: knob, knob, own: own(), compact, unstable: !!(opts.unstable && opts.unstable()) });
       holder.classList.toggle("fb-tuning", tuning); holder.classList.toggle("fb-compact", compact && !tuning);
       if (focusGod) { const o = holder.querySelector(`.orb[data-god="${focusGod}"]`); if (o) o.focus(); }
       if (focusCore) { const c = holder.querySelector(".fb-core[tabindex]"); if (c) c.focus(); }
     }
     const unask = () => { clearTimeout(asking); asking = null; };
+    const adjusted = () => { opts.onAdjust && opts.onAdjust(); }; // the reader moved the balance by hand
     let mine = false; // our own change echoing back as framoid:balance
     function change(nw, focusGod, focusCore) {
       if (asking) unask();
@@ -256,7 +260,7 @@
       draw(null, true);
     }
     function askReset() { // knob dials, tuning: drag Framoid down twice
-      if (asking) { unask(); return change(target(), null, true); }
+      if (asking) { unask(); change(target(), null, true); return adjusted(); }
       if (same(w, target())) return;
       asking = setTimeout(() => { asking = null; draw(); }, 3000);
       draw(null, true);
@@ -314,7 +318,7 @@
       if (!drag) return;
       const svg = holder.querySelector("svg"), m = svg.getScreenCTM(); if (!m) return;
       const p = new DOMPoint(e.clientX, e.clientY).matrixTransform(m.inverse()), a = ANG[drag] * Math.PI / 180;
-      change(setOne(w, drag, wOf(p.x * Math.cos(a) + p.y * Math.sin(a))));
+      change(setOne(w, drag, wOf(p.x * Math.cos(a) + p.y * Math.sin(a)))); adjusted();
     });
     const end = () => {
       drag = null;
@@ -351,7 +355,7 @@
       const o = e.target.closest(".orb"); if (!o) return;
       const g = o.dataset.god, step = { ArrowUp: 1, ArrowRight: 1, "+": 1, "=": 1, ArrowDown: -1, ArrowLeft: -1, "-": -1 }[e.key];
       if (!step) return; e.preventDefault(); e.stopPropagation(); // keep the page's arrow-key navigation out of the dial
-      change(setOne(w, g, w[g] + step * 1.5), g);
+      change(setOne(w, g, w[g] + step * 1.5), g); adjusted();
     });
     // Follow changes made elsewhere (another tab, the reader's account, /balance.json arriving).
     if (!masterMode) window.addEventListener("framoid:balance", () => { if (mine || drag) return; w = current(); draw(); });
