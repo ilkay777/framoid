@@ -157,13 +157,16 @@ body.studio .app { --barh: 6px; }
 
 .feed-msg { margin: auto; color: var(--muted); }
 
-/* The dial (tools/balance.js, one dial in two modes): a small solid disc at the bottom right, gods all the same size,
+/* The dial (tools/balance.js, one dial in two modes): a small disc (the toolbar's surface) at the bottom right, gods all the same size,
    no names. Framoid is the knob: hold it for the stance rail (left / right: your stance, down: the Pantheon's, up: tune).
    Tuning brings it to the middle, larger, with the gods placed and sized by weight; the toolbar keeps only Home. */
 .dock { position: fixed; z-index: 31; --dock: 150px; width: var(--dock); height: var(--dock); box-sizing: border-box; padding: 3px; border-radius: 50%;
   right: max(10px, env(safe-area-inset-right, 0px)); bottom: calc(8px + env(safe-area-inset-bottom, 0px));
   display: flex; justify-content: center; align-items: center;
-  background: var(--bg); border: 1px solid var(--stroke); box-shadow: 0 10px 28px -10px var(--shadow);
+  /* the same surface as the toolbar islands (tools/toolbar.js .fisl) */
+  background: var(--glass-strong); border: 1px solid var(--stroke);
+  -webkit-backdrop-filter: blur(20px) saturate(175%); backdrop-filter: blur(20px) saturate(175%);
+  box-shadow: inset 0 1px 0 var(--hl), 0 8px 24px -10px var(--shadow);
   transition: width .25s ease, height .25s ease, right .25s ease, bottom .25s ease; }
 .dial { width: 100%; height: 100%; }
 .dial .fb-dial { width: 100%; height: 100%; max-width: none; margin: 0; }
@@ -1415,6 +1418,10 @@ button.chip:hover { transform: translateY(-2px); box-shadow: inset 0 1px 0 var(-
     }
   });
   dial.compact(true);
+  // While tuning, taps on the page (links, Passages, chips) do nothing; scrolling and swiping still work.
+  document.addEventListener("click", e => {
+    if (document.body.classList.contains("tuning") && e.target.closest("#feed, #reader")) { e.preventDefault(); e.stopPropagation(); }
+  }, true);
   ["framoid:stances", "framoid:account"].forEach(n => window.addEventListener(n, () => dial.redraw()));
 
   /* ---------- the Reflection in view ---------- */
