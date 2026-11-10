@@ -29,7 +29,8 @@
   }
   function ensure() {
     if (refl || loading) return loading;
-    return loading = fetch("/reflections.json", { cache: "no-cache" }).then(r => r.json()).then(j => setReflections(j.reflections)).catch(() => { refl = {}; });
+    // A failed fetch never wipes a list the page already handed over (setReflections).
+    return loading = fetch("/reflections.json", { cache: "no-cache" }).then(r => r.json()).then(j => { if (!refl) setReflections(j.reflections); }).catch(() => { if (!refl) refl = {}; });
   }
 
   const signedIn = () => !!(A() && A().state().signedIn);
